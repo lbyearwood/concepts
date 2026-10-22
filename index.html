@@ -96,7 +96,40 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* New concept links or cards can be added inside this section later. */
+    /* Each new concept can be added as a card within a category. */
+    .concept-group { padding-top: 24px; }
+    .concept-group h3 { margin: 0 0 14px; font-size: 1.05rem; }
+    .concept-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 740px;
+      padding: 21px 24px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      text-decoration: none;
+      transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+    }
+    .concept-card:hover {
+      border-color: #97b7df;
+      box-shadow: 0 8px 30px rgba(22, 54, 99, .07);
+      transform: translateY(-2px);
+    }
+    .concept-card-icon {
+      display: grid; place-items: center;
+      flex: 0 0 auto;
+      width: 50px; height: 50px; border-radius: 12px;
+      background: #e8f1ff; color: #24569c; font-weight: 700; font-size: .95rem;
+    }
+    .concept-card-text { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+    .concept-card-text strong { font-size: 1.07rem; }
+    .concept-card-text span { color: var(--muted); font-size: .9rem; }
+    .concept-card-arrow { color: var(--accent); font-size: 1.5rem; }
+    @media (max-width: 550px) {
+      .concept-card { padding: 16px; gap: 12px; }
+      .concept-card-icon { width: 42px; height: 42px; }
+    }
     .concept-list { min-height: 180px; padding-top: 24px; }
 
     footer {
@@ -141,7 +174,17 @@
     <section id="concepts" class="concepts container" aria-labelledby="concepts-title">
       <h2 id="concepts-title" class="section-heading">Concepts</h2>
       <div class="concept-list" id="concept-list">
-        <!-- Leave blank for now. Concept links and resources will be added here. -->
+        <section class="concept-group" aria-labelledby="memory-management-title">
+          <h3 id="memory-management-title">Memory Management</h3>
+          <a class="concept-card" href="concepts/memory-management/virtual-memory.html">
+            <span class="concept-card-icon" aria-hidden="true">01</span>
+            <span class="concept-card-text">
+              <strong>Virtual Memory</strong>
+              <span>Interactive demonstration of RAM, HDD and paging</span>
+            </span>
+            <span class="concept-card-arrow" aria-hidden="true">→</span>
+          </a>
+        </section>
       </div>
     </section>
   </main>
