@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1020">
+  <meta name="description" content="An interactive, step-by-step demonstration of virtual memory using RAM and an HDD.">
+  <title>Virtual Memory | Teaching Concepts</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080d1b;
+      --surface: #111b30;
+      --surface2: #15233b;
+      --line: #263650;
+      --text: #f2f6ff;
+      --muted: #a1b0c6;
+      --blue: #66b5ff;
+      --orange: #ffbf79;
+      --green: #79dfb4;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background: radial-gradient(circle at 20% -20%, #17284c 0, transparent 48%), var(--bg);
+      color: var(--text);
+      font: 16px/1.5 Arial, Helvetica, sans-serif;
+      overflow: hidden;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; cursor: pointer; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #b5dfff; outline-offset: 4px; }
+    .app {
+      height: 100vh;
+      height: 100dvh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px clamp(20px, 3vw, 48px) 18px;
+      max-width: 1800px;
+      margin: auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex: 0 0 auto;
+    }
+    .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--text); }
+    .brand-icon {
+      display: grid; place-items: center;
+      width: 38px; height: 38px;
+      border-radius: 11px; background: #23436e; color: #a9d9ff; font-size: 22px; font-weight: bold;
+    }
+    .brand-name { font-size: 13px; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; }
+    .brand-sub { display: block; color: var(--muted); font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: normal; }
+    .back-link { text-decoration: none; color: #b5c8e3; font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; white-space: nowrap; }
+    .back-link:hover { background: #1a2c49; }
+    .title-row {
+      display: flex; justify-content: space-between; align-items: end; gap: 24px; flex: 0 0 auto;
+    }
+    .eyebrow { color: var(--blue); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; font-weight: bold; margin: 0 0 3px; }
+    h1 { font-size: clamp(26px, 3vw, 42px); letter-spacing: -.045em; line-height: 1.12; margin: 0; }
+    .subtitle { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+    .simplified { font-size: 11px; color: #b4c3d9; border: 1px solid #3b5070; border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(320px, .9fr);
+      gap: 16px;
+      min-height: 0;
+      flex: 1 1 auto;
+    }
+    .diagram, .lesson {
+      min-height: 0; border: 1px solid var(--line);
+      border-radius: 20px; background: rgba(17, 27, 48, .96);
+    }
+    .diagram {
+      padding: 20px; display: flex; flex-direction: column; gap: 13px;
+      overflow: hidden; position: relative;
+    }
+    .diagram-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .diagram-heading h2 { margin: 0; font-size: 14px; letter-spacing: .005em; }
+    .diagram-heading span { font-size: 11px; color: #93a6c1; }
+    .cpu {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 13px 16px; min-height: 88px; border: 1px solid #36547e;
+      border-radius: 14px; background: linear-gradient(105deg, #1a3556, #142339 70%);
+    }
+    .cpu-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .cpu-symbol {
+      flex: 0 0 auto; display: grid; place-items: center; border: 2px solid #82c6ff;
+      border-radius: 10px; width: 54px; height: 54px; color: #a5d8ff; font-size: 14px; font-weight: bold;
+      background: repeating-linear-gradient(45deg, #204e79, #204e79 6px, #214971 6px, #214971 12px);
+      box-shadow: 0 0 0 5px rgba(102,181,255,.07);
+    }
+    .cpu h3 { font-size: 15px; margin: 0 0 2px; }
+    .cpu p { margin: 0; color: #afc8e7; font-size: 12px; }
+    .request {
+      display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
+      background: rgba(10,20,40,.75); border: 1px solid #3e5778;
+      border-radius: 12px; padding: 9px 12px;
+    }
+    .request-label { color: var(--muted); font-size: 11px; line-height: 1.3; }
+    .request-label strong { display: block; color: white; font-size: 13px; }
+    .request-chip {
+      display: grid; place-items: center; height: 36px; width: 36px;
+      border-radius: 8px; font-size: 16px; font-weight: bold; background: #283b59;
+      color: #d4e5fa; border: 1px solid #6885aa;
+    }
+    .request-chip.page-e { background: #2b4c35; color: #abf0b9; border-color: #5aaa75; }
+    .request-chip.page-b { background: #134f61; color: #a6ebfa; border-color: #58c0da; }
+    .transfer {
+      min-height: 23px; display: flex; align-items: center; justify-content: center;
+      gap: 9px; color: #8babc9; font-size: 11px;
+    }
+    .transfer-line { width: 20px; height: 1px; background: #36577d; }
+    .transfer b { color: #c5ddff; font-weight: normal; }
+    .storage-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 13px;
+      flex: 1; min-height: 0;
+    }
+    .store {
+      display: flex; flex-direction: column; min-height: 0;
+      padding: 15px; border-radius: 15px;
+      border: 1px solid #324c73; background: linear-gradient(170deg, rgba(33,65,100,.56), rgba(13,26,44,.9));
+    }
+    .store.disk {
+      border-color: #6a5037;
+      background: linear-gradient(170deg, rgba(79,53,32,.5), rgba(27,27,34,.9));
+    }
+    .store-title { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
+    .store-title h3 { font-size: 17px; margin: 0; }
+    .store-title small { color: #9eb9d8; display: block; font-size: 11px; }
+    .disk .store-title small { color: #d9b997; }
+    .store-icon {
+      width: 36px; height: 36px; border: 2px solid #87c7ff;
+      display: grid; place-items: center; border-radius: 9px; font-size: 11px; font-weight: bold;
+      color: #a3d8ff; flex: 0 0 auto;
+    }
+    .disk .store-icon {
+      border-radius: 50%; border-color: #e0ac6b;
+      color: #eec18d; background: radial-gradient(circle, #a16e3f 0 3px, transparent 4px 7px, #734e30 8px 9px, transparent 10px);
+      font-size: 0;
+    }
+    .occupancy { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 15px 0 10px; color: #aec9e7; font-size: 11px; }
+    .disk .occupancy { color: #e0c29f; }
+    .meter { display: flex; gap: 4px; }
+    .meter i { width: 16px; height: 5px; border-radius: 2px; background: #324761; }
+    .meter i.on { background: #65b7fd; }
+    .disk .meter i.on { background: #e5aa67; }
+    .slots {
+      display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(2, minmax(0,1fr));
+      gap: 9px; flex: 1; min-height: 0;
+    }
+    .slot {
+      background: rgba(5,12,23,.5); border: 1px dashed #3e5775; border-radius: 12px;
+      min-height: 78px; position: relative; display: grid; place-items: center; padding: 8px;
+    }
+    .disk .slot { border-color: #655241; }
+    .slot-no { position: absolute; top: 7px; left: 9px; color: #667d99; font-size: 9px; letter-spacing: .07em; }
+    .disk .slot-no { color: #93765b; }
+    .slot-empty { font-size: 11px; color: #637993; }
+    .disk .slot-empty { color: #8d775e; }
+    .memory-block {
+      position: relative; width: 100%; height: 100%; min-height: 55px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      border-radius: 9px; border: 1px solid var(--page-border);
+      background: var(--page-bg); color: var(--page-fg); text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+    }
+    .memory-block strong { font-size: clamp(12px, 1.25vw, 17px); line-height: 1.1; }
+    .memory-block small { opacity: .78; font-size: 10px; margin-top: 4px; }
+    .page-a { --page-bg:#373b75; --page-border:#818ded; --page-fg:#e9eaff; }
+    .page-b { --page-bg:#11556c; --page-border:#67cde5; --page-fg:#d9faff; }
+    .page-c { --page-bg:#364f89; --page-border:#91b8ff; --page-fg:#eef4ff; }
+    .page-d { --page-bg:#704b30; --page-border:#eba965; --page-fg:#fff0df; }
+    .page-e { --page-bg:#2a6247; --page-border:#76e2a7; --page-fg:#e1ffed; }
+    .memory-block.selected { outline: 3px solid #fff; outline-offset: -1px; animation: breathe 1.3s ease-in-out infinite; }
+    .memory-block.is-new { box-shadow: 0 0 0 2px rgba(255,255,255,.18), 0 0 30px rgba(118,226,167,.1); }
+    @keyframes breathe { 50% { outline-color: #ffffff55; } }
+    .store-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 8px; padding-top: 11px; font-size: 11px; color: #add1f8;
+    }
+    .disk .store-bottom { color: #f1bd83; }
+    .notice {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; font-size: 12px; color: #b6cce8;
+      border: 1px solid #283c58; border-radius: 10px; background: #101e33;
+    }
+    .notice-dot { height: 8px; width: 8px; border-radius: 50%; background: var(--blue); flex: 0 0 auto; }
+    .notice-dot.alert { background: #ffbf79; }
+    .notice-dot.success { background: #7cddb0; }
+
+    .lesson { padding: clamp(20px, 2.3vw, 35px); display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
+    .step-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .step-label { color: var(--blue); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: bold; }
+    .step-counter { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .progress { display: flex; gap: 5px; }
+    .progress-item { flex: 1; height: 5px; border-radius: 99px; background: #2e3e56; }
+    .progress-item.past { background: #5fa5e8; }
+    .progress-item.current { background: #c2e5ff; }
+    .lesson h2 { font-size: clamp(24px, 2.4vw, 35px); line-height: 1.14; letter-spacing: -.035em; margin: 9px 0 14px; }
+    .lesson-copy { font-size: clamp(15px, 1.2vw, 18px); line-height: 1.65; color: #d7e1f0; margin: 0; }
+    .lesson-copy strong { color: white; }
+    .key-point { margin-top: auto; padding: 16px; background: #1b2c45; border: 1px solid #344d6e; border-radius: 13px; }
+    .key-point span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #90c9ff; }
+    .key-point p { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: #d7e5f8; }
+    .definitions {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 9px;
+    }
+    .definition { border: 1px solid #2b3c55; border-radius: 10px; padding: 10px 11px; }
+    .definition strong { color: #e4f1ff; font-size: 12px; }
+    .definition p { color: #97abc5; font-size: 11px; margin: 3px 0 0; }
+    .controls {
+      flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; border: 1px solid #2c3c56; background: #121e33; border-radius: 16px;
+      padding: 11px 16px;
+    }
+    .controls-left, .controls-right { display: flex; gap: 10px; align-items: center; }
+    .ctrl {
+      display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+      border: 1px solid #405571; background: #1b2b44; color: #edf5ff;
+      border-radius: 10px; font-weight: 700; font-size: 13px; padding: 11px 18px; min-height: 44px;
+    }
+    .ctrl:hover:not(:disabled) { background: #304663; }
+    .ctrl:disabled { opacity: .4; cursor: not-allowed; }
+    .ctrl.next { color: #091325; background: #a9d5ff; border-color: #a9d5ff; min-width: 114px; }
+    .ctrl.next:hover:not(:disabled) { background: #d0e9ff; }
+    .ctrl.reset { background: transparent; color: #bdcbe0; }
+    .keyboard { font-size: 11px; color: #8298b4; }
+    .stage-announcement { position: absolute; height: 1px; width: 1px; overflow: hidden; clip-path: inset(50%); }
+    .moving-ghost { position: fixed; z-index: 100; margin: 0; pointer-events: none; transform-origin: top left; box-shadow: 0 14px 35px rgba(0,0,0,.35); }
+    @media (max-height: 760px) and (min-width: 781px) {
+      .app { gap: 9px; padding-top: 12px; padding-bottom: 10px; }
+      .title-row .subtitle { margin-top: 2px; }
+      .diagram { padding: 14px; gap: 7px; }
+      .cpu { min-height: 70px; padding: 8px 12px; }
+      .cpu-symbol { width: 43px; height: 43px; }
+      .store { padding: 11px; }
+      .store .occupancy { margin: 8px 0 6px; }
+      .slot { min-height: 60px; }
+      .store-bottom { padding-top: 6px; }
+      .lesson { padding: 18px; gap: 11px; }
+      .lesson h2 { margin: 5px 0 8px; }
+      .key-point { padding: 11px; }
+      .definition { padding: 8px; }
+      .controls { padding: 8px 12px; }
+    }
+    @media (max-width: 780px) {
+      body { overflow: auto; }
+      .app { height: auto; min-height: 100dvh; padding: 17px; }
+      .workspace { grid-template-columns: 1fr; }
+      .diagram { min-height: 485px; }
+      .lesson { min-height: 370px; }
+      .keyboard { display: none; }
+    }
+    @media (max-width: 480px) {
+      .title-row { display: block; }
+      .simplified { display: inline-block; margin-top: 10px; }
+      .cpu { padding: 10px; }
+      .cpu-left { gap: 9px; }
+      .cpu-symbol { width: 40px; height: 40px; }
+      .request { padding: 7px; gap: 6px; }
+      .request-chip { width: 30px; height: 30px; }
+      .request-label { font-size: 10px; }
+      .diagram { padding: 12px; min-height: 490px; }
+      .store { padding: 8px; }
+      .store-title h3 { font-size: 15px; }
+      .store-icon { display: none; }
+      .slots { gap: 6px; }
+      .slot { min-height: 75px; padding: 5px; }
+      .memory-block strong { font-size: 12px; }
+      .store-bottom { font-size: 10px; }
+      .controls { padding: 9px; }
+      .ctrl { padding: 10px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; scroll-behaviour: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon" aria-hidden="true">C</span>
+        <span class="brand-name">Teaching Concepts<span class="brand-sub">Interactive explanations</span></span>
+      </a>
+      <a class="back-link" href="../../index.html">← All concepts</a>
+    </header>
+
+    <div class="title-row">
+      <div>
+        <p class="eyebrow">Memory Management / 01</p>
+        <h1>Virtual memory</h1>
+        <p class="subtitle">Watch how an operating system manages memory when RAM is full.</p>
+      </div>
+      <span class="simplified">Simplified paging demonstration</span>
+    </div>
+
+    <main class="workspace">
+      <section class="diagram" aria-label="Animated computer memory diagram">
+        <div class="diagram-heading">
+          <h2>Live memory diagram</h2>
+          <span>Each coloured block represents one page</span>
+        </div>
+        <div class="cpu">
+          <div class="cpu-left">
+            <div class="cpu-symbol" aria-hidden="true">CPU</div>
+            <div><h3>Processor</h3><p id="cpu-status">Running programmes</p></div>
+          </div>
+          <div class="request" aria-label="Page requested by processor">
+            <div class="request-label">CPU request<strong id="request-text">Ready</strong></div>
+            <div class="request-chip" id="request-chip" aria-hidden="true">–</div>
+          </div>
+        </div>
+        <div class="transfer" aria-hidden="true">
+          <span class="transfer-line"></span><span id="transfer-text">Operating system manages pages</span><span class="transfer-line"></span>
+        </div>
+        <div class="storage-grid">
+          <section class="store" aria-labelledby="ram-title">
+            <div class="store-title">
+              <div><h3 id="ram-title">RAM</h3><small>Fast · limited space</small></div>
+              <div class="store-icon" aria-hidden="true">RAM</div>
+            </div>
+            <div class="occupancy"><span id="ram-count">4 / 4 slots used</span><div class="meter" id="ram-meter" aria-hidden="true"></div></div>
+            <div class="slots" id="ram-slots"></div>
+            <div class="store-bottom"><span>Main memory</span><span>FAST</span></div>
+          </section>
+          <section class="store disk" aria-labelledby="hdd-title">
+            <div class="store-title">
+              <div><h3 id="hdd-title">HDD</h3><small>Slower · swap space</small></div>
+              <div class="store-icon" aria-hidden="true">HDD</div>
+            </div>
+            <div class="occupancy"><span id="hdd-count">0 / 4 slots used</span><div class="meter" id="hdd-meter" aria-hidden="true"></div></div>
+            <div class="slots" id="hdd-slots"></div>
+            <div class="store-bottom"><span>Secondary storage</span><span>SLOWER</span></div>
+          </section>
+        </div>
+        <div class="notice"><span class="notice-dot" id="notice-dot" aria-hidden="true"></span><span id="notice-text">RAM is full. There is no free space for another page.</span></div>
+      </section>
+
+      <aside class="lesson" aria-labelledby="lesson-heading">
+        <div class="step-top">
+          <span class="step-label">Step-by-step explanation</span>
+          <span class="step-counter" id="step-counter">01 / 08</span>
+        </div>
+        <div class="progress" id="progress" aria-label="Lesson progress"></div>
+        <div>
+          <h2 id="lesson-heading">RAM is full</h2>
+          <p class="lesson-copy" id="lesson-copy">RAM stores the data and instructions programmes need while they are running. In this example, all four RAM slots are occupied.</p>
+        </div>
+        <div class="key-point">
+          <span>Remember</span>
+          <p id="takeaway">RAM is quick to access, but it has limited capacity.</p>
+        </div>
+        <div class="definitions" aria-label="Important terms">
+          <div class="definition"><strong>Page</strong><p>A small, fixed-size block of virtual memory.</p></div>
+          <div class="definition"><strong>Swap space</strong><p>Area on storage used to hold pages moved out of RAM.</p></div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="controls" aria-label="Demonstration controls">
+      <div class="controls-left">
+        <button class="ctrl reset" id="reset-button" type="button">↺ Reset</button>
+        <span class="keyboard">Keyboard: ← Back · → Next · R Reset</span>
+      </div>
+      <div class="controls-right">
+        <button class="ctrl" id="back-button" type="button" disabled>← Back</button>
+        <button class="ctrl next" id="next-button" type="button">Next →</button>
+      </div>
+    </footer>
+    <div class="stage-announcement" id="announcement" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div>
+  <script>
+    'use strict';
+
+    // This is a teaching model, not an exact representation of a real computer.
+    // RAM has four frames. The HDD displays four illustrative swap-space slots.
+    const stages = [
+      {
+        title: 'RAM is full',
+        copy: 'RAM stores the data and instructions programmes need while they are running. Here, all <strong>four RAM slots</strong> are occupied by pages A, B, C and D.',
+        takeaway: 'RAM is quick to access, but it has limited capacity.',
+        ram: ['A','B','C','D'], hdd: [null,null,null,null],
+        request: null, selected: null, cpu: 'Running programmes', transfer: 'Operating system manages pages',
+        notice: 'All four RAM frames are in use.', tone: 'normal'
+      },
+      {
+        title: 'A new page is needed',
+        copy: 'The CPU tries to access <strong>page E</strong>, but it is not in RAM. This causes a <strong>page fault</strong>. The operating system must make room to bring E into main memory.',
+        takeaway: 'A page fault happens when a needed virtual-memory page is not currently in RAM.',
+        ram: ['A','B','C','D'], hdd: [null,null,null,null],
+        request: 'E', selected: null, cpu: 'Requests page E', transfer: 'Page fault: E is not in RAM',
+        notice: 'Page E is needed, but RAM has no free frame.', tone: 'alert'
+      },
+      {
+        title: 'The OS chooses a page',
+        copy: 'The operating system selects <strong>page B</strong> for removal because it is less likely to be needed soon. This is called <strong>page replacement</strong>.',
+        takeaway: 'The OS chooses which RAM page to replace using a page-replacement strategy.',
+        ram: ['A','B','C','D'], hdd: [null,null,null,null],
+        request: 'E', selected: 'B', cpu: 'Waiting for page E', transfer: 'Page B selected for replacement',
+        notice: 'The highlighted page B will be moved out of RAM.', tone: 'alert'
+      },
+      {
+        title: 'Page B moves to the HDD',
+        copy: 'The operating system writes <strong>page B</strong> to the HDD’s <strong>swap space</strong> so that its contents can be retrieved later. A frame in RAM is now free.',
+        takeaway: 'Moving a page out of RAM to swap space is called paging out.',
+        ram: ['A',null,'C','D'], hdd: ['B',null,null,null],
+        request: 'E', selected: 'B', cpu: 'Waiting for page E', transfer: 'B: RAM → HDD swap space',
+        notice: 'Page B is on the HDD. RAM now has one free frame.', tone: 'normal'
+      },
+      {
+        title: 'Page E enters RAM',
+        copy: 'The operating system brings the required <strong>page E</strong> into the free RAM frame from its backing storage. The CPU can now use page E and continue.',
+        takeaway: 'Only pages needed in RAM have to be resident there at a given time.',
+        ram: ['A','E','C','D'], hdd: ['B',null,null,null],
+        request: 'E', selected: 'E', cpu: 'Can now access page E', transfer: 'Page E → free RAM frame',
+        notice: 'Page E is ready in RAM. Page B remains on the HDD.', tone: 'success'
+      },
+      {
+        title: 'The CPU needs B again',
+        copy: 'Later, the CPU needs <strong>page B</strong>. But B is currently on the HDD, not in RAM, so another <strong>page fault</strong> occurs.',
+        takeaway: 'Pages stored on the HDD cannot be accessed as quickly as pages in RAM.',
+        ram: ['A','E','C','D'], hdd: ['B',null,null,null],
+        request: 'B', selected: 'B', cpu: 'Requests page B', transfer: 'Page fault: B is in swap space',
+        notice: 'Page B must return to RAM before the CPU can use it.', tone: 'alert'
+      },
+      {
+        title: 'Another frame is freed',
+        copy: 'RAM is full again, so the operating system moves <strong>page D</strong> to swap space. This creates a free frame for page B.',
+        takeaway: 'Repeated swapping can slow a computer because HDD access is much slower than RAM.',
+        ram: ['A','E','C',null], hdd: ['B','D',null,null],
+        request: 'B', selected: 'D', cpu: 'Waiting for page B', transfer: 'D: RAM → HDD swap space',
+        notice: 'Page D has moved to the HDD to make room for B.', tone: 'normal'
+      },
+      {
+        title: 'Page B returns to RAM',
+        copy: 'The operating system reads <strong>page B</strong> back from the HDD into RAM. The CPU can use it again. This is how the system can manage more virtual pages than fit in physical RAM at once.',
+        takeaway: 'Virtual memory lets programmes use an address space larger than available RAM. Swapping to disk helps support this, but it reduces performance.',
+        ram: ['A','E','C','B'], hdd: [null,'D',null,null],
+        request: 'B', selected: 'B', cpu: 'Can now access page B', transfer: 'B: HDD swap space → RAM',
+        notice: 'Page B is back in RAM. The CPU can continue.', tone: 'success'
+      }
+    ];
+
+    const $ = id => document.getElementById(id);
+    const pageNames = { A:'Page A', B:'Page B', C:'Page C', D:'Page D', E:'Page E' };
+    let current = 0;
+    let locked = false;
+    let activeAnimations = [];
+
+    function makeMeter(id, filled) {
+      $(id).innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        const segment = document.createElement('i');
+        if (i < filled) segment.className = 'on';
+        $(id).appendChild(segment);
+      }
+    }
+
+    function makeSlots(id, pages, selected) {
+      const host = $(id);
+      host.innerHTML = '';
+      pages.forEach((page, slotIndex) => {
+        const slot = document.createElement('div');
+        slot.className = 'slot';
+        const number = document.createElement('span');
+        number.className = 'slot-no';
+        number.textContent = String(slotIndex + 1).padStart(2,'0');
+        slot.appendChild(number);
+        if (page) {
+          const tile = document.createElement('div');
+          tile.className = 'memory-block page-' + page.toLowerCase();
+          if (page === selected) tile.classList.add('selected');
+          tile.dataset.page = page;
+          const title = document.createElement('strong');
+          title.textContent = pageNames[page];
+          const caption = document.createElement('small');
+          caption.textContent = 'Memory page';
+          tile.append(title, caption);
+          slot.appendChild(tile);
+        } else {
+          const empty = document.createElement('span');
+          empty.className = 'slot-empty';
+          empty.textContent = 'Empty';
+          slot.appendChild(empty);
+        }
+        host.appendChild(slot);
+      });
+    }
+
+    function capturePositions() {
+      const positions = new Map();
+      document.querySelectorAll('.memory-block').forEach(tile => {
+        const key = tile.dataset.page;
+        positions.set(key, { rect: tile.getBoundingClientRect(), element: tile });
+      });
+      return positions;
+    }
+
+    function removeGhosts() {
+      activeAnimations.forEach(item => {
+        item.animation.cancel();
+        item.ghost.remove();
+        if (item.target) item.target.style.visibility = '';
+      });
+      activeAnimations = [];
+      document.querySelectorAll('.moving-ghost').forEach(el => el.remove());
+      document.querySelectorAll('.memory-block').forEach(el => el.style.visibility = '');
+      locked = false;
+    }
+
+    function animateMovement(oldPositions, stage) {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const newTiles = Array.from(document.querySelectorAll('.memory-block'));
+      const animations = [];
+      newTiles.forEach(target => {
+        const page = target.dataset.page;
+        let start = oldPositions.get(page);
+        let sourceRect = start && start.rect;
+        let sourceElement = start && start.element;
+        if (!sourceRect && page === 'E' && stage.request === 'E') {
+          sourceRect = $('request-chip').getBoundingClientRect();
+          sourceElement = target;
+        }
+        if (!sourceRect) return;
+        const endRect = target.getBoundingClientRect();
+        if (Math.abs(sourceRect.left - endRect.left) < 2 &&
+            Math.abs(sourceRect.top - endRect.top) < 2) return;
+
+        const ghost = sourceElement.cloneNode(true);
+        ghost.classList.remove('selected');
+        ghost.classList.add('moving-ghost');
+        Object.assign(ghost.style, {
+          top: sourceRect.top + 'px', left: sourceRect.left + 'px',
+          width: sourceRect.width + 'px', height: sourceRect.height + 'px',
+          minHeight: '0', visibility: 'visible'
+        });
+        document.body.appendChild(ghost);
+        target.style.visibility = 'hidden';
+        const dx = endRect.left - sourceRect.left;
+        const dy = endRect.top - sourceRect.top;
+        const sx = endRect.width / sourceRect.width;
+        const sy = endRect.height / sourceRect.height;
+        const animation = ghost.animate([
+          { transform: 'translate(0,0) scale(1,1)', opacity: 1 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')', opacity: 1 }
+        ], { duration: 650, easing: 'cubic-bezier(.22,.9,.32,1)', fill: 'forwards' });
+        animations.push({animation, ghost, target});
+        animation.onfinish = () => {
+          ghost.remove();
+          target.style.visibility = '';
+          activeAnimations = activeAnimations.filter(item => item.animation !== animation);
+          if (activeAnimations.length === 0) {
+            locked = false;
+            updateButtons();
+          }
+        };
+      });
+      activeAnimations = animations;
+      if (animations.length > 0) {
+        locked = true;
+        updateButtons();
+      }
+    }
+
+    function updateButtons() {
+      $('back-button').disabled = locked || current === 0;
+      $('next-button').disabled = locked || current === stages.length - 1;
+      $('next-button').textContent = current === stages.length - 1 ? 'Finished ✓' : 'Next →';
+    }
+
+    function render(newIndex, animate = true) {
+      if (newIndex < 0 || newIndex >= stages.length) return;
+      if (locked) removeGhosts();
+      const oldPositions = animate ? capturePositions() : new Map();
+      current = newIndex;
+      const stage = stages[current];
+
+      makeSlots('ram-slots', stage.ram, stage.selected);
+      makeSlots('hdd-slots', stage.hdd, stage.selected);
+      const ramCount = stage.ram.filter(Boolean).length;
+      const hddCount = stage.hdd.filter(Boolean).length;
+      $('ram-count').textContent = ramCount + ' / 4 slots used';
+      $('hdd-count').textContent = hddCount + ' / 4 slots used';
+      makeMeter('ram-meter', ramCount);
+      makeMeter('hdd-meter', hddCount);
+
+      $('request-text').textContent = stage.request ? 'Page ' + stage.request : 'Ready';
+      $('request-chip').textContent = stage.request || '–';
+      $('request-chip').className = 'request-chip' + (stage.request ? ' page-' + stage.request.toLowerCase() : '');
+      $('cpu-status').textContent = stage.cpu;
+      $('transfer-text').textContent = stage.transfer;
+      $('notice-text').textContent = stage.notice;
+      $('notice-dot').className = 'notice-dot' + (stage.tone === 'normal' ? '' : ' ' + stage.tone);
+      $('lesson-heading').textContent = stage.title;
+      $('lesson-copy').innerHTML = stage.copy;
+      $('takeaway').textContent = stage.takeaway;
+      $('step-counter').textContent = String(current + 1).padStart(2,'0') + ' / ' + String(stages.length).padStart(2,'0');
+      $('progress').innerHTML = '';
+      stages.forEach((_, i) => {
+        const pip = document.createElement('span');
+        pip.className = 'progress-item' + (i < current ? ' past' : i === current ? ' current' : '');
+        $('progress').appendChild(pip);
+      });
+      $('announcement').textContent = 'Step ' + (current + 1) + ' of ' + stages.length + '. ' + stage.title + '. ' + stage.notice;
+      updateButtons();
+      if (animate) animateMovement(oldPositions, stage);
+    }
+
+    $('next-button').addEventListener('click', () => { if (!locked) render(current + 1); });
+    $('back-button').addEventListener('click', () => { if (!locked) render(current - 1); });
+    $('reset-button').addEventListener('click', () => { removeGhosts(); render(0, false); });
+    window.addEventListener('keydown', event => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === 'ArrowRight' && !locked) { event.preventDefault(); render(current + 1); }
+      if (event.key === 'ArrowLeft' && !locked) { event.preventDefault(); render(current - 1); }
+      if (event.key.toLowerCase() === 'r') { removeGhosts(); render(0, false); }
+    });
+    render(0, false);
+  </script>
+</body>
+</html>
