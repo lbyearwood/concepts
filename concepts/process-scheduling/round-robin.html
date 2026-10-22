@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A simple interactive explanation of round robin scheduling.">
+  <title>Round Robin Scheduling | Teaching Concepts</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --line: #334155;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #38bdf8;
+      --good: #22c55e;
+      --amber: #f59e0b;
+      --pink: #ec4899;
+      --purple: #8b5cf6;
+      --orange: #f97316;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+      color: var(--text);
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
+
+    .app {
+      height: 100vh;
+      height: 100dvh;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 16px;
+      padding: 18px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .topbar,
+    .controls,
+    .panel,
+    .explanation {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(17, 24, 39, 0.95);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #0ea5e9;
+      color: #082f49;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .brand small,
+    .back-link,
+    .subtitle,
+    .helper,
+    .mini-label,
+    .queue-note,
+    .legend,
+    .chips strong,
+    .step-count {
+      color: var(--muted);
+    }
+
+    .back-link {
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 9px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      padding: 0 6px;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      font-size: 1rem;
+    }
+
+    .helper {
+      font-size: 0.9rem;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .main-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.45fr 0.95fr;
+      gap: 16px;
+    }
+
+    .panel {
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .panel-head,
+    .status-strip,
+    .cpu-card,
+    .queue-area,
+    .finished-area,
+    .time-strip,
+    .controls,
+    .facts {
+      border-radius: 14px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-head h2,
+    .explanation h2 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .status-strip {
+      background: #0f1c33;
+      border: 1px solid #1e3a5f;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #1e293b;
+      font-size: 0.9rem;
+      border: 1px solid #334155;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .a { background: var(--pink); }
+    .b { background: var(--amber); }
+    .c { background: var(--accent); }
+    .d { background: var(--purple); }
+    .done { background: var(--good); }
+
+    .visuals {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .cpu-card,
+    .queue-area,
+    .finished-area,
+    .time-strip,
+    .facts,
+    .key-message {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+    }
+
+    .cpu-card,
+    .queue-area,
+    .finished-area {
+      padding: 16px;
+    }
+
+    .cpu-card {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      min-height: 230px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cpu-icon {
+      width: 92px;
+      height: 92px;
+      border-radius: 20px;
+      border: 3px solid #93c5fd;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #bae6fd;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #1d4ed8, #0f172a);
+      box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.08);
+    }
+
+    .cpu-label {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .cpu-sub {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .running-card {
+      margin-top: 16px;
+      min-height: 90px;
+      width: 100%;
+      border: 2px dashed #475569;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+    }
+
+    .program {
+      width: 100%;
+      min-height: 72px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      color: white;
+      font-weight: 700;
+      transform: translateY(0);
+      transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    }
+
+    .program span {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 400;
+      opacity: 0.95;
+      margin-top: 3px;
+    }
+
+    .program .ticks {
+      font-size: 0.88rem;
+      text-align: right;
+      font-weight: 700;
+      min-width: 75px;
+    }
+
+    .program.process-a { background: linear-gradient(135deg, #ec4899, #be185d); }
+    .program.process-b { background: linear-gradient(135deg, #fbbf24, #ea580c); }
+    .program.process-c { background: linear-gradient(135deg, #38bdf8, #2563eb); }
+    .program.process-d { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+
+    .queue-area,
+    .finished-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .queue-wrap,
+    .finished-wrap {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      min-height: 150px;
+    }
+
+    .queue-item,
+    .finished-item {
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: white;
+      font-weight: 700;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .queue-item small,
+    .finished-item small {
+      font-size: 0.82rem;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+
+    .queue-item.queue-a,
+    .finished-item.finished-a { background: linear-gradient(135deg, #ec4899, #be185d); }
+    .queue-item.queue-b,
+    .finished-item.finished-b { background: linear-gradient(135deg, #fbbf24, #ea580c); }
+    .queue-item.queue-c,
+    .finished-item.finished-c { background: linear-gradient(135deg, #38bdf8, #2563eb); }
+    .queue-item.queue-d,
+    .finished-item.finished-d { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+
+    .queue-item.active {
+      outline: 3px solid white;
+      transform: translateX(6px);
+    }
+
+    .queue-note {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .time-strip {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .time-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .slot {
+      min-height: 62px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed #475569;
+      color: var(--muted);
+      text-align: center;
+      padding: 8px;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .slot.filled {
+      color: white;
+      font-weight: 700;
+      border-style: solid;
+    }
+
+    .slot.filled.slot-a { background: linear-gradient(135deg, #ec4899, #be185d); }
+    .slot.filled.slot-b { background: linear-gradient(135deg, #fbbf24, #ea580c); }
+    .slot.filled.slot-c { background: linear-gradient(135deg, #38bdf8, #2563eb); }
+    .slot.filled.slot-d { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+
+    .explanation {
+      padding: 20px;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr auto;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .progress {
+      display: flex;
+      gap: 6px;
+    }
+
+    .progress span {
+      flex: 1;
+      height: 6px;
+      background: #334155;
+      border-radius: 999px;
+    }
+
+    .progress span.done-bar { background: #38bdf8; }
+    .progress span.current-bar { background: #f8fafc; }
+
+    .explanation h2 {
+      font-size: clamp(1.6rem, 2.4vw, 2.5rem);
+      letter-spacing: -0.03em;
+    }
+
+    .explanation p {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.65;
+      color: #e2e8f0;
+    }
+
+    .key-message,
+    .facts {
+      padding: 14px 16px;
+      border-radius: 14px;
+    }
+
+    .key-message strong,
+    .facts strong,
+    .mini-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .key-message p,
+    .facts p,
+    .facts li {
+      font-size: 0.97rem;
+      line-height: 1.55;
+    }
+
+    .facts ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #e2e8f0;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+    }
+
+    .controls-left,
+    .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ctrl {
+      border: 1px solid var(--line);
+      background: #1e293b;
+      color: white;
+      padding: 11px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .ctrl.primary {
+      background: var(--accent);
+      color: #082f49;
+      font-weight: 700;
+      border-color: transparent;
+    }
+
+    .ctrl:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+
+    .ctrl:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .app {
+        height: auto;
+        min-height: 100dvh;
+      }
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+      .visuals {
+        grid-template-columns: 1fr;
+      }
+      .title-row {
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 12px; }
+      .topbar,
+      .panel,
+      .explanation,
+      .controls { border-radius: 14px; }
+      .topbar,
+      .controls { padding: 12px; }
+      .panel,
+      .explanation { padding: 14px; }
+      .time-bar { grid-template-columns: repeat(2, 1fr); }
+      .controls { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">TC</span>
+        <span>
+          <strong>Teaching Concepts</strong><br>
+          <small>Interactive explanations</small>
+        </span>
+      </a>
+      <a class="back-link" href="../../index.html">← Back to homepage</a>
+    </header>
+
+    <section class="title-row">
+      <div>
+        <p class="eyebrow">Operating Systems / Process Scheduling</p>
+        <h1>Round Robin scheduling</h1>
+        <p class="subtitle">A simple way the computer gives each programme a turn.</p>
+      </div>
+      <div class="helper">Simple version for students</div>
+    </section>
+
+    <main class="main-grid">
+      <section class="panel" aria-label="Round robin animation">
+        <div class="panel-head">
+          <h2>What is happening?</h2>
+          <span class="step-count" id="stepCount">Step 1 of 7</span>
+        </div>
+
+        <div class="status-strip">
+          <div class="chips">
+            <span class="chip"><span class="dot done"></span> CPU = the part of the computer doing the work</span>
+          </div>
+          <div class="chips" id="queueSummary"></div>
+        </div>
+
+        <div class="visuals">
+          <div class="cpu-card">
+            <div class="cpu-icon">CPU</div>
+            <div class="cpu-label" id="cpuLabel">Waiting to choose</div>
+            <p class="cpu-sub" id="cpuText">The CPU will pick the first programme in the line.</p>
+            <div class="running-card" id="runningCard"></div>
+          </div>
+
+          <div style="display:grid; gap:14px; min-height:0;">
+            <div class="queue-area">
+              <div>
+                <div class="mini-label">Line of programmes</div>
+                <h2 style="margin:0; font-size:1.05rem;">Ready queue</h2>
+              </div>
+              <div class="queue-wrap" id="queueWrap"></div>
+              <p class="queue-note" id="queueNote">The one at the front gets the next turn.</p>
+            </div>
+
+            <div class="finished-area">
+              <div>
+                <div class="mini-label">Finished work</div>
+                <h2 style="margin:0; font-size:1.05rem;">Completed programmes</h2>
+              </div>
+              <div class="finished-wrap" id="finishedWrap"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="time-strip">
+          <div>
+            <div class="mini-label">Turns taken so far</div>
+            <h2 style="margin:0; font-size:1.05rem;">Turn order</h2>
+          </div>
+          <div class="time-bar" id="timeBar"></div>
+          <div class="legend" id="timeNote">Each programme gets a short turn, then the next one gets a turn.</div>
+        </div>
+      </section>
+
+      <aside class="explanation">
+        <div class="progress" id="progress"></div>
+        <div>
+          <h2 id="stageTitle">Everybody gets a turn</h2>
+          <p id="stageText">Round Robin is a simple way of sharing the CPU. Instead of letting one programme keep the CPU for a long time, the computer gives each programme a short turn.</p>
+        </div>
+
+        <div class="key-message">
+          <strong>Remember</strong>
+          <p id="stageKey">Think of it like people taking turns in a line.</p>
+        </div>
+
+        <div class="facts">
+          <strong>Keep it simple</strong>
+          <ul>
+            <li>The CPU can only do one job at a time.</li>
+            <li>Programmes wait in a line.</li>
+            <li>After a short turn, a programme goes to the back if it still needs more time.</li>
+            <li>If it finishes, it leaves the line.</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="controls">
+      <div class="controls-left">
+        <button class="ctrl" id="resetBtn" type="button">Reset</button>
+        <span class="legend">Keyboard: ← Back, → Next, R Reset</span>
+      </div>
+      <div class="controls-right">
+        <button class="ctrl" id="backBtn" type="button">← Back</button>
+        <button class="ctrl primary" id="nextBtn" type="button">Next →</button>
+      </div>
+    </footer>
+
+    <div class="sr-only" aria-live="polite" id="liveRegion"></div>
+  </div>
+
+  <script>
+    const stages = [
+      {
+        title: 'Everybody gets a turn',
+        text: 'Round Robin is a simple way of sharing the CPU. Instead of letting one programme keep the CPU for a long time, the computer gives each programme a short turn.',
+        key: 'Think of it like people taking turns in a line.',
+        cpuLabel: 'Waiting to choose',
+        cpuText: 'The CPU will pick the first programme in the line.',
+        running: null,
+        queue: ['A', 'B', 'C'],
+        finished: [],
+        time: [],
+        queueNote: 'The one at the front gets the next turn.',
+        timeNote: 'Each programme gets a short turn, then the next one gets a turn.'
+      },
+      {
+        title: 'Programme A gets the first turn',
+        text: 'Programme A is at the front of the line, so it gets the CPU first. It runs for a short amount of time.',
+        key: 'The CPU always takes the next programme from the front of the queue.',
+        cpuLabel: 'Running Programme A',
+        cpuText: 'A is using the CPU right now.',
+        running: 'A',
+        queue: ['B', 'C'],
+        finished: [],
+        time: ['A'],
+        queueNote: 'B and C are still waiting.',
+        timeNote: 'A has had one turn.'
+      },
+      {
+        title: 'A goes to the back',
+        text: 'Programme A is not finished yet. Its turn ends, so it goes to the back of the line and waits again.',
+        key: 'If a programme still needs more time, it joins the back of the queue.',
+        cpuLabel: 'Turn finished',
+        cpuText: 'A must wait for its next turn.',
+        running: null,
+        queue: ['B', 'C', 'A'],
+        finished: [],
+        time: ['A'],
+        queueNote: 'Now B is at the front.',
+        timeNote: 'A has had a turn and has moved to the back.'
+      },
+      {
+        title: 'Programme B gets a turn',
+        text: 'Now Programme B is at the front, so B gets the CPU. Round Robin keeps moving through the line in order.',
+        key: 'Each programme gets a fair chance to use the CPU.',
+        cpuLabel: 'Running Programme B',
+        cpuText: 'B is using the CPU right now.',
+        running: 'B',
+        queue: ['C', 'A'],
+        finished: [],
+        time: ['A', 'B'],
+        queueNote: 'C and A are waiting behind.',
+        timeNote: 'A then B.'
+      },
+      {
+        title: 'B finishes and leaves the line',
+        text: 'Programme B has finished its work, so it does not go back into the queue. It leaves the line completely.',
+        key: 'Finished programmes leave the queue.',
+        cpuLabel: 'B has finished',
+        cpuText: 'The CPU is ready for the next programme.',
+        running: null,
+        queue: ['C', 'A'],
+        finished: ['B'],
+        time: ['A', 'B'],
+        queueNote: 'C is now at the front.',
+        timeNote: 'B is done, so it does not return.'
+      },
+      {
+        title: 'Programme C gets the next turn',
+        text: 'Programme C gets the next turn because it is now at the front. After that, A will get another turn.',
+        key: 'The CPU keeps moving around the queue in a circle.',
+        cpuLabel: 'Running Programme C',
+        cpuText: 'C is using the CPU right now.',
+        running: 'C',
+        queue: ['A'],
+        finished: ['B'],
+        time: ['A', 'B', 'C'],
+        queueNote: 'A is waiting for its next turn.',
+        timeNote: 'A, then B, then C.'
+      },
+      {
+        title: 'The pattern repeats',
+        text: 'Now A gets another turn. After A, any other programmes still waiting will have their turn. This helps stop one programme from taking over for too long.',
+        key: 'Round Robin is simple, fair and easy to follow.',
+        cpuLabel: 'Running Programme A',
+        cpuText: 'A has another short turn.',
+        running: 'A',
+        queue: ['C'],
+        finished: ['B'],
+        time: ['A', 'B', 'C', 'A'],
+        queueNote: 'The pattern continues until everything is finished.',
+        timeNote: 'A gets another turn after waiting.'
+      }
+    ];
+
+    const colours = {
+      A: 'process-a',
+      B: 'process-b',
+      C: 'process-c',
+      D: 'process-d'
+    };
+
+    let current = 0;
+
+    const queueWrap = document.getElementById('queueWrap');
+    const finishedWrap = document.getElementById('finishedWrap');
+    const runningCard = document.getElementById('runningCard');
+    const timeBar = document.getElementById('timeBar');
+    const progress = document.getElementById('progress');
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const liveRegion = document.getElementById('liveRegion');
+
+    function renderProgramme(letter, type, extraText = 'Waiting') {
+      const div = document.createElement('div');
+      div.className = `${type} ${type}-${letter.toLowerCase ? letter.toLowerCase() : letter}`;
+      if (type === 'queue-item') {
+        div.className = `queue-item queue-${letter.toLowerCase()}`;
+      }
+      if (type === 'finished-item') {
+        div.className = `finished-item finished-${letter.toLowerCase()}`;
+      }
+      if (type === 'program') {
+        div.className = `program process-${letter.toLowerCase()}`;
+      }
+
+      if (type === 'program') {
+        div.innerHTML = `<div>Programme ${letter}<span>${extraText}</span></div><div class="ticks">Short turn</div>`;
+      } else {
+        div.innerHTML = `<div>Programme ${letter}<br><small>${extraText}</small></div><strong>${type === 'finished-item' ? 'Done' : 'Wait'}</strong>`;
+      }
+      return div;
+    }
+
+    function render() {
+      const stage = stages[current];
+
+      document.getElementById('stepCount').textContent = `Step ${current + 1} of ${stages.length}`;
+      document.getElementById('stageTitle').textContent = stage.title;
+      document.getElementById('stageText').textContent = stage.text;
+      document.getElementById('stageKey').textContent = stage.key;
+      document.getElementById('cpuLabel').textContent = stage.cpuLabel;
+      document.getElementById('cpuText').textContent = stage.cpuText;
+      document.getElementById('queueNote').textContent = stage.queueNote;
+      document.getElementById('timeNote').textContent = stage.timeNote;
+
+      const queueSummary = document.getElementById('queueSummary');
+      queueSummary.innerHTML = `<strong>Programmes:</strong>`;
+      ['A', 'B', 'C'].forEach(letter => {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.innerHTML = `<span class="dot ${letter.toLowerCase()}"></span> ${letter}`;
+        queueSummary.appendChild(chip);
+      });
+
+      runningCard.innerHTML = '';
+      if (stage.running) {
+        runningCard.appendChild(renderProgramme(stage.running, 'program', 'Using the CPU'));
+      } else {
+        runningCard.innerHTML = '<div style="color:var(--muted); text-align:center;">No programme is using the CPU at this moment.</div>';
+      }
+
+      queueWrap.innerHTML = '';
+      if (stage.queue.length === 0) {
+        queueWrap.innerHTML = '<div style="color:var(--muted);">No programmes waiting.</div>';
+      } else {
+        stage.queue.forEach((letter, index) => {
+          const item = renderProgramme(letter, 'queue-item', index === 0 ? 'Front of line' : 'Waiting');
+          if (index === 0) item.classList.add('active');
+          queueWrap.appendChild(item);
+        });
+      }
+
+      finishedWrap.innerHTML = '';
+      if (stage.finished.length === 0) {
+        finishedWrap.innerHTML = '<div style="color:var(--muted);">Nothing finished yet.</div>';
+      } else {
+        stage.finished.forEach(letter => {
+          finishedWrap.appendChild(renderProgramme(letter, 'finished-item', 'Completed'));
+        });
+      }
+
+      timeBar.innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'slot';
+        const letter = stage.time[i];
+        if (letter) {
+          slot.classList.add('filled', `slot-${letter.toLowerCase()}`);
+          slot.innerHTML = `Programme ${letter}<br><small>Turn ${i + 1}</small>`;
+        } else {
+          slot.textContent = 'Waiting for next turn';
+        }
+        timeBar.appendChild(slot);
+      }
+
+      progress.innerHTML = '';
+      stages.forEach((_, index) => {
+        const bar = document.createElement('span');
+        if (index < current) bar.classList.add('done-bar');
+        if (index === current) bar.classList.add('current-bar');
+        progress.appendChild(bar);
+      });
+
+      backBtn.disabled = current === 0;
+      nextBtn.disabled = current === stages.length - 1;
+      liveRegion.textContent = `Step ${current + 1}. ${stage.title}. ${stage.key}`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (current < stages.length - 1) {
+        current += 1;
+        render();
+      }
+    });
+
+    backBtn.addEventListener('click', () => {
+      if (current > 0) {
+        current -= 1;
+        render();
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      current = 0;
+      render();
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' && current < stages.length - 1) {
+        current += 1;
+        render();
+      }
+      if (event.key === 'ArrowLeft' && current > 0) {
+        current -= 1;
+        render();
+      }
+      if (event.key.toLowerCase() === 'r') {
+        current = 0;
+        render();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
