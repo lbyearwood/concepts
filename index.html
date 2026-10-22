@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple index of teaching concepts and classroom resources.">
+  <title>Teaching Concepts</title>
+  <style>
+    :root {
+      --background: #f8fafc;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #58677d;
+      --accent: #2856a8;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--background);
+    }
+
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+    .container {
+      width: min(100% - 40px, 1000px);
+      margin-inline: auto;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-content {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      padding-block: 16px;
+    }
+
+    .site-name {
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    nav { display: flex; gap: 24px; }
+    nav a { text-decoration: none; font-size: 0.95rem; color: var(--muted); }
+    nav a:hover { color: var(--accent); }
+
+    main { flex: 1; }
+
+    .intro { padding-block: 70px 54px; }
+    .intro .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 15px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+    }
+    .intro p:last-child {
+      margin: 0;
+      max-width: 620px;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .concepts { padding-bottom: 80px; }
+    .section-heading {
+      margin: 0;
+      padding-bottom: 16px;
+      font-size: 1.35rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* New concept links or cards can be added inside this section later. */
+    .concept-list { min-height: 180px; padding-top: 24px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer-content {
+      padding-block: 23px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-content p { margin: 0; }
+
+    @media (max-width: 550px) {
+      .intro { padding-block: 50px 42px; }
+      .concepts { padding-bottom: 50px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <a class="site-name" href="#home">Teaching Concepts</a>
+      <nav aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#concepts">Concepts</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="intro container" aria-labelledby="page-title">
+      <p class="eyebrow">Teaching &amp; Learning</p>
+      <h1 id="page-title">Teaching Concepts</h1>
+      <p>A collection of teaching concepts, explanations and resources, all in one place.</p>
+    </section>
+
+    <section id="concepts" class="concepts container" aria-labelledby="concepts-title">
+      <h2 id="concepts-title" class="section-heading">Concepts</h2>
+      <div class="concept-list" id="concept-list">
+        <!-- Leave blank for now. Concept links and resources will be added here. -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Teaching Concepts</p>
+      <p>Teaching &amp; Learning Resources</p>
+    </div>
+  </footer>
+</body>
+</html>
