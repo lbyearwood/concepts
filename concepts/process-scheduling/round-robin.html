@@ -7,6 +7,8 @@
   <title>Round Robin Scheduling | Teaching Concepts</title>
   <link rel="stylesheet" href="../../assets/sidebar.css?v=colour-block-1">
   <link rel="stylesheet" href="../../assets/colour-block.css?v=1">
+  <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
+  <script src="../../assets/concept-viewport.js?v=1" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block concept-demo round-robin-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -29,8 +31,8 @@
       </details>
     </nav>
   </aside>
-  <div class="app">
-    <div class="title-row"><p class="eyebrow">Operating Systems / Process Scheduling</p><h1>Round Robin scheduling</h1><p class="subtitle">A simple way the computer gives each programme a turn.</p></div>
+  <div class="concept-viewport"><div class="app">
+    <div class="title-row"><p class="eyebrow">Operating Systems / Process Scheduling</p><h1>Round Robin scheduling</h1><p class="subtitle">A simple way the computer gives each programme a turn.</p><button class="keywords-button" type="button" aria-haspopup="dialog" aria-controls="keywords-modal">Keywords</button></div>
     <main class="main-grid" id="main-content" tabindex="-1">
       <section class="lesson-intro" aria-labelledby="stageTitle"><div class="step-heading"><h2 id="stageTitle">Everybody gets a turn</h2><div class="step-progress"><span class="step-counter" id="stepCount">Step 1 of 7</span><div class="progress" id="progress" aria-label="Lesson progress"></div></div></div><p class="lesson-copy" id="stageText">Round Robin is a simple way of sharing the CPU. Instead of letting one programme keep the CPU for a long time, the computer gives each programme a short turn.</p></section>
       <section class="panel" aria-label="Round robin animation">
@@ -45,9 +47,14 @@
       <div class="controls-left"><button class="ctrl reset" id="resetBtn" type="button"><img class="ui-icon" src="../../assets/icons/arrow-counterclockwise.svg" alt="" aria-hidden="true">Reset</button><span class="keyboard">Keyboard: ← Back · → Next · R Reset</span></div>
       <div class="controls-right"><button class="ctrl" id="backBtn" type="button" disabled><img class="ui-icon" src="../../assets/icons/arrow-left.svg" alt="" aria-hidden="true">Back</button><button class="ctrl next primary" id="nextBtn" type="button">Next<img class="ui-icon" src="../../assets/icons/arrow-right.svg" alt="" aria-hidden="true"></button></div>
     </footer>
-    <section class="facts supporting"><h2>Keep it simple</h2><ul><li>The CPU can only do one job at a time.</li><li>Programmes wait in a line.</li><li>After a short turn, a programme goes to the back if it still needs more time.</li><li>If it finishes, it leaves the line.</li></ul><p class="model-note">Simple version for students</p></section>
+    <p class="model-note">Simple version for students</p>
     <div class="sr-only" aria-live="polite" id="liveRegion"></div>
-  </div>
+  </div></div>
+  <dialog class="keywords-modal" id="keywords-modal" aria-labelledby="keywords-title">
+    <div class="modal-heading"><h2 id="keywords-title">Keywords</h2><button class="modal-close" type="button" autofocus>Close</button></div>
+    <div class="definitions"><div class="definition"><strong>CPU</strong><p>The part of the computer doing the work.</p></div><div class="definition"><strong>Ready queue</strong><p>The line of programmes waiting for a turn on the CPU.</p></div><div class="definition"><strong>Round Robin</strong><p>Sharing the CPU by giving each programme a short turn in order.</p></div></div>
+    <section class="facts"><h3>Keep it simple</h3><ul><li>The CPU can only do one job at a time.</li><li>Programmes wait in a line.</li><li>After a short turn, a programme goes to the back if it still needs more time.</li><li>If it finishes, it leaves the line.</li></ul></section>
+  </dialog>
   <script>
     const stages = [
       {
@@ -256,6 +263,7 @@
       backBtn.disabled = current === 0;
       nextBtn.disabled = current === stages.length - 1;
       liveRegion.textContent = `Step ${current + 1}. ${stage.title}. ${stage.key}`;
+      window.dispatchEvent(new Event('conceptchange'));
     }
 
     nextBtn.addEventListener('click', () => {
@@ -278,6 +286,7 @@
     });
 
     window.addEventListener('keydown', (event) => {
+      if (document.querySelector('dialog[open]')) return;
       if (event.key === 'ArrowRight' && current < stages.length - 1) {
         current += 1;
         render();

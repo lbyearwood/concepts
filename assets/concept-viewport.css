@@ -1,0 +1,85 @@
+/* A concept is one teaching canvas. Only the navigation scrolls. */
+body.concept-demo { height: 100vh; height: 100dvh; overflow: hidden; }
+.concept-viewport { position: fixed; inset: 0 0 0 var(--sidebar-width); overflow: clip; }
+.concept-demo .app { position: absolute; top: 0; left: 0; width: 100%; max-width: none; margin: 0; padding: 14px 20px; transform-origin: top left; }
+.concept-demo .title-row { position: relative; margin-bottom: 12px; padding-right: 124px; }
+.concept-demo h1 { font-size: 38px; line-height: 1.08; }
+.concept-demo .eyebrow { margin-bottom: 4px; font-size: 12px; }
+.concept-demo .subtitle { font-size: 15px; line-height: 1.35; }
+.keywords-button { position: absolute; top: 4px; right: 0; min-height: 40px; padding: 7px 12px; border: 2px solid var(--ink); border-radius: 4px; background: var(--yellow); color: var(--ink); font-weight: 900; }
+.keywords-button:hover { background: var(--teal); }
+.concept-demo .workspace, .concept-demo .main-grid { gap: 10px; }
+.concept-demo .step-heading { grid-template-columns: minmax(0,1fr) minmax(150px,30%); gap: 16px; margin-bottom: 7px; }
+.concept-demo .step-heading h2 { padding: 6px 24px 8px 12px; font-size: 30px; }
+.concept-demo .step-counter { margin-bottom: 5px; font-size: 17px; }
+.concept-demo .progress { gap: 4px; }
+.concept-demo .progress > span { height: 7px; }
+.concept-demo .lesson-copy { font-size: 16px; line-height: 1.4; }
+.concept-demo .cpu, .concept-demo .cpu-card { flex-wrap: nowrap; gap: 12px; padding: 8px 10px; }
+.concept-demo .cpu-left { flex-wrap: nowrap; gap: 12px; }
+.concept-demo .cpu-symbol, .concept-demo .cpu-icon { width: 66px; height: 54px; font-size: 22px; }
+.concept-demo .cpu h3, .concept-demo .cpu-label { font-size: 28px; }
+.concept-demo .cpu p, .concept-demo .cpu-sub { font-size: 14px; }
+.concept-demo .cpu-description { min-width: 0; flex-basis: auto; }
+.concept-demo .request { width: auto; gap: 10px; padding: 5px 8px; }
+.concept-demo .request-label { font-size: 12px; }
+.concept-demo .request-label strong { font-size: 19px; }
+.concept-demo .request-chip { min-width: 36px; padding: 4px; font-size: 21px; }
+.concept-demo .transfer { padding: 3px 0; font-size: 11px; }
+.concept-demo .storage-grid, .concept-demo .visuals { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.concept-demo .store, .concept-demo .queue-area, .concept-demo .finished-area { padding: 10px; }
+.concept-demo .store-title h3 { font-size: 32px; }
+.concept-demo .store-title small { font-size: 14px; }
+.concept-demo .store-icon { width: 48px; height: 44px; font-size: 16px; }
+.concept-demo .store-icon img { width: 32px; height: 32px; }
+.concept-demo .occupancy { margin: 4px 0 8px; font-size: 14px; }
+.concept-demo .slots { gap: 8px; }
+.concept-demo .slot { min-height: 65px; }
+.concept-demo .memory-block { min-height: 59px; padding: 5px; }
+.concept-demo .memory-block strong { font-size: 23px; }
+.concept-demo .memory-block small { font-size: 12px; }
+.concept-demo .slot-empty { font-size: 17px; }
+.concept-demo .store-bottom { margin-top: 7px; font-size: 10px; }
+.concept-demo .key-point, .concept-demo .key-message { flex-wrap: nowrap; gap: 8px; padding: 7px 10px; font-size: 16px; line-height: 1.35; }
+.concept-demo .key-point > strong, .concept-demo .key-message > strong { font-size: 21px; }
+.concept-demo .controls { flex-wrap: nowrap; gap: 12px; margin-top: 10px; }
+.concept-demo .controls-right { width: auto; gap: 8px; }
+.concept-demo .controls-left { gap: 10px; }
+.concept-demo .ctrl { min-height: 40px; padding: 6px 12px; gap: 7px; font-size: 17px; }
+.concept-demo .ctrl.primary { min-width: 100px; }
+.concept-demo .ui-icon { width: 20px; height: 20px; }
+.concept-demo .keyboard { display: inline; font-size: 10px; }
+.concept-demo .running-card { flex-basis: 35%; min-height: 64px; padding: 5px; font-size: 12px; }
+.concept-demo .status-strip { gap: 6px; padding: 7px 0; font-size: 11px; }
+.concept-demo .queue-area h3, .concept-demo .finished-area h3 { margin-bottom: 8px; font-size: 23px; line-height: 1.1; overflow-wrap: normal; }
+.concept-demo .queue-wrap, .concept-demo .finished-wrap { gap: 6px; min-height: 155px; }
+.concept-demo .program, .concept-demo .queue-item, .concept-demo .finished-item { flex-wrap: nowrap; gap: 8px; padding: 6px 8px; font-size: 15px; line-height: 1.2; }
+.concept-demo .program span, .concept-demo .queue-item small, .concept-demo .finished-item small { font-size: 11px; }
+.concept-demo .queue-note { margin: 7px 0 0; font-size: 12px; }
+.concept-demo .time-strip { margin-top: 10px; }
+.concept-demo .time-strip h3 { margin-bottom: 5px; font-size: 17px; line-height: 1.2; }
+.concept-demo .time-bar { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; }
+.concept-demo .time-bar .slot { min-height: 48px; padding: 5px; font-size: 12px; }
+.concept-demo .legend { margin: 5px 0 0; font-size: 12px; }
+.concept-demo .model-note { margin: 7px 0 0; font-size: 10px; }
+.keywords-modal { width: min(640px,calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 22px; border: 3px solid var(--ink); border-radius: 5px; background: white; color: var(--ink); box-shadow: 8px 8px 0 var(--ink); }
+.keywords-modal::backdrop { background: rgb(16 18 35 / .45); }
+.keywords-modal .modal-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+.keywords-modal h2 { margin: 0; font-size: 28px; }
+.keywords-modal .modal-close { min-height: 40px; padding: 6px 12px; border: 2px solid var(--ink); border-radius: 4px; background: var(--pink); color: white; font-weight: 700; }
+.keywords-modal .definitions { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; font-size: 16px; }
+.keywords-modal .definition strong { font-size: 19px; }
+.keywords-modal .facts { margin-top: 20px; padding-top: 14px; border-top: 1px solid #c8c8c8; }
+.keywords-modal .facts h3 { margin-bottom: 6px; font-size: 18px; }
+.keywords-modal .facts ul { margin-bottom: 0; padding-left: 20px; }
+@media (max-width: 900px) {
+  .concept-demo .app { padding: 12px 14px; }
+  .concept-demo h1 { font-size: 32px; }
+  .concept-demo .step-heading h2 { font-size: 25px; }
+  .concept-demo .cpu h3, .concept-demo .cpu-label { font-size: 23px; }
+  .concept-demo .keyboard { display: none; }
+}
+@media (max-width: 480px) {
+  .keywords-modal { padding: 16px; font-size: 14px; }
+  .keywords-modal .definitions { grid-template-columns: minmax(0,1fr); gap: 14px; font-size: 14px; }
+}

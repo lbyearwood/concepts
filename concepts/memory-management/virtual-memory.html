@@ -8,6 +8,8 @@
   <title>Virtual Memory | Teaching Concepts</title>
   <link rel="stylesheet" href="../../assets/sidebar.css?v=colour-block-1">
   <link rel="stylesheet" href="../../assets/colour-block.css?v=1">
+  <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
+  <script src="../../assets/concept-viewport.js?v=1" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block concept-demo virtual-memory-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -30,8 +32,8 @@
       </details>
     </nav>
   </aside>
-  <div class="app">
-    <div class="title-row"><p class="eyebrow">Memory Management / 01</p><h1>Virtual memory</h1><p class="subtitle">Watch how an operating system manages memory when RAM is full.</p></div>
+  <div class="concept-viewport"><div class="app">
+    <div class="title-row"><p class="eyebrow">Memory Management / 01</p><h1>Virtual memory</h1><p class="subtitle">Watch how an operating system manages memory when RAM is full.</p><button class="keywords-button" type="button" aria-haspopup="dialog" aria-controls="keywords-modal">Keywords</button></div>
     <main id="main-content" tabindex="-1" class="workspace">
       <section class="lesson-intro" aria-labelledby="lesson-heading">
         <div class="step-heading"><h2 id="lesson-heading">RAM is full</h2><div class="step-progress"><span class="step-counter" id="step-counter">Step 1 of 8</span><div class="progress" id="progress" aria-label="Lesson progress"></div></div></div>
@@ -52,9 +54,13 @@
       <div class="controls-left"><button class="ctrl reset" id="reset-button" type="button"><img class="ui-icon" src="../../assets/icons/arrow-counterclockwise.svg" alt="" aria-hidden="true">Reset</button><span class="keyboard">Keyboard: ← Back · → Next · R Reset</span></div>
       <div class="controls-right"><button class="ctrl" id="back-button" type="button" disabled><img class="ui-icon" src="../../assets/icons/arrow-left.svg" alt="" aria-hidden="true">Back</button><button class="ctrl next primary" id="next-button" type="button"><span data-next-label>Next</span><img class="ui-icon" src="../../assets/icons/arrow-right.svg" alt="" aria-hidden="true"></button></div>
     </footer>
-    <section class="definitions supporting" aria-label="Important terms"><div class="definition"><strong>Page</strong><p>A small, fixed-size block of virtual memory.</p></div><div class="definition"><strong>Swap space</strong><p>Area on storage used to hold pages moved out of RAM.</p></div><p class="model-note">Simplified paging demonstration</p></section>
+    <p class="model-note">Simplified paging demonstration</p>
     <div class="stage-announcement" id="announcement" role="status" aria-live="polite" aria-atomic="true"></div>
-  </div>
+  </div></div>
+  <dialog class="keywords-modal" id="keywords-modal" aria-labelledby="keywords-title">
+    <div class="modal-heading"><h2 id="keywords-title">Keywords</h2><button class="modal-close" type="button" autofocus>Close</button></div>
+    <div class="definitions"><div class="definition"><strong>Page</strong><p>A small, fixed-size block of virtual memory.</p></div><div class="definition"><strong>Swap space</strong><p>Area on storage used to hold pages moved out of RAM.</p></div></div>
+  </dialog>
   <script>
     'use strict';
 
@@ -213,11 +219,13 @@
             Math.abs(sourceRect.top - endRect.top) < 2) return;
 
         const ghost = sourceElement.cloneNode(true);
+        const canvas = document.querySelector('.app');
+        const canvasScale = canvas.getBoundingClientRect().width / canvas.offsetWidth;
         ghost.classList.remove('selected');
         ghost.classList.add('moving-ghost');
         Object.assign(ghost.style, {
           top: sourceRect.top + 'px', left: sourceRect.left + 'px',
-          width: sourceRect.width + 'px', height: sourceRect.height + 'px',
+          width: sourceRect.width / canvasScale + 'px', height: sourceRect.height / canvasScale + 'px',
           minHeight: '0', visibility: 'visible'
         });
         document.body.appendChild(ghost);
@@ -227,8 +235,8 @@
         const sx = endRect.width / sourceRect.width;
         const sy = endRect.height / sourceRect.height;
         const animation = ghost.animate([
-          { transform: 'translate(0,0) scale(1,1)', opacity: 1 },
-          { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')', opacity: 1 }
+          { transform: 'translate(0,0) scale(' + canvasScale + ',' + canvasScale + ')', opacity: 1 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx * canvasScale + ',' + sy * canvasScale + ')', opacity: 1 }
         ], { duration: 650, easing: 'cubic-bezier(.22,.9,.32,1)', fill: 'forwards' });
         animations.push({animation, ghost, target});
         animation.onfinish = () => {
@@ -289,13 +297,16 @@
       });
       $('announcement').textContent = 'Step ' + (current + 1) + ' of ' + stages.length + '. ' + stage.title + '. ' + stage.notice;
       updateButtons();
+      window.dispatchEvent(new Event('conceptchange'));
       if (animate) animateMovement(oldPositions, stage);
     }
 
     $('next-button').addEventListener('click', () => { if (!locked) render(current + 1); });
     $('back-button').addEventListener('click', () => { if (!locked) render(current - 1); });
     $('reset-button').addEventListener('click', () => { removeGhosts(); render(0, false); });
+    window.addEventListener('resize', () => { removeGhosts(); updateButtons(); });
     window.addEventListener('keydown', event => {
+      if (document.querySelector('dialog[open]')) return;
       if (event.altKey || event.ctrlKey || event.metaKey) return;
       if (event.key === 'ArrowRight' && !locked) { event.preventDefault(); render(current + 1); }
       if (event.key === 'ArrowLeft' && !locked) { event.preventDefault(); render(current - 1); }

@@ -22,9 +22,17 @@ device's dark-mode preference.
 
 Shared page and lesson styling lives in `assets/colour-block.css`; sidebar styling
 and the responsive space reserved for it live in `assets/sidebar.css`. The sidebar stays on the left at all screen sizes and can
-scroll independently when its contents exceed the viewport height. Lesson pages
-use normal document scrolling to make room for the sidebar without clipping
-their diagrams or explanations.
+scroll independently when its contents exceed the viewport height. Each concept
+is a single teaching canvas that fits the available viewport, including its
+explanation, full diagram, reminder and controls. The concept page does not scroll.
+`assets/concept-viewport.css` provides the compact layout and
+`assets/concept-viewport.js` refits it after viewport or lesson-content changes.
+On small screens the complete canvas scales together. Preserve this behaviour
+when adding longer steps or concepts; do not hide content to make it fit.
+
+Keywords are available from the button beside each concept title. Definitions
+open in a native modal dialog outside the scaled canvas. Close, Escape and
+backdrop clicks dismiss it; the lesson keyboard shortcuts pause while it is open.
 
 When adding a concept, add its link to the homepage and to the sidebar in each
 HTML page. Preserve the page-specific relative paths and current-page marker.
@@ -34,7 +42,8 @@ HTML page. Preserve the page-specific relative paths and current-page marker.
 Serve this directory with a static HTTP server, then check the homepage and both
 demonstrations on desktop and a narrow viewport. Exercise category expand/collapse,
 cross-page links, current-page highlighting, keyboard focus and lesson controls.
-Check that the sidebar remains visible during document scrolling.
+Check every step fits fully inside the viewport and that only a long sidebar
+scrolls. Test Keywords, modal focus, Escape and the return to the lesson.
 
 Before release, review `git diff` and run `git diff --check`. Commit the intended
 files and push `main`; GitHub Pages builds and publishes the site automatically.
@@ -53,3 +62,5 @@ web-font connection is needed at runtime.
   virtual-memory demonstration and Round Robin demonstration. Centralised page
   styling, retained the lesson states, and checked all steps, Back, Reset,
   keyboard navigation, colour contrast and responsive layouts in Edge.
+- 7 November 2026: made each complete concept fit the viewport and moved keywords
+  to a top-of-page modal. Sidebar overflow remains independently scrollable.
