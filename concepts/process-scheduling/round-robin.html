@@ -7,13 +7,13 @@
   <title>Round Robin Scheduling | Teaching Concepts</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --panel-2: #1f2937;
-      --line: #334155;
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #38bdf8;
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --panel-2: #f3f7fc;
+      --line: #d3deec;
+      --text: #172033;
+      --muted: #58677d;
+      --accent: #2856a8;
       --good: #22c55e;
       --amber: #f59e0b;
       --pink: #ec4899;
@@ -27,7 +27,7 @@
       margin: 0;
       min-height: 100%;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+      background: #f8fafc;
       color: var(--text);
     }
 
@@ -40,7 +40,7 @@
     }
 
     button:focus-visible, a:focus-visible {
-      outline: 3px solid white;
+      outline: 3px solid #2856a8;
       outline-offset: 3px;
     }
 
@@ -48,51 +48,21 @@
       height: 100vh;
       height: 100dvh;
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
       gap: 16px;
       padding: 18px;
       max-width: 1600px;
       margin: 0 auto;
     }
 
-    .topbar,
     .controls,
     .panel,
     .explanation {
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: rgba(17, 24, 39, 0.95);
+      background: #ffffff;
     }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: #0ea5e9;
-      color: #082f49;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-    }
-
-    .brand small,
-    .back-link,
     .subtitle,
     .helper,
     .mini-label,
@@ -101,14 +71,6 @@
     .chips strong,
     .step-count {
       color: var(--muted);
-    }
-
-    .back-link {
-      text-decoration: none;
-      border: 1px solid var(--line);
-      padding: 9px 14px;
-      border-radius: 999px;
-      white-space: nowrap;
     }
 
     .title-row {
@@ -186,8 +148,8 @@
     }
 
     .status-strip {
-      background: #0f1c33;
-      border: 1px solid #1e3a5f;
+      background: #edf4ff;
+      border: 1px solid #cadcf2;
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
@@ -209,9 +171,9 @@
       gap: 8px;
       padding: 7px 10px;
       border-radius: 999px;
-      background: #1e293b;
+      background: #f0f5fb;
       font-size: 0.9rem;
-      border: 1px solid #334155;
+      border: 1px solid #d3deec;
     }
 
     .dot {
@@ -263,13 +225,13 @@
       width: 92px;
       height: 92px;
       border-radius: 20px;
-      border: 3px solid #93c5fd;
+      border: 3px solid #93b6e0;
       display: grid;
       place-items: center;
       font-weight: 700;
-      color: #bae6fd;
+      color: #24569c;
       margin-bottom: 14px;
-      background: linear-gradient(135deg, #1d4ed8, #0f172a);
+      background: linear-gradient(135deg, #dcecff, #f8fafc);
       box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.08);
     }
 
@@ -289,7 +251,7 @@
       margin-top: 16px;
       min-height: 90px;
       width: 100%;
-      border: 2px dashed #475569;
+      border: 2px dashed #adc2dc;
       border-radius: 16px;
       display: grid;
       place-items: center;
@@ -305,11 +267,11 @@
       justify-content: space-between;
       gap: 12px;
       padding: 14px 16px;
-      color: white;
+      color: var(--text);
       font-weight: 700;
       transform: translateY(0);
       transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+      box-shadow: 0 10px 24px rgba(38,66,101,0.1);
     }
 
     .program span {
@@ -327,10 +289,10 @@
       min-width: 75px;
     }
 
-    .program.process-a { background: linear-gradient(135deg, #ec4899, #be185d); }
-    .program.process-b { background: linear-gradient(135deg, #fbbf24, #ea580c); }
-    .program.process-c { background: linear-gradient(135deg, #38bdf8, #2563eb); }
-    .program.process-d { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+    .program.process-a { background: #fce7f3; }
+    .program.process-b { background: #fff0cc; }
+    .program.process-c { background: #dcecff; }
+    .program.process-d { background: #ede7ff; }
 
     .queue-area,
     .finished-area {
@@ -355,7 +317,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      color: white;
+      color: var(--text);
       font-weight: 700;
       transition: transform 0.35s ease, opacity 0.35s ease;
     }
@@ -368,16 +330,16 @@
     }
 
     .queue-item.queue-a,
-    .finished-item.finished-a { background: linear-gradient(135deg, #ec4899, #be185d); }
+    .finished-item.finished-a { background: #fce7f3; }
     .queue-item.queue-b,
-    .finished-item.finished-b { background: linear-gradient(135deg, #fbbf24, #ea580c); }
+    .finished-item.finished-b { background: #fff0cc; }
     .queue-item.queue-c,
-    .finished-item.finished-c { background: linear-gradient(135deg, #38bdf8, #2563eb); }
+    .finished-item.finished-c { background: #dcecff; }
     .queue-item.queue-d,
-    .finished-item.finished-d { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+    .finished-item.finished-d { background: #ede7ff; }
 
     .queue-item.active {
-      outline: 3px solid white;
+      outline: 3px solid #2856a8;
       transform: translateX(6px);
     }
 
@@ -404,7 +366,7 @@
       border-radius: 12px;
       display: grid;
       place-items: center;
-      border: 1px dashed #475569;
+      border: 1px dashed #adc2dc;
       color: var(--muted);
       text-align: center;
       padding: 8px;
@@ -412,15 +374,15 @@
     }
 
     .slot.filled {
-      color: white;
+      color: var(--text);
       font-weight: 700;
       border-style: solid;
     }
 
-    .slot.filled.slot-a { background: linear-gradient(135deg, #ec4899, #be185d); }
-    .slot.filled.slot-b { background: linear-gradient(135deg, #fbbf24, #ea580c); }
-    .slot.filled.slot-c { background: linear-gradient(135deg, #38bdf8, #2563eb); }
-    .slot.filled.slot-d { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+    .slot.filled.slot-a { background: #fce7f3; }
+    .slot.filled.slot-b { background: #fff0cc; }
+    .slot.filled.slot-c { background: #dcecff; }
+    .slot.filled.slot-d { background: #ede7ff; }
 
     .explanation {
       padding: 20px;
@@ -438,12 +400,12 @@
     .progress span {
       flex: 1;
       height: 6px;
-      background: #334155;
+      background: #d3deec;
       border-radius: 999px;
     }
 
-    .progress span.done-bar { background: #38bdf8; }
-    .progress span.current-bar { background: #f8fafc; }
+    .progress span.done-bar { background: #6f9ed3; }
+    .progress span.current-bar { background: #2856a8; }
 
     .explanation h2 {
       font-size: clamp(1.6rem, 2.4vw, 2.5rem);
@@ -454,7 +416,7 @@
       margin: 0;
       font-size: 1.08rem;
       line-height: 1.65;
-      color: #e2e8f0;
+      color: #334155;
     }
 
     .key-message,
@@ -483,7 +445,7 @@
     .facts ul {
       margin: 0;
       padding-left: 18px;
-      color: #e2e8f0;
+      color: #334155;
     }
 
     .controls {
@@ -504,8 +466,8 @@
 
     .ctrl {
       border: 1px solid var(--line);
-      background: #1e293b;
-      color: white;
+      background: #f0f5fb;
+      color: var(--text);
       padding: 11px 16px;
       border-radius: 12px;
       cursor: pointer;
@@ -513,13 +475,13 @@
 
     .ctrl.primary {
       background: var(--accent);
-      color: #082f49;
+      color: #ffffff;
       font-weight: 700;
       border-color: transparent;
     }
 
     .ctrl:hover:not(:disabled) {
-      filter: brightness(1.08);
+      filter: brightness(0.96);
     }
 
     .ctrl:disabled {
@@ -559,11 +521,9 @@
 
     @media (max-width: 640px) {
       .app { padding: 12px; }
-      .topbar,
       .panel,
       .explanation,
       .controls { border-radius: 14px; }
-      .topbar,
       .controls { padding: 12px; }
       .panel,
       .explanation { padding: 14px; }
@@ -595,17 +555,6 @@
     </nav>
   </aside>
   <div class="app">
-    <header class="topbar">
-      <a class="brand" href="../../index.html">
-        <span class="brand-icon">TC</span>
-        <span>
-          <strong>Teaching Concepts</strong><br>
-          <small>Interactive explanations</small>
-        </span>
-      </a>
-      <a class="back-link" href="../../index.html">← Back to homepage</a>
-    </header>
-
     <section class="title-row">
       <div>
         <p class="eyebrow">Operating Systems / Process Scheduling</p>

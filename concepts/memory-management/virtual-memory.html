@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0a1020">
+  <meta name="theme-color" content="#f8fafc">
   <meta name="description" content="An interactive, step-by-step demonstration of virtual memory using RAM and an HDD.">
   <title>Virtual Memory | Teaching Concepts</title>
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #080d1b;
-      --surface: #111b30;
-      --surface2: #15233b;
-      --line: #263650;
-      --text: #f2f6ff;
-      --muted: #a1b0c6;
-      --blue: #66b5ff;
-      --orange: #ffbf79;
-      --green: #79dfb4;
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface2: #f1f5f9;
+      --line: #d8e2ee;
+      --text: #172033;
+      --muted: #58677d;
+      --blue: #2856a8;
+      --orange: #b45309;
+      --green: #15803d;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
     body {
-      background: radial-gradient(circle at 20% -20%, #17284c 0, transparent 48%), var(--bg);
+      background: radial-gradient(circle at 20% -20%, #edf4ff 0, transparent 48%), var(--bg);
       color: var(--text);
       font: 16px/1.5 Arial, Helvetica, sans-serif;
       overflow: hidden;
     }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { font: inherit; cursor: pointer; }
-    button:focus-visible, a:focus-visible { outline: 3px solid #b5dfff; outline-offset: 4px; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #2856a8; outline-offset: 4px; }
     .app {
       height: 100vh;
       height: 100dvh;
@@ -41,30 +41,13 @@
       max-width: 1800px;
       margin: auto;
     }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex: 0 0 auto;
-    }
-    .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--text); }
-    .brand-icon {
-      display: grid; place-items: center;
-      width: 38px; height: 38px;
-      border-radius: 11px; background: #23436e; color: #a9d9ff; font-size: 22px; font-weight: bold;
-    }
-    .brand-name { font-size: 13px; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; }
-    .brand-sub { display: block; color: var(--muted); font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: normal; }
-    .back-link { text-decoration: none; color: #b5c8e3; font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; white-space: nowrap; }
-    .back-link:hover { background: #1a2c49; }
     .title-row {
       display: flex; justify-content: space-between; align-items: end; gap: 24px; flex: 0 0 auto;
     }
     .eyebrow { color: var(--blue); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; font-weight: bold; margin: 0 0 3px; }
     h1 { font-size: clamp(26px, 3vw, 42px); letter-spacing: -.045em; line-height: 1.12; margin: 0; }
     .subtitle { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
-    .simplified { font-size: 11px; color: #b4c3d9; border: 1px solid #3b5070; border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
+    .simplified { font-size: 11px; color: #58677d; border: 1px solid #c9d7e8; border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
     .workspace {
       display: grid;
       grid-template-columns: minmax(0, 1.65fr) minmax(320px, .9fr);
@@ -74,7 +57,7 @@
     }
     .diagram, .lesson {
       min-height: 0; border: 1px solid var(--line);
-      border-radius: 20px; background: rgba(17, 27, 48, .96);
+      border-radius: 20px; background: #ffffff;
     }
     .diagram {
       padding: 20px; display: flex; flex-direction: column; gap: 13px;
@@ -82,41 +65,41 @@
     }
     .diagram-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .diagram-heading h2 { margin: 0; font-size: 14px; letter-spacing: .005em; }
-    .diagram-heading span { font-size: 11px; color: #93a6c1; }
+    .diagram-heading span { font-size: 11px; color: #58677d; }
     .cpu {
       display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      padding: 13px 16px; min-height: 88px; border: 1px solid #36547e;
-      border-radius: 14px; background: linear-gradient(105deg, #1a3556, #142339 70%);
+      padding: 13px 16px; min-height: 88px; border: 1px solid #bbd2ed;
+      border-radius: 14px; background: linear-gradient(105deg, #edf5ff, #f8fbff 70%);
     }
     .cpu-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
     .cpu-symbol {
-      flex: 0 0 auto; display: grid; place-items: center; border: 2px solid #82c6ff;
-      border-radius: 10px; width: 54px; height: 54px; color: #a5d8ff; font-size: 14px; font-weight: bold;
-      background: repeating-linear-gradient(45deg, #204e79, #204e79 6px, #214971 6px, #214971 12px);
+      flex: 0 0 auto; display: grid; place-items: center; border: 2px solid #5b8fc9;
+      border-radius: 10px; width: 54px; height: 54px; color: #24569c; font-size: 14px; font-weight: bold;
+      background: repeating-linear-gradient(45deg, #e1edfc, #e1edfc 6px, #eaf2ff 6px, #eaf2ff 12px);
       box-shadow: 0 0 0 5px rgba(102,181,255,.07);
     }
     .cpu h3 { font-size: 15px; margin: 0 0 2px; }
-    .cpu p { margin: 0; color: #afc8e7; font-size: 12px; }
+    .cpu p { margin: 0; color: #49617e; font-size: 12px; }
     .request {
       display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
-      background: rgba(10,20,40,.75); border: 1px solid #3e5778;
+      background: #ffffff; border: 1px solid #bfd0e6;
       border-radius: 12px; padding: 9px 12px;
     }
     .request-label { color: var(--muted); font-size: 11px; line-height: 1.3; }
-    .request-label strong { display: block; color: white; font-size: 13px; }
+    .request-label strong { display: block; color: var(--text); font-size: 13px; }
     .request-chip {
       display: grid; place-items: center; height: 36px; width: 36px;
-      border-radius: 8px; font-size: 16px; font-weight: bold; background: #283b59;
-      color: #d4e5fa; border: 1px solid #6885aa;
+      border-radius: 8px; font-size: 16px; font-weight: bold; background: #edf3fa;
+      color: #334b69; border: 1px solid #9cb7d8;
     }
-    .request-chip.page-e { background: #2b4c35; color: #abf0b9; border-color: #5aaa75; }
-    .request-chip.page-b { background: #134f61; color: #a6ebfa; border-color: #58c0da; }
+    .request-chip.page-e { background: #dcfce7; color: #14532d; border-color: #65a77a; }
+    .request-chip.page-b { background: #cffafe; color: #164e63; border-color: #5dabc1; }
     .transfer {
       min-height: 23px; display: flex; align-items: center; justify-content: center;
-      gap: 9px; color: #8babc9; font-size: 11px;
+      gap: 9px; color: #526b89; font-size: 11px;
     }
-    .transfer-line { width: 20px; height: 1px; background: #36577d; }
-    .transfer b { color: #c5ddff; font-weight: normal; }
+    .transfer-line { width: 20px; height: 1px; background: #b9cce4; }
+    .transfer b { color: #2856a8; font-weight: normal; }
     .storage-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 13px;
       flex: 1; min-height: 0;
@@ -124,45 +107,45 @@
     .store {
       display: flex; flex-direction: column; min-height: 0;
       padding: 15px; border-radius: 15px;
-      border: 1px solid #324c73; background: linear-gradient(170deg, rgba(33,65,100,.56), rgba(13,26,44,.9));
+      border: 1px solid #bfd2e9; background: linear-gradient(170deg, #edf5ff, #f8fbff);
     }
     .store.disk {
-      border-color: #6a5037;
-      background: linear-gradient(170deg, rgba(79,53,32,.5), rgba(27,27,34,.9));
+      border-color: #e3cba8;
+      background: linear-gradient(170deg, #fff5e7, #fffaf3);
     }
     .store-title { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
     .store-title h3 { font-size: 17px; margin: 0; }
-    .store-title small { color: #9eb9d8; display: block; font-size: 11px; }
-    .disk .store-title small { color: #d9b997; }
+    .store-title small { color: #49617e; display: block; font-size: 11px; }
+    .disk .store-title small { color: #78552a; }
     .store-icon {
-      width: 36px; height: 36px; border: 2px solid #87c7ff;
+      width: 36px; height: 36px; border: 2px solid #5b8fc9;
       display: grid; place-items: center; border-radius: 9px; font-size: 11px; font-weight: bold;
-      color: #a3d8ff; flex: 0 0 auto;
+      color: #24569c; flex: 0 0 auto;
     }
     .disk .store-icon {
-      border-radius: 50%; border-color: #e0ac6b;
-      color: #eec18d; background: radial-gradient(circle, #a16e3f 0 3px, transparent 4px 7px, #734e30 8px 9px, transparent 10px);
+      border-radius: 50%; border-color: #b38349;
+      color: #80501f; background: radial-gradient(circle, #a16e3f 0 3px, transparent 4px 7px, #734e30 8px 9px, transparent 10px);
       font-size: 0;
     }
-    .occupancy { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 15px 0 10px; color: #aec9e7; font-size: 11px; }
-    .disk .occupancy { color: #e0c29f; }
+    .occupancy { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 15px 0 10px; color: #49617e; font-size: 11px; }
+    .disk .occupancy { color: #78552a; }
     .meter { display: flex; gap: 4px; }
-    .meter i { width: 16px; height: 5px; border-radius: 2px; background: #324761; }
-    .meter i.on { background: #65b7fd; }
-    .disk .meter i.on { background: #e5aa67; }
+    .meter i { width: 16px; height: 5px; border-radius: 2px; background: #dae5f1; }
+    .meter i.on { background: #3974b9; }
+    .disk .meter i.on { background: #b38349; }
     .slots {
       display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(2, minmax(0,1fr));
       gap: 9px; flex: 1; min-height: 0;
     }
     .slot {
-      background: rgba(5,12,23,.5); border: 1px dashed #3e5775; border-radius: 12px;
+      background: rgba(255,255,255,.8); border: 1px dashed #b7cbe4; border-radius: 12px;
       min-height: 78px; position: relative; display: grid; place-items: center; padding: 8px;
     }
-    .disk .slot { border-color: #655241; }
-    .slot-no { position: absolute; top: 7px; left: 9px; color: #667d99; font-size: 9px; letter-spacing: .07em; }
-    .disk .slot-no { color: #93765b; }
-    .slot-empty { font-size: 11px; color: #637993; }
-    .disk .slot-empty { color: #8d775e; }
+    .disk .slot { border-color: #cfb895; }
+    .slot-no { position: absolute; top: 7px; left: 9px; color: #526b89; font-size: 9px; letter-spacing: .07em; }
+    .disk .slot-no { color: #795d3e; }
+    .slot-empty { font-size: 11px; color: #526b89; }
+    .disk .slot-empty { color: #795d3e; }
     .memory-block {
       position: relative; width: 100%; height: 100%; min-height: 55px;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -172,67 +155,67 @@
     }
     .memory-block strong { font-size: clamp(12px, 1.25vw, 17px); line-height: 1.1; }
     .memory-block small { opacity: .78; font-size: 10px; margin-top: 4px; }
-    .page-a { --page-bg:#373b75; --page-border:#818ded; --page-fg:#e9eaff; }
-    .page-b { --page-bg:#11556c; --page-border:#67cde5; --page-fg:#d9faff; }
-    .page-c { --page-bg:#364f89; --page-border:#91b8ff; --page-fg:#eef4ff; }
-    .page-d { --page-bg:#704b30; --page-border:#eba965; --page-fg:#fff0df; }
-    .page-e { --page-bg:#2a6247; --page-border:#76e2a7; --page-fg:#e1ffed; }
-    .memory-block.selected { outline: 3px solid #fff; outline-offset: -1px; animation: breathe 1.3s ease-in-out infinite; }
+    .page-a { --page-bg:#e8e7ff; --page-border:#8e8bce; --page-fg:#38336f; }
+    .page-b { --page-bg:#d7f2f7; --page-border:#65a8b7; --page-fg:#164e63; }
+    .page-c { --page-bg:#e0ecff; --page-border:#7fa2d0; --page-fg:#244875; }
+    .page-d { --page-bg:#fff0d9; --page-border:#c99751; --page-fg:#754415; }
+    .page-e { --page-bg:#dcf5e7; --page-border:#6fa888; --page-fg:#1b5138; }
+    .memory-block.selected { outline: 3px solid #2856a8; outline-offset: -1px; animation: breathe 1.3s ease-in-out infinite; }
     .memory-block.is-new { box-shadow: 0 0 0 2px rgba(255,255,255,.18), 0 0 30px rgba(118,226,167,.1); }
-    @keyframes breathe { 50% { outline-color: #ffffff55; } }
+    @keyframes breathe { 50% { outline-color: #2856a866; } }
     .store-bottom {
       display: flex; justify-content: space-between; align-items: center;
-      gap: 8px; padding-top: 11px; font-size: 11px; color: #add1f8;
+      gap: 8px; padding-top: 11px; font-size: 11px; color: #49617e;
     }
-    .disk .store-bottom { color: #f1bd83; }
+    .disk .store-bottom { color: #78552a; }
     .notice {
       display: flex; align-items: center; gap: 10px;
-      padding: 9px 12px; font-size: 12px; color: #b6cce8;
-      border: 1px solid #283c58; border-radius: 10px; background: #101e33;
+      padding: 9px 12px; font-size: 12px; color: #334b69;
+      border: 1px solid #c9d8ea; border-radius: 10px; background: #f0f6ff;
     }
     .notice-dot { height: 8px; width: 8px; border-radius: 50%; background: var(--blue); flex: 0 0 auto; }
-    .notice-dot.alert { background: #ffbf79; }
-    .notice-dot.success { background: #7cddb0; }
+    .notice-dot.alert { background: #b45309; }
+    .notice-dot.success { background: #15803d; }
 
     .lesson { padding: clamp(20px, 2.3vw, 35px); display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
     .step-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .step-label { color: var(--blue); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: bold; }
     .step-counter { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
     .progress { display: flex; gap: 5px; }
-    .progress-item { flex: 1; height: 5px; border-radius: 99px; background: #2e3e56; }
-    .progress-item.past { background: #5fa5e8; }
-    .progress-item.current { background: #c2e5ff; }
+    .progress-item { flex: 1; height: 5px; border-radius: 99px; background: #dce5f0; }
+    .progress-item.past { background: #6f9ed3; }
+    .progress-item.current { background: #2856a8; }
     .lesson h2 { font-size: clamp(24px, 2.4vw, 35px); line-height: 1.14; letter-spacing: -.035em; margin: 9px 0 14px; }
-    .lesson-copy { font-size: clamp(15px, 1.2vw, 18px); line-height: 1.65; color: #d7e1f0; margin: 0; }
-    .lesson-copy strong { color: white; }
-    .key-point { margin-top: auto; padding: 16px; background: #1b2c45; border: 1px solid #344d6e; border-radius: 13px; }
-    .key-point span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #90c9ff; }
-    .key-point p { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: #d7e5f8; }
+    .lesson-copy { font-size: clamp(15px, 1.2vw, 18px); line-height: 1.65; color: #334155; margin: 0; }
+    .lesson-copy strong { color: var(--text); }
+    .key-point { margin-top: auto; padding: 16px; background: #edf4ff; border: 1px solid #c5d8f0; border-radius: 13px; }
+    .key-point span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #2856a8; }
+    .key-point p { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: #334b69; }
     .definitions {
       display: grid; grid-template-columns: 1fr 1fr; gap: 9px;
     }
-    .definition { border: 1px solid #2b3c55; border-radius: 10px; padding: 10px 11px; }
-    .definition strong { color: #e4f1ff; font-size: 12px; }
-    .definition p { color: #97abc5; font-size: 11px; margin: 3px 0 0; }
+    .definition { border: 1px solid #d5e0ed; border-radius: 10px; padding: 10px 11px; }
+    .definition strong { color: #243b58; font-size: 12px; }
+    .definition p { color: #58677d; font-size: 11px; margin: 3px 0 0; }
     .controls {
       flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; border: 1px solid #2c3c56; background: #121e33; border-radius: 16px;
+      gap: 12px; border: 1px solid #d3deec; background: #ffffff; border-radius: 16px;
       padding: 11px 16px;
     }
     .controls-left, .controls-right { display: flex; gap: 10px; align-items: center; }
     .ctrl {
       display: inline-flex; justify-content: center; align-items: center; gap: 8px;
-      border: 1px solid #405571; background: #1b2b44; color: #edf5ff;
+      border: 1px solid #bdcfe4; background: #f0f5fb; color: #243b58;
       border-radius: 10px; font-weight: 700; font-size: 13px; padding: 11px 18px; min-height: 44px;
     }
-    .ctrl:hover:not(:disabled) { background: #304663; }
+    .ctrl:hover:not(:disabled) { background: #e1ebf8; }
     .ctrl:disabled { opacity: .4; cursor: not-allowed; }
-    .ctrl.next { color: #091325; background: #a9d5ff; border-color: #a9d5ff; min-width: 114px; }
-    .ctrl.next:hover:not(:disabled) { background: #d0e9ff; }
-    .ctrl.reset { background: transparent; color: #bdcbe0; }
-    .keyboard { font-size: 11px; color: #8298b4; }
+    .ctrl.next { color: #17365c; background: #dcecff; border-color: #dcecff; min-width: 114px; }
+    .ctrl.next:hover:not(:disabled) { background: #c6e0ff; }
+    .ctrl.reset { background: transparent; color: #49617e; }
+    .keyboard { font-size: 11px; color: #58677d; }
     .stage-announcement { position: absolute; height: 1px; width: 1px; overflow: hidden; clip-path: inset(50%); }
-    .moving-ghost { position: fixed; z-index: 100; margin: 0; pointer-events: none; transform-origin: top left; box-shadow: 0 14px 35px rgba(0,0,0,.35); }
+    .moving-ghost { position: fixed; z-index: 100; margin: 0; pointer-events: none; transform-origin: top left; box-shadow: 0 14px 35px rgba(38,66,101,.12); }
     @media (max-height: 760px) and (min-width: 781px) {
       .app { gap: 9px; padding-top: 12px; padding-bottom: 10px; }
       .title-row .subtitle { margin-top: 2px; }
@@ -305,14 +288,6 @@
     </nav>
   </aside>
   <div class="app">
-    <header class="topbar">
-      <a class="brand" href="../../index.html">
-        <span class="brand-icon" aria-hidden="true">C</span>
-        <span class="brand-name">Teaching Concepts<span class="brand-sub">Interactive explanations</span></span>
-      </a>
-      <a class="back-link" href="../../index.html">← All concepts</a>
-    </header>
-
     <div class="title-row">
       <div>
         <p class="eyebrow">Memory Management / 01</p>
