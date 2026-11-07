@@ -1,0 +1,186 @@
+/* Shared navigation and the space it reserves on every page. */
+:root { --sidebar-width: 252px; }
+
+body.has-sidebar {
+  margin: 0 0 0 var(--sidebar-width);
+  min-width: 0;
+  overflow: auto;
+}
+
+.site-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 200;
+  width: var(--sidebar-width);
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 28px 18px;
+  border-right: 1px solid #29394f;
+  background: #101a2c;
+  color: #e8f0fc;
+  font: 14px/1.5 Arial, Helvetica, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #455b7a #101a2c;
+}
+
+.site-sidebar .sidebar-brand {
+  display: block;
+  margin: 0 8px 28px;
+  color: #f3f7ff;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.site-sidebar .sidebar-brand span {
+  display: block;
+  margin-top: 7px;
+  color: #a6b7cf;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.site-sidebar nav { display: block; }
+.site-sidebar a { text-decoration: none; }
+.site-sidebar .sidebar-home {
+  display: block;
+  padding: 11px 12px;
+  border-radius: 8px;
+  color: #c6d5ea;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.site-sidebar .sidebar-label {
+  margin: 28px 12px 10px;
+  color: #96abc7;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.site-sidebar details { margin: 4px 0; }
+.site-sidebar summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 30px 10px 12px;
+  border-radius: 8px;
+  list-style: none;
+  color: #e8f0fc;
+  font-weight: 700;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.site-sidebar summary::-webkit-details-marker { display: none; }
+.site-sidebar summary::after {
+  content: '';
+  position: absolute;
+  right: 13px;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #9bb3d3;
+  border-bottom: 2px solid #9bb3d3;
+  transform: rotate(-45deg);
+}
+
+.site-sidebar details[open] > summary::after { transform: rotate(45deg); }
+.site-sidebar .sidebar-concepts {
+  margin: 3px 0 10px 19px;
+  padding: 0 0 0 10px;
+  border-left: 1px solid #354965;
+  list-style: none;
+}
+
+.site-sidebar .sidebar-concepts a {
+  display: block;
+  padding: 10px 11px;
+  border-radius: 7px;
+  color: #b8cbe5;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.site-sidebar a:hover, .site-sidebar summary:hover { background: #20324d; color: #fff; }
+.site-sidebar a[aria-current='page'] { background: #244b78; color: #fff; }
+.site-sidebar :is(a, summary):focus-visible { outline: 3px solid #9fd3ff; outline-offset: 2px; }
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: calc(var(--sidebar-width) + 10px);
+  z-index: 300;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #fff;
+  color: #172033;
+  font: 700 14px/1.5 Arial, Helvetica, sans-serif;
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* Let the lessons grow with their contents in the narrower reading area. */
+.concept-demo .app { height: auto; min-height: 100vh; min-height: 100dvh; }
+.concept-demo :is(.topbar, .title-row, .controls) { flex-wrap: wrap; }
+.concept-demo :is(.main-grid, .workspace, .visuals) > * { min-width: 0; }
+.concept-demo .controls { gap: 12px; }
+
+@media (max-width: 1250px) {
+  .concept-demo :is(.main-grid, .workspace) { grid-template-columns: minmax(0, 1fr); }
+  .concept-demo .diagram { min-height: 485px; }
+  .concept-demo .lesson { min-height: 370px; }
+}
+
+@media (max-width: 850px) {
+  :root { --sidebar-width: 196px; }
+  .site-sidebar { padding: 22px 12px; }
+  .site-sidebar .sidebar-brand { font-size: 17px; }
+  .concept-demo .visuals { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 600px) {
+  :root { --sidebar-width: clamp(116px, 32vw, 160px); }
+  .site-sidebar { padding: 18px 6px; }
+  .site-sidebar .sidebar-brand { margin: 0 6px 20px; font-size: 15px; }
+  .site-sidebar .sidebar-brand span { font-size: 11px; }
+  .site-sidebar .sidebar-home { padding: 10px 8px; font-size: 13px; }
+  .site-sidebar .sidebar-label { margin: 24px 8px 8px; font-size: 10px; }
+  .site-sidebar summary { padding: 10px 20px 10px 8px; font-size: 12px; }
+  .site-sidebar summary::after { right: 7px; width: 5px; height: 5px; }
+  .site-sidebar .sidebar-concepts { margin-left: 8px; padding-left: 4px; }
+  .site-sidebar .sidebar-concepts a { padding: 10px 6px; font-size: 12px; }
+  .concept-home .container { width: calc(100% - 28px); }
+  .concept-home .header-content { min-height: auto; padding-block: 14px; }
+  .concept-home .intro { padding-block: 32px; }
+  .concept-home h1 { font-size: 1.8rem; }
+  .concept-home .intro p:last-child { font-size: 1rem; }
+  .concept-home .concept-card { flex-wrap: wrap; padding: 14px; }
+  .concept-home .concept-card-text { flex-basis: 100%; order: 1; }
+  .concept-home .concept-card-arrow { margin-left: auto; }
+  .concept-demo .app { padding: 12px; }
+  .concept-demo :is(.cpu, .cpu-left, .diagram-heading, .store-title, .panel-head) { flex-wrap: wrap; }
+  .concept-demo .cpu .request { width: 100%; }
+  .concept-demo :is(.diagram, .lesson, .panel, .explanation) { padding: 12px; }
+  .concept-demo .storage-grid { grid-template-columns: minmax(0, 1fr); }
+  .concept-demo .store { min-height: 250px; }
+  .concept-demo .diagram { min-height: 0; }
+  .concept-demo .definitions { grid-template-columns: minmax(0, 1fr); }
+  .concept-demo .simplified { white-space: normal; }
+  .concept-demo .controls { flex-direction: column; align-items: stretch; }
+  .concept-demo :is(.controls-left, .controls-right) { flex-wrap: wrap; }
+  .concept-demo .controls-right > button { flex: 1; }
+  .concept-demo .ctrl.next { min-width: 0; }
+  .concept-demo .keyboard { display: none; }
+  .concept-demo .program { flex-wrap: wrap; padding: 12px; }
+  .concept-demo .queue-item.active { transform: none; }
+  .concept-demo .status-strip { padding: 10px; }
+  .concept-demo h1 { font-size: 1.8rem; overflow-wrap: anywhere; }
+}

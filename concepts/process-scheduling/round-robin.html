@@ -571,8 +571,29 @@
       .controls { flex-direction: column; align-items: stretch; }
     }
   </style>
+  <link rel="stylesheet" href="../../assets/sidebar.css">
 </head>
-<body>
+<body class="has-sidebar concept-demo round-robin-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <aside class="site-sidebar" aria-label="Concept navigation">
+    <a class="sidebar-brand" href="../../index.html">Teaching Concepts<span>Interactive explanations</span></a>
+    <nav aria-label="Concepts">
+      <a class="sidebar-home" href="../../index.html">Home</a>
+      <p class="sidebar-label">Browse concepts</p>
+      <details open>
+        <summary>Memory Management</summary>
+        <ul class="sidebar-concepts">
+          <li><a href="../../concepts/memory-management/virtual-memory.html">Virtual Memory</a></li>
+        </ul>
+      </details>
+      <details open>
+        <summary>Process Scheduling</summary>
+        <ul class="sidebar-concepts">
+          <li><a href="../../concepts/process-scheduling/round-robin.html" aria-current="page">Round Robin Scheduling</a></li>
+        </ul>
+      </details>
+    </nav>
+  </aside>
   <div class="app">
     <header class="topbar">
       <a class="brand" href="../../index.html">
@@ -594,7 +615,7 @@
       <div class="helper">Simple version for students</div>
     </section>
 
-    <main class="main-grid">
+    <main class="main-grid" id="main-content" tabindex="-1">
       <section class="panel" aria-label="Round robin animation">
         <div class="panel-head">
           <h2>What is happening?</h2>

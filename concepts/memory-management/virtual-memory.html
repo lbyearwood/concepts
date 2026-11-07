@@ -281,8 +281,29 @@
       *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; }
     }
   </style>
+  <link rel="stylesheet" href="../../assets/sidebar.css">
 </head>
-<body>
+<body class="has-sidebar concept-demo virtual-memory-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <aside class="site-sidebar" aria-label="Concept navigation">
+    <a class="sidebar-brand" href="../../index.html">Teaching Concepts<span>Interactive explanations</span></a>
+    <nav aria-label="Concepts">
+      <a class="sidebar-home" href="../../index.html">Home</a>
+      <p class="sidebar-label">Browse concepts</p>
+      <details open>
+        <summary>Memory Management</summary>
+        <ul class="sidebar-concepts">
+          <li><a href="../../concepts/memory-management/virtual-memory.html" aria-current="page">Virtual Memory</a></li>
+        </ul>
+      </details>
+      <details open>
+        <summary>Process Scheduling</summary>
+        <ul class="sidebar-concepts">
+          <li><a href="../../concepts/process-scheduling/round-robin.html">Round Robin Scheduling</a></li>
+        </ul>
+      </details>
+    </nav>
+  </aside>
   <div class="app">
     <header class="topbar">
       <a class="brand" href="../../index.html">
@@ -301,7 +322,7 @@
       <span class="simplified">Simplified paging demonstration</span>
     </div>
 
-    <main class="workspace">
+    <main class="workspace" id="main-content" tabindex="-1">
       <section class="diagram" aria-label="Animated computer memory diagram">
         <div class="diagram-heading">
           <h2>Live memory diagram</h2>

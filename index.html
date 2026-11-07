@@ -152,8 +152,29 @@
       .concepts { padding-bottom: 50px; }
     }
   </style>
+  <link rel="stylesheet" href="assets/sidebar.css">
 </head>
-<body>
+<body class="has-sidebar concept-home">
+  <a class="skip-link" href="#home">Skip to content</a>
+  <aside class="site-sidebar" aria-label="Concept navigation">
+    <a class="sidebar-brand" href="index.html">Teaching Concepts<span>Interactive explanations</span></a>
+    <nav aria-label="Concepts">
+      <a class="sidebar-home" href="index.html" aria-current="page">Home</a>
+      <p class="sidebar-label">Browse concepts</p>
+      <details open>
+        <summary>Memory Management</summary>
+        <ul class="sidebar-concepts">
+          <li><a href="concepts/memory-management/virtual-memory.html">Virtual Memory</a></li>
+        </ul>
+      </details>
+      <details open>
+        <summary>Process Scheduling</summary>
+        <ul class="sidebar-concepts">
+          <li><a href="concepts/process-scheduling/round-robin.html">Round Robin Scheduling</a></li>
+        </ul>
+      </details>
+    </nav>
+  </aside>
   <header>
     <div class="container header-content">
       <a class="site-name" href="#home">Teaching Concepts</a>
@@ -164,7 +185,7 @@
     </div>
   </header>
 
-  <main id="home">
+  <main id="home" tabindex="-1">
     <section class="intro container" aria-labelledby="page-title">
       <p class="eyebrow">Teaching &amp; Learning</p>
       <h1 id="page-title">Teaching Concepts</h1>
