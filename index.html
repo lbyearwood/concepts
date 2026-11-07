@@ -5,130 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A simple index of teaching concepts and classroom resources.">
   <title>Teaching Concepts</title>
-  <style>
-    :root {
-      --background: #f8fafc;
-      --surface: #ffffff;
-      --text: #172033;
-      --muted: #58677d;
-      --accent: #2856a8;
-      --border: #e2e8f0;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-      color: var(--text);
-      background: var(--background);
-    }
-
-    a { color: inherit; }
-    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-
-    .container {
-      width: min(100% - 40px, 1000px);
-      margin-inline: auto;
-    }
-
-    main { flex: 1; }
-
-    .intro { padding-block: 70px 54px; }
-    .intro .eyebrow {
-      margin: 0 0 12px;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    h1 {
-      margin: 0 0 15px;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.2;
-      letter-spacing: -0.04em;
-    }
-    .intro p:last-child {
-      margin: 0;
-      max-width: 620px;
-      font-size: 1.08rem;
-      color: var(--muted);
-    }
-
-    .concepts { padding-bottom: 80px; }
-    .section-heading {
-      margin: 0;
-      padding-bottom: 16px;
-      font-size: 1.35rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Each new concept can be added as a card within a category. */
-    .concept-group { padding-top: 24px; }
-    .concept-group h3 { margin: 0 0 14px; font-size: 1.05rem; }
-    .concept-card {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      max-width: 740px;
-      padding: 21px 24px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface);
-      text-decoration: none;
-      transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
-    }
-    .concept-card:hover {
-      border-color: #97b7df;
-      box-shadow: 0 8px 30px rgba(22, 54, 99, .07);
-      transform: translateY(-2px);
-    }
-    .concept-card-icon {
-      display: grid; place-items: center;
-      flex: 0 0 auto;
-      width: 50px; height: 50px; border-radius: 12px;
-      background: #e8f1ff; color: #24569c; font-weight: 700; font-size: .95rem;
-    }
-    .concept-card-text { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
-    .concept-card-text strong { font-size: 1.07rem; }
-    .concept-card-text span { color: var(--muted); font-size: .9rem; }
-    .concept-card-arrow { color: var(--accent); font-size: 1.5rem; }
-    @media (max-width: 550px) {
-      .concept-card { padding: 16px; gap: 12px; }
-      .concept-card-icon { width: 42px; height: 42px; }
-    }
-    .concept-list { min-height: 180px; padding-top: 24px; }
-
-    footer {
-      border-top: 1px solid var(--border);
-      background: var(--surface);
-    }
-    .footer-content {
-      padding-block: 23px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px 22px;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    .footer-content p { margin: 0; }
-
-    @media (max-width: 550px) {
-      .intro { padding-block: 50px 42px; }
-      .concepts { padding-bottom: 50px; }
-    }
-  </style>
-  <link rel="stylesheet" href="assets/sidebar.css">
+  <link rel="stylesheet" href="assets/sidebar.css?v=colour-block-1">
+  <link rel="stylesheet" href="assets/colour-block.css?v=1">
 </head>
-<body class="has-sidebar concept-home">
+<body class="has-sidebar theme-colour-block concept-home">
   <a class="skip-link" href="#home">Skip to content</a>
   <aside class="site-sidebar" aria-label="Concept navigation">
     <a class="sidebar-brand" href="index.html">Teaching Concepts<span>Interactive explanations</span></a>
@@ -167,7 +47,7 @@
               <strong>Virtual Memory</strong>
               <span>Interactive demonstration of RAM, HDD and paging</span>
             </span>
-            <span class="concept-card-arrow" aria-hidden="true">→</span>
+            <img class="concept-card-arrow" src="assets/icons/arrow-right.svg" alt="" aria-hidden="true">
           </a>
         </section>
         <section class="concept-group" aria-labelledby="process-scheduling-title">
@@ -178,7 +58,7 @@
               <strong>Round Robin Scheduling</strong>
               <span>Learn how the CPU gives programmes turns in a simple animated explanation</span>
             </span>
-            <span class="concept-card-arrow" aria-hidden="true">→</span>
+            <img class="concept-card-arrow" src="assets/icons/arrow-right.svg" alt="" aria-hidden="true">
           </a>
         </section>
       </div>

@@ -6,267 +6,10 @@
   <meta name="theme-color" content="#f8fafc">
   <meta name="description" content="An interactive, step-by-step demonstration of virtual memory using RAM and an HDD.">
   <title>Virtual Memory | Teaching Concepts</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface2: #f1f5f9;
-      --line: #d8e2ee;
-      --text: #172033;
-      --muted: #58677d;
-      --blue: #2856a8;
-      --orange: #b45309;
-      --green: #15803d;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
-    body {
-      background: radial-gradient(circle at 20% -20%, #edf4ff 0, transparent 48%), var(--bg);
-      color: var(--text);
-      font: 16px/1.5 Arial, Helvetica, sans-serif;
-      overflow: hidden;
-    }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button { font: inherit; cursor: pointer; }
-    button:focus-visible, a:focus-visible { outline: 3px solid #2856a8; outline-offset: 4px; }
-    .app {
-      height: 100vh;
-      height: 100dvh;
-      min-height: 600px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 20px clamp(20px, 3vw, 48px) 18px;
-      max-width: 1800px;
-      margin: auto;
-    }
-    .title-row {
-      display: flex; justify-content: space-between; align-items: end; gap: 24px; flex: 0 0 auto;
-    }
-    .eyebrow { color: var(--blue); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; font-weight: bold; margin: 0 0 3px; }
-    h1 { font-size: clamp(26px, 3vw, 42px); letter-spacing: -.045em; line-height: 1.12; margin: 0; }
-    .subtitle { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
-    .simplified { font-size: 11px; color: #58677d; border: 1px solid #c9d7e8; border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
-    .workspace {
-      display: grid;
-      grid-template-columns: minmax(0, 1.65fr) minmax(320px, .9fr);
-      gap: 16px;
-      min-height: 0;
-      flex: 1 1 auto;
-    }
-    .diagram, .lesson {
-      min-height: 0; border: 1px solid var(--line);
-      border-radius: 20px; background: #ffffff;
-    }
-    .diagram {
-      padding: 20px; display: flex; flex-direction: column; gap: 13px;
-      overflow: hidden; position: relative;
-    }
-    .diagram-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .diagram-heading h2 { margin: 0; font-size: 14px; letter-spacing: .005em; }
-    .diagram-heading span { font-size: 11px; color: #58677d; }
-    .cpu {
-      display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      padding: 13px 16px; min-height: 88px; border: 1px solid #bbd2ed;
-      border-radius: 14px; background: linear-gradient(105deg, #edf5ff, #f8fbff 70%);
-    }
-    .cpu-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
-    .cpu-symbol {
-      flex: 0 0 auto; display: grid; place-items: center; border: 2px solid #5b8fc9;
-      border-radius: 10px; width: 54px; height: 54px; color: #24569c; font-size: 14px; font-weight: bold;
-      background: repeating-linear-gradient(45deg, #e1edfc, #e1edfc 6px, #eaf2ff 6px, #eaf2ff 12px);
-      box-shadow: 0 0 0 5px rgba(102,181,255,.07);
-    }
-    .cpu h3 { font-size: 15px; margin: 0 0 2px; }
-    .cpu p { margin: 0; color: #49617e; font-size: 12px; }
-    .request {
-      display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
-      background: #ffffff; border: 1px solid #bfd0e6;
-      border-radius: 12px; padding: 9px 12px;
-    }
-    .request-label { color: var(--muted); font-size: 11px; line-height: 1.3; }
-    .request-label strong { display: block; color: var(--text); font-size: 13px; }
-    .request-chip {
-      display: grid; place-items: center; height: 36px; width: 36px;
-      border-radius: 8px; font-size: 16px; font-weight: bold; background: #edf3fa;
-      color: #334b69; border: 1px solid #9cb7d8;
-    }
-    .request-chip.page-e { background: #dcfce7; color: #14532d; border-color: #65a77a; }
-    .request-chip.page-b { background: #cffafe; color: #164e63; border-color: #5dabc1; }
-    .transfer {
-      min-height: 23px; display: flex; align-items: center; justify-content: center;
-      gap: 9px; color: #526b89; font-size: 11px;
-    }
-    .transfer-line { width: 20px; height: 1px; background: #b9cce4; }
-    .transfer b { color: #2856a8; font-weight: normal; }
-    .storage-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 13px;
-      flex: 1; min-height: 0;
-    }
-    .store {
-      display: flex; flex-direction: column; min-height: 0;
-      padding: 15px; border-radius: 15px;
-      border: 1px solid #bfd2e9; background: linear-gradient(170deg, #edf5ff, #f8fbff);
-    }
-    .store.disk {
-      border-color: #e3cba8;
-      background: linear-gradient(170deg, #fff5e7, #fffaf3);
-    }
-    .store-title { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
-    .store-title h3 { font-size: 17px; margin: 0; }
-    .store-title small { color: #49617e; display: block; font-size: 11px; }
-    .disk .store-title small { color: #78552a; }
-    .store-icon {
-      width: 36px; height: 36px; border: 2px solid #5b8fc9;
-      display: grid; place-items: center; border-radius: 9px; font-size: 11px; font-weight: bold;
-      color: #24569c; flex: 0 0 auto;
-    }
-    .disk .store-icon {
-      border-radius: 50%; border-color: #b38349;
-      color: #80501f; background: radial-gradient(circle, #a16e3f 0 3px, transparent 4px 7px, #734e30 8px 9px, transparent 10px);
-      font-size: 0;
-    }
-    .occupancy { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 15px 0 10px; color: #49617e; font-size: 11px; }
-    .disk .occupancy { color: #78552a; }
-    .meter { display: flex; gap: 4px; }
-    .meter i { width: 16px; height: 5px; border-radius: 2px; background: #dae5f1; }
-    .meter i.on { background: #3974b9; }
-    .disk .meter i.on { background: #b38349; }
-    .slots {
-      display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(2, minmax(0,1fr));
-      gap: 9px; flex: 1; min-height: 0;
-    }
-    .slot {
-      background: rgba(255,255,255,.8); border: 1px dashed #b7cbe4; border-radius: 12px;
-      min-height: 78px; position: relative; display: grid; place-items: center; padding: 8px;
-    }
-    .disk .slot { border-color: #cfb895; }
-    .slot-no { position: absolute; top: 7px; left: 9px; color: #526b89; font-size: 9px; letter-spacing: .07em; }
-    .disk .slot-no { color: #795d3e; }
-    .slot-empty { font-size: 11px; color: #526b89; }
-    .disk .slot-empty { color: #795d3e; }
-    .memory-block {
-      position: relative; width: 100%; height: 100%; min-height: 55px;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      border-radius: 9px; border: 1px solid var(--page-border);
-      background: var(--page-bg); color: var(--page-fg); text-align: center;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-    }
-    .memory-block strong { font-size: clamp(12px, 1.25vw, 17px); line-height: 1.1; }
-    .memory-block small { opacity: .78; font-size: 10px; margin-top: 4px; }
-    .page-a { --page-bg:#e8e7ff; --page-border:#8e8bce; --page-fg:#38336f; }
-    .page-b { --page-bg:#d7f2f7; --page-border:#65a8b7; --page-fg:#164e63; }
-    .page-c { --page-bg:#e0ecff; --page-border:#7fa2d0; --page-fg:#244875; }
-    .page-d { --page-bg:#fff0d9; --page-border:#c99751; --page-fg:#754415; }
-    .page-e { --page-bg:#dcf5e7; --page-border:#6fa888; --page-fg:#1b5138; }
-    .memory-block.selected { outline: 3px solid #2856a8; outline-offset: -1px; animation: breathe 1.3s ease-in-out infinite; }
-    .memory-block.is-new { box-shadow: 0 0 0 2px rgba(255,255,255,.18), 0 0 30px rgba(118,226,167,.1); }
-    @keyframes breathe { 50% { outline-color: #2856a866; } }
-    .store-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 8px; padding-top: 11px; font-size: 11px; color: #49617e;
-    }
-    .disk .store-bottom { color: #78552a; }
-    .notice {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 12px; font-size: 12px; color: #334b69;
-      border: 1px solid #c9d8ea; border-radius: 10px; background: #f0f6ff;
-    }
-    .notice-dot { height: 8px; width: 8px; border-radius: 50%; background: var(--blue); flex: 0 0 auto; }
-    .notice-dot.alert { background: #b45309; }
-    .notice-dot.success { background: #15803d; }
-
-    .lesson { padding: clamp(20px, 2.3vw, 35px); display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
-    .step-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .step-label { color: var(--blue); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: bold; }
-    .step-counter { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-    .progress { display: flex; gap: 5px; }
-    .progress-item { flex: 1; height: 5px; border-radius: 99px; background: #dce5f0; }
-    .progress-item.past { background: #6f9ed3; }
-    .progress-item.current { background: #2856a8; }
-    .lesson h2 { font-size: clamp(24px, 2.4vw, 35px); line-height: 1.14; letter-spacing: -.035em; margin: 9px 0 14px; }
-    .lesson-copy { font-size: clamp(15px, 1.2vw, 18px); line-height: 1.65; color: #334155; margin: 0; }
-    .lesson-copy strong { color: var(--text); }
-    .key-point { margin-top: auto; padding: 16px; background: #edf4ff; border: 1px solid #c5d8f0; border-radius: 13px; }
-    .key-point span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #2856a8; }
-    .key-point p { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: #334b69; }
-    .definitions {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 9px;
-    }
-    .definition { border: 1px solid #d5e0ed; border-radius: 10px; padding: 10px 11px; }
-    .definition strong { color: #243b58; font-size: 12px; }
-    .definition p { color: #58677d; font-size: 11px; margin: 3px 0 0; }
-    .controls {
-      flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; border: 1px solid #d3deec; background: #ffffff; border-radius: 16px;
-      padding: 11px 16px;
-    }
-    .controls-left, .controls-right { display: flex; gap: 10px; align-items: center; }
-    .ctrl {
-      display: inline-flex; justify-content: center; align-items: center; gap: 8px;
-      border: 1px solid #bdcfe4; background: #f0f5fb; color: #243b58;
-      border-radius: 10px; font-weight: 700; font-size: 13px; padding: 11px 18px; min-height: 44px;
-    }
-    .ctrl:hover:not(:disabled) { background: #e1ebf8; }
-    .ctrl:disabled { opacity: .4; cursor: not-allowed; }
-    .ctrl.next { color: #17365c; background: #dcecff; border-color: #dcecff; min-width: 114px; }
-    .ctrl.next:hover:not(:disabled) { background: #c6e0ff; }
-    .ctrl.reset { background: transparent; color: #49617e; }
-    .keyboard { font-size: 11px; color: #58677d; }
-    .stage-announcement { position: absolute; height: 1px; width: 1px; overflow: hidden; clip-path: inset(50%); }
-    .moving-ghost { position: fixed; z-index: 100; margin: 0; pointer-events: none; transform-origin: top left; box-shadow: 0 14px 35px rgba(38,66,101,.12); }
-    @media (max-height: 760px) and (min-width: 781px) {
-      .app { gap: 9px; padding-top: 12px; padding-bottom: 10px; }
-      .title-row .subtitle { margin-top: 2px; }
-      .diagram { padding: 14px; gap: 7px; }
-      .cpu { min-height: 70px; padding: 8px 12px; }
-      .cpu-symbol { width: 43px; height: 43px; }
-      .store { padding: 11px; }
-      .store .occupancy { margin: 8px 0 6px; }
-      .slot { min-height: 60px; }
-      .store-bottom { padding-top: 6px; }
-      .lesson { padding: 18px; gap: 11px; }
-      .lesson h2 { margin: 5px 0 8px; }
-      .key-point { padding: 11px; }
-      .definition { padding: 8px; }
-      .controls { padding: 8px 12px; }
-    }
-    @media (max-width: 780px) {
-      body { overflow: auto; }
-      .app { height: auto; min-height: 100dvh; padding: 17px; }
-      .workspace { grid-template-columns: 1fr; }
-      .diagram { min-height: 485px; }
-      .lesson { min-height: 370px; }
-      .keyboard { display: none; }
-    }
-    @media (max-width: 480px) {
-      .title-row { display: block; }
-      .simplified { display: inline-block; margin-top: 10px; }
-      .cpu { padding: 10px; }
-      .cpu-left { gap: 9px; }
-      .cpu-symbol { width: 40px; height: 40px; }
-      .request { padding: 7px; gap: 6px; }
-      .request-chip { width: 30px; height: 30px; }
-      .request-label { font-size: 10px; }
-      .diagram { padding: 12px; min-height: 490px; }
-      .store { padding: 8px; }
-      .store-title h3 { font-size: 15px; }
-      .store-icon { display: none; }
-      .slots { gap: 6px; }
-      .slot { min-height: 75px; padding: 5px; }
-      .memory-block strong { font-size: 12px; }
-      .store-bottom { font-size: 10px; }
-      .controls { padding: 9px; }
-      .ctrl { padding: 10px 12px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; }
-    }
-  </style>
-  <link rel="stylesheet" href="../../assets/sidebar.css">
+  <link rel="stylesheet" href="../../assets/sidebar.css?v=colour-block-1">
+  <link rel="stylesheet" href="../../assets/colour-block.css?v=1">
 </head>
-<body class="has-sidebar concept-demo virtual-memory-page">
+<body class="has-sidebar theme-colour-block concept-demo virtual-memory-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <aside class="site-sidebar" aria-label="Concept navigation">
     <a class="sidebar-brand" href="../../index.html">Teaching Concepts<span>Interactive explanations</span></a>
@@ -288,88 +31,28 @@
     </nav>
   </aside>
   <div class="app">
-    <div class="title-row">
-      <div>
-        <p class="eyebrow">Memory Management / 01</p>
-        <h1>Virtual memory</h1>
-        <p class="subtitle">Watch how an operating system manages memory when RAM is full.</p>
-      </div>
-      <span class="simplified">Simplified paging demonstration</span>
-    </div>
-
-    <main class="workspace" id="main-content" tabindex="-1">
+    <div class="title-row"><p class="eyebrow">Memory Management / 01</p><h1>Virtual memory</h1><p class="subtitle">Watch how an operating system manages memory when RAM is full.</p></div>
+    <main id="main-content" tabindex="-1" class="workspace">
+      <section class="lesson-intro" aria-labelledby="lesson-heading">
+        <div class="step-heading"><h2 id="lesson-heading">RAM is full</h2><div class="step-progress"><span class="step-counter" id="step-counter">Step 1 of 8</span><div class="progress" id="progress" aria-label="Lesson progress"></div></div></div>
+        <p class="lesson-copy" id="lesson-copy">RAM stores the data and instructions programmes need while they are running. In this example, all four RAM slots are occupied.</p>
+      </section>
       <section class="diagram" aria-label="Animated computer memory diagram">
-        <div class="diagram-heading">
-          <h2>Live memory diagram</h2>
-          <span>Each coloured block represents one page</span>
-        </div>
-        <div class="cpu">
-          <div class="cpu-left">
-            <div class="cpu-symbol" aria-hidden="true">CPU</div>
-            <div><h3>Processor</h3><p id="cpu-status">Running programmes</p></div>
-          </div>
-          <div class="request" aria-label="Page requested by processor">
-            <div class="request-label">CPU request<strong id="request-text">Ready</strong></div>
-            <div class="request-chip" id="request-chip" aria-hidden="true">–</div>
-          </div>
-        </div>
-        <div class="transfer" aria-hidden="true">
-          <span class="transfer-line"></span><span id="transfer-text">Operating system manages pages</span><span class="transfer-line"></span>
-        </div>
+        <div class="cpu"><div class="cpu-left"><div class="cpu-symbol" aria-hidden="true">CPU</div><div><h3>Processor</h3><p id="cpu-status">Running programmes</p></div></div><div class="request" aria-label="Page requested by processor"><div class="request-label">CPU request<strong id="request-text">Ready</strong></div><div class="request-chip" id="request-chip" aria-hidden="true">–</div></div></div>
+        <div class="transfer" aria-hidden="true"><span id="transfer-text">Operating system manages pages</span></div>
         <div class="storage-grid">
-          <section class="store" aria-labelledby="ram-title">
-            <div class="store-title">
-              <div><h3 id="ram-title">RAM</h3><small>Fast · limited space</small></div>
-              <div class="store-icon" aria-hidden="true">RAM</div>
-            </div>
-            <div class="occupancy"><span id="ram-count">4 / 4 slots used</span><div class="meter" id="ram-meter" aria-hidden="true"></div></div>
-            <div class="slots" id="ram-slots"></div>
-            <div class="store-bottom"><span>Main memory</span><span>FAST</span></div>
-          </section>
-          <section class="store disk" aria-labelledby="hdd-title">
-            <div class="store-title">
-              <div><h3 id="hdd-title">HDD</h3><small>Slower · swap space</small></div>
-              <div class="store-icon" aria-hidden="true">HDD</div>
-            </div>
-            <div class="occupancy"><span id="hdd-count">0 / 4 slots used</span><div class="meter" id="hdd-meter" aria-hidden="true"></div></div>
-            <div class="slots" id="hdd-slots"></div>
-            <div class="store-bottom"><span>Secondary storage</span><span>SLOWER</span></div>
-          </section>
+          <section class="store" aria-labelledby="ram-title"><div class="store-title"><div><h3 id="ram-title">RAM</h3><small>Fast · limited space</small></div><div class="store-icon" aria-hidden="true">RAM</div></div><div class="occupancy"><span id="ram-count">4 / 4 slots used</span><div class="meter" id="ram-meter" aria-hidden="true"></div></div><div class="slots" id="ram-slots"></div><div class="store-bottom"><span>Main memory</span><span>FAST</span></div></section>
+          <section class="store disk" aria-labelledby="hdd-title"><div class="store-title"><div><h3 id="hdd-title">HDD</h3><small>Slower · swap space</small></div><div class="store-icon" aria-hidden="true"><img src="../../assets/icons/device-hdd.svg" alt=""></div></div><div class="occupancy"><span id="hdd-count">0 / 4 slots used</span><div class="meter" id="hdd-meter" aria-hidden="true"></div></div><div class="slots" id="hdd-slots"></div><div class="store-bottom"><span>Secondary storage</span><span>SLOWER</span></div></section>
         </div>
         <div class="notice"><span class="notice-dot" id="notice-dot" aria-hidden="true"></span><span id="notice-text">RAM is full. There is no free space for another page.</span></div>
       </section>
-
-      <aside class="lesson" aria-labelledby="lesson-heading">
-        <div class="step-top">
-          <span class="step-label">Step-by-step explanation</span>
-          <span class="step-counter" id="step-counter">01 / 08</span>
-        </div>
-        <div class="progress" id="progress" aria-label="Lesson progress"></div>
-        <div>
-          <h2 id="lesson-heading">RAM is full</h2>
-          <p class="lesson-copy" id="lesson-copy">RAM stores the data and instructions programmes need while they are running. In this example, all four RAM slots are occupied.</p>
-        </div>
-        <div class="key-point">
-          <span>Remember</span>
-          <p id="takeaway">RAM is quick to access, but it has limited capacity.</p>
-        </div>
-        <div class="definitions" aria-label="Important terms">
-          <div class="definition"><strong>Page</strong><p>A small, fixed-size block of virtual memory.</p></div>
-          <div class="definition"><strong>Swap space</strong><p>Area on storage used to hold pages moved out of RAM.</p></div>
-        </div>
-      </aside>
+      <aside class="key-point"><strong>Remember:</strong><p id="takeaway">RAM is quick to access, but it has limited capacity.</p></aside>
     </main>
-
     <footer class="controls" aria-label="Demonstration controls">
-      <div class="controls-left">
-        <button class="ctrl reset" id="reset-button" type="button">↺ Reset</button>
-        <span class="keyboard">Keyboard: ← Back · → Next · R Reset</span>
-      </div>
-      <div class="controls-right">
-        <button class="ctrl" id="back-button" type="button" disabled>← Back</button>
-        <button class="ctrl next" id="next-button" type="button">Next →</button>
-      </div>
+      <div class="controls-left"><button class="ctrl reset" id="reset-button" type="button"><img class="ui-icon" src="../../assets/icons/arrow-counterclockwise.svg" alt="" aria-hidden="true">Reset</button><span class="keyboard">Keyboard: ← Back · → Next · R Reset</span></div>
+      <div class="controls-right"><button class="ctrl" id="back-button" type="button" disabled><img class="ui-icon" src="../../assets/icons/arrow-left.svg" alt="" aria-hidden="true">Back</button><button class="ctrl next primary" id="next-button" type="button"><span data-next-label>Next</span><img class="ui-icon" src="../../assets/icons/arrow-right.svg" alt="" aria-hidden="true"></button></div>
     </footer>
+    <section class="definitions supporting" aria-label="Important terms"><div class="definition"><strong>Page</strong><p>A small, fixed-size block of virtual memory.</p></div><div class="definition"><strong>Swap space</strong><p>Area on storage used to hold pages moved out of RAM.</p></div><p class="model-note">Simplified paging demonstration</p></section>
     <div class="stage-announcement" id="announcement" role="status" aria-live="polite" aria-atomic="true"></div>
   </div>
   <script>
@@ -568,7 +251,7 @@
     function updateButtons() {
       $('back-button').disabled = locked || current === 0;
       $('next-button').disabled = locked || current === stages.length - 1;
-      $('next-button').textContent = current === stages.length - 1 ? 'Finished ✓' : 'Next →';
+      $('next-button').querySelector('[data-next-label]').textContent = current === stages.length - 1 ? 'Finished' : 'Next';
     }
 
     function render(newIndex, animate = true) {
@@ -597,7 +280,7 @@
       $('lesson-heading').textContent = stage.title;
       $('lesson-copy').innerHTML = stage.copy;
       $('takeaway').textContent = stage.takeaway;
-      $('step-counter').textContent = String(current + 1).padStart(2,'0') + ' / ' + String(stages.length).padStart(2,'0');
+      $('step-counter').textContent = 'Step ' + (current + 1) + ' of ' + stages.length;
       $('progress').innerHTML = '';
       stages.forEach((_, i) => {
         const pip = document.createElement('span');
