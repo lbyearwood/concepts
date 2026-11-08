@@ -31,8 +31,13 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 ## Navigation
 
 The homepage and every concept page include the same persistent left sidebar.
-Categories use native HTML `details` and `summary` elements, so their menus work
-with a keyboard and without JavaScript. All categories start expanded. The
+The order is Home, Courses, then Concepts. Courses contains GCSE Computer Science
+and its numbered topics. Concepts contains Memory Management, Process Scheduling
+and Algorithms, with their existing interactive models. Topic 1.1 is Variables,
+constants, data types and casting, matching the existing OCR course resources.
+Nested groups use native HTML `details` and `summary` elements, so their menus work
+with a keyboard and without JavaScript. The current page's branch starts open;
+other concept categories start closed. Both top groups open on the homepage. The
 current page link has `aria-current="page"`. The sidebar replaces the top site
 header on every page; page and lesson titles remain in the content area.
 
@@ -69,6 +74,14 @@ backdrop clicks dismiss it; the lesson keyboard shortcuts pause while it is open
 
 When adding a concept, add its link to the homepage and to the sidebar in each
 HTML page. Preserve the page-specific relative paths and current-page marker.
+Course-topic pages use this same navigation and complete-viewport layout.
+
+The topic 1.1 lesson-player component is prepared but remains hidden until an
+approved public Google Slides embed URL is configured in `data-lesson-src`.
+The original deck's access is unchanged. Enabling the player requires explicit
+approval to publish that exact deck to anyone on the web, followed by verification
+of the real published view. Do not substitute an editor/share link or a static
+export. The player opens beside the persistent sidebar and loads only on request.
 
 ## Local verification and release
 
@@ -87,6 +100,10 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 8 November 2026: grouped navigation under Courses and Concepts on every page,
+  added GCSE Computer Science and the verified first topic, and retained the
+  existing models. The first live Slides player awaits public-publication approval.
 
 - 8 November 2026: renamed the site CSRevision and added the approved CSR badge
   to every sidebar. Updated homepage copy, footer and all browser titles.

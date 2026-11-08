@@ -1,0 +1,25 @@
+.course-topic-page .topic-overview { margin-top: 14px; }
+.topic-introduction { padding: 18px 20px; border: 3px solid var(--ink); background: var(--blue); color: white; }
+.topic-introduction h2 { margin: 0 0 8px; font-size: 28px; }
+.topic-introduction p { margin: 0; font-size: 18px; }
+.topic-points { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 16px; }
+.topic-point { padding: 16px; border: 3px solid var(--ink); background: var(--teal); }
+.topic-point:nth-child(2) { background: var(--orange); }
+.topic-point:nth-child(3) { background: var(--lime); }
+.topic-point h3 { margin: 0 0 10px; font-size: 23px; line-height: 1.15; }
+.topic-point p { margin: 0; font-size: 17px; }
+.topic-point code { display: block; margin-top: 16px; padding: 10px; border: 2px solid var(--ink); background: white; font: 700 16px/1.4 Consolas,monospace; overflow-wrap: anywhere; }
+.topic-actions { margin-top: 16px; }
+.topic-actions:has(.lesson-launch[hidden]) { display: none; }
+.lesson-launch { display: inline-flex; align-items: center; gap: 14px; padding: 14px 20px; border: 3px solid var(--ink); background: var(--pink); color: white; font-size: 22px; font-weight: 900; }
+.lesson-launch[hidden] { display: none; }
+.lesson-launch svg { width: 32px; height: 32px; }
+.lesson-launch:hover { background: var(--blue); }
+.lesson-modal { position: fixed; inset: 16px 16px 16px calc(var(--sidebar-width) + 16px); width: auto; max-width: none; height: auto; max-height: none; margin: 0; padding: 16px; border: 3px solid var(--ink); background: white; color: var(--ink); }
+.lesson-modal[open] { display: flex; flex-direction: column; gap: 12px; }
+.lesson-modal::backdrop { background: rgb(16 18 35 / .35); }
+.lesson-modal-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lesson-modal h2 { margin: 0; font-size: 24px; }
+.lesson-modal .modal-close { min-height: 40px; padding: 7px 12px; border: 2px solid var(--ink); background: var(--pink); color: white; font-weight: 700; }
+.lesson-modal iframe { width: 100%; flex: 1; min-height: 0; border: 0; background: white; }
+@media(max-width: 600px) { .lesson-modal { inset: 8px 8px 8px calc(var(--sidebar-width) + 8px); padding: 8px; }.lesson-modal-heading { flex-wrap: wrap; }.lesson-modal h2 { font-size: 18px; } }
