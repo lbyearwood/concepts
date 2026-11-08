@@ -76,8 +76,10 @@ When adding a concept, add its link to the homepage and to the sidebar in each
 HTML page. Preserve the page-specific relative paths and current-page marker.
 Course-topic pages use this same navigation and complete-viewport layout.
 
-The topic 1.1 lesson-player component is prepared but remains hidden until an
-approved public Google Slides embed URL is configured in `data-lesson-src`.
+The topic 1.1 resource row has three square buttons. The first is Slides; the
+other two stay visually blank and inactive until the user assigns them a purpose.
+The Slides button is visible but disabled until an approved public Google Slides
+embed URL is configured in `data-lesson-src`.
 The original deck's access is unchanged. Enabling the player requires explicit
 approval to publish that exact deck to anyone on the web, followed by verification
 of the real published view. Do not substitute an editor/share link or a static
@@ -100,6 +102,10 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 8 November 2026: changed the three topic panels into square resource buttons.
+  Slides is first; the other two are blank and inactive as requested. Public
+  publication of the selected slide deck still awaits approval.
 
 - 8 November 2026: grouped navigation under Courses and Concepts on every page,
   added GCSE Computer Science and the verified first topic, and retained the

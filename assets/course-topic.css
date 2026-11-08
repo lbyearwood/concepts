@@ -3,18 +3,12 @@
 .topic-introduction h2 { margin: 0 0 8px; font-size: 28px; }
 .topic-introduction p { margin: 0; font-size: 18px; }
 .topic-points { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 16px; }
-.topic-point { padding: 16px; border: 3px solid var(--ink); background: var(--teal); }
+.topic-point { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; width: 100%; aspect-ratio: 1; padding: 24px; border: 3px solid var(--ink); background: var(--teal); color: var(--ink); font: 900 32px/1.2 "Arial Black",Arial,Helvetica,sans-serif; text-align: center; }
 .topic-point:nth-child(2) { background: var(--orange); }
 .topic-point:nth-child(3) { background: var(--lime); }
-.topic-point h3 { margin: 0 0 10px; font-size: 23px; line-height: 1.15; }
-.topic-point p { margin: 0; font-size: 17px; }
-.topic-point code { display: block; margin-top: 16px; padding: 10px; border: 2px solid var(--ink); background: white; font: 700 16px/1.4 Consolas,monospace; overflow-wrap: anywhere; }
-.topic-actions { margin-top: 16px; }
-.topic-actions:has(.lesson-launch[hidden]) { display: none; }
-.lesson-launch { display: inline-flex; align-items: center; gap: 14px; padding: 14px 20px; border: 3px solid var(--ink); background: var(--pink); color: white; font-size: 22px; font-weight: 900; }
-.lesson-launch[hidden] { display: none; }
-.lesson-launch svg { width: 32px; height: 32px; }
-.lesson-launch:hover { background: var(--blue); }
+.topic-point:disabled { cursor: default; opacity: 1; }
+.topic-point:not(:disabled):hover { background: var(--yellow); }
+.lesson-launch svg { width: 56px; height: 56px; }
 .lesson-modal { position: fixed; inset: 16px 16px 16px calc(var(--sidebar-width) + 16px); width: auto; max-width: none; height: auto; max-height: none; margin: 0; padding: 16px; border: 3px solid var(--ink); background: white; color: var(--ink); }
 .lesson-modal[open] { display: flex; flex-direction: column; gap: 12px; }
 .lesson-modal::backdrop { background: rgb(16 18 35 / .35); }

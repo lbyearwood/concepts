@@ -6,7 +6,7 @@
   if (!trigger || !dialog || !source) return;
 
   const frame = dialog.querySelector('iframe');
-  trigger.hidden = false;
+  trigger.disabled = false;
   trigger.addEventListener('click', () => {
     if (!frame.getAttribute('src')) frame.src = source;
     dialog.showModal();
