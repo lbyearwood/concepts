@@ -1,6 +1,32 @@
 # Teaching Concepts
 
-A static teaching site hosted by GitHub Pages from the `main` branch.
+A static teaching site at [csrevision.org.uk](https://csrevision.org.uk/), hosted
+by GitHub Pages from the `main` branch. Cloudflare manages the domain and DNS.
+
+## Custom domain
+
+The canonical domain is `csrevision.org.uk`, also stored in the root `CNAME`
+file. `www.csrevision.org.uk` points to the same GitHub Pages host and redirects
+to the canonical domain. Keep internal links relative to preserve all concept
+routes when moving between the default GitHub URL and this domain.
+
+Cloudflare DNS configuration:
+
+| Type | Name | Target | Proxy status |
+| --- | --- | --- | --- |
+| CNAME | @ | lbyearwood.github.io | DNS only |
+| CNAME | www | lbyearwood.github.io | DNS only |
+
+Cloudflare flattens the apex CNAME to GitHub Pages' IPv4/IPv6 addresses. Retain
+the `_github-pages-challenge-lbyearwood` TXT record so ownership stays verified
+for the `lbyearwood` GitHub account.
+
+For future domain changes, verify ownership in the account's GitHub Pages
+settings, bind the domain in this repository's Pages settings, then change the
+DNS records. Preserve unrelated records. Wait for GitHub's certificate to be
+issued, enable Enforce HTTPS, and verify both the main and www addresses plus
+the concept routes. Do not bypass a certificate warning. GitHub's domain-setting
+save creates a CNAME commit; fast-forward the local checkout before further work.
 
 ## Navigation
 
@@ -68,6 +94,8 @@ web-font connection is needed at runtime.
   first, middle, last and absent matches in an unsorted list. Each comparison shows
   its zero-based index and running count; a match ends the search immediately.
   Added the category and model to the homepage and every sidebar.
+- 8 November 2026: connected csrevision.org.uk and www through Cloudflare DNS
+  and the Concepts GitHub Pages custom-domain setting; verified domain ownership.
 
 ## Linear Search model
 
