@@ -1,8 +1,8 @@
 :root { --sidebar-width: 292px; }
 body.has-sidebar { margin: 0 0 0 var(--sidebar-width); min-width: 0; }
 .site-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 200; width: var(--sidebar-width); height: 100vh; height: 100dvh; overflow-y: auto; overscroll-behavior: contain; padding: 24px 16px; border-right: 1px solid #c8c8c8; background: white; color: #101223; font: 16px/1.5 Arial,Helvetica,sans-serif; }
-.site-sidebar .sidebar-brand { display: block; margin: 0 6px 32px; color: #101223; font-size: 32px; font-weight: 900; line-height: 1.05; letter-spacing: -.025em; text-decoration: none; }
-.site-sidebar .sidebar-brand span { display: block; margin-top: 10px; font: 16px/1.4 Arial,Helvetica,sans-serif; letter-spacing: 0; }
+.site-sidebar .sidebar-brand { display: block; margin: 0 0 18px; text-decoration: none; }
+.site-sidebar .sidebar-logo { display: block; width: 100%; height: auto; }
 .site-sidebar nav { display: block; }
 .site-sidebar a { text-decoration: none; }
 .site-sidebar .sidebar-home { display: block; padding: 12px 8px; margin-bottom: 26px; color: #101223; font-size: 20px; font-weight: 900; }
@@ -21,5 +21,5 @@ body.has-sidebar { margin: 0 0 0 var(--sidebar-width); min-width: 0; }
 .site-sidebar :is(a, summary):focus-visible { outline: 3px solid #1433ff; outline-offset: 3px; }
 .skip-link { position: fixed; top: 10px; left: calc(var(--sidebar-width) + 10px); z-index: 300; padding: 10px 14px; border: 3px solid #101223; background: #ffe500; color: #101223; font-weight: 700; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
-@media (max-width: 1100px) { :root { --sidebar-width: 230px; }.site-sidebar { padding: 22px 14px; }.site-sidebar .sidebar-brand { font-size: 28px; }.site-sidebar summary { font-size: 16px; }.site-sidebar .sidebar-concepts a { font-size: 15px; } }
-@media (max-width: 600px) { :root { --sidebar-width: clamp(112px,32vw,160px); }.site-sidebar { padding: 18px 6px; }.site-sidebar .sidebar-brand { margin: 0 6px 20px; font-size: 17px; }.site-sidebar .sidebar-brand span { margin-top: 8px; font-size: 11px; }.site-sidebar .sidebar-home { margin-bottom: 20px; padding: 10px 6px; font-size: 14px; }.site-sidebar summary { padding: 9px 13px 9px 5px; border-left-width: 4px; font-size: 12px; font-weight: 700; letter-spacing: -.02em; }.site-sidebar summary::after { width: 11px; height: 11px; }.site-sidebar .sidebar-concepts { margin-left: 7px; padding-left: 4px; }.site-sidebar .sidebar-concepts a { padding: 9px 5px; font-size: 12px; }.site-sidebar details { margin-bottom: 22px; } }
+@media (max-width: 1100px) { :root { --sidebar-width: 230px; }.site-sidebar { padding: 22px 14px; }.site-sidebar summary { font-size: 16px; }.site-sidebar .sidebar-concepts a { font-size: 15px; } }
+@media (max-width: 600px) { :root { --sidebar-width: clamp(112px,32vw,160px); }.site-sidebar { padding: 18px 6px; }.site-sidebar .sidebar-brand { margin-bottom: 16px; }.site-sidebar .sidebar-home { margin-bottom: 20px; padding: 10px 6px; font-size: 14px; }.site-sidebar summary { padding: 9px 13px 9px 5px; border-left-width: 4px; font-size: 12px; font-weight: 700; letter-spacing: -.02em; }.site-sidebar summary::after { width: 11px; height: 11px; }.site-sidebar .sidebar-concepts { margin-left: 7px; padding-left: 4px; }.site-sidebar .sidebar-concepts a { padding: 9px 5px; font-size: 12px; }.site-sidebar details { margin-bottom: 22px; } }

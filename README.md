@@ -1,4 +1,4 @@
-# Teaching Concepts
+# CSRevision
 
 A static teaching site at [csrevision.org.uk](https://csrevision.org.uk/), hosted
 by GitHub Pages from the `main` branch. Cloudflare manages the domain and DNS.
@@ -37,6 +37,13 @@ current page link has `aria-current="page"`. The sidebar replaces the top site
 header on every page; page and lesson titles remain in the content area.
 
 ## Appearance
+
+The approved CSRevision logo is `assets/csrevision-logo.png`: white CSR lettering
+in a blue-violet badge, a turquoise cut-corner accent, and the lowercase
+`csrevision` wordmark underneath. Use this same image in every sidebar, with an
+accessible home-link label and proportional sizing. Retain the original palette
+and lettering. This site identity does not change the reusable Colour Block theme
+or any Google Slides template.
 
 The selected website theme is **Colour Block (WEB-CB)**, chosen on 7 November
 2026. Follow the [canonical theme guide](https://docs.google.com/document/d/16c7ox4-QR8Df_ZRFoneW0v89Qk9MUAH0LwR8dXj2mjE/edit)
@@ -80,6 +87,9 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 8 November 2026: renamed the site CSRevision and added the approved CSR badge
+  to every sidebar. Updated homepage copy, footer and all browser titles.
 
 - 7 November 2026: replaced the top headers with persistent category navigation
   across the homepage and both concept pages, with shared responsive styling and
