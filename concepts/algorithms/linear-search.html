@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A step-by-step linear search model that checks an unsorted list one item at a time.">
+  <title>Linear Search | Teaching Concepts</title>
+  <link rel="stylesheet" href="../../assets/sidebar.css?v=colour-block-2">
+  <link rel="stylesheet" href="../../assets/colour-block.css?v=2">
+  <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
+  <link rel="stylesheet" href="../../assets/linear-search.css?v=1">
+  <script src="../../assets/concept-viewport.js?v=1" defer></script>
+  <script src="../../assets/linear-search.js?v=1" defer></script>
+</head>
+<body class="has-sidebar theme-colour-block concept-demo linear-search-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <aside class="site-sidebar" aria-label="Concept navigation">
+    <a class="sidebar-brand" href="../../index.html">Teaching Concepts<span>Interactive explanations</span></a>
+    <nav aria-label="Concepts">
+      <a class="sidebar-home" href="../../index.html">Home</a>
+      <p class="sidebar-label">Browse concepts</p>
+      <details open>
+        <summary>Memory Management</summary>
+        <ul class="sidebar-concepts"><li><a href="../memory-management/virtual-memory.html">Virtual Memory</a></li></ul>
+      </details>
+      <details open>
+        <summary>Process Scheduling</summary>
+        <ul class="sidebar-concepts"><li><a href="../process-scheduling/round-robin.html">Round Robin Scheduling</a></li></ul>
+      </details>
+      <details open>
+        <summary>Algorithms</summary>
+        <ul class="sidebar-concepts"><li><a href="linear-search.html" aria-current="page">Linear Search</a></li></ul>
+      </details>
+    </nav>
+  </aside>
+  <div class="concept-viewport"><div class="app">
+    <div class="title-row">
+      <p class="eyebrow">Algorithms / Searching</p>
+      <h1>Linear search</h1>
+      <p class="subtitle">Check each item in order until a match is found or the list ends.</p>
+      <button class="keywords-button" type="button" aria-haspopup="dialog" aria-controls="keywords-modal">Keywords</button>
+    </div>
+    <main class="workspace" id="main-content" tabindex="-1">
+      <section class="lesson-intro" aria-labelledby="lesson-heading">
+        <div class="step-heading"><h2 id="lesson-heading">Start at the beginning</h2><div class="step-progress"><span class="step-counter" id="step-counter"></span><div class="progress" id="progress" aria-label="Lesson progress"></div></div></div>
+        <p class="lesson-copy" id="lesson-copy"></p>
+      </section>
+      <section class="search-model" aria-label="Linear search model">
+        <div class="search-dashboard">
+          <div class="target-control"><label for="search-target">Search for</label><select id="search-target"><option value="11" selected>11</option><option value="18">18</option><option value="9">9</option><option value="40">40 (not in the list)</option></select></div>
+          <div class="comparison"><span>Current comparison</span><strong id="comparison-text">Ready to search</strong></div>
+          <div class="comparison-count"><span>Comparisons</span><strong id="comparison-count">0</strong></div>
+        </div>
+        <div class="search-list">
+          <div class="list-heading"><h3>The list</h3><span>Unsorted · 8 items</span></div>
+          <ol class="search-items" id="search-items" aria-label="Items in search order"></ol>
+          <p class="index-note">The <strong>index</strong> counts from 0. Index 0 is the first item.</p>
+        </div>
+        <div class="search-outcome" id="search-outcome"><strong id="outcome-heading"></strong><span id="outcome-text"></span></div>
+      </section>
+      <aside class="key-point"><strong>Remember:</strong><p id="takeaway"></p></aside>
+    </main>
+    <footer class="controls" aria-label="Demonstration controls">
+      <div class="controls-left"><button class="ctrl reset" id="reset-button" type="button"><img class="ui-icon" src="../../assets/icons/arrow-counterclockwise.svg" alt="" aria-hidden="true">Reset</button><span class="keyboard">Keyboard: ← Back · → Next · R Reset</span></div>
+      <div class="controls-right"><button class="ctrl" id="back-button" type="button" disabled><img class="ui-icon" src="../../assets/icons/arrow-left.svg" alt="" aria-hidden="true">Back</button><button class="ctrl primary" id="next-button" type="button"><span data-next-label>Next</span><img class="ui-icon" src="../../assets/icons/arrow-right.svg" alt="" aria-hidden="true"></button></div>
+    </footer>
+    <p class="model-note">Choose another target to start a new search.</p>
+    <div class="stage-announcement" id="announcement" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div></div>
+  <dialog class="keywords-modal" id="keywords-modal" aria-labelledby="keywords-title">
+    <div class="modal-heading"><h2 id="keywords-title">Keywords</h2><button class="modal-close" type="button" autofocus>Close</button></div>
+    <div class="definitions">
+      <div class="definition"><strong>Linear search</strong><p>Checking items one at a time, in order, until a match is found or the list ends.</p></div>
+      <div class="definition"><strong>Target</strong><p>The value you are trying to find.</p></div>
+      <div class="definition"><strong>Index</strong><p>An item's numbered position in a list. In this model, indexes start at 0.</p></div>
+      <div class="definition"><strong>Comparison</strong><p>Checking whether an item has the same value as the target.</p></div>
+    </div>
+  </dialog>
+</body>
+</html>

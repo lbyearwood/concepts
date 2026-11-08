@@ -10,6 +10,7 @@ body.has-sidebar { margin: 0 0 0 var(--sidebar-width); min-width: 0; }
 .site-sidebar details { margin: 10px 0 24px; }
 .site-sidebar summary { position: relative; display: flex; align-items: center; min-height: 44px; padding: 9px 24px 9px 10px; border-left: 7px solid #00d6c0; color: #101223; font-size: 18px; font-weight: 900; line-height: 1.25; list-style: none; cursor: pointer; overflow-wrap: anywhere; }
 .site-sidebar details:nth-of-type(2) summary { border-left-color: #ff8a00; }
+.site-sidebar details:nth-of-type(3) summary { border-left-color: #d90058; }
 .site-sidebar summary::-webkit-details-marker { display: none; }
 .site-sidebar summary::after { content: ''; position: absolute; right: 0; width: 14px; height: 14px; background: url("icons/chevron-right.svg") center/contain no-repeat; }
 .site-sidebar details[open] > summary::after { transform: rotate(90deg); }

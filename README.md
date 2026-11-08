@@ -6,9 +6,9 @@ A static teaching site hosted by GitHub Pages from the `main` branch.
 
 The homepage and every concept page include the same persistent left sidebar.
 Categories use native HTML `details` and `summary` elements, so their menus work
-with a keyboard and without JavaScript. Both categories start expanded. The
+with a keyboard and without JavaScript. All categories start expanded. The
 current page link has `aria-current="page"`. The sidebar replaces the top site
-header on all three pages; page and lesson titles remain in the content area.
+header on every page; page and lesson titles remain in the content area.
 
 ## Appearance
 
@@ -39,7 +39,7 @@ HTML page. Preserve the page-specific relative paths and current-page marker.
 
 ## Local verification and release
 
-Serve this directory with a static HTTP server, then check the homepage and both
+Serve this directory with a static HTTP server, then check the homepage and all
 demonstrations on desktop and a narrow viewport. Exercise category expand/collapse,
 cross-page links, current-page highlighting, keyboard focus and lesson controls.
 Check every step fits fully inside the viewport and that only a long sidebar
@@ -64,3 +64,17 @@ web-font connection is needed at runtime.
   keyboard navigation, colour contrast and responsive layouts in Edge.
 - 7 November 2026: made each complete concept fit the viewport and moved keywords
   to a top-of-page modal. Sidebar overflow remains independently scrollable.
+- 8 November 2026: added Algorithms and a Linear Search model. Targets demonstrate
+  first, middle, last and absent matches in an unsorted list. Each comparison shows
+  its zero-based index and running count; a match ends the search immediately.
+  Added the category and model to the homepage and every sidebar.
+
+## Linear Search model
+
+`concepts/algorithms/linear-search.html` uses the shared viewport and Keywords
+components, with model-specific CSS and JavaScript in `assets/linear-search.*`.
+The list is fixed at 18, 7, 25, 11, 32, 4, 16, 9. Choosing a target starts a new
+search. Each Next action performs one comparison; Back revisits the previous
+comparison, and Reset returns to the start with the selected target retained.
+The model stops at the first match, or reports not found after all eight checks.
+Index labels count from 0; the explanation also gives the ordinary item number.
