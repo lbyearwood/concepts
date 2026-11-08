@@ -15,5 +15,6 @@
 .lesson-modal-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .lesson-modal h2 { margin: 0; font-size: 24px; }
 .lesson-modal .modal-close { min-height: 40px; padding: 7px 12px; border: 2px solid var(--ink); background: var(--pink); color: white; font-weight: 700; }
-.lesson-modal iframe { width: 100%; flex: 1; min-height: 0; border: 0; background: white; }
+.lesson-player { display: flex; flex: 1; align-items: center; justify-content: center; min-height: 0; overflow: hidden; }
+.lesson-modal iframe { display: block; max-width: 100%; max-height: 100%; border: 0; background: white; }
 @media(max-width: 600px) { .lesson-modal { inset: 8px 8px 8px calc(var(--sidebar-width) + 8px); padding: 8px; }.lesson-modal-heading { flex-wrap: wrap; }.lesson-modal h2 { font-size: 18px; } }

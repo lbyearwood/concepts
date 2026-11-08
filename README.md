@@ -78,12 +78,13 @@ Course-topic pages use this same navigation and complete-viewport layout.
 
 The topic 1.1 resource row has three square buttons. The first is Slides; the
 other two stay visually blank and inactive until the user assigns them a purpose.
-The Slides button is visible but disabled until an approved public Google Slides
-embed URL is configured in `data-lesson-src`.
-The original deck's access is unchanged. Enabling the player requires explicit
-approval to publish that exact deck to anyone on the web, followed by verification
-of the real published view. Do not substitute an editor/share link or a static
-export. The player opens beside the persistent sidebar and loads only on request.
+The Slides button opens the approved published Google Slides presentation in a
+white lightbox beside the persistent sidebar. Its actual `pubembed` URL is stored
+in `data-lesson-src`; the player loads only when the button is clicked. The same
+native deck supplies future updates. Do not substitute an editor/share link or a
+static export. Existing edit-sharing permissions are preserved; the published
+presentation is public, as explicitly approved on 8 November 2026. Obtain approval
+for the exact deck and public-web audience before publishing a different deck.
 
 ## Local verification and release
 
@@ -104,12 +105,12 @@ web-font connection is needed at runtime.
 ## Progress
 
 - 8 November 2026: changed the three topic panels into square resource buttons.
-  Slides is first; the other two are blank and inactive as requested. Public
-  publication of the selected slide deck still awaits approval.
+  Slides opens the approved live presentation in a lightbox; the other two are
+  blank and inactive as requested.
 
 - 8 November 2026: grouped navigation under Courses and Concepts on every page,
   added GCSE Computer Science and the verified first topic, and retained the
-  existing models. The first live Slides player awaits public-publication approval.
+  existing models.
 
 - 8 November 2026: renamed the site CSRevision and added the approved CSR badge
   to every sidebar. Updated homepage copy, footer and all browser titles.
