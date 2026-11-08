@@ -31,10 +31,12 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 ## Navigation
 
 The homepage and every concept page include the same persistent left sidebar.
-The order is Home, Courses, then Concepts. Courses contains GCSE Computer Science
-and its numbered topics. Concepts contains Memory Management, Process Scheduling
-and Algorithms, with their existing interactive models. Topic 1.1 is Variables,
-constants, data types and casting, matching the existing OCR course resources.
+The order is Home, Courses, then Concepts. Courses contains GCSE Computer Science,
+then eight units, then their 60 numbered topics. Unit titles and topic numbering
+match the current OCR course folders: Programming, Hardware, Software, Data
+representation, Networks, Cyber security, Algorithms, and Societal implications
+of digital technology. Concepts contains Memory Management, Process Scheduling
+and Algorithms, with their existing interactive models.
 Nested groups use native HTML `details` and `summary` elements, so their menus work
 with a keyboard and without JavaScript. The current page's branch starts open;
 other concept categories start closed. Both top groups open on the homepage. The
@@ -74,7 +76,18 @@ backdrop clicks dismiss it; the lesson keyboard shortcuts pause while it is open
 
 When adding a concept, add its link to the homepage and to the sidebar in each
 HTML page. Preserve the page-specific relative paths and current-page marker.
-Course-topic pages use this same navigation and complete-viewport layout.
+Course-topic pages use this same navigation and complete-viewport layout. Their
+current unit starts open. All units start collapsed on the homepage so their
+titles can be scanned before expanding a topic list.
+
+`data/gcse-course.json` is the public unit/topic catalogue. It contains titles,
+relative filenames and approved published player URLs only. Keep private editor
+IDs and source-deck inventories outside this repository. Run
+`python scripts/build-course.py` after changing the catalogue; it regenerates the
+59 new resource pages and all 64 static sidebars while retaining the existing
+1.1 teaching content and concept models. `python scripts/build-course.py --check`
+checks that generated output is current. No runtime JavaScript is needed for
+navigation.
 
 The topic 1.1 resource row has three square buttons. The first is Slides; the
 other two stay visually blank and inactive until the user assigns them a purpose.
@@ -87,6 +100,9 @@ native deck supplies future updates. Do not substitute an editor/share link or a
 static export. Existing edit-sharing permissions are preserved; the published
 presentation is public, as explicitly approved on 8 November 2026. Obtain approval
 for the exact deck and public-web audience before publishing a different deck.
+The remaining 59 student decks have been matched to the current course folders;
+their Slides controls stay disabled until approved public player URLs are set in
+the catalogue. Teacher editions, revision cards and archived files are excluded.
 
 ## Local verification and release
 
@@ -96,7 +112,8 @@ cross-page links, current-page highlighting, keyboard focus and lesson controls.
 Check every step fits fully inside the viewport and that only a long sidebar
 scrolls. Test Keywords, modal focus, Escape and the return to the lesson.
 
-Before release, review `git diff` and run `git diff --check`. Commit the intended
+Before release, run `python scripts/build-course.py --check`, review `git diff`
+and run `git diff --check`. Commit the intended
 files and push `main`; GitHub Pages builds and publishes the site automatically.
 Verify the Pages workflow for that commit and check the published navigation.
 
@@ -105,6 +122,12 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 8 November 2026: added the eight GCSE unit menus and all 60 numbered topic
+  pages. Matched main student decks in Drive without changing their content or
+  access. Topic 1.1 retains its approved player; 59 further players await public
+  publication approval. Added a shared catalogue and static generator to keep
+  every sidebar consistent.
 
 - 8 November 2026: made the Slides square yellow by default, with a blue hover
   and keyboard-focus state using white icon/text.

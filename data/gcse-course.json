@@ -1,0 +1,345 @@
+{
+  "units": [
+    {
+      "title": "Unit 1 Programming",
+      "topics": [
+        {
+          "title": "1.1 Variables, constants, data types and casting",
+          "file": "1-1-variables-constants-data-types-casting.html",
+          "lessonSrc": "https://docs.google.com/presentation/d/e/2PACX-1vRwHbW-OMrOQeDVWM8T-_W8NF-zL4eASd1D6S_XY18LSl8gEYtiYn42nRCo_F6r24uNRZrkSwUiXYfb/pubembed?start=false&loop=false&delayms=3000"
+        },
+        {
+          "title": "1.2 Input, output, assignment and string operations",
+          "file": "1-2-input-output-assignment-and-string-operations.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.3 Arithmetic, comparison and Boolean operators",
+          "file": "1-3-arithmetic-comparison-and-boolean-operators.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.4 Sequence & Basic selection constructs",
+          "file": "1-4-sequence-and-basic-selection-constructs.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.5 Complex and nested selection",
+          "file": "1-5-complex-and-nested-selection.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.6 Count- and condition-controlled iteration",
+          "file": "1-6-count-and-condition-controlled-iteration.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.7 One-dimensional arrays",
+          "file": "1-7-one-dimensional-arrays.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.8 Procedures and functions",
+          "file": "1-8-procedures-and-functions.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.9 Nested iteration, status flags and loop control",
+          "file": "1-9-nested-iteration-status-flags-and-loop-control.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.10 Two-dimensional arrays",
+          "file": "1-10-two-dimensional-arrays.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.11 File handling",
+          "file": "1-11-file-handling.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.12 Records",
+          "file": "1-12-records.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.13 SQL",
+          "file": "1-13-sql.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.14 Defensive design",
+          "file": "1-14-defensive-design.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.15 Errors and testing",
+          "file": "1-15-errors-and-testing.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.16 Translators and programming languages",
+          "file": "1-16-translators-and-programming-languages.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "1.17 Integrated Development Environments",
+          "file": "1-17-integrated-development-environments.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 2 Hardware",
+      "topics": [
+        {
+          "title": "2.1 CPU components and registers",
+          "file": "2-1-cpu-components-and-registers.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.2 Fetch-decode-execute cycle",
+          "file": "2-2-fetch-decode-execute-cycle.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.3 CPU performance",
+          "file": "2-3-cpu-performance.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.4 Embedded systems",
+          "file": "2-4-embedded-systems.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.5 RAM and ROM",
+          "file": "2-5-ram-and-rom.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.6 Virtual memory",
+          "file": "2-6-virtual-memory.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.7 Secondary storage",
+          "file": "2-7-secondary-storage.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "2.8 Logic gates and truth tables",
+          "file": "2-8-logic-gates-and-truth-tables.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 3 Software",
+      "topics": [
+        {
+          "title": "3.1 Operating systems",
+          "file": "3-1-operating-systems.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "3.2 Utility software",
+          "file": "3-2-utility-software.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 4 Data representation",
+      "topics": [
+        {
+          "title": "4.1 Data units",
+          "file": "4-1-data-units.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.2 Binary number representation",
+          "file": "4-2-binary-number-representation.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.3 Binary arithmetic",
+          "file": "4-3-binary-arithmetic.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.4 Hexadecimal",
+          "file": "4-4-hexadecimal.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.5 Characters",
+          "file": "4-5-characters.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.6 Images",
+          "file": "4-6-images.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.7 Sound",
+          "file": "4-7-sound.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.8 Data compression and file formats",
+          "file": "4-8-data-compression-and-file-formats.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "4.9 Encryption",
+          "file": "4-9-encryption.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 5 Networks",
+      "topics": [
+        {
+          "title": "5.1 LAN",
+          "file": "5-1-lan.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.2 Network hardware",
+          "file": "5-2-network-hardware.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.3 Wireless networking",
+          "file": "5-3-wireless-networking.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.4 LAN topologies",
+          "file": "5-4-lan-topologies.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.5 Internet and WANs",
+          "file": "5-5-internet-and-wans.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.6 Client-server and peer-to-peer network architecture",
+          "file": "5-6-client-server-and-peer-to-peer-network-architecture.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.7 Standards and protocols",
+          "file": "5-7-standards-and-protocols.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "5.8 Network layers",
+          "file": "5-8-network-layers.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 6 Cyber security",
+      "topics": [
+        {
+          "title": "6.1 Network threats",
+          "file": "6-1-network-threats.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "6.2 Preventing vulnerabilities",
+          "file": "6-2-preventing-vulnerabilities.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 7 Algorithms",
+      "topics": [
+        {
+          "title": "7.1 Computational thinking",
+          "file": "7-1-computational-thinking.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.2 Linear search",
+          "file": "7-2-linear-search.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.3 Binary search",
+          "file": "7-3-binary-search.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.4 Bubble sort",
+          "file": "7-4-bubble-sort.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.5 Insertion sort",
+          "file": "7-5-insertion-sort.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.6 Merge sort",
+          "file": "7-6-merge-sort.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.7 Flowcharts",
+          "file": "7-7-flowcharts.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.8 Pseudocode",
+          "file": "7-8-pseudocode.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "7.9 Interpreting algorithms",
+          "file": "7-9-interpreting-algorithms.html",
+          "lessonSrc": null
+        }
+      ]
+    },
+    {
+      "title": "Unit 8 Societal implications of digital technology",
+      "topics": [
+        {
+          "title": "8.1 Ethical and cultural issues",
+          "file": "8-1-ethical-and-cultural-issues.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "8.2 Environmental issues",
+          "file": "8-2-environmental-issues.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "8.3 Privacy and data protection",
+          "file": "8-3-privacy-and-data-protection.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "8.4 Computer misuse and copyright",
+          "file": "8-4-computer-misuse-and-copyright.html",
+          "lessonSrc": null
+        },
+        {
+          "title": "8.5 Software licensing",
+          "file": "8-5-software-licensing.html",
+          "lessonSrc": null
+        }
+      ]
+    }
+  ]
+}
+

@@ -16,6 +16,11 @@ body.has-sidebar { margin: 0 0 0 var(--sidebar-width); min-width: 0; }
 .site-sidebar .sidebar-section-content { padding: 2px 0 0 8px; }
 .site-sidebar .sidebar-course > summary { border-left-color: #1433ff; }
 .site-sidebar .sidebar-course, .site-sidebar .sidebar-category { margin: 12px 0 18px; }
+.site-sidebar .sidebar-units { padding: 4px 0 0 8px; }
+.site-sidebar .sidebar-unit { margin: 6px 0; }
+.site-sidebar .sidebar-unit > summary { padding: 9px 19px 9px 8px; border-left: 3px solid #bfc2c8; font-size: 16px; line-height: 1.35; }
+.site-sidebar .sidebar-unit:has(a[aria-current='page']) > summary { border-left-color: #1433ff; }
+.site-sidebar .sidebar-unit .sidebar-concepts { margin-left: 10px; padding-left: 5px; }
 .site-sidebar summary::-webkit-details-marker { display: none; }
 .site-sidebar summary::after { content: ''; position: absolute; right: 0; width: 14px; height: 14px; background: url("icons/chevron-right.svg") center/contain no-repeat; }
 .site-sidebar details[open] > summary::after { transform: rotate(90deg); }
@@ -29,3 +34,4 @@ body.has-sidebar { margin: 0 0 0 var(--sidebar-width); min-width: 0; }
 @media (max-width: 1100px) { :root { --sidebar-width: 230px; }.site-sidebar { padding: 22px 14px; }.site-sidebar summary { font-size: 16px; }.site-sidebar .sidebar-concepts a { font-size: 15px; } }
 @media (max-width: 600px) { :root { --sidebar-width: clamp(112px,32vw,160px); }.site-sidebar { padding: 18px 6px; }.site-sidebar .sidebar-brand { margin-bottom: 16px; }.site-sidebar .sidebar-home { margin-bottom: 20px; padding: 10px 6px; font-size: 14px; }.site-sidebar summary { padding: 9px 13px 9px 5px; border-left-width: 4px; font-size: 12px; font-weight: 700; letter-spacing: -.02em; }.site-sidebar summary::after { width: 11px; height: 11px; }.site-sidebar .sidebar-concepts { margin-left: 7px; padding-left: 4px; }.site-sidebar .sidebar-concepts a { padding: 9px 5px; font-size: 12px; }.site-sidebar details { margin-bottom: 22px; } }
 @media (max-width: 600px) { .site-sidebar .sidebar-section > summary { padding: 9px 14px 9px 5px; border-bottom-width: 2px; font-size: 15px; }.site-sidebar .sidebar-section-content { padding-left: 3px; }.site-sidebar .sidebar-course > summary { font-size: 12px; } }
+@media (max-width: 600px) { .site-sidebar .sidebar-units { padding-left: 3px; }.site-sidebar .sidebar-unit > summary { padding: 9px 13px 9px 4px; font-size: 12px; }.site-sidebar .sidebar-unit .sidebar-concepts { margin-left: 3px; padding-left: 2px; } }

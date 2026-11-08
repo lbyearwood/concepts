@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GCSE Computer Science lesson 4.9 Encryption.">
+  <title>4.9 Encryption | CSRevision</title>
+  <link rel="stylesheet" href="../../assets/sidebar.css?v=units-1">
+  <link rel="stylesheet" href="../../assets/colour-block.css?v=2">
+  <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
+  <link rel="stylesheet" href="../../assets/course-topic.css?v=4">
+  <script src="../../assets/concept-viewport.js?v=1" defer></script>
+  <script src="../../assets/course-lesson.js?v=3" defer></script>
+</head>
+<body class="has-sidebar theme-colour-block concept-demo course-topic-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <aside class="site-sidebar" aria-label="Site navigation">
+    <a class="sidebar-brand" href="../../index.html" aria-label="CSRevision home"><img class="sidebar-logo" src="../../assets/csrevision-logo.png" alt="CSR — csrevision" width="545" height="325"></a>
+    <nav aria-label="Main navigation">
+      <a class="sidebar-home" href="../../index.html">Home</a>
+      <details class="sidebar-section" open>
+        <summary>Courses</summary>
+        <div class="sidebar-section-content">
+          <details class="sidebar-course" open>
+            <summary>GCSE Computer Science</summary>
+            <div class="sidebar-units">
+              <details class="sidebar-unit">
+                <summary>Unit 1 Programming</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="1-1-variables-constants-data-types-casting.html">1.1 Variables, constants, data types and casting</a></li>
+                  <li><a href="1-2-input-output-assignment-and-string-operations.html">1.2 Input, output, assignment and string operations</a></li>
+                  <li><a href="1-3-arithmetic-comparison-and-boolean-operators.html">1.3 Arithmetic, comparison and Boolean operators</a></li>
+                  <li><a href="1-4-sequence-and-basic-selection-constructs.html">1.4 Sequence &amp; Basic selection constructs</a></li>
+                  <li><a href="1-5-complex-and-nested-selection.html">1.5 Complex and nested selection</a></li>
+                  <li><a href="1-6-count-and-condition-controlled-iteration.html">1.6 Count- and condition-controlled iteration</a></li>
+                  <li><a href="1-7-one-dimensional-arrays.html">1.7 One-dimensional arrays</a></li>
+                  <li><a href="1-8-procedures-and-functions.html">1.8 Procedures and functions</a></li>
+                  <li><a href="1-9-nested-iteration-status-flags-and-loop-control.html">1.9 Nested iteration, status flags and loop control</a></li>
+                  <li><a href="1-10-two-dimensional-arrays.html">1.10 Two-dimensional arrays</a></li>
+                  <li><a href="1-11-file-handling.html">1.11 File handling</a></li>
+                  <li><a href="1-12-records.html">1.12 Records</a></li>
+                  <li><a href="1-13-sql.html">1.13 SQL</a></li>
+                  <li><a href="1-14-defensive-design.html">1.14 Defensive design</a></li>
+                  <li><a href="1-15-errors-and-testing.html">1.15 Errors and testing</a></li>
+                  <li><a href="1-16-translators-and-programming-languages.html">1.16 Translators and programming languages</a></li>
+                  <li><a href="1-17-integrated-development-environments.html">1.17 Integrated Development Environments</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit">
+                <summary>Unit 2 Hardware</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="2-1-cpu-components-and-registers.html">2.1 CPU components and registers</a></li>
+                  <li><a href="2-2-fetch-decode-execute-cycle.html">2.2 Fetch-decode-execute cycle</a></li>
+                  <li><a href="2-3-cpu-performance.html">2.3 CPU performance</a></li>
+                  <li><a href="2-4-embedded-systems.html">2.4 Embedded systems</a></li>
+                  <li><a href="2-5-ram-and-rom.html">2.5 RAM and ROM</a></li>
+                  <li><a href="2-6-virtual-memory.html">2.6 Virtual memory</a></li>
+                  <li><a href="2-7-secondary-storage.html">2.7 Secondary storage</a></li>
+                  <li><a href="2-8-logic-gates-and-truth-tables.html">2.8 Logic gates and truth tables</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit">
+                <summary>Unit 3 Software</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="3-1-operating-systems.html">3.1 Operating systems</a></li>
+                  <li><a href="3-2-utility-software.html">3.2 Utility software</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit" open>
+                <summary>Unit 4 Data representation</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="4-1-data-units.html">4.1 Data units</a></li>
+                  <li><a href="4-2-binary-number-representation.html">4.2 Binary number representation</a></li>
+                  <li><a href="4-3-binary-arithmetic.html">4.3 Binary arithmetic</a></li>
+                  <li><a href="4-4-hexadecimal.html">4.4 Hexadecimal</a></li>
+                  <li><a href="4-5-characters.html">4.5 Characters</a></li>
+                  <li><a href="4-6-images.html">4.6 Images</a></li>
+                  <li><a href="4-7-sound.html">4.7 Sound</a></li>
+                  <li><a href="4-8-data-compression-and-file-formats.html">4.8 Data compression and file formats</a></li>
+                  <li><a href="4-9-encryption.html" aria-current="page">4.9 Encryption</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit">
+                <summary>Unit 5 Networks</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="5-1-lan.html">5.1 LAN</a></li>
+                  <li><a href="5-2-network-hardware.html">5.2 Network hardware</a></li>
+                  <li><a href="5-3-wireless-networking.html">5.3 Wireless networking</a></li>
+                  <li><a href="5-4-lan-topologies.html">5.4 LAN topologies</a></li>
+                  <li><a href="5-5-internet-and-wans.html">5.5 Internet and WANs</a></li>
+                  <li><a href="5-6-client-server-and-peer-to-peer-network-architecture.html">5.6 Client-server and peer-to-peer network architecture</a></li>
+                  <li><a href="5-7-standards-and-protocols.html">5.7 Standards and protocols</a></li>
+                  <li><a href="5-8-network-layers.html">5.8 Network layers</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit">
+                <summary>Unit 6 Cyber security</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="6-1-network-threats.html">6.1 Network threats</a></li>
+                  <li><a href="6-2-preventing-vulnerabilities.html">6.2 Preventing vulnerabilities</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit">
+                <summary>Unit 7 Algorithms</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="7-1-computational-thinking.html">7.1 Computational thinking</a></li>
+                  <li><a href="7-2-linear-search.html">7.2 Linear search</a></li>
+                  <li><a href="7-3-binary-search.html">7.3 Binary search</a></li>
+                  <li><a href="7-4-bubble-sort.html">7.4 Bubble sort</a></li>
+                  <li><a href="7-5-insertion-sort.html">7.5 Insertion sort</a></li>
+                  <li><a href="7-6-merge-sort.html">7.6 Merge sort</a></li>
+                  <li><a href="7-7-flowcharts.html">7.7 Flowcharts</a></li>
+                  <li><a href="7-8-pseudocode.html">7.8 Pseudocode</a></li>
+                  <li><a href="7-9-interpreting-algorithms.html">7.9 Interpreting algorithms</a></li>
+                </ul>
+              </details>
+              <details class="sidebar-unit">
+                <summary>Unit 8 Societal implications of digital technology</summary>
+                <ul class="sidebar-concepts">
+                  <li><a href="8-1-ethical-and-cultural-issues.html">8.1 Ethical and cultural issues</a></li>
+                  <li><a href="8-2-environmental-issues.html">8.2 Environmental issues</a></li>
+                  <li><a href="8-3-privacy-and-data-protection.html">8.3 Privacy and data protection</a></li>
+                  <li><a href="8-4-computer-misuse-and-copyright.html">8.4 Computer misuse and copyright</a></li>
+                  <li><a href="8-5-software-licensing.html">8.5 Software licensing</a></li>
+                </ul>
+              </details>
+            </div>
+          </details>
+        </div>
+      </details>
+      <details class="sidebar-section">
+        <summary>Concepts</summary>
+        <div class="sidebar-section-content">
+          <details class="sidebar-category sidebar-category-memory">
+            <summary>Memory Management</summary>
+            <ul class="sidebar-concepts"><li><a href="../../concepts/memory-management/virtual-memory.html">Virtual Memory</a></li></ul>
+          </details>
+          <details class="sidebar-category sidebar-category-scheduling">
+            <summary>Process Scheduling</summary>
+            <ul class="sidebar-concepts"><li><a href="../../concepts/process-scheduling/round-robin.html">Round Robin Scheduling</a></li></ul>
+          </details>
+          <details class="sidebar-category sidebar-category-algorithms">
+            <summary>Algorithms</summary>
+            <ul class="sidebar-concepts"><li><a href="../../concepts/algorithms/linear-search.html">Linear Search</a></li></ul>
+          </details>
+        </div>
+      </details>
+    </nav>
+  </aside>
+  <div class="concept-viewport"><div class="app">
+    <div class="title-row">
+      <p class="eyebrow">Courses / GCSE Computer Science / Unit 4 Data representation</p>
+      <h1>4.9 Encryption</h1>
+    </div>
+    <main id="main-content" class="topic-overview" tabindex="-1">
+      <section class="topic-introduction" aria-labelledby="topic-introduction-title">
+        <h2 id="topic-introduction-title">Unit 4 Data representation</h2>
+        <p>GCSE Computer Science</p>
+      </section>
+      <div class="topic-points" role="group" aria-label="Lesson resources">
+        <button class="topic-point lesson-launch" type="button" aria-label="Open lesson slides" aria-haspopup="dialog" aria-controls="lesson-modal" disabled><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 4h26v18H3zM16 22v6M9 29l7-3 7 3" stroke="currentColor" stroke-width="2.5"/><path d="m13 9 8 4-8 4z" fill="currentColor"/></svg><span>Slides</span></button>
+        <button class="topic-point" type="button" aria-label="Resource 2" disabled></button>
+        <button class="topic-point" type="button" aria-label="Resource 3" disabled></button>
+      </div>
+    </main>
+  </div></div>
+  <dialog class="lesson-modal" id="lesson-modal" aria-labelledby="lesson-title">
+    <div class="lesson-modal-heading"><h2 id="lesson-title">4.9 Lesson</h2><button class="modal-close" type="button">Close</button></div>
+    <div class="lesson-player"><iframe title="Encryption lesson" allowfullscreen></iframe></div>
+  </dialog>
+</body>
+</html>
