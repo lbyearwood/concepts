@@ -78,6 +78,8 @@ Course-topic pages use this same navigation and complete-viewport layout.
 
 The topic 1.1 resource row has three square buttons. The first is Slides; the
 other two stay visually blank and inactive until the user assigns them a purpose.
+Slides is yellow with dark icon/text by default, then blue with white icon/text
+on hover or visible keyboard focus. The blank controls retain orange and lime.
 The Slides button opens the approved published Google Slides presentation in a
 white lightbox beside the persistent sidebar. Its actual `pubembed` URL is stored
 in `data-lesson-src`; the player loads only when the button is clicked. The same
@@ -103,6 +105,9 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 8 November 2026: made the Slides square yellow by default, with a blue hover
+  and keyboard-focus state using white icon/text.
 
 - 8 November 2026: changed the three topic panels into square resource buttons.
   Slides opens the approved live presentation in a lightbox; the other two are
