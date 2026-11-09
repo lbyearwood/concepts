@@ -1,0 +1,94 @@
+/* Native tutorial catalogue. Keep the surrounding page and sidebar stationary. */
+body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
+.problems-app { position:fixed; inset:0 0 0 var(--sidebar-width); display:flex; flex-direction:column; min-width:0; padding:26px 28px 20px; background:#fff; color:#101223; font:15px/1.5 Arial,Helvetica,sans-serif; }
+.problems-app [hidden] { display:none !important; }
+.problems-heading .eyebrow { margin:0 0 8px; color:#d90058; font-size:11px; font-weight:900; letter-spacing:.065em; text-transform:uppercase; }
+.problems-heading h1 { margin:0 0 24px; font:900 34px/1.14 "Arial Black",Arial,sans-serif; letter-spacing:-1.1px; }
+.problem-collections { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; padding-bottom:19px; border-bottom:3px solid #101223; }
+.problem-collections button { min-width:0; min-height:48px; padding:12px 8px; border:2px solid #101223; background:#fff; color:#101223; font:800 14px/1.3 Arial,Helvetica,sans-serif; }
+.problem-collections button[aria-selected="true"] { background:#1433ff; color:#fff; }
+.problem-collections button:hover:not([aria-selected="true"]) { background:#fff9c9; }
+.problem-panel, .category-panel { display:flex; flex-direction:column; min-height:0; flex:1; }
+.problem-categories { display:flex; flex-wrap:wrap; flex:none; gap:6px 22px; padding:20px 0 0; margin-bottom:20px; border-bottom:1px solid #d4d5dc; }
+.problem-categories button { display:flex; gap:7px; align-items:center; padding:0 0 12px; border:0; border-bottom:4px solid transparent; background:transparent; color:#535563; font:700 14px/1.5 Arial,Helvetica,sans-serif; }
+.problem-categories button[aria-selected="true"] { border-bottom-color:#d90058; color:#101223; }
+.problem-categories button:hover { color:#1433ff; }
+.category-count { padding:1px 7px; border-radius:12px; background:#ececf1; color:#535563; font-size:11px; }
+.problem-categories button[aria-selected="true"] .category-count { background:#d90058; color:#fff; }
+.problem-list-heading { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin:0 0 8px; }
+.problem-list-heading h2 { margin:0; font:900 23px/1.2 "Arial Black",Arial,sans-serif; letter-spacing:-.4px; }
+.problem-list-heading > span { color:#636572; font-size:12px; }
+.problem-list-scroll { min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; }
+.problem-list { margin:0; padding:0; list-style:none; }
+.problem-row { display:grid; grid-template-columns:34px minmax(0,1fr) auto; gap:10px; align-items:center; width:100%; min-height:56px; padding:11px 12px 11px 4px; border:0; border-bottom:1px solid #d4d5dc; background:#fff; color:#101223; text-align:left; font-family:Arial,Helvetica,sans-serif; }
+.problem-row:hover { background:#fff9c9; }
+.problem-number { color:#6b6d79; font-size:12px; font-weight:800; font-variant-numeric:tabular-nums; text-align:center; }
+.problem-title { font-size:15px; line-height:1.35; font-weight:700; overflow-wrap:anywhere; }
+.problem-open { display:flex; align-items:center; gap:9px; color:#d90058; font-size:12px; font-weight:800; white-space:nowrap; }
+.problem-row:hover .problem-open { color:#1433ff; }
+.problem-icon { display:inline-block; flex:none; width:16px; height:16px; background:currentColor; mask:center/contain no-repeat; }
+.icon-right { mask-image:url("icons/arrow-right.svg"); }
+.icon-left { mask-image:url("icons/arrow-left.svg"); }
+.problem-empty { margin:0; padding:35px 0; color:#636572; }
+.problems-page button { cursor:pointer; }
+.problems-page button:disabled { cursor:default; }
+.problems-page button:focus-visible, .tutorial-question summary:focus-visible { outline:3px solid #1433ff; outline-offset:3px; }
+.tutorial-modal { position:fixed; inset:24px 24px 24px calc(var(--sidebar-width) + 24px); width:min(720px,calc(100vw - var(--sidebar-width) - 48px)); height:fit-content; max-width:none; max-height:calc(100dvh - 48px); margin:0 auto; padding:0; overflow:visible; border:3px solid #101223; background:#fff; color:#101223; box-shadow:7px 7px 0 rgb(16 18 35 / .18); font:14px/1.5 Arial,Helvetica,sans-serif; }
+.tutorial-modal [hidden] { display:none !important; }
+.tutorial-modal[open] { display:flex; flex-direction:column; }
+.tutorial-modal::backdrop { background:rgb(16 18 35 / .42); }
+.tutorial-header { display:flex; flex:none; justify-content:space-between; gap:20px; align-items:center; padding:19px 22px; background:#1433ff; color:#fff; }
+.tutorial-path { margin:0 0 5px; font-size:11px; font-weight:700; opacity:.85; }
+.tutorial-header h2 { margin:0; font:900 23px/1.2 "Arial Black",Arial,sans-serif; letter-spacing:-.4px; color:#fff; overflow-wrap:anywhere; }
+.tutorial-close { flex:none; min-height:40px; padding:8px 12px; border:2px solid #fff; background:#d90058; color:#fff; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
+.tutorial-close:focus-visible { outline-color:#ffe500 !important; }
+.tutorial-body { min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:20px 22px; }
+.tutorial-question { margin:0 0 18px; border-bottom:1px solid #d4d5dc; padding-bottom:12px; }
+.tutorial-question summary { color:#535563; font-size:12px; font-weight:700; cursor:pointer; }
+.tutorial-question-content { padding-top:12px; }
+.tutorial-question-content p { margin:0 0 10px; }
+.tutorial-question-content ol { padding-left:22px; margin:0 0 8px; }
+.tutorial-question-content li + li { margin-top:5px; }
+.tutorial-steps { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:0 0 19px; }
+.tutorial-step-label { margin-right:3px; color:#636572; font-size:12px; font-weight:800; }
+.tutorial-step-button { width:31px; height:31px; padding:0; border:2px solid #d4d5dc; background:#fff; color:#101223; font-weight:800; }
+.tutorial-step-button[aria-current="step"] { border-color:#101223; background:#00d6c0; }
+.tutorial-step-title { margin:0 0 12px; font:900 20px/1.25 "Arial Black",Arial,sans-serif; letter-spacing:-.35px; }
+.tutorial-step-content { min-height:245px; font-size:14px; }
+.tutorial-step-content p { margin:0 0 12px; }
+.tutorial-step-content pre { margin:13px 0 17px; padding:14px 16px; border-left:4px solid #1433ff; background:#f3f5ff; color:#1530a9; white-space:pre-wrap; overflow-wrap:anywhere; font:13px/1.65 Consolas,"Courier New",monospace; }
+.tutorial-step-content .understanding-question { margin-top:14px; padding:11px 14px; border-left:4px solid #ffe500; background:#fff6a3; font-weight:700; }
+.tutorial-step-content .common-error { color:#8b1642; font-size:13px; }
+.tutorial-footer { display:flex; flex:none; justify-content:space-between; align-items:center; gap:12px; padding:15px 22px; border-top:1px solid #d4d5dc; }
+.tutorial-counter { color:#636572; font-size:12px; }
+.tutorial-footer > div { display:flex; gap:8px; }
+.tutorial-back, .tutorial-next { display:flex; align-items:center; justify-content:center; gap:7px; min-height:39px; padding:8px 15px; border:2px solid #101223; background:#fff; color:#101223; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
+.tutorial-back:disabled { opacity:.35; }
+.tutorial-next { background:#d90058; color:#fff; }
+@media(max-width:900px) { .problems-app { padding:20px 16px; }.problem-list-heading > span { display:none; }.problem-categories { gap:7px 16px; } }
+@media(max-width:700px) {
+  .problems-heading h1 { font-size:29px; }
+  .problem-collections { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .problem-open > span:first-child { display:none; }
+  .problem-row { grid-template-columns:28px minmax(0,1fr) 20px; }
+  .tutorial-modal { inset:12px 8px 12px calc(var(--sidebar-width) + 8px); width:calc(100vw - var(--sidebar-width) - 16px); max-height:calc(100dvh - 24px); }
+  .tutorial-header { padding:15px; gap:10px; align-items:flex-start; flex-wrap:wrap; }
+  .tutorial-header h2 { font-size:20px; }
+  .tutorial-body { padding:17px 15px; }
+  .tutorial-footer { padding:13px 15px; flex-wrap:wrap; }
+}
+@media(max-height:500px) {
+  .problems-app { padding-top:12px; padding-bottom:12px; }
+  .problems-heading h1 { margin-bottom:12px; font-size:26px; }
+  .problem-collections { padding-bottom:10px; }
+  .problem-collections button { min-height:38px; padding:7px; }
+  .problem-categories { padding-top:10px; margin-bottom:10px; }
+  .problem-categories button { padding-bottom:6px; }
+  .tutorial-header { padding:10px 15px; }
+  .tutorial-footer { padding:10px 15px; }
+}
+@media(max-width:400px) {
+  .problems-heading h1 { font-size:23px; letter-spacing:-.7px; }
+  .problem-list-heading h2 { font-size:20px; overflow-wrap:anywhere; }
+  .problem-collections button { font-size:12px; }
+}

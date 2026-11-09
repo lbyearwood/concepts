@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GCSE programming exam questions and step-by-step Python tutorials.">
+  <title>Programming Problems | CSRevision</title>
+  <link rel="stylesheet" href="../../../assets/sidebar.css?v=tutorials-1">
+  <link rel="stylesheet" href="../../../assets/colour-block.css?v=2">
+  <link rel="stylesheet" href="../../../assets/programming-problems.css?v=1">
+  <script src="../../../assets/programming-problems.js?v=1" defer></script>
+</head>
+<body class="has-sidebar theme-colour-block problems-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+__SIDEBAR__
+  <main id="main-content" class="problems-app" tabindex="-1">
+    <header class="problems-heading">
+      <p class="eyebrow">GCSE Computer Science / Tutorials</p>
+      <h1>Programming problems</h1>
+    </header>
+    <div class="problem-collections" role="tablist" aria-label="Problem collections">
+      <button id="collection-exam" type="button" role="tab" aria-selected="true" aria-controls="problem-panel" data-collection="exam">Exam questions</button>
+      <button id="collection-level1" type="button" role="tab" aria-selected="false" aria-controls="problem-panel" data-collection="level1" tabindex="-1">Level 1 problems</button>
+      <button id="collection-level2" type="button" role="tab" aria-selected="false" aria-controls="problem-panel" data-collection="level2" tabindex="-1">Level 2</button>
+      <button id="collection-level3" type="button" role="tab" aria-selected="false" aria-controls="problem-panel" data-collection="level3" tabindex="-1">Level 3</button>
+    </div>
+    <section id="problem-panel" class="problem-panel" role="tabpanel" aria-labelledby="collection-exam">
+      <div class="problem-categories" role="tablist" aria-label="Exam question categories">
+__CATEGORIES__
+      </div>
+      <section id="category-panel" class="category-panel" role="tabpanel" aria-labelledby="category-traversal">
+        <div class="problem-list-heading">
+          <h2 id="problem-category-title">List Traversal</h2>
+          <span>Choose a problem to open its tutorial</span>
+        </div>
+        <div class="problem-list-scroll">
+          <ol class="problem-list" aria-label="List Traversal problems">
+__PROBLEM_LIST__
+          </ol>
+          <p class="problem-empty" hidden></p>
+          <noscript><p>Enable JavaScript to open the tutorials and change categories.</p></noscript>
+        </div>
+      </section>
+    </section>
+    <p class="sr-only problem-announcement" aria-live="polite"></p>
+  </main>
+  <dialog id="tutorial-modal" class="tutorial-modal" aria-labelledby="tutorial-title">
+    <header class="tutorial-header">
+      <div><p class="tutorial-path"></p><h2 id="tutorial-title"></h2></div>
+      <button class="tutorial-close" type="button" autofocus>Close</button>
+    </header>
+    <div class="tutorial-body">
+      <details class="tutorial-question">
+        <summary>Exam question</summary>
+        <div class="tutorial-question-content"></div>
+      </details>
+      <div class="tutorial-steps" role="group" aria-label="Tutorial steps"></div>
+      <h3 class="tutorial-step-title"></h3>
+      <div class="tutorial-step-content"></div>
+    </div>
+    <footer class="tutorial-footer">
+      <span class="tutorial-counter"></span>
+      <div><button class="tutorial-back" type="button"><span class="problem-icon icon-left" aria-hidden="true"></span>Back</button><button class="tutorial-next" type="button"><span data-next-label>Next</span><span class="problem-icon icon-right" aria-hidden="true"></span></button></div>
+    </footer>
+    <p class="sr-only tutorial-announcement" aria-live="polite"></p>
+  </dialog>
+  <script type="application/json" id="problem-data">__PROBLEM_DATA__</script>
+</body>
+</html>

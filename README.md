@@ -38,11 +38,34 @@ representation, Networks, Cyber security, Algorithms, and Societal implications
 of digital technology. Concepts contains Memory Management, Process Scheduling
 and Algorithms, with their existing interactive models.
 Below the eight units, GCSE Computer Science also contains Tutorials / Programming
-Problems. Its landing page is ready for the user's problem list. Tutorials will
-be native web pages on CSRevision, with the problem and its guided solution on
-the site. Do not replace them with links to Google Docs or embed the source
-document. No example problems have been imported or invented in this initial
-section. Add future tutorial pages to the shared navigation generator.
+Problems. It has Exam questions, Level 1 problems, Level 2 and Level 3 tabs.
+Exam questions contains List Traversal (eight tutorials), Counting (four),
+Subroutines (one) and File Handling (currently empty). Level collections have
+empty states ready for further problems. Every tutorial opens in a native
+popup with numbered steps, code, understanding questions and common errors.
+The collapsible Exam question gives the complete problem while keeping the
+walkthrough compact. Tutorials are native site content, without document
+embeds or private editor links.
+
+Public tutorial content is maintained in `data/programming-problems.json`.
+Run `python scripts/build-problems.py` to rebuild the page from that catalogue
+and `scripts/templates/programming-problems.html`, then run
+`python scripts/build-course.py` to reconcile shared navigation.
+Both scripts accept `--check`. Keep stable problem IDs and include the complete
+Python solution alongside its displayed steps so the teaching algorithm can be
+checked. Preserve Python indentation in code blocks.
+
+The web adaptations reconcile question/code inconsistencies, make the letter
+counter case insensitive for the chosen letter, use the stated safe-reading
+range, and include a worked username subroutine. The source document is
+unchanged. These are authored practice questions, rather than official
+exam-board past-paper questions.
+
+The catalogue keeps readable text and fixed tabs beside the persistent sidebar.
+Its problem list can scroll independently. Native tutorial dialogs sit outside
+the page content, with fixed header/footer controls and a scrollable body for
+longer steps. The existing interactive concept canvases retain their
+fitted-viewport behavior.
 
 Nested groups use native HTML `details` and `summary` elements, so their menus work
 with a keyboard and without JavaScript. The current page's branch starts open;
@@ -129,6 +152,11 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 9 November 2026: built the approved Exam questions design with all four main
+  tabs, four source categories, 13 native tutorials and 66 guided steps. Added
+  public structured content, a deterministic page builder and accessible popup
+  controls. Empty File Handling and Level 1–3 collections await further content.
 
 - 9 November 2026: added Tutorials / Programming Problems under GCSE Computer
   Science on every page, with a native landing page ready for the user's list.

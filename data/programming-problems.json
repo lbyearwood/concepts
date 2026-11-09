@@ -1,0 +1,1586 @@
+{
+  "categories": [
+    {
+      "id": "traversal",
+      "title": "List Traversal"
+    },
+    {
+      "id": "counting",
+      "title": "Counting"
+    },
+    {
+      "id": "subroutines",
+      "title": "Subroutines"
+    },
+    {
+      "id": "files",
+      "title": "File Handling"
+    }
+  ],
+  "problems": [
+    {
+      "id": "problem-1",
+      "category": "traversal",
+      "title": "Linear search on a string",
+      "question": {
+        "context": [
+          "A program needs to check whether a line of text contains the lowercase letter a."
+        ],
+        "requirements": [
+          "Ask the user to enter a line of text.",
+          "Set a Boolean flag to False before searching.",
+          "Visit the character positions in order using an index-based loop.",
+          "Compare each character with lowercase a and update the flag when a match is found.",
+          "Stop searching once a match is found.",
+          "Display a clear message saying whether a was found."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Read the user input",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Create one input to store the text that the user types."
+            },
+            {
+              "type": "code",
+              "text": "text = input(\"Enter some text: \")"
+            },
+            {
+              "type": "question",
+              "text": "Question: What data type is stored in text after the input call?"
+            }
+          ]
+        },
+        {
+          "title": "Create a Status flag",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Prepare a Boolean flag to record whether a has been found."
+            },
+            {
+              "type": "code",
+              "text": "found = False"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is False a sensible initial value for found?"
+            }
+          ]
+        },
+        {
+          "title": "Scan the string using for in range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Loop over each valid index and compare that character with lowercase a. Set the flag to True and stop the loop as soon as a match is found."
+            },
+            {
+              "type": "code",
+              "text": "for i in range(len(text)):\n    if text[i] == 'a':\n        found = True\n        break"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why might you choose range(len(text)) rather than looping directly over the characters when you need positions?"
+            }
+          ]
+        },
+        {
+          "title": "Report the outcome",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use an if statement to print a clear message."
+            },
+            {
+              "type": "code",
+              "text": "if found:\n    print(\"The letter 'a' exists in the text.\")\nelse:\n    print(\"The letter 'a' does not exist in the text.\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: What will be printed if the user enters Cab?"
+            }
+          ]
+        }
+      ],
+      "solution": "text = input(\"Enter some text: \")\nfound = False\nfor i in range(len(text)):\n    if text[i] == 'a':\n        found = True\n        break\nif found:\n    print(\"The letter 'a' exists in the text.\")\nelse:\n    print(\"The letter 'a' does not exist in the text.\")"
+    },
+    {
+      "id": "problem-2",
+      "category": "traversal",
+      "title": "Linear search on a list",
+      "question": {
+        "context": [
+          "A game keeps a list of scores. The player wants a simple program that can check whether a particular score is in the list or not. This helps them see if they have reached a chosen target score at least once."
+        ],
+        "requirements": [
+          "Stores several whole number scores together so they can be checked one by one.",
+          "Asks the user to enter a score they want to look for and stores this value.",
+          "Goes through each stored score in turn and compares it with the user’s chosen score.",
+          "Shows a clear message to say that the score has been found if any of the values match the one the user entered."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list of numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line of code creates a list of numbers and stores it in a variable called numbers_list. The numbers are kept in order so the loop can visit them one at a time."
+            },
+            {
+              "type": "code",
+              "text": "numbers_list = [3, 7, 9, 2, 7]"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many values are stored in numbers_list in this example?"
+            }
+          ]
+        },
+        {
+          "title": "Ask the user which number to search for",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line asks the user to type a whole number. The input function reads text from the user and int changes it into an integer so it can be compared with the numbers in the list."
+            },
+            {
+              "type": "code",
+              "text": "target = int(input(\"Enter a number to search for: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why do we use int around the input in this line?"
+            }
+          ]
+        },
+        {
+          "title": "Loop through every number in the list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that will go through each value in numbers_list. Each time the loop repeats, number will take the next value from the list in order."
+            },
+            {
+              "type": "code",
+              "text": "for number in numbers_list:"
+            },
+            {
+              "type": "question",
+              "text": "Question: What values will number take as this loop runs with the example list?"
+            }
+          ]
+        },
+        {
+          "title": "Compare the current value with the target",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line checks whether the current number from the list is the same as the value the user is looking for. The condition number == target is either True or False each time the loop runs."
+            },
+            {
+              "type": "code",
+              "text": "    if number == target:"
+            },
+            {
+              "type": "question",
+              "text": "Question: What does number == target mean in plain English?"
+            }
+          ]
+        },
+        {
+          "title": "Show a message when the value is found",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line will run only when the condition in the if statement is True. It displays a simple message to tell the user that the value they wanted has been found in the list."
+            },
+            {
+              "type": "code",
+              "text": "        print(\"Found it!\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: If the target value appears twice in numbers_list, how many times could this message be printed, and why?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers_list = [3, 7, 9, 2, 7]\ntarget = int(input(\"Enter a number to search for: \"))\nfor number in numbers_list:\n    if number == target:\n        print(\"Found it!\")"
+    },
+    {
+      "id": "problem-3",
+      "category": "traversal",
+      "title": "For each loop",
+      "question": {
+        "context": [
+          "A wildlife researcher is storing the names of several animals spotted during a field survey. They want a simple program that can go through the list of animals and show each sighting clearly so they can check what has been recorded."
+        ],
+        "requirements": [
+          "Creates a list containing several animal names.",
+          "Goes through each animal in the list from the first to the last.",
+          "For each animal, carries out a simple action, such as displaying its name.",
+          "Makes sure all animal names in the list have been shown by the end of the program."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list with several items",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A list lets you store many values inside a single variable. Each value is kept in order so that Python can move through them one by one. In this example we create a list of animal names and store it in a variable called animals_list."
+            },
+            {
+              "type": "code",
+              "text": "animals_list = [\"cat\", \"dog\", \"rabbit\"]"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many items are stored in the animals_list list in this example?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the closing square bracket at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Start a for loop to visit each item",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A for loop lets Python go through the list from the first item to the last item. The variable animal will take each value from animals_list in turn. The colon at the end tells Python that a block of code will follow."
+            },
+            {
+              "type": "code",
+              "text": "for animal in animals_list:"
+            },
+            {
+              "type": "question",
+              "text": "Question: In your own words, what does the variable animal represent while this loop runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the colon at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Do something with each item in the loop",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line is placed inside the loop so it will run once for every item in the list. Each time the loop repeats, the print function will show the current value stored in animal. This is how you perform an action on every item in a list."
+            },
+            {
+              "type": "code",
+              "text": "    print(animal)"
+            },
+            {
+              "type": "question",
+              "text": "Question: If animals_list has three items, how many times will this print line run, and why?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if print(animal) was not indented under the for loop?"
+            }
+          ]
+        }
+      ],
+      "solution": "animals_list = [\"cat\", \"dog\", \"rabbit\"]\nfor animal in animals_list:\n    print(animal)"
+    },
+    {
+      "id": "problem-4",
+      "category": "traversal",
+      "title": "For in range loop",
+      "question": {
+        "context": [
+          "A shop assistant is storing the names of products on a shelf. They want a simple program that can go through the list by position and print each item in the correct order. This helps them check that every product has been recorded."
+        ],
+        "requirements": [
+          "Creates a list containing several product names to be checked.",
+          "Works out how many positions are in the list before any checking starts.",
+          "Uses position numbers to visit each product from the first position to the last and prints each product.",
+          "Makes sure that every position in the list is visited once so that all products are shown in order."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Create a list with some example values that you want to print."
+            },
+            {
+              "type": "code",
+              "text": "items = [\"milk\", \"bread\", \"eggs\"]"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many values are in the list items right now?"
+            }
+          ]
+        },
+        {
+          "title": "Find the length of the list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use len to get how many positions the loop must visit."
+            },
+            {
+              "type": "code",
+              "text": "count = len(items)\nprint(count)"
+            },
+            {
+              "type": "question",
+              "text": "Question: What number does len return for the list items?"
+            }
+          ]
+        },
+        {
+          "title": "Write a for in range loop",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use range with the length to generate index numbers that start at zero and go up to the last position."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(count):\n    print(index)"
+            },
+            {
+              "type": "question",
+              "text": "Question: What is the last index number that will be printed for a list of three values?"
+            }
+          ]
+        },
+        {
+          "title": "Print each value using the index",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use the index inside the loop to access and print each value."
+            },
+            {
+              "type": "code",
+              "text": "items = [\"milk\", \"bread\", \"eggs\"]\ncount = len(items)\nfor index in range(count):\n    print(items[index])"
+            },
+            {
+              "type": "question",
+              "text": "Question: What line of code fetches the value from the list using the index?"
+            }
+          ]
+        }
+      ],
+      "solution": "items = [\"milk\", \"bread\", \"eggs\"]\ncount = len(items)\nfor index in range(count):\n    print(items[index])"
+    },
+    {
+      "id": "problem-5",
+      "category": "traversal",
+      "title": "Append",
+      "question": {
+        "context": [
+          "A busy shopper wants a simple program that helps them build a shopping list. They would like to type in a fixed number of items, have each one stored, and then see the full list at the end so they can check what they need to buy."
+        ],
+        "requirements": [
+          "Starts with an empty place to store the shopping items.",
+          "Repeats a fixed number of times, each time asking the user to enter one shopping item and adding it to the stored list.",
+          "After all items have been entered, displays the complete shopping list.",
+          "Makes sure the final message clearly shows every item that was entered."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Make an empty list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Create an empty list ready to store shopping list items."
+            },
+            {
+              "type": "code",
+              "text": "items = []"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many things are in items now?"
+            }
+          ]
+        },
+        {
+          "title": "Create a for loop from 0 to 4 (five times)",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use range(5) to repeat the input process five times. For now, pass is a temporary statement that keeps the loop valid. Replace it with the indented input and append lines in the next steps."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(5):\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: What values will index take during these five repetitions?"
+            }
+          ]
+        },
+        {
+          "title": "Ask for a shopping item (simple prompt)",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with this input statement. Keep it indented inside the loop."
+            },
+            {
+              "type": "code",
+              "text": "    item_text = input(\"Enter a shopping item: \")"
+            },
+            {
+              "type": "question",
+              "text": "Question: What type does input() return?"
+            }
+          ]
+        },
+        {
+          "title": "Add to the list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Still inside the loop, add:"
+            },
+            {
+              "type": "code",
+              "text": "    items.append(item_text)"
+            },
+            {
+              "type": "paragraph",
+              "text": "Append means to add to the end of the list.  Thus, each input is added to the end of the list."
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must items.append(item_text) be inside the loop?"
+            }
+          ]
+        },
+        {
+          "title": "Show all items",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Outside of the for loop (outdented), add the following:"
+            },
+            {
+              "type": "code",
+              "text": "print(\"You entered:\", items)"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many items will be stored at the end?"
+            }
+          ]
+        }
+      ],
+      "solution": "items = []\nfor index in range(5):\n    item_text = input(\"Enter a shopping item: \")\n    items.append(item_text)\nprint(\"You entered:\", items)"
+    },
+    {
+      "id": "problem-6",
+      "category": "traversal",
+      "title": "Empty position",
+      "question": {
+        "context": [
+          "A venue stores booked names in a seating list. An empty string represents an available seat. Find the first available position."
+        ],
+        "requirements": [
+          "Create a list containing booked names and empty strings.",
+          "Visit the list using index numbers.",
+          "Read the value stored at the current index.",
+          "Check whether that value is an empty string.",
+          "Display the index of the first empty position.",
+          "Stop the search immediately after that position is found."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list with some empty positions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a list of seats and stores it in seats_list. Some positions contain names and some contain an empty string which means no one is sitting there."
+            },
+            {
+              "type": "code",
+              "text": "seats_list = [\"Ali\", \"\", \"Sofia\", \"\", \"Liam\"]"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which index in seats_list is the first empty position in this example?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the closing square bracket at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Start a loop over all index positions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that goes through every index in the list. range(len(seats_list)) produces all valid index values for seats_list."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(len(seats_list)):"
+            },
+            {
+              "type": "question",
+              "text": "Question: With this list, what index values will index take as the loop runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you removed len and wrote range(seats_list) instead?"
+            }
+          ]
+        },
+        {
+          "title": "Read the value at the current index",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line gets the value at the current index and stores it in a variable called seat. This makes the next condition easier to read."
+            },
+            {
+              "type": "code",
+              "text": "    seat = seats_list[index]"
+            },
+            {
+              "type": "question",
+              "text": "Question: If index is 1, what value will seat hold with this example list?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What mistake could cause an IndexError when you access seats_list[index]?"
+            }
+          ]
+        },
+        {
+          "title": "Check whether the current position is empty",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line checks if the value at the current position is an empty string. The condition seat == \"\" is True only when that index contains nothing."
+            },
+            {
+              "type": "code",
+              "text": "    if seat == \"\":"
+            },
+            {
+              "type": "question",
+              "text": "Question: In plain English, what is this if statement asking each time it runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you wrote seat = \"\" instead of seat == \"\" in this line?"
+            }
+          ]
+        },
+        {
+          "title": "Print the index of the first empty position",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line runs only when the if condition is True. It prints a message that tells the user the index of the first empty position in the list."
+            },
+            {
+              "type": "code",
+              "text": "        print(\"First empty position at index\", index)"
+            },
+            {
+              "type": "question",
+              "text": "Question: With the example list, what index should this line print the first time it runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What error would you get if you forgot to close the quotation marks around the message text?"
+            }
+          ]
+        },
+        {
+          "title": "Stop the loop after finding the first empty position",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line breaks out of the loop as soon as the first empty position is found. It stops the program from checking any remaining positions after the answer is known."
+            },
+            {
+              "type": "code",
+              "text": "        break"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is it more efficient to use break once the first empty position has been found?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if break was placed outside the loop instead of inside it?"
+            }
+          ]
+        }
+      ],
+      "solution": "seats_list = [\"Ali\", \"\", \"Sofia\", \"\", \"Liam\"]\nfor index in range(len(seats_list)):\n    seat = seats_list[index]\n    if seat == \"\":\n        print(\"First empty position at index\", index)\n        break"
+    },
+    {
+      "id": "problem-7",
+      "category": "traversal",
+      "title": "Two Conditions",
+      "question": {
+        "context": [
+          "A technician is analysing a list of sensor readings. They want a simple program that searches through the readings and stops as soon as it finds the first value that falls within a safe range which is between 1 and 100. This helps them quickly identify the earliest point where the readings became acceptable.",
+          "readings = [156, 903, 345, -64, -23, 58, 1003]"
+        ],
+        "requirements": [
+          "1) Creates a list of whole number readings that will be checked.",
+          "2) Goes through every position in the list one at a time using index numbers.\n3) Reads the value stored at each index before checking it.\n4) Checks whether the value meets two conditions at the same time (inside a specific range).",
+          "5) When the first value that meets both conditions is found, shows its index and its value.",
+          "6) Stops searching immediately after the first match."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list of readings",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Store the sensor readings in a list. The safe range is from 1 to 100, including both limits."
+            },
+            {
+              "type": "code",
+              "text": "numbers_list = [156, 903, 345, -64, -23, 58, 1003]"
+            },
+            {
+              "type": "question",
+              "text": "Question: What is the index of the reading 58?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if the closing square bracket was missing?"
+            }
+          ]
+        },
+        {
+          "title": "Start a loop over all index positions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that goes through every index in the list. range(len(numbers_list)) produces all valid index values for this list."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(len(numbers_list)):"
+            },
+            {
+              "type": "question",
+              "text": "Question: With this list, what index values will index take as the loop runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the colon at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Read the value at the current index",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line gets the value at the current index and stores it in a variable called number. This makes the code easier to read in the next step."
+            },
+            {
+              "type": "code",
+              "text": "    number = numbers_list[index]"
+            },
+            {
+              "type": "question",
+              "text": "Question: If index is 2, what value will number hold?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What mistake would cause an IndexError when accessing numbers_list?"
+            }
+          ]
+        },
+        {
+          "title": "Check both limits of the safe range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use and to check that the reading is at least 1 and at most 100. Both comparisons must be True."
+            },
+            {
+              "type": "code",
+              "text": "    if number >= 1 and number <= 100:"
+            },
+            {
+              "type": "question",
+              "text": "Question: Would the readings 1 and 100 pass this condition?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Why would or give the wrong result here?"
+            }
+          ]
+        },
+        {
+          "title": "Print the index and value when both conditions are met",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line runs only when the if condition is True. It prints a message that shows the index and the value that met both conditions."
+            },
+            {
+              "type": "code",
+              "text": "        print(\"First match at index\", index, \"with value\", number)"
+            },
+            {
+              "type": "question",
+              "text": "Question: The first safe reading is 58. What index and value should the message display?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if the quotation marks around the text were not closed properly?"
+            }
+          ]
+        },
+        {
+          "title": "Stop the loop after the first match",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line ends the loop as soon as the first value that meets both conditions is found. It makes sure the program does not continue to check the rest of the list."
+            },
+            {
+              "type": "code",
+              "text": "        break"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is break important if you only want the first value that meets both conditions?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if break was placed outside the loop by mistake?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers_list = [156, 903, 345, -64, -23, 58, 1003]\nfor index in range(len(numbers_list)):\n    number = numbers_list[index]\n    if number >= 1 and number <= 100:\n        print(\"First match at index\", index, \"with value\", number)\n        break"
+    },
+    {
+      "id": "problem-8",
+      "category": "traversal",
+      "title": "Print the index number",
+      "question": {
+        "context": [
+          "A warehouse system stores product codes in a list. A worker wants a simple program that can search through the list and show the position (index) where a chosen product code is found. This helps them quickly locate items."
+        ],
+        "requirements": [
+          "Creates a list containing several values that can be searched.",
+          "Asks the user which value they want to search for and stores this choice.",
+          "Goes through each index position in the list one at a time.",
+          "Checks whether the value at the current position matches the user’s choice.",
+          "When a match is found, shows the index where the value was found.",
+          "Stops checking after the correct index has been shown."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list of numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a list of numbers and stores it in numbers_list. Each value has an index that starts at zero and goes up by one for each position."
+            },
+            {
+              "type": "code",
+              "text": "numbers_list = [4, 8, 2, 9, 5]"
+            },
+            {
+              "type": "question",
+              "text": "Question: What is the index of the value 9 in numbers_list?"
+            }
+          ]
+        },
+        {
+          "title": "Ask the user which number to find",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line asks the user for the number they want to search for. The input is read as text and int changes it into a whole number so it can be compared with the values in the list."
+            },
+            {
+              "type": "code",
+              "text": "target = int(input(\"Enter a number to find: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why do we need to convert the input to an integer here?"
+            }
+          ]
+        },
+        {
+          "title": "Loop through index positions using range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that goes through every index in the list. range(len(numbers_list)) produces the sequence of index values from zero up to the last position in the list."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(len(numbers_list)):"
+            },
+            {
+              "type": "question",
+              "text": "Question: With the example list, what index values will index take as the loop runs?"
+            }
+          ]
+        },
+        {
+          "title": "Check if the current item matches the target",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line checks the value stored at the current index. It compares numbers_list[index] with the target. The condition is True only when the value at that position matches the number the user is searching for."
+            },
+            {
+              "type": "code",
+              "text": "    if numbers_list[index] == target:"
+            },
+            {
+              "type": "question",
+              "text": "Question: In plain English, what is this if statement asking each time it runs?"
+            }
+          ]
+        },
+        {
+          "title": "Print a message with the index when a match is found",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line runs only when the if condition is True. It prints a message that shows the index where the target value has been found inside the list."
+            },
+            {
+              "type": "code",
+              "text": "        print(\"Found at index\", index)"
+            },
+            {
+              "type": "question",
+              "text": "Question: If the target is 2, what index will this line print when it finds the value in the example list?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers_list = [4, 8, 2, 9, 5]\ntarget = int(input(\"Enter a number to find: \"))\nfor index in range(len(numbers_list)):\n    if numbers_list[index] == target:\n        print(\"Found at index\", index)"
+    },
+    {
+      "id": "problem-9",
+      "category": "counting",
+      "title": "Count a letter",
+      "question": {
+        "context": [
+          "A school newsletter system stores short messages written by students. The teacher wants a simple program that can count how many times a chosen letter appears in a message so they can analyse how often certain letters are used."
+        ],
+        "requirements": [
+          "Asks the user to enter a line of text.",
+          "Asks the user to enter a single letter to search for.",
+          "Sets a counter to 0 before any checking starts.",
+          "Goes through the text one character at a time and checks each character.",
+          "Increases the counter every time the current character matches the chosen letter (you can assume this is case insensitive).",
+          "Displays a clear message showing how many times the letter appeared in the text.",
+          "Assume that the user enters exactly one letter."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Read the text and chosen letter",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Collect the line of text and the letter to count. Convert the chosen letter to lowercase so that an uppercase choice works too. Assume the user enters one letter."
+            },
+            {
+              "type": "code",
+              "text": "text = input(\"Enter some text: \")\nletter = input(\"Enter one letter to count: \").lower()"
+            },
+            {
+              "type": "question",
+              "text": "Question: What data type does input return?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Why must lower have parentheses after it?"
+            }
+          ]
+        },
+        {
+          "title": "Prepare a counter",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Start count at zero because no characters have been checked yet."
+            },
+            {
+              "type": "code",
+              "text": "count = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must this line come before the loop?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would starting count at 1 do to the result?"
+            }
+          ]
+        },
+        {
+          "title": "Check each character",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Visit every index. Convert the current character to lowercase before comparing it with the chosen letter. Increase count once for each match."
+            },
+            {
+              "type": "code",
+              "text": "for i in range(len(text)):\n    if text[i].lower() == letter:\n        count = count + 1"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must both sides of the comparison use the same case?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if the loop used range(len(text) + 1)?"
+            }
+          ]
+        },
+        {
+          "title": "Output the result",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After the loop has finished, print the chosen letter and the total number of matches."
+            },
+            {
+              "type": "code",
+              "text": "print(f\"The letter '{letter}' appeared {count} times.\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: What is the count for Banana when the chosen letter is a?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What happens to the placeholders if you remove the f before the string?"
+            }
+          ]
+        },
+        {
+          "title": "Test and extend the program (optional)",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Try Banana with a, AaA with A, an empty line with a, and rhythm with a. The expected counts are 3, 3, 0 and 0."
+            },
+            {
+              "type": "paragraph",
+              "text": "As an extension, use an empty list and append each matching index so that the program can report where the matches occurred."
+            },
+            {
+              "type": "question",
+              "text": "Question: Which test checks that the search ignores case?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would change if you converted the text to lowercase but left an uppercase chosen letter unchanged?"
+            }
+          ]
+        }
+      ],
+      "solution": "text = input(\"Enter some text: \")\nletter = input(\"Enter one letter to count: \").lower()\ncount = 0\nfor i in range(len(text)):\n    if text[i].lower() == letter:\n        count = count + 1\nprint(f\"The letter '{letter}' appeared {count} times.\")"
+    },
+    {
+      "id": "problem-10",
+      "category": "counting",
+      "title": "Count even or odd",
+      "question": {
+        "context": [
+          "A data analyst is checking a set of test scores. They want a simple program that can go through the scores and work out how many are even and how many are odd so they can look for patterns."
+        ],
+        "requirements": [
+          "Creates a set of whole number scores.",
+          "Starts with the total of even scores at 0 before any checking begins.",
+          "Starts with the total of odd scores at 0 before any checking begins.",
+          "Goes through each score one at a time and decides whether it is even or odd.",
+          "Increases the correct total each time a new score is checked.",
+          "At the end, clearly shows how many scores were even and how many were odd."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list of numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a list of whole numbers and stores it in numbers_list. You will use this list for the rest of the program."
+            },
+            {
+              "type": "code",
+              "text": "numbers_list = [4, 7, 10, 3, 8]"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many values are stored in numbers_list in this example?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you removed the closing square bracket from this line?"
+            }
+          ]
+        },
+        {
+          "title": "Set up a counter for even numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a counter called even_count and sets it to zero at the start. You will add to this counter each time you find an even number."
+            },
+            {
+              "type": "code",
+              "text": "even_count = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why do we set even_count to zero before the loop starts?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What problem would you cause if you wrote even_count = \"0\" with quotation marks?"
+            }
+          ]
+        },
+        {
+          "title": "Set up a counter for odd numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a second counter called odd_count and also sets it to zero. You will add to this counter each time you find an odd number."
+            },
+            {
+              "type": "code",
+              "text": "odd_count = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: What does odd_count represent in this program?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot to create odd_count before using it later?"
+            }
+          ]
+        },
+        {
+          "title": "Loop through every number in the list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that goes through each value in numbers_list one by one. The variable number will hold each value as the loop runs."
+            },
+            {
+              "type": "code",
+              "text": "for number in numbers_list:"
+            },
+            {
+              "type": "question",
+              "text": "Question: With the example list, what values will number take as the loop runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the colon at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Test if the current number is even or odd",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This block checks the remainder when number is divided by 2. If the remainder is zero, the number is even and the even counter goes up by one. If not, the odd counter goes up by one."
+            },
+            {
+              "type": "code",
+              "text": "    if number % 2 == 0:\n        even_count = even_count + 1\n    else:\n        odd_count = odd_count + 1"
+            },
+            {
+              "type": "question",
+              "text": "Question: What does number % 2 == 0 tell you about the value stored in number?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you wrote number % 2 = 0 instead of number % 2 == 0?"
+            }
+          ]
+        },
+        {
+          "title": "Print the totals for even and odd numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line displays the final counts after the loop has finished. It shows how many even and odd numbers were found in the list."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Even:\", even_count, \"Odd:\", odd_count)"
+            },
+            {
+              "type": "question",
+              "text": "Question: If numbers_list is [4, 7, 10, 3, 8], what should even_count and odd_count be at the end?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot to include even_count or odd_count inside the print brackets?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers_list = [4, 7, 10, 3, 8]\neven_count = 0\nodd_count = 0\nfor number in numbers_list:\n    if number % 2 == 0:\n        even_count = even_count + 1\n    else:\n        odd_count = odd_count + 1\nprint(\"Even:\", even_count, \"Odd:\", odd_count)"
+    },
+    {
+      "id": "problem-11",
+      "category": "counting",
+      "title": "Count threshold",
+      "question": {
+        "context": [
+          "A researcher is analysing a set of test readings. They want a simple program that can check each reading and work out how many values are above a chosen threshold and how many are below or equal to it. This will help them identify patterns in the results."
+        ],
+        "requirements": [
+          "Creates a list of whole number readings and stores them ready to be checked.",
+          "Stores a threshold value that the readings will be compared against.",
+          "Starts with the total of values above the threshold set to 0 before any checking begins.",
+          "Starts with the total of values below or equal to the threshold set to 0 before any checking begins.",
+          "Goes through each reading one at a time and decides whether it is above the threshold or below/equal to it.",
+          "Increases the correct total each time a reading is checked.",
+          "At the end, clearly shows how many readings were above the threshold and how many were below or equal to it."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list of numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a list of whole numbers and stores it in numbers_list. You will use this list for the rest of the program."
+            },
+            {
+              "type": "code",
+              "text": "numbers_list = [4, 12, 7, 20, 3, 15]"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many values are stored in numbers_list in this example?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the closing square bracket at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Set the threshold value",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a variable called threshold and stores the value that you will compare each number against. Any number greater than this value will be counted as above the threshold."
+            },
+            {
+              "type": "code",
+              "text": "threshold = 10"
+            },
+            {
+              "type": "question",
+              "text": "Question: In this example, which numbers in numbers_list are above the threshold?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What problem would you cause if you wrote threshold = \"10\" with quotation marks?"
+            }
+          ]
+        },
+        {
+          "title": "Set up counters for above and below",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "These lines create two counters and set them both to zero. above_count will track how many values are greater than the threshold. below_count will track how many values are less than or equal to the threshold."
+            },
+            {
+              "type": "code",
+              "text": "above_count = 0\nbelow_count = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: What does above_count represent in this program, and what does below_count represent?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you tried to use above_count in the loop without creating it first?"
+            }
+          ]
+        },
+        {
+          "title": "Loop through every number in the list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that goes through each value in numbers_list one by one. The variable number will hold each value as the loop runs."
+            },
+            {
+              "type": "code",
+              "text": "for number in numbers_list:"
+            },
+            {
+              "type": "question",
+              "text": "Question: With the example list, what values will number take as the loop runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the colon at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Compare each number with the threshold",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This block checks whether the current number is greater than the threshold. If it is greater, above_count goes up by one. If not, below_count goes up by one."
+            },
+            {
+              "type": "code",
+              "text": "    if number > threshold:\n        above_count = above_count + 1\n    else:\n        below_count = below_count + 1"
+            },
+            {
+              "type": "question",
+              "text": "Question: In plain English, what is the if condition number > threshold asking each time it runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen to the counts if you wrote number >= threshold instead of number > threshold?"
+            }
+          ]
+        },
+        {
+          "title": "Print the totals for above and below",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line displays the final counts after the loop has finished. It shows how many numbers were above the threshold and how many were below or equal to it."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Above:\", above_count, \"Below or equal:\", below_count)"
+            },
+            {
+              "type": "question",
+              "text": "Question: For the example list and a threshold of 10, what should above_count and below_count be at the end?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you missed out above_count inside the print brackets but still tried to display it in the text?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers_list = [4, 12, 7, 20, 3, 15]\nthreshold = 10\nabove_count = 0\nbelow_count = 0\nfor number in numbers_list:\n    if number > threshold:\n        above_count = above_count + 1\n    else:\n        below_count = below_count + 1\nprint(\"Above:\", above_count, \"Below or equal:\", below_count)"
+    },
+    {
+      "id": "problem-12",
+      "category": "counting",
+      "title": "Count a range",
+      "question": {
+        "context": [
+          "A sports scientist is analysing a set of training readings. They want a simple program that can check each reading and work out how many values fall inside a chosen target range. This will help them see how often the readings stayed within a safe or effective level."
+        ],
+        "requirements": [
+          "Creates a list of whole number readings that will be checked.",
+          "Stores a lower limit and an upper limit for the target range.",
+          "Starts the total of readings inside the target range at 0 before any checking begins.",
+          "Goes through each reading one at a time and decides whether it is between the lower and upper limits, including the limits themselves.",
+          "Increases the total each time a reading is inside the target range.",
+          "At the end, clearly shows how many readings were inside the chosen range."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Create a list of numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a list of whole numbers and stores it in numbers_list. You will use this list for the rest of the program."
+            },
+            {
+              "type": "code",
+              "text": "numbers_list = [4, 12, 7, 20, 3, 15, 9]"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many values are stored in numbers_list in this example?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the closing square bracket at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Set the lower and upper limits",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "These lines create two variables that store the lower and upper limits for the range. You will count numbers that are greater than or equal to lower_limit and less than or equal to upper_limit."
+            },
+            {
+              "type": "code",
+              "text": "lower_limit = 5\nupper_limit = 15"
+            },
+            {
+              "type": "question",
+              "text": "Question: With these limits, which values in numbers_list are inside the range?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What problem would you cause if you wrote lower_limit = \"5\" with quotation marks instead of a number?"
+            }
+          ]
+        },
+        {
+          "title": "Set up a counter for values in range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line creates a counter called in_range_count and sets it to zero at the start. You will increase this counter every time a number is inside the chosen range."
+            },
+            {
+              "type": "code",
+              "text": "in_range_count = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: What does in_range_count represent in this program?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you tried to increase in_range_count in the loop without creating it first?"
+            }
+          ]
+        },
+        {
+          "title": "Loop through every number in the list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line starts a for loop that goes through each value in numbers_list one by one. The variable number will hold each value as the loop runs."
+            },
+            {
+              "type": "code",
+              "text": "for number in numbers_list:"
+            },
+            {
+              "type": "question",
+              "text": "Question: With the example list, what values will number take as the loop runs?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you forgot the colon at the end of this line?"
+            }
+          ]
+        },
+        {
+          "title": "Check if the number is inside the range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This block checks whether the current number is greater than or equal to lower_limit and less than or equal to upper_limit. If both conditions are true, the counter goes up by one."
+            },
+            {
+              "type": "code",
+              "text": "    if number >= lower_limit and number <= upper_limit:\n        in_range_count = in_range_count + 1"
+            },
+            {
+              "type": "question",
+              "text": "Question: In plain English, what is the if condition asking about the value stored in number?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would change if you used or instead of and between the two conditions?"
+            }
+          ]
+        },
+        {
+          "title": "Print the total number of values in range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This line displays the final count after the loop has finished. It shows how many values in the list were inside the chosen range."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Numbers in range:\", in_range_count)"
+            },
+            {
+              "type": "question",
+              "text": "Question: For the example list and limits from 5 to 15, what should in_range_count be at the end?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if you tried to print in_range_count but spelled the variable name differently inside the print brackets?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers_list = [4, 12, 7, 20, 3, 15, 9]\nlower_limit = 5\nupper_limit = 15\nin_range_count = 0\nfor number in numbers_list:\n    if number >= lower_limit and number <= upper_limit:\n        in_range_count = in_range_count + 1\nprint(\"Numbers in range:\", in_range_count)"
+    },
+    {
+      "id": "problem-13",
+      "category": "subroutines",
+      "title": "Process String",
+      "question": {
+        "context": [
+          "A school creates usernames for new students. The username is made by taking the first letter of the student’s first name and joining it to their surname. The username must be in lower case and must not contain spaces.",
+          "For example:",
+          "First name: \"Aisha\"",
+          "Surname: \" Khan\"",
+          "Username: \"akhan\""
+        ],
+        "requirements": [
+          "Asks the user to enter their first name as text.",
+          "Asks the user to enter their surname as text.",
+          "Passes both text values from the main program into a subroutine.",
+          "In the subroutine, removes extra spaces from the start and end of each value.",
+          "In the subroutine, converts the values to lower case and removes any spaces inside the surname.",
+          "In the subroutine, creates the username and prints it directly (do not return it)."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Read the names",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Ask for the first name and surname in the main program. Both inputs are text."
+            },
+            {
+              "type": "code",
+              "text": "first_name = input(\"Enter your first name: \")\nsurname = input(\"Enter your surname: \")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why do these inputs not need int or float?"
+            }
+          ]
+        },
+        {
+          "title": "Define a subroutine with parameters",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Create a procedure that receives both names. The indented instructions in the following steps belong inside this procedure."
+            },
+            {
+              "type": "code",
+              "text": "def make_username(first_name, surname):\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which two values will the parameters receive?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What would happen if the colon was missing?"
+            }
+          ]
+        },
+        {
+          "title": "Clean the text inside the subroutine",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with these lines. Remove spaces at the ends, convert the names to lowercase and remove spaces inside the surname."
+            },
+            {
+              "type": "code",
+              "text": "    first_name = first_name.strip().lower()\n    surname = surname.strip().lower().replace(\" \", \"\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: How is strip different from replace(\" \", \"\")?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Why does strip alone not remove a space in the middle of a surname?"
+            }
+          ]
+        },
+        {
+          "title": "Create and print the username",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "If both cleaned names contain text, join the first character of the first name to the surname. Print the username inside the procedure; do not return it. The else branch handles an empty name."
+            },
+            {
+              "type": "code",
+              "text": "    if first_name and surname:\n        username = first_name[0] + surname\n        print(username)\n    else:\n        print(\"Enter both names.\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: What username will Aisha and Khan produce?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Why must you check that first_name is not empty before using first_name[0]?"
+            }
+          ]
+        },
+        {
+          "title": "Call the subroutine",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Place this call outside the procedure, after its definition. Pass the two values collected by the main program."
+            },
+            {
+              "type": "code",
+              "text": "make_username(first_name, surname)"
+            },
+            {
+              "type": "question",
+              "text": "Question: What would be printed for Jean and Van Dyke?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: What happens if you define the procedure but never call it?"
+            }
+          ]
+        }
+      ],
+      "solution": "first_name = input(\"Enter your first name: \")\nsurname = input(\"Enter your surname: \")\ndef make_username(first_name, surname):\n    first_name = first_name.strip().lower()\n    surname = surname.strip().lower().replace(\" \", \"\")\n    if first_name and surname:\n        username = first_name[0] + surname\n        print(username)\n    else:\n        print(\"Enter both names.\")\nmake_username(first_name, surname)"
+    }
+  ]
+}
