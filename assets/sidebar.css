@@ -20,6 +20,8 @@ body.has-sidebar { margin: 0 0 0 var(--sidebar-width); min-width: 0; }
 .site-sidebar .sidebar-unit { margin: 6px 0; }
 .site-sidebar .sidebar-unit > summary { padding: 9px 19px 9px 8px; border-left: 3px solid #bfc2c8; font-size: 16px; line-height: 1.35; }
 .site-sidebar .sidebar-unit:has(a[aria-current='page']) > summary { border-left-color: #1433ff; }
+.site-sidebar .sidebar-tutorials > summary { border-left-color: #d90058; }
+.site-sidebar .sidebar-tutorials:has(a[aria-current='page']) > summary { border-left-color: #d90058; }
 .site-sidebar .sidebar-unit .sidebar-concepts { margin-left: 10px; padding-left: 5px; }
 .site-sidebar summary::-webkit-details-marker { display: none; }
 .site-sidebar summary::after { content: ''; position: absolute; right: 0; width: 14px; height: 14px; background: url("icons/chevron-right.svg") center/contain no-repeat; }

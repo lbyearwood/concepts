@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOGUE = ROOT / "data/gcse-course.json"
 COURSE = "courses/gcse-computer-science"
 EXISTING_TOPIC = f"{COURSE}/1-1-variables-constants-data-types-casting.html"
+PROGRAMMING_PROBLEMS = f"{COURSE}/tutorials/programming-problems.html"
 CONCEPTS = [
     ("memory", "Memory Management", "concepts/memory-management/virtual-memory.html", "Virtual Memory"),
     ("scheduling", "Process Scheduling", "concepts/process-scheduling/round-robin.html", "Round Robin Scheduling"),
@@ -54,6 +55,10 @@ def sidebar(units, current):
             lines.append("                  <li>" + link(f'{COURSE}/{topic["file"]}', topic["title"], current) + "</li>")
         lines += ["                </ul>", "              </details>"]
     lines += [
+        '              <details class="sidebar-unit sidebar-tutorials"' + (" open" if current.startswith(COURSE + "/tutorials/") else "") + ">",
+        "                <summary>Tutorials</summary>",
+        '                <ul class="sidebar-concepts"><li>' + link(PROGRAMMING_PROBLEMS, "Programming Problems", current) + "</li></ul>",
+        "              </details>",
         "            </div>",
         "          </details>",
         "        </div>",
@@ -139,7 +144,7 @@ def outputs():
             if path != EXISTING_TOPIC:
                 pages[path] = new_topic(unit, topic)
     # Existing teaching content stays intact; only its shared navigation is regenerated.
-    for path in ["index.html", EXISTING_TOPIC] + [item[2] for item in CONCEPTS]:
+    for path in ["index.html", EXISTING_TOPIC, PROGRAMMING_PROBLEMS] + [item[2] for item in CONCEPTS]:
         pages[path] = (ROOT / path).read_text(encoding="utf-8")
     existing = next(topic for unit in units for topic in unit["topics"]
                     if f'{COURSE}/{topic["file"]}' == EXISTING_TOPIC)
@@ -152,7 +157,7 @@ def outputs():
         html, count = re.subn(r'  <aside class="site-sidebar".*?</aside>', lambda _: sidebar(units, path), html, count=1, flags=re.S)
         if count != 1:
             raise ValueError(f"Expected exactly one sidebar in {path}")
-        html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=units-1", html)
+        html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=tutorials-1", html)
         pages[path] = html
     return pages
 
@@ -172,7 +177,7 @@ def main():
             path.write_text(content, encoding="utf-8", newline="\n")
     if args.check and changed:
         raise SystemExit("Regenerate with python scripts/build-course.py: " + ", ".join(changed))
-    print(f'{"Checked" if args.check else "Generated"} 60 topic pages and shared navigation; {len(changed)} changed.')
+    print(f'{"Checked" if args.check else "Generated"} 60 topic pages, tutorials and shared navigation; {len(changed)} changed.')
 
 
 if __name__ == "__main__":

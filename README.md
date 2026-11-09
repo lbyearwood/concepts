@@ -30,13 +30,20 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 
 ## Navigation
 
-The homepage and every concept page include the same persistent left sidebar.
+The homepage and every concept, course and tutorial page include the same persistent left sidebar.
 The order is Home, Courses, then Concepts. Courses contains GCSE Computer Science,
 then eight units, then their 60 numbered topics. Unit titles and topic numbering
 match the current OCR course folders: Programming, Hardware, Software, Data
 representation, Networks, Cyber security, Algorithms, and Societal implications
 of digital technology. Concepts contains Memory Management, Process Scheduling
 and Algorithms, with their existing interactive models.
+Below the eight units, GCSE Computer Science also contains Tutorials / Programming
+Problems. Its landing page is ready for the user's problem list. Tutorials will
+be native web pages on CSRevision, with the problem and its guided solution on
+the site. Do not replace them with links to Google Docs or embed the source
+document. No example problems have been imported or invented in this initial
+section. Add future tutorial pages to the shared navigation generator.
+
 Nested groups use native HTML `details` and `summary` elements, so their menus work
 with a keyboard and without JavaScript. The current page's branch starts open;
 other concept categories start closed. Both top groups open on the homepage. The
@@ -84,7 +91,7 @@ titles can be scanned before expanding a topic list.
 relative filenames and approved published player URLs only. Keep private editor
 IDs and source-deck inventories outside this repository. Run
 `python scripts/build-course.py` after changing the catalogue; it regenerates the
-59 new resource pages and all 64 static sidebars while retaining the existing
+59 new resource pages and all 65 static sidebars while retaining the existing
 1.1 teaching content and concept models. `python scripts/build-course.py --check`
 checks that generated output is current. No runtime JavaScript is needed for
 navigation.
@@ -122,6 +129,11 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 9 November 2026: added Tutorials / Programming Problems under GCSE Computer
+  Science on every page, with a native landing page ready for the user's list.
+  The example Google Doc informed the intended tutorial structure only; its
+  content and access were preserved.
 
 - 8 November 2026: added the eight GCSE unit menus and all 60 numbered topic
   pages. Matched main student decks in Drive without changing their content or
