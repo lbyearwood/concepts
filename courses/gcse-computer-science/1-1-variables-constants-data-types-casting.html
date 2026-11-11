@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
   <link rel="stylesheet" href="../../assets/course-topic.css?v=4">
   <script src="../../assets/concept-viewport.js?v=1" defer></script>
-  <script src="../../assets/course-lesson.js?v=3" defer></script>
+  <link rel="stylesheet" href="../../assets/selfhosted-slides.css?v=1">
+  <script src="../../assets/selfhosted-lesson.js?v=1" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block concept-demo course-topic-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -183,7 +184,19 @@
   </dialog>
   <dialog class="lesson-modal" id="lesson-modal" aria-labelledby="lesson-title">
     <div class="lesson-modal-heading"><h2 id="lesson-title">1.1 Lesson</h2><button class="modal-close" type="button">Close</button></div>
-    <div class="lesson-player"><iframe title="Variables, constants, data types and casting lesson" allowfullscreen></iframe></div>
+    <div class="selfhosted-viewer" data-manifest="../../assets/slide-decks/1-1/manifest.json">
+      <div class="selfhosted-slide-stage" aria-label="Lesson slide">
+        <img class="selfhosted-slide-image" alt="" hidden>
+        <p class="selfhosted-slide-status" role="status">Loading slides from CSRevision…</p>
+      </div>
+      <div class="selfhosted-slide-controls">
+        <button class="slide-btn selfhosted-slide-previous" type="button" disabled>← Back</button>
+        <strong class="selfhosted-slide-counter" aria-live="polite">Loading…</strong>
+        <button class="slide-btn selfhosted-slide-next" type="button" disabled>Next →</button>
+        <button class="slide-btn secondary selfhosted-slide-fullscreen" type="button">Fullscreen</button>
+        <a href="https://docs.google.com/presentation/d/e/2PACX-1vRwHbW-OMrOQeDVWM8T-_W8NF-zL4eASd1D6S_XY18LSl8gEYtiYn42nRCo_F6r24uNRZrkSwUiXYfb/pub?start=false&amp;loop=false&amp;delayms=3000" target="_blank" rel="noopener noreferrer">Original Google Slides (backup)</a>
+      </div>
+    </div>
   </dialog>
 </body>
 </html>
