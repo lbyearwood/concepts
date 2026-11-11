@@ -64,10 +64,19 @@ with the default `GITHUB_TOKEN`.
 4. Confirm a successful Pages deployment and test the Slides button from a
    school device/account that could not use the Google embed.
 
-Public export is attempted first; authentication is used only as a fallback.
-Publishing a student deck to the web should only be done where authorisation
-has already been granted. If export fails, the workflow stops and retains the
-previous successful slides instead of publishing a partial deck.
+The first successful pilot deployment used an approved, saved PDF snapshot
+(`assets/slide-decks/1-1/bootstrap.pdf`). GitHub has generated 56
+slides from that snapshot without requiring a Google account in the student's
+browser. **This snapshot is not live-synchronised.** Changes in Google Slides
+will appear only after `GOOGLE_SERVICE_ACCOUNT_JSON` has been configured and
+the source student deck has been shared with the service-account email.
+
+Public Google export is attempted first; authenticated export is next when
+credentials are available. Until then, only the pre-approved 1.1 pilot may
+use its saved PDF as an initial fallback. If a live-synchronised version has
+already been generated, a Google access failure must not replace it with the
+older snapshot. Publishing a student deck to the web should only be done
+where authorisation has already been granted.
 
 For a new approved deck, add an entry to `data/slide-sync.json`, point its
 viewer to its own manifest directory, and include the slide viewer assets on
