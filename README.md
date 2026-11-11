@@ -30,57 +30,38 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 
 ## GCSE 1.1 self-hosted slides pilot
 
-The **student** deck for 1.1 Variables, constants, data types and casting
-is the Google Slides file `1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo`.
-It is already approved for publication. Do not synchronise the teacher edition.
+The **approved student** Google Slides presentation for topic 1.1 is
+`1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo`. The teacher edition
+must not be published. The student-facing page at
+`courses/gcse-computer-science/1-1-variables-constants-data-types-casting.html`
+has a self-hosted image viewer with Back, Next, arrow-key and fullscreen
+controls. Students do not connect to Google when using this viewer.
 
-`data/slide-sync.json` lists the approved file and output location.
-`scripts/sync-slides.py` retrieves its latest PDF on the GitHub Actions runner,
-converts all slides to static WebP images, and writes
-`assets/slide-decks/1-1/manifest.json`. The lesson page uses
-`assets/selfhosted-lesson.js` to load those static images with Back, Next,
-arrow keys and fullscreen controls. Students make **no Google requests** through
-the viewer. The original Google Slides link is retained as a manual backup.
+The pilot initially published 56 approved slide images from
+`assets/slide-decks/1-1/bootstrap.pdf`. Google Apps Script is the **new
+automatic-update mechanism**: [the account-authorised script](scripts/google-apps-script/Code.gs)
+exports the original student presentation as a PDF on a 30-minute Google
+time-based trigger and updates that same repository PDF using a fine-grained
+GitHub access token. On a successful file update, the push to `main` triggers
+`.github/workflows/sync-lesson-slides.yml`, which runs
+`scripts/sync-slides.py` to convert that repository PDF into static WebP
+slides, saves the manifest under `assets/slide-decks/1-1` and deploys
+the site through GitHub Pages. The source ID and PDF path are configured in
+`data/slide-sync.json`.
 
-`.github/workflows/sync-lesson-slides.yml` runs every 30 minutes, on push to
-`main`, and via **Actions → Synchronise lesson slides and publish CSRevision →
-Run workflow**. It commits generated assets only when image files change and
-publishes the full website with an explicit GitHub Pages deployment. This is
-necessary because GitHub Pages branch builds are not triggered by commits made
-with the default `GITHUB_TOKEN`.
+**Initial publishing succeeded, but automatic synchronisation is not active
+until the Google Apps Script is authorised and its trigger is installed.**
+The script must run under a Google account with permission to read the
+student slides. No Google Cloud service account or Google secret in GitHub
+is necessary.
 
-### One-time configuration
-
-1. In **Settings → Pages → Build and deployment → Source**, choose
-   **GitHub Actions** (not Deploy from a branch). Keep the existing custom domain
-   `csrevision.org.uk`.
-2. Open **Actions** and run the above workflow manually.
-3. If anonymous export returns a permission error, create a Google Cloud service
-   account with the **Google Drive API enabled**. Share only the approved **student**
-   presentation with its service-account email as **Viewer**, subject to school
-   policy. In **Settings → Secrets and variables → Actions**, add a repository
-   secret named `GOOGLE_SERVICE_ACCOUNT_JSON` containing the complete JSON key.
-   Never commit that key or put it into a lesson file. Rerun the workflow.
-4. Confirm a successful Pages deployment and test the Slides button from a
-   school device/account that could not use the Google embed.
-
-The first successful pilot deployment used an approved, saved PDF snapshot
-(`assets/slide-decks/1-1/bootstrap.pdf`). GitHub has generated 56
-slides from that snapshot without requiring a Google account in the student's
-browser. **This snapshot is not live-synchronised.** Changes in Google Slides
-will appear only after `GOOGLE_SERVICE_ACCOUNT_JSON` has been configured and
-the source student deck has been shared with the service-account email.
-
-Public Google export is attempted first; authenticated export is next when
-credentials are available. Until then, only the pre-approved 1.1 pilot may
-use its saved PDF as an initial fallback. If a live-synchronised version has
-already been generated, a Google access failure must not replace it with the
-older snapshot. Publishing a student deck to the web should only be done
-where authorisation has already been granted.
-
-For a new approved deck, add an entry to `data/slide-sync.json`, point its
-viewer to its own manifest directory, and include the slide viewer assets on
-its course topic page. Do not add private staff-only decks without approval.
+See **[Google Apps Script setup instructions](scripts/google-apps-script/README.md)**
+for the one-time token, Script Properties and setup() steps. The GitHub
+token must be stored only in Apps Script Script Properties; do not commit it.
+Keep the custom domain `csrevision.org.uk` and the GitHub Pages Source set
+to **GitHub Actions**. An existing approved PDF remains available while
+the Google Apps Script is being configured. Only add new student decks
+after their public publication has been authorised.
 
 ## Navigation
 
