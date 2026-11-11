@@ -31,35 +31,35 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 ## GCSE 1.1 self-hosted slides pilot
 
 The **student** deck for 1.1 Variables, constants, data types and casting
-is the Google Slides file \`1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo\`.
+is the Google Slides file `1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo`.
 It is already approved for publication. Do not synchronise the teacher edition.
 
-\`data/slide-sync.json\` lists the approved file and output location.
-\`scripts/sync-slides.py\` retrieves its latest PDF on the GitHub Actions runner,
+`data/slide-sync.json` lists the approved file and output location.
+`scripts/sync-slides.py` retrieves its latest PDF on the GitHub Actions runner,
 converts all slides to static WebP images, and writes
-\`assets/slide-decks/1-1/manifest.json\`. The lesson page uses
-\`assets/selfhosted-lesson.js\` to load those static images with Back, Next,
+`assets/slide-decks/1-1/manifest.json`. The lesson page uses
+`assets/selfhosted-lesson.js` to load those static images with Back, Next,
 arrow keys and fullscreen controls. Students make **no Google requests** through
 the viewer. The original Google Slides link is retained as a manual backup.
 
-\`.github/workflows/sync-lesson-slides.yml\` runs every 30 minutes, on push to
-\`main\`, and via **Actions → Synchronise lesson slides and publish CSRevision →
+`.github/workflows/sync-lesson-slides.yml` runs every 30 minutes, on push to
+`main`, and via **Actions → Synchronise lesson slides and publish CSRevision →
 Run workflow**. It commits generated assets only when image files change and
 publishes the full website with an explicit GitHub Pages deployment. This is
 necessary because GitHub Pages branch builds are not triggered by commits made
-with the default \`GITHUB_TOKEN\`.
+with the default `GITHUB_TOKEN`.
 
 ### One-time configuration
 
 1. In **Settings → Pages → Build and deployment → Source**, choose
    **GitHub Actions** (not Deploy from a branch). Keep the existing custom domain
-   \`csrevision.org.uk\`.
+   `csrevision.org.uk`.
 2. Open **Actions** and run the above workflow manually.
 3. If anonymous export returns a permission error, create a Google Cloud service
    account with the **Google Drive API enabled**. Share only the approved **student**
    presentation with its service-account email as **Viewer**, subject to school
    policy. In **Settings → Secrets and variables → Actions**, add a repository
-   secret named \`GOOGLE_SERVICE_ACCOUNT_JSON\` containing the complete JSON key.
+   secret named `GOOGLE_SERVICE_ACCOUNT_JSON` containing the complete JSON key.
    Never commit that key or put it into a lesson file. Rerun the workflow.
 4. Confirm a successful Pages deployment and test the Slides button from a
    school device/account that could not use the Google embed.
@@ -69,7 +69,7 @@ Publishing a student deck to the web should only be done where authorisation
 has already been granted. If export fails, the workflow stops and retains the
 previous successful slides instead of publishing a partial deck.
 
-For a new approved deck, add an entry to \`data/slide-sync.json\`, point its
+For a new approved deck, add an entry to `data/slide-sync.json`, point its
 viewer to its own manifest directory, and include the slide viewer assets on
 its course topic page. Do not add private staff-only decks without approval.
 
