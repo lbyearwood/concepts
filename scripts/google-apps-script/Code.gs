@@ -1,174 +1,150 @@
-/**
- * CSRevision GCSE 1.1 — Google Slides → GitHub automatic publishing.
- *
- * Run setup() ONCE after adding GITHUB_TOKEN under Script Properties.
- * The script runs as your Google account. It does not change the slide deck.
- *
- * The approved student deck is converted to PDF and written to GitHub.
- * GitHub Actions then converts it to WebP slides and publishes CSRevision.
+/** CSRevision: read approved student Slides; upload PDFs, never edit Google files.
+ * Install appsscript.json too. GITHUB_TOKEN belongs only in Script Properties.
+ * A successful upload is not proof of a successful Pages deployment.
  */
-
 const SLIDE_SYNC = Object.freeze({
-  googlePresentationId: '1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo',
-  githubOwner: 'lbyearwood',
-  githubRepository: 'concepts',
-  githubBranch: 'main',
-  githubPdfPath: 'assets/slide-decks/1-1/bootstrap.pdf',
-  lastHashKey: 'GCSE_1_1_LAST_UPLOADED_SHA256',
-  lastModifiedKey: 'GCSE_1_1_LAST_UPLOADED_MODIFIED'
+  owner: 'lbyearwood', repository: 'concepts', branch: 'main',
+  configPath: 'data/slide-sync.json', intervalMinutes: 15,
+  runBudgetMs: 240000, maxUploadsPerRun: 6, maxPdfBytes: 10 * 1024 * 1024
 });
 
-/**
- * One-time setup: check the token, install one 30-minute trigger and
- * upload the current presentation immediately.
- */
 function setup() {
-  requireGithubToken_();
-  for (const trigger of ScriptApp.getProjectTriggers()) {
-    if (trigger.getHandlerFunction() === 'syncSlides') {
-      ScriptApp.deleteTrigger(trigger);
-    }
-  }
-  ScriptApp.newTrigger('syncSlides').timeBased().everyMinutes(30).create();
-  console.log('Installed the 30-minute slide synchronisation trigger.');
+  // Prove access/export/upload first; failure must not install a new trigger.
   syncSlides();
+  stopSync();
+  ScriptApp.newTrigger('syncSlides').timeBased().everyMinutes(SLIDE_SYNC.intervalMinutes).create();
+  console.log('Installed one 15-minute trigger. Check GitHub Actions and the live viewer.');
 }
 
-/**
- * Run manually at any time to publish an updated version without waiting.
- * Re-running it with identical slides does not create another Git commit.
- */
-function syncSlides() {
-  const lock = LockService.getScriptLock();
-  if (!lock.tryLock(10000)) {
-    console.log('An earlier slide update is already running.');
-    return;
+function stopSync() {
+  for (const trigger of ScriptApp.getProjectTriggers()) {
+    if (trigger.getHandlerFunction() === 'syncSlides') ScriptApp.deleteTrigger(trigger);
   }
+}
 
+function syncSlides() { runSync_(false); }
+// Recovery/on-demand export; identical GitHub PDF still produces no commit.
+function forceSyncSlides() { runSync_(true); }
+
+function runSync_(force) {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(10000)) throw new Error('Another sync is running; try again later.');
   try {
-    const token = requireGithubToken_();
-    const deck = DriveApp.getFileById(SLIDE_SYNC.googlePresentationId);
-    const properties = PropertiesService.getScriptProperties();
-    const modified = String(deck.getLastUpdated().getTime());
-    // Avoid unnecessary PDF exports (and commits if PDF metadata changes).
-    if (modified === properties.getProperty(SLIDE_SYNC.lastModifiedKey)) {
-      console.log('The Google Slides file has not changed; no export needed.');
-      return;
-    }
-    const pdf = deck.getAs(MimeType.PDF);
-    const bytes = pdf.getBytes();
-
-    // Fail before sending anything if Google did not export a PDF.
-    if (bytes.length < 5 ||
-        (bytes[0] & 255) !== 37 ||
-        (bytes[1] & 255) !== 80 ||
-        (bytes[2] & 255) !== 68 ||
-        (bytes[3] & 255) !== 70 ||
-        (bytes[4] & 255) !== 45) {
-      throw new Error('Google did not return a valid PDF. Nothing was uploaded.');
-    }
-    if (bytes.length > 20 * 1024 * 1024) {
-      throw new Error('PDF is over the 20 MB pilot limit. No upload attempted.');
-    }
-
-    const hash = sha256_(bytes);
-    if (hash === properties.getProperty(SLIDE_SYNC.lastHashKey)) {
-      properties.setProperty(SLIDE_SYNC.lastModifiedKey, modified);
-      console.log('Export is identical to the previous PDF; GitHub update skipped.');
-      return;
-    }
-
-    const url = githubContentsUrl_();
-    const headers = {
-      Authorization: 'Bearer ' + token,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'CSRevision-Google-Apps-Script'
-    };
-
-    // GitHub needs the current file SHA when replacing an existing PDF.
-    // On a rare concurrent-edit conflict, fetch a fresh SHA and retry once.
-    const content = Utilities.base64Encode(bytes);
-    let uploaded = false;
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      const getResult = UrlFetchApp.fetch(
-        url + '?ref=' + encodeURIComponent(SLIDE_SYNC.githubBranch),
-        { method: 'get', headers, muteHttpExceptions: true }
-      );
-      const getStatus = getResult.getResponseCode();
-      if (getStatus !== 200 && getStatus !== 404) {
-        failGithub_('read', getResult);
-      }
-
-      const body = {
-        message: 'Update GCSE 1.1 student slides from Google Apps Script',
-        branch: SLIDE_SYNC.githubBranch,
-        content
-      };
-      if (getStatus === 200) {
-        const file = JSON.parse(getResult.getContentText());
-        if (!file.sha) throw new Error('GitHub did not return the existing file SHA.');
-        body.sha = file.sha;
-      }
-
-      const putResult = UrlFetchApp.fetch(url, {
-        method: 'put',
-        headers,
-        contentType: 'application/json',
-        payload: JSON.stringify(body),
-        muteHttpExceptions: true
-      });
-      const putStatus = putResult.getResponseCode();
-      if (putStatus === 200 || putStatus === 201) {
-        uploaded = true;
+    const started = Date.now();
+    const props = PropertiesService.getScriptProperties();
+    const token = (props.getProperty('GITHUB_TOKEN') || '').trim();
+    if (!token) throw new Error('Set GITHUB_TOKEN in Script Properties, never in source code.');
+    const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28' };
+    const configResult = githubGet_(SLIDE_SYNC.configPath, headers);
+    if (configResult.getResponseCode() !== 200) failGithub_('configuration read', configResult);
+    const configFile = JSON.parse(configResult.getContentText());
+    const config = JSON.parse(Utilities.newBlob(Utilities.base64Decode(configFile.content)).getDataAsString());
+    const decks = validateDecks_(config);
+    let cursor = Number(props.getProperty('SYNC_CURSOR') || 0) % decks.length;
+    if (!Number.isInteger(cursor) || cursor < 0) cursor = 0;
+    let uploads = 0;
+    const failed = [];
+    for (let checked = 0; checked < decks.length; checked++) {
+      if (Date.now() - started > SLIDE_SYNC.runBudgetMs || uploads >= SLIDE_SYNC.maxUploadsPerRun) {
+        console.log('Batch budget reached; next trigger resumes at the saved cursor.');
         break;
       }
-      if (putStatus !== 409 || attempt === 2) {
-        failGithub_('write', putResult);
+      const deck = decks[cursor];
+      try {
+        if (syncDeck_(deck, props, headers, force)) uploads++;
+      } catch (error) {
+        console.error(deck.key + ': ' + error.message);
+        failed.push(deck.key);
       }
-      console.log('GitHub file changed concurrently; retrying with its latest SHA.');
+      cursor = (cursor + 1) % decks.length;
+      props.setProperty('SYNC_CURSOR', String(cursor));
     }
+    if (failed.length) throw new Error('Sync failed for ' + failed.join(', ') + '; checkpoints retained for retry. See execution log.');
+  } finally { lock.releaseLock(); }
+}
 
-    if (!uploaded) throw new Error('GitHub did not confirm the PDF update.');
-    properties.setProperties({
-      [SLIDE_SYNC.lastHashKey]: hash,
-      [SLIDE_SYNC.lastModifiedKey]: modified
-    });
-    console.log('Uploaded revised GCSE 1.1 PDF to GitHub. GitHub Actions will rebuild the slides.');
-  } finally {
-    lock.releaseLock();
+function validateDecks_(config) {
+  if (!Array.isArray(config.decks) || !config.decks.length || config.decks.length > 100) {
+    throw new Error('Expected 1–100 explicitly approved student decks.');
   }
-}
-
-function requireGithubToken_() {
-  const token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
-  if (!token || !token.trim()) {
-    throw new Error('Add the GITHUB_TOKEN property in Apps Script Project Settings before running setup().');
+  const keys = new Set(), paths = new Set();
+  for (const deck of config.decks) {
+    if (deck.approvedStudent !== true || !/^[a-z0-9-]+$/.test(deck.key || '') ||
+        !/^[A-Za-z0-9_-]{20,}$/.test(deck.googleFileId || '') ||
+        !/^assets\/slide-decks\/[a-z0-9-]+\/bootstrap\.pdf$/.test(deck.sourcePdf || '') ||
+        deck.output !== deck.sourcePdf.slice(0, -'/bootstrap.pdf'.length) ||
+        !deck.title || keys.has(deck.key) || paths.has(deck.sourcePdf)) {
+      throw new Error('Invalid or unapproved student deck configuration; no exports attempted.');
+    }
+    keys.add(deck.key); paths.add(deck.sourcePdf);
   }
-  return token.trim();
+  return config.decks;
 }
 
-function githubContentsUrl_() {
-  // All path segments are constants, not user input.
-  const path = SLIDE_SYNC.githubPdfPath.split('/').map(encodeURIComponent).join('/');
-  return 'https://api.github.com/repos/' +
-    SLIDE_SYNC.githubOwner + '/' + SLIDE_SYNC.githubRepository +
-    '/contents/' + path;
+function syncDeck_(deck, props, headers, force) {
+  const prefix = 'SYNC_' + deck.key + '_';
+  const file = DriveApp.getFileById(deck.googleFileId);
+  if (file.getMimeType() !== MimeType.GOOGLE_SLIDES) throw new Error('Source must be a native Google Slides presentation.');
+  const modified = String(file.getLastUpdated().getTime());
+  if (!force && modified === props.getProperty(prefix + 'MODIFIED')) {
+    console.log(deck.key + ': unchanged; no PDF export or upload.');
+    return false;
+  }
+  const bytes = file.getAs(MimeType.PDF).getBytes();
+  if (bytes.length < 5 || bytes.length > SLIDE_SYNC.maxPdfBytes ||
+      [37, 80, 68, 70, 45].some((value, i) => (bytes[i] & 255) !== value)) {
+    throw new Error('Invalid PDF or over the 10 MiB limit; no upload.');
+  }
+  if (String(file.getLastUpdated().getTime()) !== modified) {
+    throw new Error('Source changed during export; next trigger will retry.');
+  }
+  const hash = digest_(Utilities.DigestAlgorithm.SHA_256, bytes);
+  const blobPrefix = Utilities.newBlob('blob ' + bytes.length + '\0').getBytes();
+  const gitSha = digest_(Utilities.DigestAlgorithm.SHA_1, blobPrefix.concat(bytes));
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const result = githubGet_(deck.sourcePdf, headers);
+    const status = result.getResponseCode();
+    if (status !== 200 && status !== 404) failGithub_('PDF read', result);
+    const remote = status === 200 ? JSON.parse(result.getContentText()) : null;
+    if (remote && !remote.sha) throw new Error('GitHub did not return a file SHA.');
+    if (remote && remote.sha === gitSha) {
+      checkpoint_(props, prefix, modified, hash);
+      console.log(deck.key + ': GitHub PDF already identical; no commit.');
+      return false;
+    }
+    const body = { message: 'Update approved student slides: ' + deck.key,
+      branch: SLIDE_SYNC.branch, content: Utilities.base64Encode(bytes) };
+    if (remote) body.sha = remote.sha;
+    const put = UrlFetchApp.fetch(githubUrl_(deck.sourcePdf), { method: 'put', headers,
+      contentType: 'application/json', payload: JSON.stringify(body), muteHttpExceptions: true });
+    const putStatus = put.getResponseCode();
+    if (putStatus === 200 || putStatus === 201) {
+      checkpoint_(props, prefix, modified, hash);
+      console.log(deck.key + ': PDF uploaded. Verify the subsequent Pages workflow; upload is not deployment.');
+      return true;
+    }
+    if (putStatus !== 409 || attempt === 1) failGithub_('PDF write', put);
+  }
+  throw new Error('GitHub did not confirm the upload.');
 }
 
-function sha256_(bytes) {
-  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, bytes)
-    .map(byte => ('0' + (byte & 255).toString(16)).slice(-2))
-    .join('');
+function checkpoint_(props, prefix, modified, hash) {
+  props.setProperties({ [prefix + 'MODIFIED']: modified, [prefix + 'SHA256']: hash });
 }
-
+function digest_(algorithm, bytes) {
+  return Utilities.computeDigest(algorithm, bytes).map(b => ('0' + (b & 255).toString(16)).slice(-2)).join('');
+}
+function githubUrl_(path) {
+  return 'https://api.github.com/repos/' + SLIDE_SYNC.owner + '/' + SLIDE_SYNC.repository +
+    '/contents/' + path.split('/').map(encodeURIComponent).join('/');
+}
+function githubGet_(path, headers) {
+  return UrlFetchApp.fetch(githubUrl_(path) + '?ref=' + encodeURIComponent(SLIDE_SYNC.branch),
+    { method: 'get', headers: { ...headers, Accept: 'application/vnd.github.object+json' },
+      muteHttpExceptions: true });
+}
 function failGithub_(operation, result) {
-  const status = result.getResponseCode();
-  let reason = 'Unspecified GitHub API error';
-  try {
-    reason = JSON.parse(result.getContentText()).message || reason;
-  } catch (ignored) {
-    // Do not print headers, bearer tokens or request payloads to logs.
-  }
-  throw new Error('GitHub ' + operation + ' failed (HTTP ' + status + '): ' + reason);
+  // Never log response bodies, headers, tokens or base64 source content.
+  throw new Error('GitHub ' + operation + ' failed (HTTP ' + result.getResponseCode() + ').');
 }

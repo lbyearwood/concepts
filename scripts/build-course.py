@@ -78,12 +78,33 @@ def sidebar(units, current):
     return "\n".join(lines)
 
 
-def new_topic(unit, topic):
+def selfhosted_player(output):
+    return f'''<div class="selfhosted-viewer" data-manifest="../../{escape(output)}/manifest.json">
+      <div class="selfhosted-slide-stage" aria-label="Lesson slide">
+        <img class="selfhosted-slide-image" alt="" hidden>
+        <p class="selfhosted-slide-status" role="status">Loading slides from CSRevision…</p>
+      </div>
+      <div class="selfhosted-slide-controls">
+        <button class="slide-btn selfhosted-slide-previous" type="button" disabled>← Back</button>
+        <strong class="selfhosted-slide-counter" aria-live="polite">Loading…</strong>
+        <button class="slide-btn selfhosted-slide-next" type="button" disabled>Next →</button>
+        <button class="slide-btn secondary selfhosted-slide-fullscreen" type="button">Fullscreen</button>
+      </div>
+    </div>'''
+
+
+def new_topic(unit, topic, deck=None):
     title = escape(topic["title"])
     short_title = escape(topic["title"].split(" ", 1)[1])
     number = escape(topic["title"].split(" ", 1)[0])
     source = topic.get("lessonSrc")
     source_attr = f' data-lesson-src="{escape(source, quote=True)}"' if source else ""
+    lesson_script = "selfhosted-lesson.js?v=1" if deck else "course-lesson.js?v=3"
+    lesson_css = '\n  <link rel="stylesheet" href="../../assets/selfhosted-slides.css?v=1">' if deck else ""
+    player = (selfhosted_player(deck["output"]) if deck else
+              f'<div class="lesson-player"><iframe title="{short_title} lesson" allowfullscreen></iframe></div>')
+    if deck:
+        source_attr = ""
     return f'''<!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -94,9 +115,9 @@ def new_topic(unit, topic):
   <link rel="stylesheet" href="../../assets/sidebar.css?v=units-1">
   <link rel="stylesheet" href="../../assets/colour-block.css?v=2">
   <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
-  <link rel="stylesheet" href="../../assets/course-topic.css?v=4">
+  <link rel="stylesheet" href="../../assets/course-topic.css?v=4">{lesson_css}
   <script src="../../assets/concept-viewport.js?v=1" defer></script>
-  <script src="../../assets/course-lesson.js?v=3" defer></script>
+  <script src="../../assets/{lesson_script}" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block concept-demo course-topic-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -120,7 +141,7 @@ def new_topic(unit, topic):
   </div></div>
   <dialog class="lesson-modal" id="lesson-modal" aria-labelledby="lesson-title">
     <div class="lesson-modal-heading"><h2 id="lesson-title">{number} Lesson</h2><button class="modal-close" type="button">Close</button></div>
-    <div class="lesson-player"><iframe title="{short_title} lesson" allowfullscreen></iframe></div>
+    {player}
   </dialog>
 </body>
 </html>
@@ -130,6 +151,15 @@ def new_topic(unit, topic):
 def outputs():
     catalogue = json.loads(CATALOGUE.read_text(encoding="utf-8"))
     units = catalogue["units"]
+    sync = json.loads((ROOT / "data/slide-sync.json").read_text(encoding="utf-8"))
+    decks = {}
+    for deck in sync["decks"]:
+        if (deck.get("approvedStudent") is not True or
+                not re.fullmatch(r"assets/slide-decks/[a-z0-9-]+", deck.get("output", ""))):
+            raise ValueError("Expected an explicitly approved, safe self-hosted deck.")
+        if deck["key"] in decks:
+            raise ValueError("Duplicate slide deck key.")
+        decks[deck["key"]] = deck
     pages = {}
     paths = set()
     for unit in units:
@@ -142,7 +172,8 @@ def outputs():
             if source and not re.fullmatch(r"https://docs\.google\.com/presentation/d/e/[\w-]+/pubembed\?start=false&loop=false&delayms=3000", source):
                 raise ValueError(f"Expected an approved published player URL: {path}")
             if path != EXISTING_TOPIC:
-                pages[path] = new_topic(unit, topic)
+                deck = decks.get("gcse-" + topic["title"].split(" ", 1)[0].replace(".", "-"))
+                pages[path] = new_topic(unit, topic, deck)
     # Existing teaching content stays intact; only its shared navigation is regenerated.
     for path in ["index.html", EXISTING_TOPIC, PROGRAMMING_PROBLEMS] + [item[2] for item in CONCEPTS]:
         pages[path] = (ROOT / path).read_text(encoding="utf-8")

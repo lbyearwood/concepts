@@ -17,6 +17,7 @@ concurrency:
 jobs:
   sync-and-publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -24,6 +25,7 @@ jobs:
       - name: Check out website
         uses: actions/checkout@v4
         with:
+          ref: main
           persist-credentials: true
 
       - name: Set up Python
@@ -32,7 +34,14 @@ jobs:
           python-version: '3.12'
 
       - name: Install slide-rendering tools
-        run: python -m pip install "pymupdf>=1.24,<2" "pillow>=11,<13"
+        run: python -m pip install -r scripts/requirements-slides.txt
+
+      - name: Verify conversion and publisher failure handling
+        run: |
+          python -m unittest discover -s tests -p 'test_slide_sync.py'
+          node --test tests/slide-sync.test.cjs
+          python scripts/build-course.py --check
+          python scripts/build-problems.py --check
 
       - name: Render approved PDF supplied by Google Apps Script
         run: python scripts/sync-slides.py
@@ -42,6 +51,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+            echo "A newer main revision is queued. Refusing to publish stale content."
+            exit 1
+          fi
           git add assets/slide-decks/
           if ! git diff --cached --quiet; then
             git commit -m "Sync published student slides [skip ci]"
@@ -49,6 +63,12 @@ jobs:
           else
             echo "Slides unchanged; no commit needed."
           fi
+
+      - name: Record the packaged revision
+        shell: bash
+        run: |
+          git rev-parse HEAD > assets/site-revision.txt
+          echo "Packaged revision: $(cat assets/site-revision.txt)" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

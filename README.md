@@ -37,31 +37,23 @@ must not be published. The student-facing page at
 has a self-hosted image viewer with Back, Next, arrow-key and fullscreen
 controls. Students do not connect to Google when using this viewer.
 
-The pilot initially published 56 approved slide images from
-`assets/slide-decks/1-1/bootstrap.pdf`. Google Apps Script is the **new
-automatic-update mechanism**: [the account-authorised script](scripts/google-apps-script/Code.gs)
-exports the original student presentation as a PDF on a 30-minute Google
-time-based trigger and updates that same repository PDF using a fine-grained
-GitHub access token. On a successful file update, the push to `main` triggers
-`.github/workflows/sync-lesson-slides.yml`, which runs
-`scripts/sync-slides.py` to convert that repository PDF into static WebP
-slides, saves the manifest under `assets/slide-decks/1-1` and deploys
-the site through GitHub Pages. The source ID and PDF path are configured in
-`data/slide-sync.json`.
+The current 56-slide copy is self-hosted. **Automatic updates from Google are
+not yet activated or proven.** The preferred route is an owner-run Apps Script
+with a 15-minute metadata check, a repository-only GitHub token, and the existing
+PDF → WebP → Pages workflow. The original Google presentation remains the editor.
 
-**Initial publishing succeeded, but automatic synchronisation is not active
-until the Google Apps Script is authorised and its trigger is installed.**
-The script must run under a Google account with permission to read the
-student slides. No Google Cloud service account or Google secret in GitHub
-is necessary.
+Read the [options, security review and test status](docs/slide-synchronisation.md)
+and [one-time account setup](scripts/google-apps-script/README.md). Install both
+Code.gs and its explicit read-only manifest. No Advanced Drive service is needed.
+The conversion skips unchanged input, validates every image before replacement,
+and preserves the last published release on failure. Pages Source is **GitHub
+Actions**; do not restore the competing branch deployment. `assets/site-revision.txt`
+on the live site identifies the packaged revision.
 
-See **[Google Apps Script setup instructions](scripts/google-apps-script/README.md)**
-for the one-time token, Script Properties and setup() steps. The GitHub
-token must be stored only in Apps Script Script Properties; do not commit it.
-Keep the custom domain `csrevision.org.uk` and the GitHub Pages Source set
-to **GitHub Actions**. An existing approved PDF remains available while
-the Google Apps Script is being configured. Only add new student decks
-after their public publication has been authorised.
+Only 1.1 is enabled in `data/slide-sync.json`. The helper
+`scripts/add-slide-deck.py` takes an existing topic and an approved student deck
+ID, derives its metadata, and supports the existing viewer on generated topic
+pages. No additional decks were exported or enabled during this pilot.
 
 ## Navigation
 
@@ -171,16 +163,14 @@ The topic 1.1 resource row has three square buttons. The first is Slides; the
 other two stay visually blank and inactive until the user assigns them a purpose.
 Slides is yellow with dark icon/text by default, then blue with white icon/text
 on hover or visible keyboard focus. The blank controls retain orange and lime.
-The Slides button opens the approved published Google Slides presentation in a
-white lightbox beside the persistent sidebar. Its actual `pubembed` URL is stored
-in `data-lesson-src`; the player loads only when the button is clicked. The same
-native deck supplies future updates. Do not substitute an editor/share link or a
-static export. Existing edit-sharing permissions are preserved; the published
-presentation is public, as explicitly approved on 8 November 2026. Obtain approval
-for the exact deck and public-web audience before publishing a different deck.
-The remaining 59 student decks have been matched to the current course folders;
-their Slides controls stay disabled until approved public player URLs are set in
-the catalogue. Teacher editions, revision cards and archived files are excluded.
+For topic 1.1, Slides opens the self-hosted image viewer. It fetches the current
+manifest on each opening, with Next, Back, arrow keys and fullscreen. The original
+published Google player is an optional backup link. Normal slide viewing loads
+images from CSRevision and requires no Google sign-in. The image export loses
+animations, video, audio, interactive links and semantic/selectable text; see the
+sync decision for limits and recovery. Original Google content and sharing are
+preserved. Remaining topics stay disabled until an approved working source is
+configured. Teacher editions, revision cards and archived files are excluded.
 
 ## Local verification and release
 
@@ -190,7 +180,10 @@ cross-page links, current-page highlighting, keyboard focus and lesson controls.
 Check every step fits fully inside the viewport and that only a long sidebar
 scrolls. Test Keywords, modal focus, Escape and the return to the lesson.
 
-Before release, run `python scripts/build-course.py --check`, review `git diff`
+Before release, install `scripts/requirements-slides.txt`, run
+`python -m unittest discover -s tests -p test_slide_sync.py`,
+`node --test tests/slide-sync.test.cjs`, both site builders with `--check`,
+and `python scripts/sync-slides.py` twice (the second run must skip). Review `git diff`
 and run `git diff --check`. Commit the intended
 files and push `main`; GitHub Pages builds and publishes the site automatically.
 Verify the Pages workflow for that commit and check the published navigation.
