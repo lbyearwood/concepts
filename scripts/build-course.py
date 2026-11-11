@@ -100,7 +100,7 @@ def new_topic(unit, topic, deck=None):
     source = topic.get("lessonSrc")
     source_attr = f' data-lesson-src="{escape(source, quote=True)}"' if source else ""
     lesson_script = "selfhosted-lesson.js?v=1" if deck else "course-lesson.js?v=3"
-    lesson_css = '\n  <link rel="stylesheet" href="../../assets/selfhosted-slides.css?v=1">' if deck else ""
+    lesson_css = '\n  <link rel="stylesheet" href="../../assets/selfhosted-slides.css?v=2">' if deck else ""
     player = (selfhosted_player(deck["output"]) if deck else
               f'<div class="lesson-player"><iframe title="{short_title} lesson" allowfullscreen></iframe></div>')
     if deck:

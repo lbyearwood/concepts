@@ -140,7 +140,10 @@ traffic warrants it; migrating assets now would add unnecessary infrastructure.
 
 Text, diagrams and images retain the current 1.7× PDF rendering, RGB and WebP
 quality 87. The unchanged 56 pilot images were byte-identical when re-rendered
-locally with the pinned tools; the original viewer/CSS were retained. Raster
+locally with the pinned tools; the viewer controller was retained. Final visual QA found that the image
+height could exceed its flex/grid frame and clip the lower slide content. A
+small positioning fix now contains the complete slide; local 1400×579, 390×844
+and 844×390 checks confirm image/dialog bounds, with no document overflow. Raster
 slides lack selectable text and semantic slide contents for screen readers.
 Zoom quality is finite. PDF rendering does not preserve animations, progressive
 reveals, transitions, audio, embedded video or clickable slide interactions.

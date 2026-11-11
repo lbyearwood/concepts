@@ -194,6 +194,11 @@ web-font connection is needed at runtime.
 
 ## Progress
 
+- 11 November 2026: completed the automatic-sync investigation and prepared a
+  private read-only Apps Script pilot, still awaiting token/Google consent and
+  a real scheduled edit test. Fixed an existing slide-image sizing issue so
+  the whole slide fits inside its frame on desktop/mobile/short screens.
+
 - 11 November 2026: added four original subroutine problems and five file-handling
   problems with 45 guided steps, bringing both categories to five problems.
   The nine new solutions passed 44 independent function, boundary and file-effect
