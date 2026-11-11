@@ -164,11 +164,23 @@ successful upload/checkpoint, identical recovery, export failure/setup gate,
 GitHub failure/retry, 409 handling, edit-during-export, approval guard and trigger
 setup. These Node tests are simulations, not execution inside Google's runtime.
 The real 56-slide repository PDF rendered, then skipped on the second run.
-Both existing site generators passed `--check`. Release and Edge evidence are
-recorded in the existing project QA record.
+Both existing site generators passed `--check`. Custom Pages release 5f98a0a
+passed run 43103780643; the live revision marker matches. Live Back/Next and
+ArrowRight passed, and the rendered image is a CSRevision URL with no iframe
+or relevant live console warnings. A local automated fullscreen request was
+denied by Edge; the original fullscreen code is preserved and manual fullscreen
+remains unverified in this session. Release and Edge evidence are in the
+existing project QA record.
 
-**Still required to prove automatic sync:** owner-created Apps Script project,
-private GitHub token, explicit Google consent, successful `setup()` and a real
+**Prepared in the Google account:** a dedicated native `CSRevision Slide Sync`
+project was created in Planning / 5. Workspace tools. Code.gs was saved, reloaded
+and copied back exactly; the saved explicit scope manifest was read back. Drive
+metadata confirms the intended folder and no sharing. No token was entered and
+no function/consent flow was run. The private project link is in the workspace
+policy and task handover, rather than this public repository.
+
+**Still required to prove automatic sync:** private GitHub token, explicit
+Google consent, successful `setup()` and a real
 scheduled execution. Then the user makes a controlled edit to the original;
 observe source modification → PDF commit → successful Pages run → changed image
 on CSRevision, followed by another trigger with no new export/commit. The agent

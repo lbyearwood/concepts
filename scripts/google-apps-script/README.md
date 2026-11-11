@@ -17,7 +17,13 @@ The token can write repository contents across this one repository, not only
 the PDF path. Do not paste it into chat, commit it or grant access to all repos.
 Create, enter and save the token yourself; the agent does not need to see it.
 
-## 2. Create the private owner-run project
+## 2. Open the prepared owner-run project, or create one for a future installation
+
+For this pilot, the dedicated **CSRevision Slide Sync** project and its reviewed
+Code.gs/explicit manifest have already been saved and checked in **Planning /
+5. Workspace tools**. Use the private project link supplied in the handover.
+The following creation/copy steps are for a future installation; do not create
+a duplicate for this prepared pilot.
 
 Use the Google account that can access the approved native student deck.
 At [Apps Script](https://script.google.com/home), create a standalone project
