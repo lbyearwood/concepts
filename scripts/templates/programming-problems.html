@@ -7,8 +7,8 @@
   <title>Programming Problems | CSRevision</title>
   <link rel="stylesheet" href="../../../assets/sidebar.css?v=tutorials-1">
   <link rel="stylesheet" href="../../../assets/colour-block.css?v=2">
-  <link rel="stylesheet" href="../../../assets/programming-problems.css?v=1">
-  <script src="../../../assets/programming-problems.js?v=1" defer></script>
+  <link rel="stylesheet" href="../../../assets/programming-problems.css?v=2">
+  <script src="../../../assets/programming-problems.js?v=2" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block problems-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -31,14 +31,14 @@ __CATEGORIES__
       <section id="category-panel" class="category-panel" role="tabpanel" aria-labelledby="category-traversal">
         <div class="problem-list-heading">
           <h2 id="problem-category-title">List Traversal</h2>
-          <span>Choose a problem to open its tutorial</span>
+          <span>Choose a problem to open its exam question</span>
         </div>
         <div class="problem-list-scroll">
           <ol class="problem-list" aria-label="List Traversal problems">
 __PROBLEM_LIST__
           </ol>
           <p class="problem-empty" hidden></p>
-          <noscript><p>Enable JavaScript to open the tutorials and change categories.</p></noscript>
+          <noscript><p>Enable JavaScript to open the questions and change categories.</p></noscript>
         </div>
       </section>
     </section>
@@ -50,15 +50,20 @@ __PROBLEM_LIST__
       <button class="tutorial-close" type="button" autofocus>Close</button>
     </header>
     <div class="tutorial-body">
-      <details class="tutorial-question">
+      <details class="tutorial-question" open>
         <summary>Exam question</summary>
         <div class="tutorial-question-content"></div>
       </details>
-      <div class="tutorial-steps" role="group" aria-label="Tutorial steps"></div>
-      <h3 class="tutorial-step-title"></h3>
-      <div class="tutorial-step-content"></div>
+      <details class="tutorial-help">
+        <summary>Tutorial</summary>
+        <div class="tutorial-help-content">
+          <div class="tutorial-steps" role="group" aria-label="Tutorial steps"></div>
+          <h3 class="tutorial-step-title"></h3>
+          <div class="tutorial-step-content"></div>
+        </div>
+      </details>
     </div>
-    <footer class="tutorial-footer">
+    <footer class="tutorial-footer" hidden>
       <span class="tutorial-counter"></span>
       <div><button class="tutorial-back" type="button"><span class="problem-icon icon-left" aria-hidden="true"></span>Back</button><button class="tutorial-next" type="button"><span data-next-label>Next</span><span class="problem-icon icon-right" aria-hidden="true"></span></button></div>
     </footer>

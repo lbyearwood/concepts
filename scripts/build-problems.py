@@ -37,7 +37,7 @@ def output():
     problems = [problem for problem in data['problems'] if problem['category'] == 'traversal']
     items = []
     for index, problem in enumerate(problems, 1):
-        items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open tutorial</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
+        items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open question</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
     content = TEMPLATE.read_text(encoding='utf-8')
     values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
     for token, value in values.items():

@@ -43,8 +43,11 @@ Exam questions contains List Traversal (eight tutorials), Counting (four),
 Subroutines (one) and File Handling (currently empty). Level collections have
 empty states ready for further problems. Every tutorial opens in a native
 popup with numbered steps, code, understanding questions and common errors.
-The collapsible Exam question gives the complete problem while keeping the
-walkthrough compact. Tutorials are native site content, without document
+Each popup opens with the complete Exam question expanded and Tutorial help
+collapsed, so students can attempt the problem before revealing the steps.
+Opening Tutorial reveals its numbered steps and Back/Next controls; collapsing
+it hides those controls. Every problem starts in this question-first state,
+including when reopened. Tutorials are native site content, without document
 embeds or private editor links.
 
 Public tutorial content is maintained in `data/programming-problems.json`.
@@ -152,6 +155,10 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 11 November 2026: made Exam question open by default and Tutorial collapsed
+  in every programming problem popup. Step navigation appears only when the
+  student opens Tutorial help.
 
 - 9 November 2026: built the approved Exam questions design with all four main
   tabs, four source categories, 13 native tutorials and 66 guided steps. Added

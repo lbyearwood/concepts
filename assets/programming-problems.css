@@ -32,7 +32,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .problem-empty { margin:0; padding:35px 0; color:#636572; }
 .problems-page button { cursor:pointer; }
 .problems-page button:disabled { cursor:default; }
-.problems-page button:focus-visible, .tutorial-question summary:focus-visible { outline:3px solid #1433ff; outline-offset:3px; }
+.problems-page button:focus-visible, .tutorial-modal summary:focus-visible { outline:3px solid #1433ff; outline-offset:3px; }
 .tutorial-modal { position:fixed; inset:24px 24px 24px calc(var(--sidebar-width) + 24px); width:min(720px,calc(100vw - var(--sidebar-width) - 48px)); height:fit-content; max-width:none; max-height:calc(100dvh - 48px); margin:0 auto; padding:0; overflow:visible; border:3px solid #101223; background:#fff; color:#101223; box-shadow:7px 7px 0 rgb(16 18 35 / .18); font:14px/1.5 Arial,Helvetica,sans-serif; }
 .tutorial-modal [hidden] { display:none !important; }
 .tutorial-modal[open] { display:flex; flex-direction:column; }
@@ -49,8 +49,9 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-question-content p { margin:0 0 10px; }
 .tutorial-question-content ol { padding-left:22px; margin:0 0 8px; }
 .tutorial-question-content li + li { margin-top:5px; }
+.tutorial-help > summary { color:#1433ff; font-size:14px; font-weight:800; cursor:pointer; }
+.tutorial-help-content { padding-top:18px; }
 .tutorial-steps { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:0 0 19px; }
-.tutorial-step-label { margin-right:3px; color:#636572; font-size:12px; font-weight:800; }
 .tutorial-step-button { width:31px; height:31px; padding:0; border:2px solid #d4d5dc; background:#fff; color:#101223; font-weight:800; }
 .tutorial-step-button[aria-current="step"] { border-color:#101223; background:#00d6c0; }
 .tutorial-step-title { margin:0 0 12px; font:900 20px/1.25 "Arial Black",Arial,sans-serif; letter-spacing:-.35px; }

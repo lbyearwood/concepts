@@ -12,6 +12,8 @@
   const categoryPanel = document.getElementById('category-panel');
   const content = dialog.querySelector('.tutorial-step-content');
   const body = dialog.querySelector('.tutorial-body');
+  const help = dialog.querySelector('.tutorial-help');
+  const footer = dialog.querySelector('.tutorial-footer');
   let launcher = null;
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -54,7 +56,7 @@
       button.setAttribute('aria-haspopup', 'dialog');
       button.setAttribute('aria-controls', 'tutorial-modal');
       const open = element('span', 'problem-open');
-      open.append(element('span', '', 'Open tutorial'), icon('right'));
+      open.append(element('span', '', 'Open question'), icon('right'));
       button.append(element('span', 'problem-number', String(index + 1).padStart(2, '0')), element('span', 'problem-title', problem.title), open);
       item.append(button);
       list.append(item);
@@ -74,7 +76,7 @@
     document.getElementById('tutorial-title').textContent = problem.title;
     dialog.querySelector('.tutorial-step-title').textContent = 'Step ' + (state.step + 1) + '. ' + step.title;
     const steps = dialog.querySelector('.tutorial-steps');
-    steps.replaceChildren(element('span', 'tutorial-step-label', 'Tutorial'));
+    steps.replaceChildren();
     problem.steps.forEach((item, index) => {
       const button = element('button', 'tutorial-step-button', String(index + 1));
       button.type = 'button';
@@ -98,8 +100,10 @@
     dialog.querySelector('.tutorial-back').disabled = state.step === 0;
     dialog.querySelector('[data-next-label]').textContent = state.step === problem.steps.length - 1 ? 'Done' : 'Next';
     dialog.querySelector('.tutorial-next .problem-icon').hidden = state.step === problem.steps.length - 1;
-    dialog.querySelector('.tutorial-announcement').textContent = problem.title + '. Step ' + (state.step + 1) + '. ' + step.title;
-    body.scrollTop = 0;
+    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title : problem.title + '. Exam question. Tutorial collapsed.';
+    if (help.open) {
+      body.scrollTop += help.getBoundingClientRect().top - body.getBoundingClientRect().top - parseFloat(getComputedStyle(body).paddingTop);
+    } else body.scrollTop = 0;
   }
   function openTutorial(id, button) {
     const problem = data.problems.find(item => item.id === id);
@@ -108,7 +112,9 @@
     state.problem = id;
     state.step = 0;
     const question = dialog.querySelector('.tutorial-question');
-    question.open = false;
+    question.open = true;
+    help.open = false;
+    footer.hidden = true;
     const questionContent = dialog.querySelector('.tutorial-question-content');
     questionContent.replaceChildren();
     problem.question.context.forEach(text => questionContent.append(element('p', '', text)));
@@ -119,6 +125,10 @@
     renderStep();
     dialog.showModal();
   }
+  help.addEventListener('toggle', () => {
+    footer.hidden = !help.open;
+    if (state.problem && help.open) renderStep();
+  });
   list.addEventListener('click', event => {
     const button = event.target.closest('[data-problem]');
     if (button) openTutorial(button.dataset.problem, button);
