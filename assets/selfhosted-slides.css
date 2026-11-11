@@ -1,0 +1,71 @@
+/* Self-hosted GCSE slides: no student requests to Google. */
+.lesson-modal .selfhosted-viewer {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  gap: 12px;
+}
+.selfhosted-slide-stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  background: #f3f7fb;
+  border: 3px solid var(--ink, #132b44);
+  overflow: hidden;
+  position: relative;
+}
+.selfhosted-slide-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.selfhosted-slide-stage img[hidden] { display: none; }
+.selfhosted-slide-status {
+  color: #17365e;
+  padding: 18px;
+  font-size: clamp(15px,2vw,22px);
+  line-height: 1.5;
+  text-align: center;
+  max-width: 52ch;
+}
+.selfhosted-slide-status[hidden] { display: none; }
+.selfhosted-slide-controls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.selfhosted-slide-controls .slide-btn {
+  background: var(--blue, #275ee3);
+  color: white;
+  border: 2px solid var(--ink, #132b44);
+  font: 700 16px Arial, Helvetica, sans-serif;
+  padding: 9px 16px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.selfhosted-slide-controls .slide-btn:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+.selfhosted-slide-controls .slide-btn:focus-visible,
+.selfhosted-slide-controls a:focus-visible {
+  outline: 3px solid #f00082;
+  outline-offset: 3px;
+}
+.selfhosted-slide-controls .slide-btn.secondary { background: var(--pink,#d11a78); }
+.selfhosted-slide-counter { font: 800 17px Arial, Helvetica, sans-serif; color: var(--ink,#172c48); min-width: 130px; text-align: center; }
+.selfhosted-slide-controls a { color: #174b9a; font-size: 13px; }
+.selfhosted-slide-stage:fullscreen { background: #071225; padding: 0; }
+.selfhosted-slide-stage:fullscreen img { object-fit: contain; }
+@media(max-width:600px) {
+  .selfhosted-slide-controls { gap: 6px; }
+  .selfhosted-slide-controls .slide-btn { padding: 8px 10px; font-size: 13px; min-height: 39px; }
+  .selfhosted-slide-counter { min-width: 75px; font-size: 13px; }
+  .selfhosted-slide-controls a { display:none; }
+}
