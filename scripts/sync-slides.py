@@ -70,19 +70,38 @@ def get_authenticated_pdf(file_id: str) -> bytes:
     return content
 
 
-def export_pdf(file_id: str) -> bytes:
+def export_pdf(file_id: str, snapshot: Path | None, output: Path) -> tuple[bytes, str]:
     try:
         data = get_public_pdf(file_id)
         print("Downloaded the latest student slides using public export.")
-        return data
+        return data, "live"
     except (urllib.error.URLError, ValueError, TimeoutError) as exc:
-        # Public viewing and public downloading are different permissions.
-        # Never print Google credentials in logs.
-        print(f"Public export unavailable ({type(exc).__name__}). Trying Drive API.")
-        return get_authenticated_pdf(file_id)
+        # Published slides may be viewable while the original is not downloadable.
+        print(f"Public export unavailable ({type(exc).__name__}).")
+        if os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip():
+            print("Using authenticated Google Drive API export.")
+            return get_authenticated_pdf(file_id), "live"
+
+        # Use the approved student-deck snapshot for the FIRST demonstration
+        # only. Never silently overwrite newer, live-synchronised slides.
+        manifest_path = output / "manifest.json"
+        if snapshot and snapshot.is_file():
+            if manifest_path.is_file():
+                old_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                if old_manifest.get("source") == "live":
+                    raise RuntimeError("Live sync lost access; keeping existing slides unchanged.")
+            data = snapshot.read_bytes()
+            if len(data) <= MAX_PDF_BYTES and data.startswith(b"%PDF"):
+                print("NOTICE: Using the saved pilot snapshot; automatic live updates need")
+                print("GOOGLE_SERVICE_ACCOUNT_JSON and Viewer access to the student deck.")
+                return data, "bootstrap"
+        raise RuntimeError(
+            "Google export is unavailable. Configure GOOGLE_SERVICE_ACCOUNT_JSON "
+            "and share the approved student deck with the service account."
+        )
 
 
-def render_pdf(pdf_bytes: bytes, output: Path, title: str) -> bool:
+def render_pdf(pdf_bytes: bytes, output: Path, title: str, source: str) -> bool:
     output.mkdir(parents=True, exist_ok=True)
     pdf = fitz.open(stream=pdf_bytes, filetype="pdf")
     try:
@@ -104,9 +123,12 @@ def render_pdf(pdf_bytes: bytes, output: Path, title: str) -> bool:
                 (output / name).read_bytes() == (temp / name).read_bytes()
                 for name in filenames
             )
-            if unchanged and (output / "manifest.json").is_file():
-                print(f"No slide changes: {len(filenames)} slides already current.")
-                return False
+            manifest_path = output / "manifest.json"
+            if unchanged and manifest_path.is_file():
+                old_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                if old_manifest.get("source") == source:
+                    print(f"No slide changes: {len(filenames)} slides already current.")
+                    return False
 
             # Render and validate ALL pages before replacing the public files.
             for old in output.glob("slide-*.webp"):
@@ -116,6 +138,7 @@ def render_pdf(pdf_bytes: bytes, output: Path, title: str) -> bool:
                 (temp / filename).replace(output / filename)
             manifest = {
                 "title": title,
+                "source": source,
                 "slideCount": len(filenames),
                 "slides": filenames,
                 "updatedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
@@ -138,8 +161,9 @@ def main() -> None:
         output = ROOT / deck["output"]
         if not output.resolve().is_relative_to((ROOT / "assets" / "slide-decks").resolve()):
             raise ValueError("Slide output must be within assets/slide-decks.")
-        pdf = export_pdf(file_id)
-        render_pdf(pdf, output, deck["title"])
+        snapshot = ROOT / deck["bootstrapPdf"] if deck.get("bootstrapPdf") else None
+        pdf, source = export_pdf(file_id, snapshot, output)
+        render_pdf(pdf, output, deck["title"], source)
 
 
 if __name__ == "__main__":
