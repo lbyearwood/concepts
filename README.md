@@ -40,7 +40,8 @@ and Algorithms, with their existing interactive models.
 Below the eight units, GCSE Computer Science also contains Tutorials / Programming
 Problems. It has Exam questions, Level 1 problems, Level 2 and Level 3 tabs.
 Exam questions contains List Traversal (eight tutorials), Counting (four),
-Subroutines (one) and File Handling (currently empty). Level collections have
+Subroutines (five) and File Handling (five), with 22 tutorials and 111 guided
+steps in total. Level collections have
 empty states ready for further problems. Every tutorial opens in a native
 popup with numbered steps, code, understanding questions and common errors.
 Each popup opens with the complete Exam question expanded and Tutorial help
@@ -63,6 +64,15 @@ counter case insensitive for the chosen letter, use the stated safe-reading
 range, and include a worked username subroutine. The source document is
 unchanged. These are authored practice questions, rather than official
 exam-board past-paper questions.
+
+The additional subroutine/file practice follows [OCR J277 specification v3.1,
+section 2.2.3](https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf)
+and the [J277/02 sample assessment format](https://www.ocr.org.uk/Images/552502-computational-thinking-algorithms-and-programming.pdf).
+It covers parameters, local variables, return values, list parameters/results,
+validation and opening/reading/writing/appending/closing text files. The file
+walkthroughs use Python, checked against its [file I/O documentation](https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files).
+These questions and worked solutions are original CSRevision practice. File
+format and input assumptions are stated in each question.
 
 The catalogue keeps readable text and fixed tabs beside the persistent sidebar.
 Its problem list can scroll independently. Native tutorial dialogs sit outside
@@ -155,6 +165,11 @@ under its MIT licence, retained in `assets/icons/LICENSE.txt`. No icon service o
 web-font connection is needed at runtime.
 
 ## Progress
+
+- 11 November 2026: added four original subroutine problems and five file-handling
+  problems with 45 guided steps, bringing both categories to five problems.
+  The nine new solutions passed 44 independent function, boundary and file-effect
+  checks, including empty input, append preservation, overwrite and closed files.
 
 - 11 November 2026: made Exam question open by default and Tutorial collapsed
   in every programming problem popup. Step navigation appears only when the

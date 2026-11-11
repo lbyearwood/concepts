@@ -1581,6 +1581,1142 @@
         }
       ],
       "solution": "first_name = input(\"Enter your first name: \")\nsurname = input(\"Enter your surname: \")\ndef make_username(first_name, surname):\n    first_name = first_name.strip().lower()\n    surname = surname.strip().lower().replace(\" \", \"\")\n    if first_name and surname:\n        username = first_name[0] + surname\n        print(username)\n    else:\n        print(\"Enter both names.\")\nmake_username(first_name, surname)"
+    },
+    {
+      "id": "problem-14",
+      "category": "subroutines",
+      "title": "Calculate a ticket price",
+      "question": {
+        "context": [
+          "A cinema charges £6 for a customer younger than 16 and £10 for a customer aged 16 or over. A program must use a function to work out the price. Assume the age entered is a valid non-negative whole number."
+        ],
+        "requirements": [
+          "Define a function called ticket_price with one parameter called age.",
+          "Use selection inside the function to choose the correct ticket price.",
+          "Return the price to the calling program. Do not print inside the function.",
+          "In the main program, input the customer's age as an integer.",
+          "Call ticket_price with that age and display the returned price."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Define the function",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A parameter gives a function a local name for a value supplied by its caller. Define ticket_price before the main program calls it. The temporary pass keeps the empty function valid while its body is being built."
+            },
+            {
+              "type": "code",
+              "text": "def ticket_price(age):\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which value will be supplied through the age parameter?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Defining a function does not run its body; the program must call it."
+            }
+          ]
+        },
+        {
+          "title": "Choose a price",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with this selection. The child price applies only below 16. Age 16 belongs in the else branch. The variable price is local to this function."
+            },
+            {
+              "type": "code",
+              "text": "    if age < 16:\n        price = 6\n    else:\n        price = 10"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which price is chosen for age 16?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using <= 16 would give a child ticket to someone aged exactly 16."
+            }
+          ]
+        },
+        {
+          "title": "Return the result",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Put return after the selection, still indented inside the function. It sends price back to the caller rather than displaying it."
+            },
+            {
+              "type": "code",
+              "text": "    return price"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must return remain inside the function?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: print(price) would display a value but would not return that price to the main program."
+            }
+          ]
+        },
+        {
+          "title": "Read an age in the main program",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After the complete function definition, remove the indentation for the main program. Convert the input text to an integer so it can be compared with 16."
+            },
+            {
+              "type": "code",
+              "text": "customer_age = int(input(\"Enter age: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is int needed around input?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Indenting this input inside the function would make the function collect its own age instead of using its parameter."
+            }
+          ]
+        },
+        {
+          "title": "Use the returned price",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Call the function with customer_age, store its return value and display it. An age of 15 gives 6; an age of 16 gives 10."
+            },
+            {
+              "type": "code",
+              "text": "price = ticket_price(customer_age)\nprint(\"Ticket price:\", price)"
+            },
+            {
+              "type": "question",
+              "text": "Question: What is printed when the input age is 16?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Writing ticket_price without brackets refers to the function rather than calling it."
+            }
+          ]
+        }
+      ],
+      "solution": "def ticket_price(age):\n    if age < 16:\n        price = 6\n    else:\n        price = 10\n    return price\n\ncustomer_age = int(input(\"Enter age: \"))\nprice = ticket_price(customer_age)\nprint(\"Ticket price:\", price)",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-15",
+      "category": "subroutines",
+      "title": "Validate a score",
+      "question": {
+        "context": [
+          "A quiz score must be a whole number from 0 to 100 inclusive. A program uses a Boolean function to check the range and keeps asking for a score until the range is valid. Assume every input can be converted to an integer."
+        ],
+        "requirements": [
+          "Define a function called valid_score with one integer parameter called score.",
+          "Return True for scores from 0 to 100 inclusive, and False for any other score.",
+          "In the main program, input a score as an integer.",
+          "Use the function in a loop to reject scores outside the range and ask again.",
+          "After a valid score is entered, display it with the message Accepted score:."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Define the range-checking function",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The caller supplies a score through the parameter. The function will return a Boolean value, not print an answer."
+            },
+            {
+              "type": "code",
+              "text": "def valid_score(score):\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: What are the two possible Boolean return values?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: A string such as \"False\" is text; it is not the Boolean value False."
+            }
+          ]
+        },
+        {
+          "title": "Return the combined comparison",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with this return statement. Both conditions must be true: the score must be at least 0 and no greater than 100."
+            },
+            {
+              "type": "code",
+              "text": "    return score >= 0 and score <= 100"
+            },
+            {
+              "type": "question",
+              "text": "Question: Does this return True or False for 100?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using or would accept out-of-range values because one of these comparisons would still be true."
+            }
+          ]
+        },
+        {
+          "title": "Read the first score",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Input the first score before the loop so there is a value to check. This belongs in the main program, outside the function."
+            },
+            {
+              "type": "code",
+              "text": "score = int(input(\"Enter score: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must score have a value before the loop condition is checked?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Without int, a text input cannot be compared numerically with 0 and 100."
+            }
+          ]
+        },
+        {
+          "title": "Repeat while the function returns False",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Call the function in the loop condition. not reverses its Boolean result, so an invalid score enters the loop and a valid score ends it. Read a replacement score on every iteration."
+            },
+            {
+              "type": "code",
+              "text": "while not valid_score(score):\n    print(\"Enter a score from 0 to 100.\")\n    score = int(input(\"Enter score: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Question: What happens when the first input is -1?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Leaving out the replacement input would keep checking the same invalid score forever."
+            }
+          ]
+        },
+        {
+          "title": "Accept the valid score",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Place this output after the loop. Test -1, 0, 100 and 101: only 0 and 100 should be accepted immediately."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Accepted score:\", score)"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which of the four test values should cause another input?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using < 100 instead of <= 100 would incorrectly reject the upper boundary."
+            }
+          ]
+        }
+      ],
+      "solution": "def valid_score(score):\n    return score >= 0 and score <= 100\n\nscore = int(input(\"Enter score: \"))\nwhile not valid_score(score):\n    print(\"Enter a score from 0 to 100.\")\n    score = int(input(\"Enter score: \"))\nprint(\"Accepted score:\", score)",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-16",
+      "category": "subroutines",
+      "title": "Calculate a quiz total",
+      "question": {
+        "context": [
+          "A teacher stores a student's marks in a one-dimensional array (a Python list). The marks can change between students. An empty list represents a student with no recorded marks and must give a total of 0."
+        ],
+        "requirements": [
+          "Define a function called total_marks that takes a list of integer marks as its parameter.",
+          "Use a local variable to accumulate the marks using a loop. Do not use the built-in sum function.",
+          "Return the total after every mark has been processed.",
+          "In the main program, use the list [3, 5, 0, 4].",
+          "Call total_marks with the list and display the returned total."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Receive the list as a parameter",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The function receives the whole list, so the same function can process different students' marks. Define it before the main program."
+            },
+            {
+              "type": "code",
+              "text": "def total_marks(marks):\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is passing the list more reusable than writing the marks inside the function?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: A function written for one fixed list would not automatically use a different student's marks."
+            }
+          ]
+        },
+        {
+          "title": "Initialise a local total",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with a local accumulator set to 0. It is created again for every call, including a call with an empty list."
+            },
+            {
+              "type": "code",
+              "text": "    total = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: What total should the function return for an empty list?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: If total were not reset for each call, one student's marks could be added to another student's total."
+            }
+          ]
+        },
+        {
+          "title": "Add every mark",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Loop through the list, adding each current mark to the running total. The assignment is indented inside the loop."
+            },
+            {
+              "type": "code",
+              "text": "    for mark in marks:\n        total = total + mark"
+            },
+            {
+              "type": "question",
+              "text": "Question: What is total after processing 3 and then 5?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Setting total = mark would replace the running total with the latest mark."
+            }
+          ]
+        },
+        {
+          "title": "Return after the loop",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Return the accumulator at the function indentation level, after the loop. This also returns 0 when the list contains no marks."
+            },
+            {
+              "type": "code",
+              "text": "    return total"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must return be outside the loop body?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Returning inside the loop would stop the function after its first mark."
+            }
+          ]
+        },
+        {
+          "title": "Call the function with a list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Create the given list in the main program, pass it to the function and display the returned result. These marks total 12."
+            },
+            {
+              "type": "code",
+              "text": "student_marks = [3, 5, 0, 4]\nresult = total_marks(student_marks)\nprint(\"Total marks:\", result)"
+            },
+            {
+              "type": "question",
+              "text": "Question: What result would total_marks([2, 2]) return in a separate call?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: The parameter marks receives the list from the call; it does not need the same name as student_marks."
+            }
+          ]
+        }
+      ],
+      "solution": "def total_marks(marks):\n    total = 0\n    for mark in marks:\n        total = total + mark\n    return total\n\nstudent_marks = [3, 5, 0, 4]\nresult = total_marks(student_marks)\nprint(\"Total marks:\", result)",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-17",
+      "category": "subroutines",
+      "title": "Find items to restock",
+      "question": {
+        "context": [
+          "A shop stores stock quantities in the list [8, 2, 10, 0, 5]. An item's position in this list is its item number, starting at 0. An item needs restocking when its quantity is below a supplied reorder level."
+        ],
+        "requirements": [
+          "Define a function called restock_items with parameters stock_levels and reorder_level.",
+          "Create a new empty list inside the function.",
+          "Visit the stock list by index and add the index of every item whose quantity is strictly below reorder_level to the new list.",
+          "Return the new list after checking every item. Do not change stock_levels.",
+          "In the main program, call the function with [8, 2, 10, 0, 5] and a reorder level of 5, then display the returned list."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Pass the data and the threshold",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The function needs both the list of quantities and the reorder level. Different calls can therefore use different stock data or thresholds."
+            },
+            {
+              "type": "code",
+              "text": "def restock_items(stock_levels, reorder_level):\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which parameter contains the quantities, and which contains the threshold?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: The quantity at a position and the position itself are different values."
+            }
+          ]
+        },
+        {
+          "title": "Create an empty result list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with an empty list. This stores item numbers that need restocking, without altering the input list."
+            },
+            {
+              "type": "code",
+              "text": "    items = []"
+            },
+            {
+              "type": "question",
+              "text": "Question: What should this list contain when no item needs restocking?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Adding results to stock_levels would change the data being checked."
+            }
+          ]
+        },
+        {
+          "title": "Check the indexed quantities",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use indexes from 0 to the last valid position. Compare each quantity with reorder_level. The comparison is strict: a quantity equal to the threshold is not selected."
+            },
+            {
+              "type": "code",
+              "text": "    for index in range(len(stock_levels)):\n        if stock_levels[index] < reorder_level:\n            items.append(index)"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why does the code append index rather than stock_levels[index]?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Appending the quantity would return stock amounts instead of the requested item numbers."
+            }
+          ]
+        },
+        {
+          "title": "Return the collected item numbers",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Return after the loop so all quantities are checked. An empty input list also produces an empty result list."
+            },
+            {
+              "type": "code",
+              "text": "    return items"
+            },
+            {
+              "type": "question",
+              "text": "Question: What would happen if return were indented inside the loop?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Returning on the first matching item would miss later items that also need restocking."
+            }
+          ]
+        },
+        {
+          "title": "Display the returned list",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The example selects positions 1 and 3, because their quantities are 2 and 0. Position 4 has quantity 5 and is not below 5."
+            },
+            {
+              "type": "code",
+              "text": "stock = [8, 2, 10, 0, 5]\nneeded = restock_items(stock, 5)\nprint(\"Restock items:\", needed)"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which positions would be returned for stock [1, 1] with reorder level 2?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using <= would also select items whose quantity exactly equals the reorder level."
+            }
+          ]
+        }
+      ],
+      "solution": "def restock_items(stock_levels, reorder_level):\n    items = []\n    for index in range(len(stock_levels)):\n        if stock_levels[index] < reorder_level:\n            items.append(index)\n    return items\n\nstock = [8, 2, 10, 0, 5]\nneeded = restock_items(stock, 5)\nprint(\"Restock items:\", needed)",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-18",
+      "category": "files",
+      "title": "Display a text file",
+      "question": {
+        "context": [
+          "A text file called visitors.txt stores one visitor name on each line. Names may contain spaces. The file exists and may be empty. A program must display each stored name once, in the original order."
+        ],
+        "requirements": [
+          "Open visitors.txt for reading.",
+          "Use a loop and readline to read until the end of the file.",
+          "Display each name on its own line without adding an extra blank line.",
+          "Do not skip the first or final name, including when the final line has no newline character.",
+          "Close the file after the loop."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Open the file for reading",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "open returns a file object. Store it in visitor_file so later instructions can read and close that same file. The mode \"r\" opens the existing file for reading."
+            },
+            {
+              "type": "code",
+              "text": "visitor_file = open(\"visitors.txt\", \"r\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why does the program store the result of open in a variable?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Opening the file in \"w\" mode would erase its existing contents."
+            }
+          ]
+        },
+        {
+          "title": "Read the first line",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Read once before the loop. readline returns the next line as text, usually ending in \\n. It returns the empty string \"\" only when there is no more text to read."
+            },
+            {
+              "type": "code",
+              "text": "line = visitor_file.readline()"
+            },
+            {
+              "type": "question",
+              "text": "Question: What does this return if visitors.txt is empty?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: A blank line is \"\\n\", not \"\"; the empty string specifically signals the end of the file."
+            }
+          ]
+        },
+        {
+          "title": "Display each line and advance",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Keep looping while a line was read. rstrip(\"\\n\") removes the stored line ending; print supplies one line ending of its own. Read the next line inside the loop to advance through the file."
+            },
+            {
+              "type": "code",
+              "text": "while line != \"\":\n    print(line.rstrip(\"\\n\"))\n    line = visitor_file.readline()"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why would forgetting the second readline make the loop repeat forever?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using strip() would also remove spaces from the start and end of a name; only the line ending needs removing."
+            }
+          ]
+        },
+        {
+          "title": "Close the file",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Place close after the loop. It releases the file once every name has been displayed; it must not close the file during the first iteration."
+            },
+            {
+              "type": "code",
+              "text": "visitor_file.close()"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is close outside the while loop?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Closing inside the loop would prevent the next line from being read."
+            }
+          ]
+        },
+        {
+          "title": "Check the end-of-file cases",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "For a file containing Aisha followed by Sam Lee, the output is two lines with no blank line between them. The same loop works when Sam Lee has no final newline. An empty file displays no names and is still closed."
+            },
+            {
+              "type": "question",
+              "text": "Question: How many names are displayed if the file is empty?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Reading a second line before the first line is processed would skip the first visitor."
+            }
+          ]
+        }
+      ],
+      "solution": "visitor_file = open(\"visitors.txt\", \"r\")\nline = visitor_file.readline()\nwhile line != \"\":\n    print(line.rstrip(\"\\n\"))\n    line = visitor_file.readline()\nvisitor_file.close()",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-19",
+      "category": "files",
+      "title": "Append a club member",
+      "question": {
+        "context": [
+          "A club stores one member name per line in members.txt. The file exists and may be empty. Every existing name already ends with a newline. A new non-empty name must be added while preserving all existing members."
+        ],
+        "requirements": [
+          "Input the new member's full name as text.",
+          "Open members.txt in append mode so existing names are kept.",
+          "Write the new name followed by a newline character.",
+          "Close the file after writing.",
+          "Display Member saved only after the file has been closed."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Read the new name",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Read the full name as text. input removes the Enter key's line ending, so the program will add a newline when it writes the record."
+            },
+            {
+              "type": "code",
+              "text": "name = input(\"Enter member name: \")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why can a name such as Sam Lee stay as one string?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Converting the name to an integer would fail and is unnecessary."
+            }
+          ]
+        },
+        {
+          "title": "Preserve the existing members",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use mode \"a\" to append at the end of the file. It keeps the existing text; the question states that any existing final name already has a newline."
+            },
+            {
+              "type": "code",
+              "text": "member_file = open(\"members.txt\", \"a\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: What would happen to existing names if the mode were \"w\"?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Write mode \"w\" starts the file again instead of appending to its existing contents."
+            }
+          ]
+        },
+        {
+          "title": "Write one new record",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "write does not add a newline automatically. Concatenate \"\\n\" so this name occupies a complete line and a later appended member can start on the next line."
+            },
+            {
+              "type": "code",
+              "text": "member_file.write(name + \"\\n\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is the newline added explicitly?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Without the newline, a later appended name could join onto this one."
+            }
+          ]
+        },
+        {
+          "title": "Close before confirming",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Close the file to finish the file operation, then display the confirmation required by the question."
+            },
+            {
+              "type": "code",
+              "text": "member_file.close()\nprint(\"Member saved\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why should the confirmation come after close?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Trying to write after the file has been closed causes an error."
+            }
+          ]
+        },
+        {
+          "title": "Check preservation and order",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "If the original file contains Aisha and Ben on separate lines, adding Sam Lee must leave those two names in place and add Sam Lee as the third line. Appending to an empty file creates its first name line."
+            },
+            {
+              "type": "question",
+              "text": "Question: Which names should remain after a second new member is added?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Reopening in \"w\" mode on the next run would discard the earlier members."
+            }
+          ]
+        }
+      ],
+      "solution": "name = input(\"Enter member name: \")\nmember_file = open(\"members.txt\", \"a\")\nmember_file.write(name + \"\\n\")\nmember_file.close()\nprint(\"Member saved\")",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-20",
+      "category": "files",
+      "title": "Write a results file",
+      "question": {
+        "context": [
+          "A teacher has the integer scores [34, 67, 80, 50, 49]. A score of at least 50 is a PASS; any smaller score is a RETRY. The program must create results.txt, replacing any old contents with the latest results."
+        ],
+        "requirements": [
+          "Use the given list of scores in the program.",
+          "Open results.txt for writing, replacing any previous file contents.",
+          "Process the scores in their original order and select PASS or RETRY for each one.",
+          "Write one line per score in the format score,status, for example 67,PASS.",
+          "End each record with a newline and close the file after all scores have been written."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Open a fresh results file",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Create the given list and open the output in mode \"w\". This creates the file if necessary and replaces old contents, as the question requires."
+            },
+            {
+              "type": "code",
+              "text": "scores = [34, 67, 80, 50, 49]\nresult_file = open(\"results.txt\", \"w\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is \"w\" appropriate for this task rather than \"a\"?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Appending would leave old results in the output, rather than replacing them with the latest list."
+            }
+          ]
+        },
+        {
+          "title": "Visit each score",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use a for loop so each value is processed once in the original order. The temporary pass will be replaced by the instructions in the next two steps."
+            },
+            {
+              "type": "code",
+              "text": "for score in scores:\n    pass"
+            },
+            {
+              "type": "question",
+              "text": "Question: What value does score contain on the first iteration?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using an index as the score would classify positions instead of the actual marks."
+            }
+          ]
+        },
+        {
+          "title": "Select the status",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Replace pass with this selection inside the loop. The equality in >= means a score of exactly 50 is a PASS."
+            },
+            {
+              "type": "code",
+              "text": "    if score >= 50:\n        status = \"PASS\"\n    else:\n        status = \"RETRY\""
+            },
+            {
+              "type": "question",
+              "text": "Question: Which status is assigned to 49 and to 50?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using > 50 would incorrectly classify a score of 50 as RETRY."
+            }
+          ]
+        },
+        {
+          "title": "Write the formatted record",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Add this after the selection, still inside the for loop. Convert the integer score to text before joining it to the comma, status and newline."
+            },
+            {
+              "type": "code",
+              "text": "    result_file.write(str(score) + \",\" + status + \"\\n\")"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is str(score) needed in this concatenation?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Writing outside the loop would save only the final score's result."
+            }
+          ]
+        },
+        {
+          "title": "Close and verify the file",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After the loop, close the file. Its five lines should be 34,RETRY; 67,PASS; 80,PASS; 50,PASS; 49,RETRY, in that order."
+            },
+            {
+              "type": "code",
+              "text": "result_file.close()"
+            },
+            {
+              "type": "question",
+              "text": "Question: How many lines should the output file contain?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Closing inside the for loop would stop the program writing the remaining scores."
+            }
+          ]
+        }
+      ],
+      "solution": "scores = [34, 67, 80, 50, 49]\nresult_file = open(\"results.txt\", \"w\")\nfor score in scores:\n    if score >= 50:\n        status = \"PASS\"\n    else:\n        status = \"RETRY\"\n    result_file.write(str(score) + \",\" + status + \"\\n\")\nresult_file.close()",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-21",
+      "category": "files",
+      "title": "Count high readings",
+      "question": {
+        "context": [
+          "The text file readings.txt contains one valid integer reading per line, with no blank lines. The file exists and may be empty. A reading is classed as high when it is at least 25."
+        ],
+        "requirements": [
+          "Open readings.txt for reading.",
+          "Use a counter that starts at 0.",
+          "Read every line and convert its text to an integer.",
+          "Count readings greater than or equal to 25.",
+          "Close the file and display High readings: followed by the count. An empty file must produce a count of 0."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Prepare the input and counter",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Open the file in reading mode and initialise the counter before the loop. The counter must exist even if the file is empty."
+            },
+            {
+              "type": "code",
+              "text": "reading_file = open(\"readings.txt\", \"r\")\nhigh_count = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is the counter initialised before any line is read?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Starting at 1 would count a reading before the program has checked any data."
+            }
+          ]
+        },
+        {
+          "title": "Read and cast each line",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "In Python, looping over a file reads each line in order and stops at the end. Convert the current line to an integer; int accepts the line ending after the digits."
+            },
+            {
+              "type": "code",
+              "text": "for line in reading_file:\n    reading = int(line)"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must reading be converted before it is compared with 25?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: The question guarantees valid integer lines; a blank or non-numeric line would need separate validation."
+            }
+          ]
+        },
+        {
+          "title": "Apply the inclusive threshold",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Add this selection inside the loop. Increment only when the integer is at least 25, including the boundary value 25."
+            },
+            {
+              "type": "code",
+              "text": "    if reading >= 25:\n        high_count = high_count + 1"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which of 24, 25 and 26 increase the count?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using > 25 would miss readings exactly equal to the stated threshold."
+            }
+          ]
+        },
+        {
+          "title": "Finish reading before the output",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After the loop, close the input file and display the accumulated count. The output belongs outside the loop so it appears once."
+            },
+            {
+              "type": "code",
+              "text": "reading_file.close()\nprint(\"High readings:\", high_count)"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why should print be after the loop?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Printing inside the loop would display partial counts instead of one final answer."
+            }
+          ]
+        },
+        {
+          "title": "Trace the normal and empty cases",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "For file values 24, 25, 31 and 10 on separate lines, the final output is High readings: 2. For an empty file, the loop runs zero times and the counter remains 0."
+            },
+            {
+              "type": "question",
+              "text": "Question: What should be printed for a file containing only 25?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Resetting high_count inside the loop would lose matches found on earlier lines."
+            }
+          ]
+        }
+      ],
+      "solution": "reading_file = open(\"readings.txt\", \"r\")\nhigh_count = 0\nfor line in reading_file:\n    reading = int(line)\n    if reading >= 25:\n        high_count = high_count + 1\nreading_file.close()\nprint(\"High readings:\", high_count)",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-22",
+      "category": "files",
+      "title": "Copy group bookings",
+      "question": {
+        "context": [
+          "The text file bookings.txt stores records as name,places, with one record per line. Each name contains no comma, and places is a valid positive integer. The file exists, contains no blank lines and may be empty.",
+          "Example records are Aisha,2 then Ben,4 then Sam,6. A group booking has at least 4 places. The program must create a fresh groups.txt containing only the group bookings."
+        ],
+        "requirements": [
+          "Open bookings.txt for reading and groups.txt for writing, replacing any previous output contents.",
+          "Read each booking record and obtain its number of places.",
+          "Copy records with at least 4 places to groups.txt in their original order.",
+          "Write each selected record on its own line and count how many records were copied.",
+          "Close both files, then display Bookings copied: followed by the count. An empty input must leave an empty output file and display 0."
+        ]
+      },
+      "steps": [
+        {
+          "title": "Open the source and destination",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Read from bookings.txt and write to a fresh groups.txt. Keep separate file variables so the program can read one and write to the other. Initialise the copied-record counter."
+            },
+            {
+              "type": "code",
+              "text": "source_file = open(\"bookings.txt\", \"r\")\ngroup_file = open(\"groups.txt\", \"w\")\ncopied = 0"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why do the two files need different modes?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Opening bookings.txt in \"w\" mode would erase the source records."
+            }
+          ]
+        },
+        {
+          "title": "Separate the fields",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Loop over the source lines. Remove only the newline, split at the comma, and convert the second field, at index 1, to an integer. For Ben,4 the fields are [\"Ben\", \"4\"]."
+            },
+            {
+              "type": "code",
+              "text": "for line in source_file:\n    record = line.rstrip(\"\\n\")\n    fields = record.split(\",\")\n    places = int(fields[1])"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why is the number of places at index 1 rather than index 0?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Comparing the text field without int would compare text instead of the required numeric quantity."
+            }
+          ]
+        },
+        {
+          "title": "Copy qualifying records",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Add the selection inside the loop. Write the original record plus a newline only when places is at least 4, then increase the copied counter."
+            },
+            {
+              "type": "code",
+              "text": "    if places >= 4:\n        group_file.write(record + \"\\n\")\n        copied = copied + 1"
+            },
+            {
+              "type": "question",
+              "text": "Question: Which example records are copied: Aisha,2; Ben,4; Sam,6?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: The counter belongs inside the if block; otherwise it would count all bookings."
+            }
+          ]
+        },
+        {
+          "title": "Close both files and report the count",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After the source loop finishes, close both files before displaying the final count. Closing the output completes the writing operation."
+            },
+            {
+              "type": "code",
+              "text": "source_file.close()\ngroup_file.close()\nprint(\"Bookings copied:\", copied)"
+            },
+            {
+              "type": "question",
+              "text": "Question: Why must neither file be closed inside the for loop?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Closing only the input would leave the output file unclosed."
+            }
+          ]
+        },
+        {
+          "title": "Check boundaries and empty input",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The example produces Ben,4 and Sam,6 on separate output lines, with Bookings copied: 2. A booking of exactly 4 qualifies; one of 3 does not. An empty source still creates a fresh empty output and reports 0."
+            },
+            {
+              "type": "question",
+              "text": "Question: What should happen if every booking has fewer than 4 places?"
+            },
+            {
+              "type": "error",
+              "text": "Common error: Using append mode for groups.txt would retain old group records from an earlier run."
+            }
+          ]
+        }
+      ],
+      "solution": "source_file = open(\"bookings.txt\", \"r\")\ngroup_file = open(\"groups.txt\", \"w\")\ncopied = 0\nfor line in source_file:\n    record = line.rstrip(\"\\n\")\n    fields = record.split(\",\")\n    places = int(fields[1])\n    if places >= 4:\n        group_file.write(record + \"\\n\")\n        copied = copied + 1\nsource_file.close()\ngroup_file.close()\nprint(\"Bookings copied:\", copied)",
+      "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    }
+  ],
+  "practice_sources": [
+    {
+      "title": "OCR GCSE Computer Science J277 specification, version 3.1, section 2.2.3",
+      "url": "https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf",
+      "purpose": "Programming scope for original subroutine and file-handling practice"
+    },
+    {
+      "title": "OCR J277/02 sample assessment materials",
+      "url": "https://www.ocr.org.uk/Images/552502-computational-thinking-algorithms-and-programming.pdf",
+      "purpose": "Exam-question format reference; new questions are original CSRevision practice"
+    },
+    {
+      "title": "Python tutorial: Reading and writing files",
+      "url": "https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files",
+      "purpose": "Verify file modes, line endings, end-of-file and closing semantics"
     }
   ]
 }
