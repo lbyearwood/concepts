@@ -3,6 +3,47 @@
 Checked 11 November 2026. Scope: the approved **student** deck for GCSE 1.1.
 The original Google presentation was not edited, renamed, moved or reshared.
 
+## Cost requirement
+
+The user requires **£0 in additional running costs for slide synchronisation**
+(11 November 2026). Keep existing account plans and domain arrangements separate
+from this new automation. Do not enable Google Cloud billing, paid API quota
+increases, paid/larger Actions runners, metered storage, paid trials or new
+subscriptions. A service's free allowance does not authorise enabling a billable
+account that can charge for overages. No R2 bucket or other new hosting service
+has been created for this pilot.
+
+The existing repository is public. Standard GitHub-hosted compute in public
+repositories remains free under the current [Actions billing rules](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+The workflow uses the standard Ubuntu runner and skips the entire job if the
+repository becomes private. Pages artifacts have a one-day retention period;
+no extra build cache is introduced. This workflow guard is separate from provider spending controls. A read-only
+Edge check of GitHub Budgets and alerts confirmed an existing account-wide
+**Actions $0.00 budget with Usage blocked**. It was preserved, not raised or
+replaced. Google billing and unrelated provider settings were not audited or
+changed. [Budget controls](https://docs.github.com/en/billing/how-tos/set-up-budgets)
+explain the hard-stop option. Recheck that this zero-spend budget remains in
+place before increasing the catalogue; free compute and artifact storage are
+different allowances.
+
+Google's current Apps Script quotas stop execution when a limit is reached.
+[Standard Drive API use](https://developers.google.com/workspace/drive/api/guides/limits#pricing)
+has no additional charge, but Google has announced [paid above-standard API usage](https://developers.google.com/workspace/tools-safety).
+Do not enable that paid capacity. Stay within free quotas; if a limit is reached,
+preserve the last published slides, report it and reduce/batch work or pause the
+affected operation rather than buying more capacity. Recheck provider terms
+before a large rollout; current free allowances are not an unlimited guarantee.
+
+Measured pilot assets: 56 WebP images total **2,433,592 bytes**; source PDF
+**488,718 bytes**. Sixty similarly sized lessons would be approximately **175 MB**
+of PDF/image assets, before the rest of the site and Git history. This is an
+estimate from one deck, not a measured full-course inventory. The published-site
+limit is currently [1 GB](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits).
+Unchanged Google decks already skip export/upload, and unchanged PDFs skip
+rendering. Repeated binary history and complete-site artifact/deployment work
+are the longer-term growth points. Batch changes and measure the real catalogue
+before choosing a new delivery architecture; do not migrate to paid storage.
+
 ## Decision
 
 Use **A: an owner-run Google Apps Script → GitHub PDF → Actions → WebP → Pages**.

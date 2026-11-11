@@ -16,6 +16,9 @@ concurrency:
 
 jobs:
   sync-and-publish:
+    # The user requires no additional running costs. Standard hosted compute is
+    # free for this public repository; stop if its visibility changes.
+    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
@@ -77,6 +80,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+          retention-days: 1
 
       - name: Deploy website, including updated slides
         id: deployment

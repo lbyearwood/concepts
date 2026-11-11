@@ -30,6 +30,12 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 
 ## GCSE 1.1 self-hosted slides pilot
 
+Slide syncing has a **£0 additional-running-cost requirement**. Keep to free
+Google quotas and this public repository's standard GitHub-hosted runner.
+Do not enable paid billing/quota upgrades, larger runners, metered storage or
+new subscriptions. The release job skips if the repository becomes private.
+See the [cost and capacity rules](docs/slide-synchronisation.md#cost-requirement).
+
 The **approved student** Google Slides presentation for topic 1.1 is
 `1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo`. The teacher edition
 must not be published. The student-facing page at
