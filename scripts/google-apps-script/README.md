@@ -52,8 +52,9 @@ approved public student presentation.
 - Edit and save your Google Slides presentation normally. The script checks
   approximately every 30 minutes; timing is not exact.
 - To update immediately, select and run `syncSlides` in the Apps Script editor.
-- PDF bytes are SHA-256 checked in Apps Script. If identical to the last
-  successful upload, the GitHub commit and website rebuild are skipped.
+- Apps Script checks the source file's last-modified time first, then
+  compares exported PDF bytes using SHA-256 when needed. Unchanged content
+  does not create another GitHub commit or rebuild.
 - GitHub Actions performs slide rendering and deployment on the first GitHub
   commit. Students only load the resulting static images from CSRevision.
 - If the token expires or is revoked, generate a replacement and update the
