@@ -63,11 +63,14 @@ anonymity guarantee or a way to bypass school access rules.
    answer-edition titles are rejected.
 4. Run `previewMirrors` first. This reads metadata/counts without writing a
    presentation or installing a timer. The user must review Google's new consent:
-   **Slides read/write across presentations accessible to the account**, Drive
+   **Full Slides access, including reading, editing, creating and deleting
+   presentations accessible to the account**, Drive
    read-only across accessible files, and this project's trigger management.
    The code's exact-file allowlist is narrower than Google's permission. There
    is no Drive write/delete/share scope or GitHub permission, but the Slides
-   permission still allows editing accessible presentations. Handle security or
+   permission is broader than the code's target writes. See Google's
+   [official scope descriptions](https://developers.google.com/workspace/slides/api/scopes).
+   Handle security or
    unverified-app warnings through the user's/admin's review; do not bypass them.
 5. Run `syncMirrors` to import the pilot. If bounded execution pauses, rerun it.
    Check saved target contents/order, owner/shares and native editor/slideshow.
