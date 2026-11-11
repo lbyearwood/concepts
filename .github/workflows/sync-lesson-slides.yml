@@ -43,6 +43,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_slide_sync.py'
           node --test tests/slide-sync.test.cjs
+          node --test tests/slide-mirror.test.cjs
           python scripts/build-course.py --check
           python scripts/build-problems.py --check
 

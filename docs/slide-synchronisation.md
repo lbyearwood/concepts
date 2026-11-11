@@ -3,31 +3,63 @@
 Checked 11 November 2026. Scope: the approved **student** deck for GCSE 1.1.
 The original Google presentation was not edited, renamed, moved or reshared.
 
-## Latest intended arrangement: one school-owned presentation
+## Native mirror: one fixed source
 
 The user subsequently clarified that students can access school-owned Google
 Slides but not personally owned presentations. This is a user-reported access
-distinction, not a confirmed network-policy diagnosis. The intended arrangement
-is **one school-owned lesson, shared to the personal account as Editor, with a
-shortcut in the personal My Drive**. Both accounts edit the same file. CSRevision
-would embed that school-owned presentation. No synchronisation script, separate
-mirror, PDF export or slide-image conversion is needed for that arrangement.
+distinction, not a confirmed network-policy diagnosis. The final clarification
+is **two separate presentations, one fixed editing source, and a script that
+updates the other copy automatically**. The user will always edit the
+lbyearwood versions if that direction works, otherwise always the school
+versions. Do not implement bidirectional merging. Prefer personal master to
+school-owned target, so CSRevision can eventually embed the school target.
 
-Test the school's external-editor policy and actual student access to the
-embedded lesson before changing the working website. A shortcut does not change
+In the example 1.1 folder, Drive metadata confirms that the existing original
+Teacher edition is personally owned and its separate copy is school-owned.
+Both accounts have Editor access to the other's file. All 66 slide IDs, slide
+content and formatting returned by the Slides API match after excluding
+temporary image content URLs. This verifies the example arrangement, not a
+live automatic update. Both are Teacher editions: they were only read and
+must not be published or silently used as the student mirror. A separate
+**School student copy** was subsequently created from the original 56-slide
+student deck while signed into the school account, in that same lesson folder.
+Metadata verifies school ownership and inherited lbyearwood Editor access;
+all 56 native slide records and dimensions match the original after excluding
+temporary image content URLs. Its editor shows Saved to Drive and the opening
+slide renders correctly. A full post-sync visual/fidelity check remains pending.
+
+The [native mirror script](../scripts/google-slides-mirror/README.md) is
+prepared separately from the old read-only exporter. Its dedicated private
+native project, exact one-pair Script Property and explicit manifest are saved.
+Reloaded source matches all 8,934 characters and the manifest matches the
+reviewed scopes. The Triggers page shows zero triggers. The pilot is **not
+activated**: new Slides read/write consent has not been granted. It polls source metadata,
+imports native linked slides once, then refreshes linked slides after source
+changes and reconciles additions, deletions and order. A mirror preserves the
+target presentation ID, owner and sharing. Real cross-account execution,
+notes/media/animation fidelity, timer activation and student access remain
+unverified. No source content or file sharing was changed.
+
+Test a real cross-account update and actual student access to the
+embedded student lesson before changing the working website. A shortcut does not change
 ownership or grant access. A copy made by the personal account would have the
 wrong ownership for this goal. Google does not support transferring a personal
 file directly into school-account ownership; create the intended school-owned
 file from the school account if a suitable one does not already exist. Preserve
-the original personal source and other files/sharing. No school-owned migration,
-new sharing permission or student-device test has been carried out here.
+the original personal source and other files/sharing. Do not overwrite a Teacher
+deck with the different student deck. Existing files were unchanged, the new
+copy inherits its folder's access, and no publication or student-device access
+test has been carried out here.
 
 The export/Apps Script route below remains a prepared **fallback**. Keep the
 existing working self-hosted viewer until the school-owned route is verified;
-do not activate the pending exporter just to satisfy a now-unnecessary setup
+do not activate the pending exporter just to satisfy an obsolete setup
 step. Retiring unused credentials/projects is a separate scoped action.
 
-Official references: [shortcuts point to the same original file](https://support.google.com/drive/answer/9700156?hl=en),
+Official references: [native slide copies and linking](https://developers.google.com/apps-script/reference/slides/presentation#appendSlide(Slide,SlideLinkingMode)),
+[refreshing linked slides](https://developers.google.com/apps-script/reference/slides/slide#refreshSlide()),
+[linked content and destination access](https://support.google.com/docs/answer/7009814?hl=en),
+[shortcuts point to the same original file](https://support.google.com/drive/answer/9700156?hl=en),
 [school external-sharing restrictions](https://support.google.com/drive/answer/7166529?hl=en),
 [personal-to-school ownership transfer restrictions](https://support.google.com/drive/answer/2494892?hl=en)
 and [published Slides updates/embedding](https://support.google.com/docs/answer/183965?hl=en).

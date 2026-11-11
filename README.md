@@ -30,12 +30,19 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 
 ## GCSE 1.1 self-hosted slides pilot
 
-The latest intended delivery is a **school-owned presentation shared to the
-personal account as Editor, with a shortcut in personal My Drive**. This edits
-one file and would need no export/sync script. School external-editor permission
-and real student access to the embed still need a pilot test. Keep the working
-self-hosted 1.1 viewer until that succeeds; the prepared exporter is a fallback.
-See the [current ownership/access plan](docs/slide-synchronisation.md#latest-intended-arrangement-one-school-owned-presentation).
+The intended replacement is **two presentations with one fixed source**. The
+user will always edit either the personal versions or the school versions,
+whichever direction works. Prefer the existing lbyearwood master updating a
+school-owned copy that lbyearwood can edit. This requires an automatic script;
+it is not a shortcut to one file or bidirectional editing. The example folder
+contains a matching 66-slide Teacher pair with the required cross-account edit
+permissions. That pair is read-only inspection evidence, not a student-publishing
+target. A separate school-owned 56-slide student copy has now been created in
+the lesson folder, with lbyearwood Editor access and matching native slide data.
+The separate mirror project/configuration are saved; new Google consent and a
+real automatic update remain pending. Keep the working self-hosted 1.1 viewer
+until native syncing and actual student access pass a pilot. See the [native mirror plan](docs/slide-synchronisation.md#native-mirror-one-fixed-source)
+and the [prepared mirror script](scripts/google-slides-mirror/README.md).
 
 Slide syncing has a **£0 additional-running-cost requirement**. Keep to free
 Google quotas and this public repository's standard GitHub-hosted runner.
@@ -51,7 +58,7 @@ has a self-hosted image viewer with Back, Next, arrow-key and fullscreen
 controls. Students do not connect to Google when using this viewer.
 
 The current 56-slide copy is self-hosted. **Automatic updates from Google are
-not yet activated or proven.** The preferred route is an owner-run Apps Script
+not yet activated or proven.** The prepared fallback is an owner-run Apps Script
 with a 15-minute metadata check, a repository-only GitHub token, and the existing
 PDF → WebP → Pages workflow. The original Google presentation remains the editor.
 

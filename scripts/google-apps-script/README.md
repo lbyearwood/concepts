@@ -1,5 +1,10 @@
 # Activate CSRevision Slide Sync
 
+This is the older PDF-export fallback. The user now prefers a native
+[Google-to-Google mirror with one fixed source](../google-slides-mirror/README.md).
+Do not finish this exporter's pending token/consent setup just to activate it.
+Its existing project and credentials are preserved until separately retired.
+
 The repository code is prepared; account activation is **not verified**.
 See [the decision, tests and limitations](../../docs/slide-synchronisation.md).
 Only the approved GCSE 1.1 student presentation is configured initially.
