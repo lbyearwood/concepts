@@ -14,7 +14,8 @@ const SLIDE_SYNC = Object.freeze({
   githubRepository: 'concepts',
   githubBranch: 'main',
   githubPdfPath: 'assets/slide-decks/1-1/bootstrap.pdf',
-  lastHashKey: 'GCSE_1_1_LAST_UPLOADED_SHA256'
+  lastHashKey: 'GCSE_1_1_LAST_UPLOADED_SHA256',
+  lastModifiedKey: 'GCSE_1_1_LAST_UPLOADED_MODIFIED'
 });
 
 /**
@@ -47,6 +48,13 @@ function syncSlides() {
   try {
     const token = requireGithubToken_();
     const deck = DriveApp.getFileById(SLIDE_SYNC.googlePresentationId);
+    const properties = PropertiesService.getScriptProperties();
+    const modified = String(deck.getLastUpdated().getTime());
+    // Avoid unnecessary PDF exports (and commits if PDF metadata changes).
+    if (modified === properties.getProperty(SLIDE_SYNC.lastModifiedKey)) {
+      console.log('The Google Slides file has not changed; no export needed.');
+      return;
+    }
     const pdf = deck.getAs(MimeType.PDF);
     const bytes = pdf.getBytes();
 
@@ -64,9 +72,9 @@ function syncSlides() {
     }
 
     const hash = sha256_(bytes);
-    const properties = PropertiesService.getScriptProperties();
     if (hash === properties.getProperty(SLIDE_SYNC.lastHashKey)) {
-      console.log('No slide changes; GitHub update skipped.');
+      properties.setProperty(SLIDE_SYNC.lastModifiedKey, modified);
+      console.log('Export is identical to the previous PDF; GitHub update skipped.');
       return;
     }
 
@@ -122,7 +130,10 @@ function syncSlides() {
     }
 
     if (!uploaded) throw new Error('GitHub did not confirm the PDF update.');
-    properties.setProperty(SLIDE_SYNC.lastHashKey, hash);
+    properties.setProperties({
+      [SLIDE_SYNC.lastHashKey]: hash,
+      [SLIDE_SYNC.lastModifiedKey]: modified
+    });
     console.log('Uploaded revised GCSE 1.1 PDF to GitHub. GitHub Actions will rebuild the slides.');
   } finally {
     lock.releaseLock();
