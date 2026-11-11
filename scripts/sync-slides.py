@@ -1,104 +1,24 @@
 #!/usr/bin/env python3
-"""Synchronise the approved GCSE 1.1 student Google Slides deck for offline viewing.
+"""Render approved PDFs committed by Google Apps Script into self-hosted slides.
 
-No Google resources are requested by students: only GitHub Actions contacts Google.
-The original Google Slides presentation is never modified.
+Students load these files from CSRevision and never contact Google.
+The Google Apps Script (run as the presentation owner's account) updates the
+PDF in GitHub whenever the student presentation is changed.
 """
 from __future__ import annotations
 
 import datetime as dt
-import io
 import json
-import os
 from pathlib import Path
 import tempfile
-import urllib.error
-import urllib.request
 
-import fitz
+import pymupdf as fitz
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "data" / "slide-sync.json"
 MAX_PDF_BYTES = 40 * 1024 * 1024
 MAX_SLIDES = 180
-
-
-def get_public_pdf(file_id: str) -> bytes:
-    url = f"https://docs.google.com/presentation/d/{file_id}/export/pdf"
-    request = urllib.request.Request(
-        url, headers={"User-Agent": "CSRevision-SlideSync/1.0"}
-    )
-    with urllib.request.urlopen(request, timeout=70) as response:
-        data = response.read(MAX_PDF_BYTES + 1)
-    if len(data) > MAX_PDF_BYTES or not data.startswith(b"%PDF"):
-        raise ValueError("Public export did not return a PDF (check sharing).")
-    return data
-
-
-def get_authenticated_pdf(file_id: str) -> bytes:
-    """Optional fallback for a deck that disallows anonymous downloads.
-
-    Make a Google Cloud service account, enable the Drive API, share only the
-    student deck with the service account as Viewer, and save its credentials
-    as a GitHub Actions repository secret GOOGLE_SERVICE_ACCOUNT_JSON.
-    """
-    secret = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
-    if not secret:
-        raise RuntimeError(
-            "Anonymous Google Slides PDF export failed. Configure the "
-            "GOOGLE_SERVICE_ACCOUNT_JSON repository secret and share the "
-            "student presentation with its service-account email."
-        )
-    from google.oauth2 import service_account
-    from google.auth.transport.requests import AuthorizedSession
-
-    info = json.loads(secret)
-    credentials = service_account.Credentials.from_service_account_info(
-        info, scopes=["https://www.googleapis.com/auth/drive.readonly"]
-    )
-    session = AuthorizedSession(credentials)
-    response = session.get(
-        f"https://www.googleapis.com/drive/v3/files/{file_id}/export",
-        params={"mimeType": "application/pdf"},
-        timeout=90,
-    )
-    response.raise_for_status()
-    content = response.content
-    if len(content) > MAX_PDF_BYTES or not content.startswith(b"%PDF"):
-        raise ValueError("Authenticated Drive export did not return a PDF.")
-    return content
-
-
-def export_pdf(file_id: str, snapshot: Path | None, output: Path) -> tuple[bytes, str]:
-    try:
-        data = get_public_pdf(file_id)
-        print("Downloaded the latest student slides using public export.")
-        return data, "live"
-    except (urllib.error.URLError, ValueError, TimeoutError) as exc:
-        # Published slides may be viewable while the original is not downloadable.
-        print(f"Public export unavailable ({type(exc).__name__}).")
-        if os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip():
-            print("Using authenticated Google Drive API export.")
-            return get_authenticated_pdf(file_id), "live"
-
-        # Use the approved student-deck snapshot for the FIRST demonstration
-        # only. Never silently overwrite newer, live-synchronised slides.
-        manifest_path = output / "manifest.json"
-        if snapshot and snapshot.is_file():
-            if manifest_path.is_file():
-                old_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-                if old_manifest.get("source") == "live":
-                    raise RuntimeError("Live sync lost access; keeping existing slides unchanged.")
-            data = snapshot.read_bytes()
-            if len(data) <= MAX_PDF_BYTES and data.startswith(b"%PDF"):
-                print("NOTICE: Using the saved pilot snapshot; automatic live updates need")
-                print("GOOGLE_SERVICE_ACCOUNT_JSON and Viewer access to the student deck.")
-                return data, "bootstrap"
-        raise RuntimeError(
-            "Google export is unavailable. Configure GOOGLE_SERVICE_ACCOUNT_JSON "
-            "and share the approved student deck with the service account."
-        )
 
 
 def render_pdf(pdf_bytes: bytes, output: Path, title: str, source: str) -> bool:
@@ -157,13 +77,19 @@ def main() -> None:
     config = json.loads(CONFIG.read_text(encoding="utf-8"))
     decks = config["decks"]
     for deck in decks:
-        file_id = deck["googleFileId"]
         output = ROOT / deck["output"]
-        if not output.resolve().is_relative_to((ROOT / "assets" / "slide-decks").resolve()):
+        source_pdf = ROOT / deck["sourcePdf"]
+        approved_root = (ROOT / "assets" / "slide-decks").resolve()
+        if not output.resolve().is_relative_to(approved_root):
             raise ValueError("Slide output must be within assets/slide-decks.")
-        snapshot = ROOT / deck["bootstrapPdf"] if deck.get("bootstrapPdf") else None
-        pdf, source = export_pdf(file_id, snapshot, output)
-        render_pdf(pdf, output, deck["title"], source)
+        if not source_pdf.resolve().is_relative_to(approved_root):
+            raise ValueError("Input PDF must be within assets/slide-decks.")
+        if not source_pdf.is_file():
+            raise FileNotFoundError(f"No approved PDF at {source_pdf}")
+        pdf = source_pdf.read_bytes()
+        if len(pdf) > MAX_PDF_BYTES or not pdf.startswith(b"%PDF"):
+            raise ValueError("Local source is missing, too large, or not a valid PDF.")
+        render_pdf(pdf, output, deck["title"], "repository-pdf")
 
 
 if __name__ == "__main__":
