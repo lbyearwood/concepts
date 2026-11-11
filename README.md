@@ -30,6 +30,13 @@ save creates a CNAME commit; fast-forward the local checkout before further work
 
 ## GCSE 1.1 self-hosted slides pilot
 
+The latest intended delivery is a **school-owned presentation shared to the
+personal account as Editor, with a shortcut in personal My Drive**. This edits
+one file and would need no export/sync script. School external-editor permission
+and real student access to the embed still need a pilot test. Keep the working
+self-hosted 1.1 viewer until that succeeds; the prepared exporter is a fallback.
+See the [current ownership/access plan](docs/slide-synchronisation.md#latest-intended-arrangement-one-school-owned-presentation).
+
 Slide syncing has a **£0 additional-running-cost requirement**. Keep to free
 Google quotas and this public repository's standard GitHub-hosted runner.
 Do not enable paid billing/quota upgrades, larger runners, metered storage or

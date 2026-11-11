@@ -3,6 +3,35 @@
 Checked 11 November 2026. Scope: the approved **student** deck for GCSE 1.1.
 The original Google presentation was not edited, renamed, moved or reshared.
 
+## Latest intended arrangement: one school-owned presentation
+
+The user subsequently clarified that students can access school-owned Google
+Slides but not personally owned presentations. This is a user-reported access
+distinction, not a confirmed network-policy diagnosis. The intended arrangement
+is **one school-owned lesson, shared to the personal account as Editor, with a
+shortcut in the personal My Drive**. Both accounts edit the same file. CSRevision
+would embed that school-owned presentation. No synchronisation script, separate
+mirror, PDF export or slide-image conversion is needed for that arrangement.
+
+Test the school's external-editor policy and actual student access to the
+embedded lesson before changing the working website. A shortcut does not change
+ownership or grant access. A copy made by the personal account would have the
+wrong ownership for this goal. Google does not support transferring a personal
+file directly into school-account ownership; create the intended school-owned
+file from the school account if a suitable one does not already exist. Preserve
+the original personal source and other files/sharing. No school-owned migration,
+new sharing permission or student-device test has been carried out here.
+
+The export/Apps Script route below remains a prepared **fallback**. Keep the
+existing working self-hosted viewer until the school-owned route is verified;
+do not activate the pending exporter just to satisfy a now-unnecessary setup
+step. Retiring unused credentials/projects is a separate scoped action.
+
+Official references: [shortcuts point to the same original file](https://support.google.com/drive/answer/9700156?hl=en),
+[school external-sharing restrictions](https://support.google.com/drive/answer/7166529?hl=en),
+[personal-to-school ownership transfer restrictions](https://support.google.com/drive/answer/2494892?hl=en)
+and [published Slides updates/embedding](https://support.google.com/docs/answer/183965?hl=en).
+
 ## Cost requirement
 
 The user requires **£0 in additional running costs for slide synchronisation**
