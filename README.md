@@ -122,16 +122,22 @@ underlying code and teaching text stay unchanged and selectable. Correct and
 incorrect answers have green/red feedback cards, a tick/cross and a text label.
 The Sound on/off control sits in the footer and governs quiet typing clicks,
 a correct-answer recording and a wrong-answer recording supplied by the user.
-The supplied keyboard recording loops only while a line types and stops when
-that line finishes. The three original MP3s and their hashes/provenance are in
-`assets/tutorial-sounds/`. Files load from this site only when needed and decoded
-buffers are reused. Sounds start only after an actual tutorial action/answer
+Typing uses the original quiet, locally generated 18ms character clicks at the
+original modest level. There is no keyboard-file request or recorded lead-in.
+The supplied keyboard MP3 remains stored but inactive. The two selected answer
+MP3s are downloaded/decoded when the pilot first opens with Sound on, before
+Tutorial is expanded, then reused. Prepared answers start directly from cached
+buffers, without a new fetch/decode on selection. An unusually early current
+answer waits for its existing preload; obsolete requests remain cancelled.
+Typing follows real character ticks; instant/reduced-motion rendering creates
+no sound burst. Original MP3s and hashes remain retained.
+Sounds start only after an actual tutorial action/answer
 change. Restoring a saved answer is silent. Navigation, collapse,
 Close and hiding the page cancel active/pending effects. Muting stops all effects
 and is kept for the current page visit; enabling never replays an old sound.
 Unsupported sound leaves the tutorial usable.
-No external sound service or paid call is involved. The three small MP3s total
-347,349 bytes; original source files and encoded content are preserved.
+No external sound service or paid call is involved. The two runtime MP3s total
+88,215 bytes. All three supplied originals remain byte-for-byte unchanged.
 `assets/tutorial-code-style.js` and `assets/tutorial-typing-sound.js` contain the
 small isolated render/sound helpers, covered by exact-text and lifecycle tests.
 

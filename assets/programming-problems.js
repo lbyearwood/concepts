@@ -38,7 +38,7 @@
     onChange: status => {
       soundToggle.setAttribute('aria-pressed', String(status.enabled));
       soundToggle.setAttribute('aria-label', status.enabled ? 'Mute all sound effects' : 'Enable sound effects');
-      soundToggle.title = status.unavailable ? 'Sound unavailable; click to retry' : status.enabled ? 'Typing and answer sounds on' : 'All sound effects off';
+      soundToggle.title = status.unavailable ? 'Sound unavailable; click to retry' : status.enabled ? status.answerBuffersReady === 2 ? 'Typing and answer sounds on' : 'Sound on; recordings preparing' : 'All sound effects off';
       soundToggle.querySelector('.typing-sound-label').textContent = status.enabled ? 'Sound on' : 'Sound off';
       soundToggle.dataset.audioReady = String(status.ready);
       soundToggle.dataset.clicksPlayed = String(status.played);
@@ -48,6 +48,10 @@
       soundToggle.dataset.typingActive = String(status.typingActive);
       soundToggle.dataset.activeEffects = String(status.activeEffects);
       soundToggle.dataset.soundError = status.errorKind;
+      soundToggle.dataset.answerBuffersReady = String(status.answerBuffersReady);
+      soundToggle.dataset.typingBufferReady = String(status.typingBufferReady);
+      soundToggle.dataset.buffersReady = String(status.buffersReady);
+      soundToggle.dataset.answerStartDelayMs = status.lastAnswerWaitMs === null ? '' : status.lastAnswerWaitMs.toFixed(1);
     }
   });
   const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
@@ -182,7 +186,6 @@
       },
       onCharacter: character => typingSound.tap(character),
       done: () => {
-        typingSound.stopTyping();
         pre.classList.remove('is-typing');
         pre.setAttribute('aria-busy', 'false');
       }
@@ -286,6 +289,7 @@
     }
     renderStep();
     dialog.showModal();
+    if (isTypedTutorial(problem)) void typingSound.unlock();
     fitWorkspace();
   }
   help.addEventListener('toggle', () => {

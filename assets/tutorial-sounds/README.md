@@ -8,7 +8,13 @@ recording to its role and records byte hashes, decoded duration and sample rate.
 - Incorrect answer: universfield-wrong-answer-126515.mp3
 - Typing: dragon-studio-keyboard-typing-sound-effect-335503.mp3
 
-The shared Sound on/off control governs all playback. Recordings are fetched
-from this site only when required, decoded once per browser audio context and
-reused. Typing loops only while a line is being revealed; completion, navigation
-and mute stop it. The original Downloads files remain unchanged.
+The final user choice on 21 November 2026 is the original generated keyboard
+clicks. The supplied keyboard MP3 remains stored but is inactive. Typing uses
+the original quiet 18ms locally generated clicks on real character ticks.
+
+The shared Sound on/off control governs all playback. Correct/wrong recordings
+are downloaded/decoded when the pilot opens with sound enabled, before Tutorial
+is expanded. Buffers are reused; no fresh fetch/decode is needed on a prepared
+answer selection. Exceptionally early valid answers wait for the shared preload,
+while obsolete requests remain cancelled. Navigation and mute stop active
+effects. Original Downloads files and all three supplied MP3s are unchanged.

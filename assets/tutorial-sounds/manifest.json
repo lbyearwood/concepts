@@ -8,7 +8,8 @@
       "sha256": "cd043f1b6a0f52388b2754e5b648f343baeda4b1af93cf5e35582839568eef4c",
       "duration": 8.097959183673469,
       "sampleRate": 44100,
-      "channels": 2
+      "channels": 2,
+      "active": false
     },
     "correct": {
       "file": "dragon-studio-correct-472358.mp3",
@@ -16,7 +17,8 @@
       "sha256": "a106868fd8a145542ed741b1a784a9324c3b6bcbadbef1cb5680f6ac0dad0097",
       "duration": 1.32,
       "sampleRate": 48000,
-      "channels": 2
+      "channels": 2,
+      "active": true
     },
     "incorrect": {
       "file": "universfield-wrong-answer-126515.mp3",
@@ -24,7 +26,9 @@
       "sha256": "16098fa3e3c9b98a9b53397f935edbcc8bb6970d991a0fbad6305811585d7796",
       "duration": 1.436734693877551,
       "sampleRate": 44100,
-      "channels": 2
+      "channels": 2,
+      "active": true
     }
-  }
+  },
+  "typingPlayback": "Original locally generated 18ms character clicks; supplied typing MP3 retained but inactive"
 }
