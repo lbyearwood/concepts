@@ -9,11 +9,13 @@
   function walkthroughFrames(problem, guide, compact = false) {
     return tutorialCodeLines(problem).flatMap((_, line) => [
       ...(compact ? [{ line, kind: 'code' }] : []),
-      { line, kind: 'explanation' }, ...(guide.lines[line].question ? [{ line, kind: 'question' }] : [])
+      { line, kind: 'explanation' },
+      ...['question', 'prediction'].filter(kind => guide.lines[line][kind])
+        .map(kind => ({ line, kind, checkpoint: guide.lines[line][kind].id }))
     ]);
   }
-  function checkpointLimit(frames, guide, isCorrect) {
-    const locked = frames.findIndex(frame => frame.kind === 'question' && guide.lines[frame.line].question && !isCorrect(frame.line));
+  function checkpointLimit(frames, isCorrect) {
+    const locked = frames.findIndex(frame => frame.checkpoint && !isCorrect(frame.checkpoint));
     return locked < 0 ? frames.length - 1 : locked;
   }
   function createTypewriter({ schedule = setTimeout, unschedule = clearTimeout, interval = 32 } = {}) {

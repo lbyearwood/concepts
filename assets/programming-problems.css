@@ -52,12 +52,13 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-question-content ol { padding-left:22px; margin:0 0 8px; }
 .tutorial-question-content li + li { margin-top:5px; }
 .tutorial-help > summary { color:#1433ff; font-size:14px; font-weight:800; cursor:pointer; }
+.tutorial-modal[data-problem="problem-1"] .tutorial-question > summary { color:#1433ff; font-size:14px; font-weight:800; }
 .tutorial-help-content { padding-top:18px; }
 .tutorial-walkthrough { min-width:0; }
 .tutorial-modal[data-problem="problem-1"] .tutorial-help-content { display:grid; grid-template-columns:minmax(0,3fr) minmax(0,2fr); gap:24px; align-items:stretch; height:var(--tutorial-workspace-height,100%); min-height:0; padding-top:12px; box-sizing:border-box; overflow:hidden; }
 .tutorial-modal[data-problem="problem-1"] .tutorial-question { flex:none; margin:0; padding:0; border:0; }
-.tutorial-modal[data-problem="problem-1"] .tutorial-question-content { display:flex; flex-direction:column; height:var(--exam-content-height,auto); min-height:0; box-sizing:border-box; }
-.tutorial-question-text { flex:1; min-height:0; overflow:hidden; padding-bottom:8px; }
+.tutorial-modal[data-problem="problem-1"] .tutorial-question-content { display:flex; flex-direction:column; max-height:var(--exam-content-height,none); min-height:0; box-sizing:border-box; }
+.tutorial-question-text { flex:0 1 auto; min-height:0; overflow:hidden; padding-bottom:8px; }
 .tutorial-question-text ol { margin-bottom:0; }
 .tutorial-modal[data-problem="problem-1"] .tutorial-help { min-height:0; }
 .tutorial-modal[data-problem="problem-1"] .tutorial-walkthrough { display:flex; flex-direction:column; min-height:0; overflow:hidden; }
@@ -132,9 +133,9 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
   .tutor-check-prompt { font-size:13px; }
 }
 @media(max-width:900px), (max-height:500px) {
-  .tutorial-modal[data-problem="problem-1"][data-tutorial-view="question"] .tutorial-walkthrough { display:none; }
-  .tutorial-modal[data-problem="problem-1"][data-tutorial-view="question"] .tutorial-help-content { grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr); }
-  .tutorial-modal[data-problem="problem-1"][data-tutorial-view="question"] .tutorial-tutor { padding:0; border:0; }
+  .tutorial-modal[data-problem="problem-1"]:is([data-tutorial-view="question"],[data-tutorial-view="prediction"]) .tutorial-walkthrough { display:none; }
+  .tutorial-modal[data-problem="problem-1"]:is([data-tutorial-view="question"],[data-tutorial-view="prediction"]) .tutorial-help-content { grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr); }
+  .tutorial-modal[data-problem="problem-1"]:is([data-tutorial-view="question"],[data-tutorial-view="prediction"]) .tutorial-tutor { padding:0; border:0; }
 }
 @media(max-height:500px) and (min-width:650px) {
   .tutorial-modal[data-problem="problem-1"] .tutorial-help-content { grid-template-columns:minmax(0,3fr) minmax(0,2fr); grid-template-rows:minmax(0,1fr); }
@@ -146,6 +147,11 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
   .tutorial-modal[data-problem="problem-1"][data-tutorial-view="explanation"] .tutorial-walkthrough { display:none; }
   .tutorial-modal[data-problem="problem-1"] .tutorial-tutor { padding:0; border:0; }
   .tutor-choice { padding-top:6px; padding-bottom:6px; }
+}
+@media(max-width:600px) {
+  .tutorial-modal[data-problem="problem-1"] .tutorial-footer { padding:10px 12px; gap:8px; }
+  .tutorial-modal[data-problem="problem-1"] .tutorial-back,
+  .tutorial-modal[data-problem="problem-1"] .tutorial-next { padding:6px 8px; gap:5px; font-size:12px; }
 }
 @media(max-height:500px) {
   .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-heading { margin-bottom:4px; }

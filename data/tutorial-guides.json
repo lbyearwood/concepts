@@ -29,6 +29,7 @@
           ],
           "watchOut": "Set this starting value before the loop. Resetting it on every iteration could erase an earlier match.",
           "question": {
+            "id": "understand-initial-flag",
             "prompt": "What does the starting value False tell us?",
             "choices": [
               {
@@ -48,11 +49,33 @@
               }
             ]
           },
+          "prediction": {
+            "id": "predict-start-scan",
+            "prompt": "The input is stored and found is False. What should the algorithm do next?",
+            "choices": [
+              {
+                "text": "Report that the letter is absent.",
+                "feedback": "No characters have been checked yet. The starting flag is not evidence that the letter is absent. What could gather that evidence?",
+                "correct": false
+              },
+              {
+                "text": "Visit the character positions in order to search for a match.",
+                "feedback": "Correct. The search must examine the text before deciding its result. Visiting positions in order lets it test each character.",
+                "correct": true
+              },
+              {
+                "text": "Set found to True before checking the text.",
+                "feedback": "The flag should record evidence from a match. No match has been found yet, so changing it now would invent a result.",
+                "correct": false
+              }
+            ]
+          },
           "audio": "assets/tutorial-audio/linear-search-string/line-02.mp3",
           "narration": "Why start with False?. found is a Boolean flag. It remembers whether the search has found the letter. We start it at False because no match has been found yet. The text has not been searched, so this does not mean the letter is definitely absent. A matching character will change the flag to True. Remember: Set this starting value before the loop. Resetting it on every iteration could erase an earlier match."
         },
         {
           "code": "for i in range(len(text)):",
+          "stageDescription": "Loop over each valid index and compare that character with lowercase a.",
           "title": "Visit each character position",
           "paragraphs": [
             "len(text) gives the number of characters. range(len(text)) produces their positions, beginning at 0 and ending one before that length.",
@@ -60,6 +83,7 @@
           ],
           "watchOut": "The final valid position is length minus one. Position 5 would be outside a five-character string.",
           "question": {
+            "id": "understand-indexes",
             "prompt": "If text has five characters, which positions does this loop visit?",
             "choices": [
               {
@@ -84,6 +108,7 @@
         },
         {
           "code": "    if text[i] == 'a':",
+          "stageDescription": "Loop over each valid index and compare that character with lowercase a.",
           "title": "Compare the current character",
           "paragraphs": [
             "text[i] reads the character at the current position. The double equals sign compares it with the lowercase letter a.",
@@ -91,6 +116,7 @@
           ],
           "watchOut": "This comparison is case sensitive. Uppercase A does not match lowercase a. A single equals sign stores a value; it is not this comparison.",
           "question": {
+            "id": "understand-case",
             "prompt": "Which character makes this comparison True?",
             "choices": [
               {
@@ -115,12 +141,34 @@
         },
         {
           "code": "        found = True",
+          "stageDescription": "Record a match in the Boolean flag.",
           "title": "Remember that a match was found",
           "paragraphs": [
             "A matching character has been found, so the flag changes to True. The program can use that remembered result after the loop.",
             "This line is inside both the loop and the if statement. It runs only when the current character matches lowercase a."
           ],
           "watchOut": "Keep the indentation. If this assignment ran for every character, the flag could incorrectly report a match.",
+          "prediction": {
+            "id": "predict-stop-search",
+            "prompt": "A matching character has set found to True. We only need to know whether a exists. What should happen next?",
+            "choices": [
+              {
+                "text": "Check every remaining character before reporting success.",
+                "feedback": "One match already proves that the letter exists. We are not counting matches. Think about whether more comparisons could change that result.",
+                "correct": false
+              },
+              {
+                "text": "Reset found to False for the next character.",
+                "feedback": "That would erase a real match. The flag needs to remember that the letter was found until the result is reported.",
+                "correct": false
+              },
+              {
+                "text": "Stop scanning and keep the flag True for the result message.",
+                "feedback": "Correct. One match is enough for an existence search. Stop the loop, retain True and let the result code report success.",
+                "correct": true
+              }
+            ]
+          },
           "audio": "assets/tutorial-audio/linear-search-string/line-05.mp3",
           "narration": "Remember that a match was found. A matching character has been found, so the flag changes to True. The program can use that remembered result after the loop. This line is inside both the loop and the if statement. It runs only when the current character matches lowercase a. Remember: Keep the indentation. If this assignment ran for every character, the flag could incorrectly report a match."
         },
@@ -133,6 +181,7 @@
           ],
           "watchOut": "break must stay inside the matching if statement. Otherwise the search could stop after checking only the first character.",
           "question": {
+            "id": "understand-break",
             "prompt": "What does break exit here?",
             "choices": [
               {
@@ -197,6 +246,7 @@
           ],
           "watchOut": "Uppercase A alone does not count as a match in this program.",
           "question": {
+            "id": "understand-result",
             "prompt": "What happens if the user enters Cab?",
             "choices": [
               {

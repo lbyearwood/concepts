@@ -66,7 +66,7 @@
   const compactView = window.matchMedia('(max-width:600px), (max-height:500px)');
   const framesFor = problem => walkthroughFrames(problem, guides.problems[problem.id], compactView.matches);
   const isTypedTutorial = problem => problem.id === 'problem-1';
-  const limitFor = (problem, frames) => checkpointLimit(frames, guides.problems[problem.id], line => tutor.isCorrect(problem.id, line));
+  const limitFor = (problem, frames) => checkpointLimit(frames, id => tutor.isCorrect(problem.id, id));
   function canVisitFrame(target) {
     const problem = data.problems.find(item => item.id === state.problem);
     return target >= 0 && target <= limitFor(problem, framesFor(problem));
@@ -78,7 +78,7 @@
     if (!problem || !isTypedTutorial(problem)) return;
     const frames = framesFor(problem), lines = tutorialCodeLines(problem), limit = limitFor(problem, frames);
     next.disabled = state.frame >= limit;
-    if (dialog.dataset.tutorialView === 'question') next.setAttribute('aria-describedby', 'tutor-check-instruction');
+    if (frames[state.frame].checkpoint) next.setAttribute('aria-describedby', 'tutor-check-instruction');
     dialog.querySelectorAll('[data-step]').forEach(button => {
       const target = frames.findIndex(frame => lines[frame.line].step === Number(button.dataset.step));
       button.disabled = target > limit;
@@ -229,7 +229,7 @@
     step.blocks.forEach(block => {
       if (block.type === 'code') {
         if (typed) {
-          if (!activeText) activeText = renderTypedCode(lines, animate && kind !== 'question');
+          if (!activeText) activeText = renderTypedCode(lines, animate && !frames[state.frame].checkpoint);
         } else {
           const pre = element('pre');
           pre.append(element('code', '', block.text));
@@ -239,7 +239,8 @@
         // A stage's check question follows its complete code, not an unfinished branch.
         if (typed && block.type === 'question') return;
         const className = block.type === 'question' ? 'understanding-question' : block.type === 'error' ? 'common-error' : '';
-        content.append(element('p', className, block.text));
+        const text = typed && block.type === 'paragraph' ? guides.problems[problem.id].lines[state.line].stageDescription || block.text : block.text;
+        content.append(element('p', className, text));
       }
     });
     if (typed && help.open && kind !== 'code') tutor.show(problem.id, state.line, kind);
@@ -250,10 +251,10 @@
     counter.hidden = typed; counter.textContent = typed ? '' : progress;
     dialog.querySelector('.tutorial-back').disabled = typed ? state.frame === 0 : state.step === 0;
     dialog.querySelector('.tutorial-next').disabled = typed && last;
-    dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
+    dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'prediction' ? 'Predict' : frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
     dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
     refreshCheckpointControls();
-    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length : '') : problem.title + '. Exam question. Tutorial collapsed.';
+    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length + (kind === 'prediction' ? '. Predict the next step.' : '') : '') : problem.title + '. Exam question. Tutorial collapsed.';
     if (typed && help.open) fitWorkspace();
     else if (help.open) {
       body.scrollTop += help.getBoundingClientRect().top - body.getBoundingClientRect().top - parseFloat(getComputedStyle(body).paddingTop);

@@ -17,6 +17,12 @@ class TutorialGuideTests(unittest.TestCase):
         self.assertEqual('\n'.join(line['code'] for line in lines), original['solution'])
         self.assertEqual(len(lines), 10)
         self.assertEqual(sum('question' in line for line in lines), 5)
+        self.assertEqual([index for index, line in enumerate(lines) if 'prediction' in line], [1, 4])
+        checks = [line[kind] for line in lines for kind in ('question', 'prediction') if kind in line]
+        self.assertEqual(len({question['id'] for question in checks}), 7)
+        for question in checks:
+            self.assertTrue(question['prompt'])
+            self.assertEqual(sum(choice['correct'] for choice in question['choices']), 1)
         for line in lines:
             self.assertEqual(line['narration'], line['title'] + '. ' + ' '.join(line['paragraphs']) + ' Remember: ' + line['watchOut'])
 

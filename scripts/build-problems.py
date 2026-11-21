@@ -34,14 +34,24 @@ def output():
         code_lines = [line for step in problem['steps'] for block in step['blocks'] if block['type'] == 'code' for line in block['text'].split('\n')]
         if [line['code'] for line in guide['lines']] != code_lines:
             raise ValueError(f'Tutor explanations do not match code: {problem_id}')
-        for line in guide['lines']:
+        checkpoint_ids = set()
+        for index, line in enumerate(guide['lines']):
             if not line['title'] or not line['paragraphs'] or not all(line['paragraphs']) or not line['watchOut'] or not line['narration']:
                 raise ValueError(f'Empty tutor explanation: {problem_id}')
             if not re.fullmatch(r'assets/tutorial-audio/[a-z0-9-]+/line-\d{2}\.mp3', line['audio']):
                 raise ValueError('Invalid local audio path')
-            question = line.get('question')
-            if question and (len(question['choices']) < 2 or sum(choice['correct'] is True for choice in question['choices']) != 1 or not all(choice['text'] and choice['feedback'] for choice in question['choices'])):
-                raise ValueError(f'Invalid tutor check: {problem_id}')
+            for kind in ('question', 'prediction'):
+                question = line.get(kind)
+                if not question:
+                    continue
+                identity = question.get('id', '')
+                if (not re.fullmatch(r'[a-z][a-z0-9-]+', identity) or identity in checkpoint_ids
+                        or not question.get('prompt') or len(question['choices']) < 2
+                        or sum(choice['correct'] is True for choice in question['choices']) != 1
+                        or not all(choice['text'] and choice['feedback'] for choice in question['choices'])
+                        or (kind == 'prediction' and index == len(guide['lines']) - 1)):
+                    raise ValueError(f'Invalid tutor {kind}: {problem_id}')
+                checkpoint_ids.add(identity)
     previous = PAGE.read_text(encoding='utf-8')
     sidebar = re.search(r'  <aside class="site-sidebar".*?</aside>', previous, re.S)
     if not sidebar:

@@ -6,6 +6,9 @@
   }
   function createTutor(panel, guides, { onAnswer = () => {} } = {}) {
     const answers = new Map();
+    const checkpoints = new Map(Object.entries(guides.problems).map(([id, guide]) => [id,
+      new Map(guide.lines.flatMap(line => [line.question, line.prediction].filter(Boolean).map(question => [question.id, question])))
+    ]));
     let pager = null;
     const node = (tag, className, text) => {
       const item = document.createElement(tag);
@@ -14,9 +17,9 @@
       return item;
     };
     const { renderTutorText, renderPython } = window.CSRTutorialCodeStyle;
-    function isCorrect(problemId, lineIndex) {
-      const question = guides.problems[problemId]?.lines[lineIndex]?.question;
-      const selected = answers.get(problemId + ':' + lineIndex);
+    function isCorrect(problemId, checkpointId) {
+      const question = checkpoints.get(problemId)?.get(checkpointId);
+      const selected = answers.get(problemId + ':' + checkpointId);
       return !!question && selected !== undefined && question.choices[selected]?.correct === true;
     }
     function show(problemId, lineIndex, kind = 'explanation') {
@@ -25,18 +28,19 @@
       panel.hidden = !line;
       if (!line) return;
       panel.replaceChildren();
-      panel.classList.toggle('is-question', kind === 'question');
+      const question = kind === 'question' || kind === 'prediction' ? line[kind] : null;
+      panel.classList.toggle('is-question', !!question);
       const heading = node('header', 'tutor-heading');
       const copy = node('div', 'tutor-heading-copy');
       copy.append(node('p', 'tutor-line-label', 'Line ' + (lineIndex + 1) + ' of ' + guide.lines.length));
-      const title = node('h3'); renderTutorText(title, kind === 'question' ? 'Question' : line.title); copy.append(title);
+      const title = node('h3'); renderTutorText(title, kind === 'prediction' ? 'Predict the next step' : question ? 'Question' : line.title); copy.append(title);
       heading.append(copy); panel.append(heading);
-      if (kind === 'question' && line.question) {
-        const question = line.question, key = problemId + ':' + lineIndex;
+      if (question) {
+        const key = problemId + ':' + question.id;
         const contextCode = node('code', 'tutor-question-code'); renderPython(contextCode, line.code.trim()); panel.append(contextCode);
         const prompt = node('p', 'tutor-check-prompt', question.prompt);
         renderTutorText(prompt, question.prompt);
-        const finalQuestion = lineIndex === guide.lines.length - 1;
+        const finalQuestion = kind === 'question' && lineIndex === guide.lines.length - 1;
         const instruction = node('span', 'tutor-check-instruction', finalQuestion ? 'Choose the correct answer to complete the tutorial.' : 'Choose the correct answer to continue.');
         instruction.id = 'tutor-check-instruction'; prompt.append(instruction);
         prompt.id = 'tutor-prompt'; panel.append(prompt);
@@ -60,7 +64,7 @@
         }
         question.choices.forEach((choice, index) => {
           const label = node('label', 'tutor-choice'), input = node('input');
-          input.type = 'radio'; input.name = 'tutor-answer-' + lineIndex; input.value = String(index);
+          input.type = 'radio'; input.name = 'tutor-answer-' + question.id; input.value = String(index);
           input.checked = answers.get(key) === index;
           input.addEventListener('change', () => { answer(index); onAnswer(choice.correct); });
           const text = node('span'); renderTutorText(text, choice.text); label.append(input, text); viewport.append(label);

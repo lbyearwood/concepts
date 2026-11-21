@@ -43,22 +43,22 @@ test('only real answer changes trigger effects; restoration is silent and a new 
   const h = harness();
   try {
     h.tutor.show('problem-1', 1, 'question');
-    assert.equal(h.tutor.isCorrect('problem-1', 1), false);
+    assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), false);
     let inputs = h.nodes().filter(node => node.tagName === 'input');
-    inputs[0].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), false);
-    inputs[1].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), true);
+    inputs[0].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), false);
+    inputs[1].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), true);
     assert.deepEqual(h.sounds, [false, true]);
     assert.ok(h.panel.textContent.includes('✅ Correct.'));
     h.tutor.show('problem-1', 0); h.tutor.show('problem-1', 1, 'question');
     inputs = h.nodes().filter(node => node.tagName === 'input');
     assert.equal(inputs[1].checked, true); assert.deepEqual(h.sounds, [false, true]);
-    assert.equal(h.tutor.isCorrect('problem-1', 1), true);
+    assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), true);
     h.tutor.hide(); h.tutor.show('problem-1', 1, 'question');
     assert.deepEqual(h.sounds, [false, true]);
     h.tutor.reset(); h.tutor.show('problem-1', 1, 'question');
     assert.equal(h.nodes().filter(node => node.tagName === 'input' && node.checked).length, 0);
     assert.equal(h.nodes().filter(node => node.dataset.feedback).length, 0);
-    assert.equal(h.tutor.isCorrect('problem-1', 1), false);
+    assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), false);
     assert.deepEqual(h.sounds, [false, true]);
   } finally { h.cleanup(); }
 });
@@ -68,10 +68,40 @@ test('choosing a wrong answer after a correct one removes the current checkpoint
   try {
     h.tutor.show('problem-1', 1, 'question');
     const inputs = h.nodes().filter(node => node.tagName === 'input');
-    inputs[1].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), true);
-    inputs[0].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), false);
+    inputs[1].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), true);
+    inputs[0].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), false);
     assert.ok(h.panel.textContent.includes('Try again.'));
     assert.deepEqual(h.sounds, [true, false]);
+  } finally { h.cleanup(); }
+});
+
+test('a prediction shares the current code but never another checkpoint answer or the next explanation', () => {
+  const h = harness();
+  try {
+    h.tutor.show('problem-1', 1, 'question');
+    h.nodes().filter(node => node.tagName === 'input')[1].events.change();
+    h.tutor.show('problem-1', 1, 'prediction');
+    assert.ok(h.panel.textContent.includes('Predict the next step'));
+    assert.equal(h.nodes().filter(node => node.tagName === 'input' && node.checked).length, 0);
+    assert.equal(h.tutor.isCorrect('problem-1', 'predict-start-scan'), false);
+    assert.ok(h.panel.textContent.includes('found = False'));
+    assert.ok(!h.panel.textContent.includes(guides.problems['problem-1'].lines[2].code));
+    assert.ok(!h.panel.textContent.includes(guides.problems['problem-1'].lines[2].title));
+    h.nodes().filter(node => node.tagName === 'input')[1].events.change();
+    assert.equal(h.tutor.isCorrect('problem-1', 'predict-start-scan'), true);
+    h.tutor.show('problem-1', 1, 'question');
+    assert.equal(h.nodes().filter(node => node.tagName === 'input')[1].checked, true);
+    h.tutor.show('problem-1', 1, 'prediction');
+    assert.equal(h.nodes().filter(node => node.tagName === 'input')[1].checked, true);
+    assert.deepEqual(h.sounds, [true, true], 'restoring either checkpoint is silent');
+    h.nodes().filter(node => node.tagName === 'input')[0].events.change();
+    assert.equal(h.tutor.isCorrect('problem-1', 'predict-start-scan'), false);
+    assert.equal(h.tutor.isCorrect('problem-1', 'understand-initial-flag'), true);
+    h.tutor.reset();
+    for (const id of ['predict-start-scan', 'understand-initial-flag']) assert.equal(h.tutor.isCorrect('problem-1', id), false);
+    h.tutor.show('problem-1', 4, 'prediction');
+    assert.ok(!h.panel.textContent.includes('break'));
+    assert.equal(h.nodes().filter(node => node.tagName === 'input' && node.checked).length, 0);
   } finally { h.cleanup(); }
 });
 
@@ -79,9 +109,13 @@ test('misconception choices give their own feedback and exactly one correct answ
   const lines = guides.problems['problem-1'].lines;
   assert.equal(lines.length, 10);
   assert.equal(lines.filter(line => line.question).length, 5);
-  for (const line of lines.filter(line => line.question)) {
-    assert.equal(line.question.choices.filter(choice => choice.correct).length, 1);
-    line.question.choices.forEach((choice, index) => assert.deepEqual(checkAnswer(line.question, index), { correct: choice.correct, text: choice.feedback }));
+  const questions = lines.flatMap(line => [line.question, line.prediction].filter(Boolean));
+  assert.equal(questions.length, 7);
+  assert.equal(new Set(questions.map(question => question.id)).size, 7);
+  for (const question of questions) {
+    assert.equal(question.choices.filter(choice => choice.correct).length, 1);
+    assert.equal(new Set(question.choices.map(choice => choice.feedback)).size, question.choices.length);
+    question.choices.forEach((choice, index) => assert.deepEqual(checkAnswer(question, index), { correct: choice.correct, text: choice.feedback }));
   }
   assert.match(checkAnswer(lines[1].question, 0).text, /not been searched/);
 });

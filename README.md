@@ -111,6 +111,16 @@ internal scrolling. On small or short screens, code and explanation use
 successive views; short pages preserve any overflow text or earlier code.
 Answers persist inside an attempt and reset
 on reopening. All content remains available, including on the compact pages.
+Two selected **Predict the next step** checkpoints also appear before the scan
+starts and before the search stops at its first match. They follow the existing
+understanding checks and require a correct answer before the next code line or
+its explanation is shown. Each question has a distinct stable identity, so a
+prediction cannot inherit another question's answer. Next and stage jumps use
+the same earliest-unpassed-checkpoint limit; Back retains choices and reopening
+resets them all. Correct answers unlock without automatically moving on.
+The pilot's Exam question and Tutorial disclosures use the same larger type;
+Tutorial follows the question content directly. Long exam text still uses fitted
+pages on compact screens.
 `data/tutorial-guides.json` owns the explanations, checks and audio references.
 The builder rejects mismatched code/explanations; tests verify every audio digest
 and transcript. The original problem catalogue and the other 21 tutorials are

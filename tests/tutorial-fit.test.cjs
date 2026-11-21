@@ -7,14 +7,14 @@ const guides = require('../data/tutorial-guides.json');
 
 test('questions follow their explanations in Next/Back order without extra tabs', () => {
   const frames = walkthroughFrames(data.problems[0], guides.problems['problem-1']);
-  assert.equal(frames.length, 15);
+  assert.equal(frames.length, 17);
   assert.deepEqual(frames.filter(frame => frame.kind === 'question').map(frame => frame.line), [1, 2, 3, 5, 9]);
   frames.forEach((frame, index) => {
     if (frame.kind === 'question') assert.deepEqual(frames[index - 1], { line: frame.line, kind: 'explanation' });
   });
-  assert.deepEqual(frames.at(-1), { line: 9, kind: 'question' });
+  assert.deepEqual(frames.at(-1), { line: 9, kind: 'question', checkpoint: 'understand-result' });
   const compact = walkthroughFrames(data.problems[0], guides.problems['problem-1'], true);
-  assert.equal(compact.length, 25);
+  assert.equal(compact.length, 27);
   assert.equal(compact.filter(frame => frame.kind === 'code').length, 10);
   assert.deepEqual(compact.slice(0, 2), [{ line: 0, kind: 'code' }, { line: 0, kind: 'explanation' }]);
 });
@@ -23,22 +23,46 @@ test('unanswered or wrong checkpoints bound every forward target in desktop and 
   const guide = guides.problems['problem-1'], lines = tutorialCodeLines(data.problems[0]);
   for (const compact of [false, true]) {
     const frames = walkthroughFrames(data.problems[0], guide, compact), answers = new Map();
-    const limit = () => checkpointLimit(frames, guide, line => answers.get(line) === true);
-    const checkpoints = frames.map((frame, index) => ({ ...frame, index })).filter(frame => frame.kind === 'question');
+    const limit = () => checkpointLimit(frames, id => answers.get(id) === true);
+    const checkpoints = frames.map((frame, index) => ({ ...frame, index })).filter(frame => frame.checkpoint);
+    assert.equal(checkpoints.length, 7);
     assert.equal(limit(), checkpoints[0].index);
     const stage3 = frames.findIndex(frame => lines[frame.line].step === 2);
     assert.ok(stage3 > limit(), 'stage jump cannot skip the first question');
     for (const checkpoint of checkpoints) {
       assert.equal(limit(), checkpoint.index);
-      answers.set(checkpoint.line, false); assert.equal(limit(), checkpoint.index);
+      answers.set(checkpoint.checkpoint, false); assert.equal(limit(), checkpoint.index);
       assert.ok(checkpoint.index + 1 > limit());
-      answers.set(checkpoint.line, true);
+      answers.set(checkpoint.checkpoint, true);
       assert.ok(limit() >= checkpoint.index);
     }
     assert.equal(limit(), frames.length - 1);
-    answers.set(checkpoints[0].line, false);
+    answers.set(checkpoints[0].checkpoint, false);
     assert.equal(limit(), checkpoints[0].index, 'a newly selected wrong answer relocks forward progress');
     assert.ok(0 <= limit(), 'earlier views remain reachable');
+  }
+});
+
+test('each prediction gates the next line and explanation with its own checkpoint identity', () => {
+  const problem = data.problems[0], guide = guides.problems[problem.id];
+  for (const compact of [false, true]) {
+    const frames = walkthroughFrames(problem, guide, compact), passed = new Set();
+    const limit = () => checkpointLimit(frames, id => passed.has(id));
+    const predictions = frames.map((frame, index) => ({ ...frame, index })).filter(frame => frame.kind === 'prediction');
+    assert.deepEqual(predictions.map(frame => frame.line), [1, 4]);
+    assert.equal(new Set(frames.filter(frame => frame.checkpoint).map(frame => frame.checkpoint)).size, 7);
+    for (const prediction of predictions) {
+      frames.slice(0, prediction.index).filter(frame => frame.checkpoint).forEach(frame => passed.add(frame.checkpoint));
+      assert.equal(limit(), prediction.index, 'the earlier understanding answer cannot pass the prediction');
+      assert.equal(frames[prediction.index + 1].line, prediction.line + 1);
+      assert.equal(frames[prediction.index + 1].kind, compact ? 'code' : 'explanation');
+      assert.ok(frames.slice(0, limit() + 1).every(frame => frame.line <= prediction.line), 'no reachable frame reveals the next line');
+      passed.add(prediction.checkpoint);
+      assert.ok(limit() > prediction.index, 'correct unlocks the next line');
+      passed.delete(prediction.checkpoint);
+      assert.equal(limit(), prediction.index, 'wrong-again relocks even with later stored answers');
+      passed.add(prediction.checkpoint);
+    }
   }
 });
 
