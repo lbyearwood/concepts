@@ -45,10 +45,7 @@
   }
   function createTutor(panel, guides) {
     const answers = new Map();
-    let playButton = null;
-    let playLabel = null;
-    let playIcon = null;
-    let audioStatus = null;
+    let pager = null, playButton = null, playIcon = null, audioStatus = null;
     const node = (tag, className, text) => {
       const item = document.createElement(tag);
       if (className) item.className = className;
@@ -59,97 +56,74 @@
       createAudio: () => document.createElement('audio'),
       onState: phase => {
         if (!playButton) return;
+        const label = ({ playing: 'Pause explanation', paused: 'Resume explanation', ended: 'Replay explanation', loading: 'Loading audio' })[phase] || 'Play explanation';
         playButton.disabled = phase === 'loading';
-        playLabel.textContent = ({ playing: 'Pause explanation', paused: 'Resume explanation', ended: 'Replay explanation', loading: 'Loading audio…' })[phase] || 'Play explanation';
-        playIcon.textContent = phase === 'playing' ? 'Ⅱ' : '▶';
+        playButton.setAttribute('aria-label', label); playButton.title = label;
+        playIcon.textContent = phase === 'playing' ? 'Ⅱ' : phase === 'loading' ? '…' : '▶';
         playButton.setAttribute('aria-pressed', String(phase === 'playing'));
-        audioStatus.textContent = phase === 'error' ? 'Audio could not play. Try again, or read the explanation below.' : '';
+        audioStatus.textContent = phase === 'error' ? 'Audio could not play. Try again or read the explanation.' : '';
+        pager?.layout();
       }
     });
-    function show(problemId, lineIndex) {
-      player.stop();
-      const guide = guides.problems[problemId];
-      const line = guide?.lines[lineIndex];
+    function show(problemId, lineIndex, kind = 'explanation') {
+      player.stop(); pager = null;
+      const guide = guides.problems[problemId], line = guide?.lines[lineIndex];
       panel.hidden = !line;
       if (!line) return;
       panel.replaceChildren();
+      panel.classList.toggle('is-question', kind === 'question');
       const heading = node('header', 'tutor-heading');
-      heading.append(node('p', 'tutor-line-label', 'Your tutor · Line ' + (lineIndex + 1) + ' of ' + guide.lines.length));
-      heading.append(node('h3', '', line.title));
-      playButton = node('button', 'tutor-play');
-      playIcon = node('span', 'tutor-play-icon', '▶');
-      playIcon.setAttribute('aria-hidden', 'true');
-      playLabel = node('span', '', 'Play explanation');
-      playButton.append(playIcon, playLabel);
-      playButton.type = 'button';
-      playButton.addEventListener('click', player.toggle);
-      audioStatus = node('p', 'tutor-audio-status');
-      audioStatus.setAttribute('role', 'status');
-      heading.append(playButton, audioStatus);
-      panel.append(heading);
-      const explanation = node('div', 'tutor-explanation');
-      line.paragraphs.forEach(text => explanation.append(node('p', '', text)));
-      panel.append(explanation);
-      const reminder = node('div', 'tutor-reminder');
-      reminder.append(node('strong', '', 'Remember'), node('p', '', line.watchOut));
-      explanation.append(reminder);
-      if (line.question) {
-        const question = line.question;
-        const key = problemId + ':' + lineIndex;
-        const fieldset = node('fieldset', 'tutor-check');
-        fieldset.append(node('legend', '', 'Check your understanding'), node('p', 'tutor-check-prompt', question.prompt));
-        const feedback = node('p', 'tutor-feedback');
-        feedback.setAttribute('role', 'status');
-        feedback.hidden = true;
-        const views = node('div', 'tutor-views');
-        views.setAttribute('role', 'group');
-        views.setAttribute('aria-label', 'Tutor content');
-        const explainButton = node('button', '', 'Explanation');
-        const checkButton = node('button', '', 'Quick check');
-        explainButton.type = checkButton.type = 'button';
-        fieldset.hidden = true;
-        function selectView(check) {
-          explanation.hidden = check;
-          fieldset.hidden = !check;
-          explainButton.setAttribute('aria-pressed', String(!check));
-          checkButton.setAttribute('aria-pressed', String(check));
-          panel.scrollTop = 0;
-        }
-        explainButton.addEventListener('click', () => selectView(false));
-        checkButton.addEventListener('click', () => selectView(true));
-        views.append(explainButton, checkButton);
-        heading.append(views);
-        selectView(false);
+      const copy = node('div', 'tutor-heading-copy');
+      copy.append(node('p', 'tutor-line-label', 'Line ' + (lineIndex + 1) + ' of ' + guide.lines.length));
+      copy.append(node('h3', '', kind === 'question' ? 'Question' : line.title));
+      playButton = node('button', 'tutor-play'); playButton.type = 'button';
+      playIcon = node('span', 'tutor-play-icon', '▶'); playIcon.setAttribute('aria-hidden', 'true');
+      playButton.append(playIcon); playButton.addEventListener('click', player.toggle);
+      heading.append(copy, playButton); panel.append(heading);
+      audioStatus = node('p', 'tutor-audio-status'); audioStatus.setAttribute('role', 'status');
+      panel.append(audioStatus);
+      if (kind === 'question' && line.question) {
+        const question = line.question, key = problemId + ':' + lineIndex;
+        panel.append(node('code', 'tutor-question-code', line.code.trim()));
+        const prompt = node('p', 'tutor-check-prompt', question.prompt);
+        prompt.id = 'tutor-prompt'; panel.append(prompt);
+        const viewport = node('div', 'tutor-content');
+        viewport.setAttribute('role', 'radiogroup'); viewport.setAttribute('aria-labelledby', prompt.id);
+        const announcement = node('p', 'sr-only');
+        announcement.setAttribute('role', 'status');
         function answer(index) {
-          const result = checkAnswer(question, index);
-          answers.set(key, index);
-          feedback.textContent = result.text;
-          feedback.className = 'tutor-feedback ' + (result.correct ? 'is-correct' : 'is-incorrect');
-          feedback.hidden = false;
-          const overflow = feedback.getBoundingClientRect().bottom - panel.getBoundingClientRect().bottom;
-          if (overflow > 0 && !fieldset.hidden) panel.scrollTop += overflow + 12;
+          const result = checkAnswer(question, index); answers.set(key, index);
+          viewport.querySelectorAll('[data-feedback]').forEach(item => item.remove());
+          const part = node('p', 'tutor-feedback ' + (result.correct ? 'is-correct' : 'is-incorrect'), result.text);
+          part.dataset.feedback = 'true'; part.dataset.fitText = 'true';
+          part.setAttribute('aria-hidden', 'true'); viewport.append(part);
+          announcement.textContent = result.text;
+          pager?.layout(); pager?.layout(false, viewport.querySelector('[data-feedback]'));
         }
         question.choices.forEach((choice, index) => {
-          const label = node('label', 'tutor-choice');
-          const input = node('input');
-          input.type = 'radio';
-          input.name = 'tutor-answer-' + lineIndex;
-          input.value = String(index);
+          const label = node('label', 'tutor-choice'), input = node('input');
+          input.type = 'radio'; input.name = 'tutor-answer-' + lineIndex; input.value = String(index);
           input.checked = answers.get(key) === index;
           input.addEventListener('change', () => answer(index));
-          label.append(input, node('span', '', choice.text));
-          fieldset.append(label);
+          label.append(input, node('span', '', choice.text)); viewport.append(label);
         });
-        fieldset.append(feedback);
-        panel.append(fieldset);
+        panel.append(viewport, announcement);
+        pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'answer');
         if (answers.has(key)) answer(answers.get(key));
+      } else {
+        const viewport = node('div', 'tutor-content tutor-explanation');
+        [...line.paragraphs, 'Remember: ' + line.watchOut].forEach((text, index) => {
+          const part = node('p', index === line.paragraphs.length ? 'tutor-reminder' : '', text);
+          part.dataset.fitText = 'true'; viewport.append(part);
+        });
+        panel.append(viewport);
+        pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'explanation');
       }
-      panel.scrollTop = 0;
       player.setSource(new URL('../../../' + line.audio, window.location.href).href);
     }
-    function hide() { player.stop(); panel.hidden = true; }
+    function hide() { player.stop(); panel.hidden = true; pager = null; }
     function reset() { answers.clear(); hide(); }
-    return { show, hide, reset };
+    return { show, hide, reset, layout: () => pager?.layout() };
   }
   const api = { createNarrationPlayer, checkAnswer, createTutor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

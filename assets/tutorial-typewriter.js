@@ -6,6 +6,12 @@
       .filter(block => block.type === 'code')
       .flatMap(block => block.text.split('\n').map(text => ({ step: stepIndex, text }))));
   }
+  function walkthroughFrames(problem, guide, compact = false) {
+    return tutorialCodeLines(problem).flatMap((_, line) => [
+      ...(compact ? [{ line, kind: 'code' }] : []),
+      { line, kind: 'explanation' }, ...(guide.lines[line].question ? [{ line, kind: 'question' }] : [])
+    ]);
+  }
   function createTypewriter({ schedule = setTimeout, unschedule = clearTimeout, interval = 32 } = {}) {
     let active = null;
     let timer = null;
@@ -41,7 +47,7 @@
     }
     return { play, cancel, finish, get playing() { return active !== null; } };
   }
-  const api = { tutorialCodeLines, createTypewriter };
+  const api = { tutorialCodeLines, createTypewriter, walkthroughFrames };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRCodeWalkthrough = api;
 })();

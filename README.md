@@ -100,13 +100,17 @@ other tutorials retain their current layout and step navigation. Playback
 logic and cancellation tests live in `assets/tutorial-typewriter.js` and
 `tests/tutorial-typewriter.test.cjs`; the catalogue remains the source of code.
 
-The same pilot has a roughly 70/30 code/tutor split on desktop. Its right-hand
-tutor follows the current line with detailed written explanations, reminders
-and optional prepared British English audio. Five checkpoints offer a Quick
-check view with individual feedback for each misconception. Playback starts
-only when requested, supports pause/resume/replay and unloads on line changes,
-collapse or Close. Answers persist while navigating an open walkthrough and
-reset on reopening. Narrow screens stack the tutor below the code.
+The same pilot has a roughly 60/40 code/tutor split on desktop. Its wider,
+unboxed right-hand area follows the current line with explanations, useful
+Remember guidance and a small play/pause icon for prepared British English
+audio. Questions follow their explanations in the existing Next/Back flow;
+there are no Explanation or Quick check tabs. Opening the walkthrough closes
+the exam text so the two views do not compete for height. Both fit without
+internal scrolling. On small or short screens, code and explanation use
+successive views; short pages preserve any overflow text or earlier code.
+Playback starts only when requested, supports pause/resume/replay and unloads
+on navigation, collapse or Close. Answers persist inside an attempt and reset
+on reopening. All content remains available, including on the compact pages.
 `data/tutorial-guides.json` owns the explanations, checks and audio references.
 The builder rejects mismatched code/explanations; tests verify every audio digest
 and transcript. The original problem catalogue and the other 21 tutorials are
@@ -207,7 +211,7 @@ Check every step fits fully inside the viewport and that only a long sidebar
 scrolls. Test Keywords, modal focus, Escape and the return to the lesson.
 
 Before release, install `scripts/requirements-slides.txt`, run
-`python -m unittest discover -s tests -p test_slide_sync.py`,
+`python -m unittest discover -s tests -p 'test_*.py'`,
 `node --test tests/*.test.cjs`, both site builders with `--check`,
 and `python scripts/sync-slides.py` twice (the second run must skip). Review `git diff`
 and run `git diff --check`. Commit the intended
