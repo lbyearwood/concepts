@@ -43,19 +43,35 @@ test('only real answer changes trigger effects; restoration is silent and a new 
   const h = harness();
   try {
     h.tutor.show('problem-1', 1, 'question');
+    assert.equal(h.tutor.isCorrect('problem-1', 1), false);
     let inputs = h.nodes().filter(node => node.tagName === 'input');
-    inputs[0].events.change(); inputs[1].events.change();
+    inputs[0].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), false);
+    inputs[1].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), true);
     assert.deepEqual(h.sounds, [false, true]);
     assert.ok(h.panel.textContent.includes('✅ Correct.'));
     h.tutor.show('problem-1', 0); h.tutor.show('problem-1', 1, 'question');
     inputs = h.nodes().filter(node => node.tagName === 'input');
     assert.equal(inputs[1].checked, true); assert.deepEqual(h.sounds, [false, true]);
+    assert.equal(h.tutor.isCorrect('problem-1', 1), true);
     h.tutor.hide(); h.tutor.show('problem-1', 1, 'question');
     assert.deepEqual(h.sounds, [false, true]);
     h.tutor.reset(); h.tutor.show('problem-1', 1, 'question');
     assert.equal(h.nodes().filter(node => node.tagName === 'input' && node.checked).length, 0);
     assert.equal(h.nodes().filter(node => node.dataset.feedback).length, 0);
+    assert.equal(h.tutor.isCorrect('problem-1', 1), false);
     assert.deepEqual(h.sounds, [false, true]);
+  } finally { h.cleanup(); }
+});
+
+test('choosing a wrong answer after a correct one removes the current checkpoint pass', () => {
+  const h = harness();
+  try {
+    h.tutor.show('problem-1', 1, 'question');
+    const inputs = h.nodes().filter(node => node.tagName === 'input');
+    inputs[1].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), true);
+    inputs[0].events.change(); assert.equal(h.tutor.isCorrect('problem-1', 1), false);
+    assert.ok(h.panel.textContent.includes('Try again.'));
+    assert.deepEqual(h.sounds, [true, false]);
   } finally { h.cleanup(); }
 });
 

@@ -96,6 +96,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .syntax-keyword, .syntax-builtin, .syntax-constant { font-weight:700; }
 .tutor-question-code { display:block; flex:none; margin:0 0 10px; white-space:pre-wrap; overflow-wrap:anywhere; font:13px/1.4 Consolas,"Courier New",monospace; color:#1433ff; }
 .tutor-check-prompt { flex:none; margin:0 0 10px; font-size:14px; font-weight:700; line-height:1.45; }
+.tutor-check-instruction { display:block; margin-top:4px; color:#535563; font-size:12px; font-weight:400; line-height:1.35; }
 .tutor-choice { display:flex; align-items:flex-start; gap:8px; padding:8px 0; border-bottom:1px solid #d4d5dc; cursor:pointer; font-size:13px; line-height:1.4; }
 .tutor-choice:hover, .tutor-choice:has(input:checked) { background:#e1faf6; }
 .tutor-choice input { flex:none; margin:3px 0 0; accent-color:#1433ff; }
@@ -147,6 +148,13 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
   .tutor-choice { padding-top:6px; padding-bottom:6px; }
 }
 @media(max-height:500px) {
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-heading { margin-bottom:4px; }
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-heading-copy { display:flex; align-items:baseline; gap:10px; }
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-line-label { margin-bottom:0; }
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-heading h3 { font-size:14px; }
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-question-code,
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-check-prompt { margin-bottom:5px; }
+  .tutorial-modal[data-problem="problem-1"] .tutorial-tutor.is-question .tutor-feedback { padding:6px 8px; font-size:12px; line-height:1.35; }
   .tutorial-modal[data-problem="problem-1"] .tutorial-header { padding:8px 12px; }
   .tutorial-modal[data-problem="problem-1"] .tutorial-header h2 { font-size:18px; }
   .tutorial-modal[data-problem="problem-1"] .tutorial-body { gap:6px; padding:10px; }
@@ -160,6 +168,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-steps { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:0 0 19px; }
 .tutorial-step-button { width:31px; height:31px; padding:0; border:2px solid #d4d5dc; background:#fff; color:#101223; font-weight:800; }
 .tutorial-step-button[aria-current="step"] { border-color:#101223; background:#00d6c0; }
+.tutorial-step-button:disabled { border-color:#d4d5dc; background:#f4f4f7; color:#737685; }
 .tutorial-step-title { margin:0 0 12px; font:900 20px/1.25 "Arial Black",Arial,sans-serif; letter-spacing:-.35px; }
 .tutorial-step-content { min-height:245px; font-size:14px; }
 .tutorial-step-content p { margin:0 0 12px; }

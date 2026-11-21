@@ -142,6 +142,14 @@ is hidden for the pilot; retain the blue tutor progress and four stage buttons.
 Other tutorials keep their current dismissal and progress behavior. Stored
 recordings, guide data and transcript checks remain intact as unused assets.
 
+The five pilot questions are checkpoints. Next stays disabled until the selected
+answer is correct, and later stage jumps cannot skip an unanswered or wrong
+checkpoint. Earlier views and Back remain available. A correct answer unlocks
+Next without automatically advancing; selecting a wrong answer again relocks
+progress. Selection/pass state lasts for the current attempt and clears on
+reopening. This works independently of sound or audio loading. A short prompt
+explains the lock, with the next control linked to it for assistive technology.
+
 The web adaptations reconcile question/code inconsistencies, make the letter
 counter case insensitive for the chosen letter, use the stated safe-reading
 range, and include a worked username subroutine. The source document is

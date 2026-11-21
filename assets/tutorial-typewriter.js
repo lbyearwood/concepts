@@ -12,6 +12,10 @@
       { line, kind: 'explanation' }, ...(guide.lines[line].question ? [{ line, kind: 'question' }] : [])
     ]);
   }
+  function checkpointLimit(frames, guide, isCorrect) {
+    const locked = frames.findIndex(frame => frame.kind === 'question' && guide.lines[frame.line].question && !isCorrect(frame.line));
+    return locked < 0 ? frames.length - 1 : locked;
+  }
   function createTypewriter({ schedule = setTimeout, unschedule = clearTimeout, interval = 32 } = {}) {
     let active = null;
     let timer = null;
@@ -48,7 +52,7 @@
     }
     return { play, cancel, finish, get playing() { return active !== null; } };
   }
-  const api = { tutorialCodeLines, createTypewriter, walkthroughFrames };
+  const api = { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRCodeWalkthrough = api;
 })();

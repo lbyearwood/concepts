@@ -108,6 +108,18 @@ test('late answer loads are ignored after mute, navigation, hidden view or page 
   assert.ok(h.sources[0].buffer.url.endsWith(soundFiles.incorrect));
 });
 
+test('a still-current first answer waits for decoding and plays exactly once when ready', async () => {
+  for (const correct of [true, false]) {
+    const h = harness(); let resolve;
+    h.settings.loader = url => new Promise(done => { resolve = () => done({ url }); });
+    const pending = h.sound.answer(correct); await settle();
+    assert.equal(h.sources.length, 0); assert.equal(h.sound.enabled, true);
+    resolve(); assert.equal(await pending, true); assert.equal(h.sources.length, 1);
+    assert.equal(h.states.at(-1).answersPlayed, 1);
+    assert.equal(h.states.at(-1).lastAnswer, correct ? 'correct' : 'incorrect');
+  }
+});
+
 test('resume rejection, missing audio and decode/playback failures do not break the written tutorial', async () => {
   const unsupported = createTypingSound({ createContext: () => null });
   assert.equal(await unsupported.unlock(), false); assert.doesNotThrow(() => unsupported.tap('a'));

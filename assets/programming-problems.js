@@ -51,17 +51,36 @@
     }
   });
   const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
-    onAnswer: correct => { void typingSound.answer(correct); }
+    onAnswer: correct => { refreshCheckpointControls(); void typingSound.answer(correct); }
   });
   const { renderPython } = window.CSRTutorialCodeStyle;
   let codePager = null, examPager = null;
   new ResizeObserver(fitWorkspace).observe(body);
-  const { tutorialCodeLines, createTypewriter, walkthroughFrames } = window.CSRCodeWalkthrough;
+  const { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit } = window.CSRCodeWalkthrough;
   const typewriter = createTypewriter();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const compactView = window.matchMedia('(max-width:600px), (max-height:500px)');
   const framesFor = problem => walkthroughFrames(problem, guides.problems[problem.id], compactView.matches);
   const isTypedTutorial = problem => problem.id === 'problem-1';
+  const limitFor = (problem, frames) => checkpointLimit(frames, guides.problems[problem.id], line => tutor.isCorrect(problem.id, line));
+  function canVisitFrame(target) {
+    const problem = data.problems.find(item => item.id === state.problem);
+    return target >= 0 && target <= limitFor(problem, framesFor(problem));
+  }
+  function refreshCheckpointControls() {
+    const next = dialog.querySelector('.tutorial-next');
+    next.removeAttribute('aria-describedby');
+    const problem = data.problems.find(item => item.id === state.problem);
+    if (!problem || !isTypedTutorial(problem)) return;
+    const frames = framesFor(problem), lines = tutorialCodeLines(problem), limit = limitFor(problem, frames);
+    next.disabled = state.frame >= limit;
+    if (dialog.dataset.tutorialView === 'question') next.setAttribute('aria-describedby', 'tutor-check-instruction');
+    dialog.querySelectorAll('[data-step]').forEach(button => {
+      const target = frames.findIndex(frame => lines[frame.line].step === Number(button.dataset.step));
+      button.disabled = target > limit;
+      button.title = button.disabled ? 'Answer the earlier question correctly first.' : '';
+    });
+  }
   let launcher = null;
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -230,6 +249,7 @@
     dialog.querySelector('.tutorial-next').disabled = typed && last;
     dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
     dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
+    refreshCheckpointControls();
     dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length : '') : problem.title + '. Exam question. Tutorial collapsed.';
     if (typed && help.open) fitWorkspace();
     else if (help.open) {
@@ -319,13 +339,15 @@
   dialog.querySelector('.tutorial-steps').addEventListener('click', event => {
     const button = event.target.closest('[data-step]');
     if (!button) return;
-    state.step = Number(button.dataset.step);
+    const targetStep = Number(button.dataset.step);
     const problem = data.problems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
       void typingSound.unlock();
       const lines = tutorialCodeLines(problem);
-      state.frame = framesFor(problem).findIndex(frame => lines[frame.line].step === state.step);
-    }
+      const target = framesFor(problem).findIndex(frame => lines[frame.line].step === targetStep);
+      if (!canVisitFrame(target)) return;
+      state.frame = target;
+    } else state.step = targetStep;
     renderStep();
     dialog.querySelector('[data-step="' + state.step + '"]').focus();
   });
@@ -339,6 +361,7 @@
   dialog.querySelector('.tutorial-next').addEventListener('click', () => {
     const problem = data.problems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
+      if (!canVisitFrame(state.frame + 1)) return;
       void typingSound.unlock();
       typewriter.finish();
       const frames = framesFor(problem);

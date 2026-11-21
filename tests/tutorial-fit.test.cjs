@@ -1,7 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { packPages, textParts } = require('../assets/tutorial-fit.js');
-const { walkthroughFrames } = require('../assets/tutorial-typewriter.js');
+const { walkthroughFrames, checkpointLimit, tutorialCodeLines } = require('../assets/tutorial-typewriter.js');
 const data = require('../data/programming-problems.json');
 const guides = require('../data/tutorial-guides.json');
 
@@ -17,6 +17,29 @@ test('questions follow their explanations in Next/Back order without extra tabs'
   assert.equal(compact.length, 25);
   assert.equal(compact.filter(frame => frame.kind === 'code').length, 10);
   assert.deepEqual(compact.slice(0, 2), [{ line: 0, kind: 'code' }, { line: 0, kind: 'explanation' }]);
+});
+
+test('unanswered or wrong checkpoints bound every forward target in desktop and compact flows', () => {
+  const guide = guides.problems['problem-1'], lines = tutorialCodeLines(data.problems[0]);
+  for (const compact of [false, true]) {
+    const frames = walkthroughFrames(data.problems[0], guide, compact), answers = new Map();
+    const limit = () => checkpointLimit(frames, guide, line => answers.get(line) === true);
+    const checkpoints = frames.map((frame, index) => ({ ...frame, index })).filter(frame => frame.kind === 'question');
+    assert.equal(limit(), checkpoints[0].index);
+    const stage3 = frames.findIndex(frame => lines[frame.line].step === 2);
+    assert.ok(stage3 > limit(), 'stage jump cannot skip the first question');
+    for (const checkpoint of checkpoints) {
+      assert.equal(limit(), checkpoint.index);
+      answers.set(checkpoint.line, false); assert.equal(limit(), checkpoint.index);
+      assert.ok(checkpoint.index + 1 > limit());
+      answers.set(checkpoint.line, true);
+      assert.ok(limit() >= checkpoint.index);
+    }
+    assert.equal(limit(), frames.length - 1);
+    answers.set(checkpoints[0].line, false);
+    assert.equal(limit(), checkpoints[0].index, 'a newly selected wrong answer relocks forward progress');
+    assert.ok(0 <= limit(), 'earlier views remain reachable');
+  }
 });
 
 test('fitted pages preserve every item in order and respect the available height', () => {

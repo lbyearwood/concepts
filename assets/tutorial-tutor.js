@@ -14,6 +14,11 @@
       return item;
     };
     const { renderTutorText, renderPython } = window.CSRTutorialCodeStyle;
+    function isCorrect(problemId, lineIndex) {
+      const question = guides.problems[problemId]?.lines[lineIndex]?.question;
+      const selected = answers.get(problemId + ':' + lineIndex);
+      return !!question && selected !== undefined && question.choices[selected]?.correct === true;
+    }
     function show(problemId, lineIndex, kind = 'explanation') {
       pager = null;
       const guide = guides.problems[problemId], line = guide?.lines[lineIndex];
@@ -31,6 +36,9 @@
         const contextCode = node('code', 'tutor-question-code'); renderPython(contextCode, line.code.trim()); panel.append(contextCode);
         const prompt = node('p', 'tutor-check-prompt', question.prompt);
         renderTutorText(prompt, question.prompt);
+        const finalQuestion = lineIndex === guide.lines.length - 1;
+        const instruction = node('span', 'tutor-check-instruction', finalQuestion ? 'Choose the correct answer to complete the tutorial.' : 'Choose the correct answer to continue.');
+        instruction.id = 'tutor-check-instruction'; prompt.append(instruction);
         prompt.id = 'tutor-prompt'; panel.append(prompt);
         const viewport = node('div', 'tutor-content');
         viewport.setAttribute('role', 'radiogroup'); viewport.setAttribute('aria-labelledby', prompt.id);
@@ -46,6 +54,8 @@
           part.dataset.feedback = 'true'; part.dataset.fitText = 'true';
           part.setAttribute('aria-hidden', 'true'); viewport.append(part);
           announcement.textContent = (result.correct ? 'Correct. ' : 'Incorrect. ') + body;
+          instruction.textContent = result.correct ? finalQuestion ? 'You have completed the tutorial.' : 'Next is unlocked. Continue when you are ready.' : 'Try again. Choose the correct answer to continue.';
+          announcement.textContent += ' ' + instruction.textContent;
           pager?.layout(); pager?.layout(false, viewport.querySelector('[data-feedback]'));
         }
         question.choices.forEach((choice, index) => {
@@ -71,7 +81,7 @@
     }
     function hide() { panel.hidden = true; pager = null; }
     function reset() { answers.clear(); hide(); }
-    return { show, hide, reset, layout: () => pager?.layout() };
+    return { show, hide, reset, isCorrect, layout: () => pager?.layout() };
   }
   const api = { checkAnswer, createTutor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
