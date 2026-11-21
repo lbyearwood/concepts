@@ -102,14 +102,14 @@ logic and cancellation tests live in `assets/tutorial-typewriter.js` and
 
 The same pilot has a roughly 60/40 code/tutor split on desktop. Its wider,
 unboxed right-hand area follows the current line with explanations, useful
-Remember guidance in a compact yellow card and a small play/pause icon for prepared British English
-audio. Questions follow their explanations in the existing Next/Back flow;
+Remember guidance in a compact yellow card. The tutor is written only; spoken
+playback and its Play control have been removed at the user's request.
+Questions follow their explanations in the existing Next/Back flow;
 there are no Explanation or Quick check tabs. Opening the walkthrough closes
 the exam text so the two views do not compete for height. Both fit without
 internal scrolling. On small or short screens, code and explanation use
 successive views; short pages preserve any overflow text or earlier code.
-Playback starts only when requested, supports pause/resume/replay and unloads
-on navigation, collapse or Close. Answers persist inside an attempt and reset
+Answers persist inside an attempt and reset
 on reopening. All content remains available, including on the compact pages.
 `data/tutorial-guides.json` owns the explanations, checks and audio references.
 The builder rejects mismatched code/explanations; tests verify every audio digest
@@ -120,13 +120,23 @@ Python syntax colours appear with each typed character and remain on completed
 lines. Inline code in the tutor uses the same palette and heavier type; the
 underlying code and teaching text stay unchanged and selectable. Correct and
 incorrect answers have green/red feedback cards, a tick/cross and a text label.
-The keyboard icon toggles quiet typing clicks. These use a short locally
-generated Web Audio buffer, start only after a tutorial action, stop on
-navigation/collapse/Close and stay silent while narration plays. Muting is kept
-for the current page visit. Unsupported sound leaves the tutorial usable.
+The Sound on/off control sits in the footer and governs quiet typing clicks,
+a short correct-answer ding and an incorrect-answer buzzer. Effects use locally
+generated reusable Web Audio buffers and start only after an actual tutorial
+action/answer change. Restoring a saved answer is silent. Navigation, collapse,
+Close and hiding the page cancel active/pending effects. Muting stops all effects
+and is kept for the current page visit; enabling never replays an old sound.
+Unsupported sound leaves the tutorial usable.
 No external service, paid call or additional audio download is involved.
 `assets/tutorial-code-style.js` and `assets/tutorial-typing-sound.js` contain the
 small isolated render/sound helpers, covered by exact-text and lifecycle tests.
+
+Only the pilot's explicit Close button dismisses its dialog. Backdrop/sidebar
+clicks and Escape leave the current line and answer intact. The final Next
+control becomes a disabled End button. The duplicated footer progress counter
+is hidden for the pilot; retain the blue tutor progress and four stage buttons.
+Other tutorials keep their current dismissal and progress behavior. Stored
+recordings, guide data and transcript checks remain intact as unused assets.
 
 The web adaptations reconcile question/code inconsistencies, make the letter
 counter case insensitive for the chosen letter, use the stated safe-reading

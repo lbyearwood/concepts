@@ -1,51 +1,12 @@
 (() => {
   'use strict';
-  function createNarrationPlayer({ createAudio, onState }) {
-    let audio = null;
-    let phase = 'ready';
-    const update = value => { phase = value; onState(value); };
-    function stop() {
-      const previous = audio;
-      audio = null;
-      if (previous) {
-        previous.pause();
-        previous.removeAttribute('src');
-        previous.load();
-      }
-    }
-    function setSource(source) {
-      stop();
-      const current = createAudio();
-      audio = current;
-      current.preload = 'none';
-      current.src = source;
-      for (const [event, value] of [['playing', 'playing'], ['pause', 'paused'], ['ended', 'ended'], ['error', 'error']]) {
-        current.addEventListener(event, () => { if (audio === current) update(value); });
-      }
-      update('ready');
-    }
-    async function toggle() {
-      const current = audio;
-      if (!current || phase === 'loading') return;
-      if (phase === 'playing') { current.pause(); return; }
-      if (current.ended) current.currentTime = 0;
-      update('loading');
-      try {
-        await current.play();
-        if (audio === current && !current.paused) update('playing');
-      } catch (_) {
-        if (audio === current) update('error');
-      }
-    }
-    return { setSource, toggle, stop };
-  }
   function checkAnswer(question, index) {
     const choice = question.choices[index];
     return { correct: choice.correct, text: choice.feedback };
   }
-  function createTutor(panel, guides, { onNarrationState = () => {} } = {}) {
+  function createTutor(panel, guides, { onAnswer = () => {} } = {}) {
     const answers = new Map();
-    let pager = null, playButton = null, playIcon = null, audioStatus = null;
+    let pager = null;
     const node = (tag, className, text) => {
       const item = document.createElement(tag);
       if (className) item.className = className;
@@ -53,22 +14,8 @@
       return item;
     };
     const { renderTutorText, renderPython } = window.CSRTutorialCodeStyle;
-    const player = createNarrationPlayer({
-      createAudio: () => document.createElement('audio'),
-      onState: phase => {
-        onNarrationState(phase);
-        if (!playButton) return;
-        const label = ({ playing: 'Pause explanation', paused: 'Resume explanation', ended: 'Replay explanation', loading: 'Loading audio' })[phase] || 'Play explanation';
-        playButton.disabled = phase === 'loading';
-        playButton.setAttribute('aria-label', label); playButton.title = label;
-        playIcon.textContent = phase === 'playing' ? 'Ⅱ' : phase === 'loading' ? '…' : '▶';
-        playButton.setAttribute('aria-pressed', String(phase === 'playing'));
-        audioStatus.textContent = phase === 'error' ? 'Audio could not play. Try again or read the explanation.' : '';
-        pager?.layout();
-      }
-    });
     function show(problemId, lineIndex, kind = 'explanation') {
-      player.stop(); onNarrationState('stopped'); pager = null;
+      pager = null;
       const guide = guides.problems[problemId], line = guide?.lines[lineIndex];
       panel.hidden = !line;
       if (!line) return;
@@ -78,12 +25,7 @@
       const copy = node('div', 'tutor-heading-copy');
       copy.append(node('p', 'tutor-line-label', 'Line ' + (lineIndex + 1) + ' of ' + guide.lines.length));
       const title = node('h3'); renderTutorText(title, kind === 'question' ? 'Question' : line.title); copy.append(title);
-      playButton = node('button', 'tutor-play'); playButton.type = 'button';
-      playIcon = node('span', 'tutor-play-icon', '▶'); playIcon.setAttribute('aria-hidden', 'true');
-      playButton.append(playIcon); playButton.addEventListener('click', player.toggle);
-      heading.append(copy, playButton); panel.append(heading);
-      audioStatus = node('p', 'tutor-audio-status'); audioStatus.setAttribute('role', 'status');
-      panel.append(audioStatus);
+      heading.append(copy); panel.append(heading);
       if (kind === 'question' && line.question) {
         const question = line.question, key = problemId + ':' + lineIndex;
         const contextCode = node('code', 'tutor-question-code'); renderPython(contextCode, line.code.trim()); panel.append(contextCode);
@@ -110,7 +52,7 @@
           const label = node('label', 'tutor-choice'), input = node('input');
           input.type = 'radio'; input.name = 'tutor-answer-' + lineIndex; input.value = String(index);
           input.checked = answers.get(key) === index;
-          input.addEventListener('change', () => answer(index));
+          input.addEventListener('change', () => { answer(index); onAnswer(choice.correct); });
           const text = node('span'); renderTutorText(text, choice.text); label.append(input, text); viewport.append(label);
         });
         panel.append(viewport, announcement);
@@ -126,13 +68,12 @@
         panel.append(viewport);
         pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'explanation', renderTutorText);
       }
-      player.setSource(new URL('../../../' + line.audio, window.location.href).href);
     }
-    function hide() { player.stop(); onNarrationState('stopped'); panel.hidden = true; pager = null; }
+    function hide() { panel.hidden = true; pager = null; }
     function reset() { answers.clear(); hide(); }
     return { show, hide, reset, layout: () => pager?.layout() };
   }
-  const api = { createNarrationPlayer, checkAnswer, createTutor };
+  const api = { checkAnswer, createTutor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRTutorialTutor = api;
 })();

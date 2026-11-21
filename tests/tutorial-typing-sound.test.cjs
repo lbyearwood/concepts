@@ -41,12 +41,43 @@ test('muting cancels active sounds and does not queue characters for later', asy
   h.sound.tap('z'); assert.equal(h.sources.length, 2);
 });
 
-test('narration has priority, pausing releases sound and hidden views stay silent', async () => {
-  const h = harness(); await h.sound.unlock(); h.sound.tap('a');
-  h.sound.setNarrating(true); h.sound.tap('b'); assert.equal(h.sources.length, 1);
-  assert.ok(h.events.includes('stop'));
-  h.sound.setNarrating(false); h.sound.tap('c'); assert.equal(h.sources.length, 2);
-  h.hide(); h.sound.tap('d'); assert.equal(h.sources.length, 2);
+test('correct ding and incorrect buzzer are distinct quiet buffers reused on later answers', async () => {
+  const h = harness(); await h.sound.unlock();
+  assert.equal(await h.sound.answer(true), true);
+  const correct = h.sources.at(-1).buffer;
+  assert.equal(h.states.at(-1).lastAnswer, 'correct');
+  assert.equal(await h.sound.answer(false), true);
+  const incorrect = h.sources.at(-1).buffer;
+  assert.equal(h.states.at(-1).lastAnswer, 'incorrect'); assert.notEqual(correct, incorrect);
+  assert.ok(h.samples[1].length / h.context.sampleRate <= 0.5);
+  assert.ok(h.samples[2].length / h.context.sampleRate <= 0.2);
+  for (const buffer of h.samples) assert.ok(buffer.every(value => Number.isFinite(value) && Math.abs(value) <= 1));
+  await h.sound.answer(true); assert.equal(h.sources.at(-1).buffer, correct);
+  assert.equal(h.states.at(-1).answersPlayed, 3); assert.equal(h.states.at(-1).played, 0);
+});
+
+test('one mute switch stops and suppresses typing, correct and incorrect sounds without replay', async () => {
+  const h = harness(); await h.sound.unlock(); await h.sound.answer(true);
+  h.sound.setEnabled(false); const before = h.sources.length;
+  h.sound.tap('a'); await h.sound.answer(true); await h.sound.answer(false);
+  assert.equal(h.sources.length, before); assert.ok(h.events.includes('stop'));
+  h.sound.setEnabled(true); assert.equal(h.sources.length, before);
+  h.sound.tap('b'); await h.sound.answer(false); assert.equal(h.sources.length, before + 2);
+});
+
+test('a delayed resume cannot play an old answer after navigation, mute, hiding or another answer', async () => {
+  for (const cancel of [h => h.sound.stop(), h => h.sound.setEnabled(false), h => h.hide()]) {
+    const h = harness(); let resume;
+    h.context.resume = () => new Promise(resolve => { resume = () => { h.context.state = 'running'; resolve(); }; });
+    const pending = h.sound.answer(true); cancel(h); resume();
+    assert.equal(await pending, false); assert.equal(h.sources.length, 0);
+  }
+  const h = harness(); let resume;
+  h.context.resume = () => new Promise(resolve => { resume = () => { h.context.state = 'running'; resolve(); }; });
+  const old = h.sound.answer(true); const finishOld = resume;
+  const latest = h.sound.answer(false); resume(); await latest; finishOld();
+  assert.equal(await old, false); assert.equal(h.sources.length, 1);
+  assert.equal(h.states.at(-1).lastAnswer, 'incorrect');
 });
 
 test('navigation stop/disposal cancel sources and suspended contexts do not schedule a backlog', async () => {

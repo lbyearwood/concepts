@@ -1,57 +1,62 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { createNarrationPlayer, checkAnswer } = require('../assets/tutorial-tutor.js');
+const { checkAnswer, createTutor } = require('../assets/tutorial-tutor.js');
 const guides = require('../data/tutorial-guides.json');
+const codeStyle = require('../assets/tutorial-code-style.js');
 
 function harness() {
-  const created = [], states = [];
-  function createAudio() {
-    const events = new Map();
-    const audio = { paused: true, ended: false, plays: 0, currentTime: 0,
-      addEventListener: (key, value) => events.set(key, value),
-      fire: key => events.get(key)?.(),
-      pause() { this.paused = true; this.fire('pause'); },
-      play() { this.plays++; this.paused = false; this.fire('playing'); return Promise.resolve(); },
-      removeAttribute(key) { delete this[key]; }, load() {} };
-    created.push(audio); return audio;
+  class Node {
+    constructor(tag) { this.tagName = tag; this.children = []; this.dataset = {}; this.events = {}; this.className = ''; this.value = ''; this.attributes = {}; this.classList = { toggle: (name, on) => { this.className = on ? name : ''; } }; }
+    append(...nodes) { for (const node of nodes.flatMap(n => n.tagName === '#fragment' ? n.children : [n])) { node.parent = this; this.children.push(node); } }
+    replaceChildren(...nodes) { this.children = []; this.value = ''; this.append(...nodes); }
+    set textContent(text) { this.value = text; this.children = []; }
+    get textContent() { return this.value + this.children.map(node => node.textContent).join(''); }
+    get firstChild() { return this.children[0]; }
+    setAttribute(key, value) { this.attributes[key] = value; }
+    addEventListener(name, handler) { this.events[name] = handler; }
+    remove() { this.parent.children = this.parent.children.filter(node => node !== this); }
+    querySelectorAll(selector) { return walk(this).filter(node => selector === '[data-feedback]' ? node.dataset.feedback : node.tagName === selector); }
+    querySelector(selector) { return this.querySelectorAll(selector)[0]; }
   }
-  return { created, states, player: createNarrationPlayer({ createAudio, onState: state => states.push(state) }) };
+  function walk(node) { return node.children.flatMap(child => [child, ...walk(child)]); }
+  global.document = { createElement: tag => { assert.notEqual(tag, 'audio', 'written tutor must never construct spoken audio'); return new Node(tag); },
+    createTextNode: text => { const node = new Node('#text'); node.textContent = text; return node; }, createDocumentFragment: () => new Node('#fragment') };
+  global.window = { CSRTutorialCodeStyle: codeStyle, CSRTutorialFit: { createPager: () => ({ layout() {} }) } };
+  const panel = new Node('aside'), sounds = [];
+  const tutor = createTutor(panel, guides, { onAnswer: correct => sounds.push(correct) });
+  return { panel, tutor, sounds, nodes: () => walk(panel), cleanup() { delete global.document; delete global.window; } };
 }
 
-test('a new line prepares audio without autoplay or eager preload', async () => {
-  const h = harness(); h.player.setSource('line-01.mp3');
-  assert.equal(h.created[0].plays, 0); assert.equal(h.created[0].preload, 'none');
-  assert.deepEqual(h.states, ['ready']);
-  await h.player.toggle(); assert.equal(h.created[0].plays, 1); assert.equal(h.states.at(-1), 'playing');
-  await h.player.toggle(); assert.equal(h.states.at(-1), 'paused');
-  await h.player.toggle(); assert.equal(h.created[0].plays, 2); assert.equal(h.states.at(-1), 'playing');
+test('written explanations and Remember are intact without any playback button or audio element', () => {
+  const h = harness();
+  try {
+    h.tutor.show('problem-1', 1);
+    assert.ok(h.panel.textContent.includes('Why start with False?'));
+    for (const text of guides.problems['problem-1'].lines[1].paragraphs) assert.ok(h.panel.textContent.includes(text));
+    assert.ok(h.panel.textContent.includes('Remember: ' + guides.problems['problem-1'].lines[1].watchOut));
+    assert.equal(h.nodes().filter(node => node.tagName === 'button' || node.tagName === 'audio').length, 0);
+    assert.ok(h.nodes().some(node => node.className === 'tutor-inline-code'));
+  } finally { h.cleanup(); }
 });
 
-test('moving to a new line unloads old narration and ignores its stale events', async () => {
-  const h = harness(); h.player.setSource('line-01.mp3'); await h.player.toggle();
-  const old = h.created[0]; h.player.setSource('line-02.mp3');
-  assert.equal(old.paused, true); assert.equal(old.src, undefined);
-  old.fire('error'); old.fire('ended');
-  assert.equal(h.states.at(-1), 'ready'); assert.equal(h.created[1].plays, 0);
-});
-
-test('late rejection from a stopped line cannot overwrite the next line state', async () => {
-  const h = harness(); h.player.setSource('line-01.mp3');
-  let reject; h.created[0].play = () => new Promise((_, fail) => { reject = fail; });
-  const playing = h.player.toggle();
-  h.player.setSource('line-02.mp3'); reject(new Error('old request interrupted')); await playing;
-  assert.equal(h.states.at(-1), 'ready'); assert.equal(h.created[1].plays, 0);
-});
-
-test('playback failure is recoverable and ending supports replay from the start', async () => {
-  const h = harness(); h.player.setSource('line-01.mp3');
-  const audio = h.created[0], play = audio.play;
-  audio.play = () => Promise.reject(new Error('blocked')); await h.player.toggle();
-  assert.equal(h.states.at(-1), 'error');
-  audio.play = play; await h.player.toggle();
-  audio.ended = true; audio.paused = true; audio.currentTime = 12; audio.fire('ended');
-  await h.player.toggle(); assert.equal(audio.currentTime, 0); assert.equal(h.states.at(-1), 'playing');
-  h.player.stop(); assert.equal(audio.paused, true); assert.equal(audio.src, undefined);
+test('only real answer changes trigger effects; restoration is silent and a new attempt clears answers', () => {
+  const h = harness();
+  try {
+    h.tutor.show('problem-1', 1, 'question');
+    let inputs = h.nodes().filter(node => node.tagName === 'input');
+    inputs[0].events.change(); inputs[1].events.change();
+    assert.deepEqual(h.sounds, [false, true]);
+    assert.ok(h.panel.textContent.includes('✅ Correct.'));
+    h.tutor.show('problem-1', 0); h.tutor.show('problem-1', 1, 'question');
+    inputs = h.nodes().filter(node => node.tagName === 'input');
+    assert.equal(inputs[1].checked, true); assert.deepEqual(h.sounds, [false, true]);
+    h.tutor.hide(); h.tutor.show('problem-1', 1, 'question');
+    assert.deepEqual(h.sounds, [false, true]);
+    h.tutor.reset(); h.tutor.show('problem-1', 1, 'question');
+    assert.equal(h.nodes().filter(node => node.tagName === 'input' && node.checked).length, 0);
+    assert.equal(h.nodes().filter(node => node.dataset.feedback).length, 0);
+    assert.deepEqual(h.sounds, [false, true]);
+  } finally { h.cleanup(); }
 });
 
 test('misconception choices give their own feedback and exactly one correct answer', () => {

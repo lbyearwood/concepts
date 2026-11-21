@@ -50,6 +50,7 @@ jobs:
           node --test tests/tutorial-fit.test.cjs
           node --test tests/tutorial-code-style.test.cjs
           node --test tests/tutorial-typing-sound.test.cjs
+          node --test tests/tutorial-dismissal.test.cjs
           python -m unittest discover -s tests -p 'test_tutorial_guides.py'
           python scripts/build-course.py --check
           python scripts/build-problems.py --check

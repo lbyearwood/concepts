@@ -1,5 +1,18 @@
 (() => {
   'use strict';
+  function createDismissalGuard(dialog, isProtected) {
+    function requestClose(reason) {
+      if (isProtected() && reason !== 'close-button') return false;
+      dialog.close(); return true;
+    }
+    dialog.addEventListener('cancel', event => { if (isProtected()) event.preventDefault(); });
+    dialog.addEventListener('click', event => {
+      const rect = dialog.getBoundingClientRect();
+      if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) requestClose('outside');
+    });
+    return requestClose;
+  }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { createDismissalGuard }; return; }
   const dataNode = document.getElementById('problem-data');
   const dialog = document.getElementById('tutorial-modal');
   if (!dataNode || !dialog) return;
@@ -7,6 +20,7 @@
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Level 1 problems', level2: 'Level 2', level3: 'Level 3'};
   const state = {collection: 'exam', category: 'traversal', problem: null, step: 0, line: 0, frame: 0};
+  const requestClose = createDismissalGuard(dialog, () => state.problem === 'problem-1');
   const list = document.querySelector('.problem-list');
   const categoryTabs = document.querySelector('.problem-categories');
   const categoryPanel = document.getElementById('category-panel');
@@ -22,16 +36,17 @@
     isVisible: () => !document.hidden && dialog.open && help.open && state.problem === 'problem-1',
     onChange: status => {
       soundToggle.setAttribute('aria-pressed', String(status.enabled));
-      soundToggle.setAttribute('aria-label', status.enabled ? 'Mute typing sound' : 'Enable typing sound');
-      soundToggle.title = status.unavailable ? 'Typing sound unavailable; click to retry' : status.enabled ? status.narrating ? 'Typing sound on; quiet during narration' : 'Typing sound on' : 'Typing sound off';
+      soundToggle.setAttribute('aria-label', status.enabled ? 'Mute all sound effects' : 'Enable sound effects');
+      soundToggle.title = status.unavailable ? 'Sound unavailable; click to retry' : status.enabled ? 'Typing and answer sounds on' : 'All sound effects off';
       soundToggle.querySelector('.typing-sound-label').textContent = status.enabled ? 'Sound on' : 'Sound off';
       soundToggle.dataset.audioReady = String(status.ready);
-      soundToggle.dataset.narrationQuiet = String(status.narrating);
       soundToggle.dataset.clicksPlayed = String(status.played);
+      soundToggle.dataset.answersPlayed = String(status.answersPlayed);
+      soundToggle.dataset.lastAnswer = status.lastAnswer;
     }
   });
   const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
-    onNarrationState: phase => typingSound.setNarrating(phase === 'loading' || phase === 'playing')
+    onAnswer: correct => { void typingSound.answer(correct); }
   });
   const { renderPython } = window.CSRTutorialCodeStyle;
   let codePager = null, examPager = null;
@@ -203,9 +218,11 @@
     else tutor.hide();
     const last = typed ? state.frame === frames.length - 1 : state.step === problem.steps.length - 1;
     const progress = 'Step ' + (state.step + 1) + ' of ' + problem.steps.length;
-    dialog.querySelector('.tutorial-counter').textContent = typed ? 'Line ' + (state.line + 1) + ' of ' + lines.length + ' · ' + progress : progress;
+    const counter = dialog.querySelector('.tutorial-counter');
+    counter.hidden = typed; counter.textContent = typed ? '' : progress;
     dialog.querySelector('.tutorial-back').disabled = typed ? state.frame === 0 : state.step === 0;
-    dialog.querySelector('[data-next-label]').textContent = last ? 'Done' : typed ? frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
+    dialog.querySelector('.tutorial-next').disabled = typed && last;
+    dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
     dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
     dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length : '') : problem.title + '. Exam question. Tutorial collapsed.';
     if (typed && help.open) fitWorkspace();
@@ -220,6 +237,7 @@
     launcher = button;
     tutor.reset();
     dialog.dataset.problem = problem.id;
+    dialog.setAttribute('closedby', isTypedTutorial(problem) ? 'none' : 'closerequest');
     state.problem = id;
     state.step = 0;
     state.line = 0;
@@ -318,18 +336,14 @@
       void typingSound.unlock();
       typewriter.finish();
       const frames = framesFor(problem);
-      if (state.frame === frames.length - 1) dialog.close();
+      if (state.frame === frames.length - 1) requestClose('done');
       else { const line = state.line; state.frame++; renderStep(frames[state.frame].line !== line); }
       return;
     }
-    if (state.step === problem.steps.length - 1) dialog.close();
+    if (state.step === problem.steps.length - 1) requestClose('done');
     else { state.step++; renderStep(); }
   });
-  dialog.querySelector('.tutorial-close').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', event => {
-    const rect = dialog.getBoundingClientRect();
-    if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
-  });
+  dialog.querySelector('.tutorial-close').addEventListener('click', () => requestClose('close-button'));
   dialog.addEventListener('close', () => {
     typewriter.cancel();
     typingSound.stop();

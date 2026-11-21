@@ -80,11 +80,6 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutor-heading-copy { flex:1; min-width:0; }
 .tutor-line-label { margin:0 0 6px; color:#1433ff; font-size:11px; font-weight:800; }
 .tutor-heading h3 { margin:0; font:900 19px/1.25 "Arial Black",Arial,sans-serif; letter-spacing:-.3px; }
-.tutor-play { display:flex; flex:none; align-items:center; justify-content:center; width:32px; height:32px; padding:0; border:0; border-radius:50%; background:transparent; color:#1433ff; }
-.tutor-play-icon { font-size:17px; line-height:1; }
-.tutor-play:hover { background:#e1faf6; }
-.tutor-audio-status { flex:none; margin:0 0 8px; color:#8b1642; font-size:12px; }
-.tutor-audio-status:empty { display:none; }
 .tutor-content { flex:1; min-height:0; overflow:hidden; font-size:14px; line-height:1.55; }
 .tutor-content > p { margin:0 0 12px; }
 .tutor-reminder { padding:10px 12px; border:1px solid #e0c900; border-left:4px solid #ffe500; background:#fff9c9; color:#383617; font-size:13px; line-height:1.45; }
@@ -184,6 +179,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-back, .tutorial-next { display:flex; align-items:center; justify-content:center; gap:7px; min-height:39px; padding:8px 15px; border:2px solid #101223; background:#fff; color:#101223; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
 .tutorial-back:disabled { opacity:.35; }
 .tutorial-next { background:#d90058; color:#fff; }
+.tutorial-next:disabled { background:#ececf1; color:#636572; border-color:#d4d5dc; }
 @media(max-width:900px) { .problems-app { padding:20px 16px; }.problem-list-heading > span { display:none; }.problem-categories { gap:7px 16px; } }
 @media(max-width:700px) {
   .problems-heading h1 { font-size:29px; }
