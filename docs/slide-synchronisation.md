@@ -1,9 +1,38 @@
-# Google Slides synchronisation decision and pilot
+# GCSE school-owned lesson delivery and historical sync pilots
 
-Checked 11 November 2026. Scope: the approved **student** deck for GCSE 1.1.
-The original Google presentation was not edited, renamed, moved or reshared.
+Current delivery checked 21 November 2026. Scope: all 60 GCSE Computer Science
+student lessons. Earlier 11 November pilot details below are historical.
 
-## Native mirror: one fixed source
+## Current delivery: link directly to the school lessons
+
+Every topic's Slides button uses the exact **myearwood-owned** student deck
+identified by the completed GCSE school resource-ownership map. All 60 owners,
+native types and matching topic-folder parents were rechecked on 21 November.
+Teacher editions, revision cards and personal originals are excluded.
+
+The existing lightbox embeds the school's native `/preview` URL and also offers
+Open in Google Slides. Its iframe reloads the live school presentation when the
+lesson is reopened and unloads on Close. The existing sidebar and topic 1.1's
+introduction/Keywords remain. No lbyearwood deck or stored WebP copy is used by
+these course pages. Edit the school versions for future changes.
+
+Existing Google sharing is preserved. This is an authenticated native preview,
+not anonymous public-web publication. Students need a Google account with access
+to that specific deck, normally their school account. Teacher-side checks cannot
+prove actual pupil access. A direct Slides link remains available for sign-in or
+iframe restrictions; do not automatically broaden file sharing to bypass them.
+
+No export, copy, scheduled sync, new Google permission, GitHub credential or paid
+service is needed for this delivery. The active PDF catalogue is empty. The old
+personal-master mirror must not be run against the authoritative school versions.
+Historical code/assets/projects remain available for separately scoped work;
+this task does not revoke credentials, delete assets or modify native content.
+
+The continuing authority is AP-GC-OWN-001 plus the user's explicit instruction to
+use myearwood's GCSE CS lessons. The previous personal-master proposals below
+are superseded for these resources.
+
+## Historical 11 November preparation: native mirror with one fixed source
 
 The user subsequently clarified that students can access school-owned Google
 Slides but not personally owned presentations. This is a user-reported access

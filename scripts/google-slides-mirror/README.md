@@ -1,5 +1,11 @@
 # Native student Slides mirror
 
+**Historical tool: do not activate for GCSE.** The school-owned versions are
+authoritative and CSRevision now links those native lessons directly. The user
+explicitly excludes lbyearwood versions from the site. No new mirror consent or
+timer is needed. The preparation record below is retained as history; it is
+not the current operating plan. See [current delivery](../../docs/slide-synchronisation.md).
+
 Prepared, not activated. **One student pair is configured privately; no timer
 is installed and new Google consent remains pending.** The live website still
 uses its verified self-hosted 1.1 viewer. This is a separate Apps Script project

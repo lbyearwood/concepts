@@ -28,52 +28,30 @@ issued, enable Enforce HTTPS, and verify both the main and www addresses plus
 the concept routes. Do not bypass a certificate warning. GitHub's domain-setting
 save creates a CNAME commit; fast-forward the local checkout before further work.
 
-## GCSE 1.1 self-hosted slides pilot
+## GCSE lesson slides
 
-The intended replacement is **two presentations with one fixed source**. The
-user will always edit either the personal versions or the school versions,
-whichever direction works. Prefer the existing lbyearwood master updating a
-school-owned copy that lbyearwood can edit. This requires an automatic script;
-it is not a shortcut to one file or bidirectional editing. The example folder
-contains a matching 66-slide Teacher pair with the required cross-account edit
-permissions. That pair is read-only inspection evidence, not a student-publishing
-target. A separate school-owned 56-slide student copy has now been created in
-the lesson folder, with lbyearwood Editor access and matching native slide data.
-The separate mirror project/configuration are saved; new Google consent and a
-real automatic update remain pending. Keep the working self-hosted 1.1 viewer
-until native syncing and actual student access pass a pilot. See the [native mirror plan](docs/slide-synchronisation.md#native-mirror-one-fixed-source)
-and the [prepared mirror script](scripts/google-slides-mirror/README.md).
+All 60 GCSE Computer Science Slides buttons open the matching native lesson
+owned by **myearwood@oaklandsschool.com**, using the school-version mappings
+verified in the GCSE resource-ownership record. The yellow button opens a live
+Google Slides preview in the existing lightbox, with an Open in Google Slides
+link alongside it. Google access follows each deck's existing permissions;
+students should use their school Google account if prompted.
 
-Slide syncing has a **£0 additional-running-cost requirement**. Keep to free
-Google quotas and this public repository's standard GitHub-hosted runner.
-Do not enable paid billing/quota upgrades, larger runners, metered storage or
-new subscriptions. The release job skips if the repository becomes private.
-See the [cost and capacity rules](docs/slide-synchronisation.md#cost-requirement).
+Make future lesson amendments in these **school-owned versions**. No personal
+lbyearwood presentation or old static export is used by the course pages.
+No new public publishing, copying, sharing change, Apps Script authorisation,
+GitHub token or paid service is required for this link-based delivery.
 
-The **approved student** Google Slides presentation for topic 1.1 is
-`1cc7zHgWpVhG7WMHJMREHOcYh988dZ2Dyuxm4taaeAUo`. The teacher edition
-must not be published. The student-facing page at
-`courses/gcse-computer-science/1-1-variables-constants-data-types-casting.html`
-has a self-hosted image viewer with Back, Next, arrow-key and fullscreen
-controls. Students do not connect to Google when using this viewer.
+The catalogue is `data/gcse-course.json`; rebuild it with
+`python scripts/build-course.py`, then verify with `--check`.
+Topic 1.1 keeps its existing introduction and Keywords modal. The persistent
+sidebar, Colour Block theme, spare resource buttons and tutorials are preserved.
 
-The current 56-slide copy is self-hosted. **Automatic updates from Google are
-not yet activated or proven.** The prepared fallback is an owner-run Apps Script
-with a 15-minute metadata check, a repository-only GitHub token, and the existing
-PDF → WebP → Pages workflow. The original Google presentation remains the editor.
-
-Read the [options, security review and test status](docs/slide-synchronisation.md)
-and [one-time account setup](scripts/google-apps-script/README.md). Install both
-Code.gs and its explicit read-only manifest. No Advanced Drive service is needed.
-The conversion skips unchanged input, validates every image before replacement,
-and preserves the last published release on failure. Pages Source is **GitHub
-Actions**; do not restore the competing branch deployment. `assets/site-revision.txt`
-on the live site identifies the packaged revision.
-
-Only 1.1 is enabled in `data/slide-sync.json`. The helper
-`scripts/add-slide-deck.py` takes an existing topic and an approved student deck
-ID, derives its metadata, and supports the existing viewer on generated topic
-pages. No additional decks were exported or enabled during this pilot.
+The older PDF exporter and personal-master mirror are **historical and must not
+be activated for these GCSE resources**. Their code/assets are retained, with
+no active PDF decks in `data/slide-sync.json`. See the
+[current school-link delivery and earlier pilot record](docs/slide-synchronisation.md).
+Slide delivery retains the **£0 additional-running-cost requirement**.
 
 ## Navigation
 

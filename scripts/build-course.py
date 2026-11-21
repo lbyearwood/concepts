@@ -93,16 +93,21 @@ def selfhosted_player(output):
     </div>'''
 
 
+def native_player(title, source):
+    """Use the verified school file's live preview without changing its access."""
+    return f'''<div class="lesson-player"><iframe title="{escape(title)} lesson" allowfullscreen referrerpolicy="no-referrer"></iframe></div>
+    <p class="lesson-access">Use your school Google account if asked to sign in. <a class="lesson-open-link" href="{escape(source, quote=True)}" target="_blank" rel="noopener noreferrer">Open in Google Slides ↗</a></p>'''
+
+
 def new_topic(unit, topic, deck=None):
     title = escape(topic["title"])
     short_title = escape(topic["title"].split(" ", 1)[1])
     number = escape(topic["title"].split(" ", 1)[0])
     source = topic.get("lessonSrc")
     source_attr = f' data-lesson-src="{escape(source, quote=True)}"' if source else ""
-    lesson_script = "selfhosted-lesson.js?v=1" if deck else "course-lesson.js?v=3"
+    lesson_script = "selfhosted-lesson.js?v=1" if deck else "course-lesson.js?v=4"
     lesson_css = '\n  <link rel="stylesheet" href="../../assets/selfhosted-slides.css?v=2">' if deck else ""
-    player = (selfhosted_player(deck["output"]) if deck else
-              f'<div class="lesson-player"><iframe title="{short_title} lesson" allowfullscreen></iframe></div>')
+    player = selfhosted_player(deck["output"]) if deck else native_player(topic["title"], source)
     if deck:
         source_attr = ""
     return f'''<!DOCTYPE html>
@@ -115,7 +120,7 @@ def new_topic(unit, topic, deck=None):
   <link rel="stylesheet" href="../../assets/sidebar.css?v=units-1">
   <link rel="stylesheet" href="../../assets/colour-block.css?v=2">
   <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
-  <link rel="stylesheet" href="../../assets/course-topic.css?v=4">{lesson_css}
+  <link rel="stylesheet" href="../../assets/course-topic.css?v=5">{lesson_css}
   <script src="../../assets/concept-viewport.js?v=1" defer></script>
   <script src="../../assets/{lesson_script}" defer></script>
 </head>
@@ -169,8 +174,8 @@ def outputs():
                 raise ValueError(f"Invalid or duplicate topic path: {path}")
             paths.add(path)
             source = topic.get("lessonSrc")
-            if source and not re.fullmatch(r"https://docs\.google\.com/presentation/d/e/[\w-]+/pubembed\?start=false&loop=false&delayms=3000", source):
-                raise ValueError(f"Expected an approved published player URL: {path}")
+            if not source or not re.fullmatch(r"https://docs\.google\.com/presentation/d/[\w-]{20,}/preview", source):
+                raise ValueError(f"Expected a verified school-owned Slides preview URL: {path}")
             if path != EXISTING_TOPIC:
                 deck = decks.get("gcse-" + topic["title"].split(" ", 1)[0].replace(".", "-"))
                 pages[path] = new_topic(unit, topic, deck)
@@ -181,14 +186,28 @@ def outputs():
                     if f'{COURSE}/{topic["file"]}' == EXISTING_TOPIC)
     source = existing.get("lessonSrc")
     source_attr = f' data-lesson-src="{escape(source, quote=True)}"' if source else ""
-    pages[EXISTING_TOPIC] = re.sub(
-        r'(class="topic-point lesson-launch"[^>]*?) data-lesson-src="[^"]*"',
-        lambda match: match[1] + source_attr, pages[EXISTING_TOPIC], count=1)
+    html = pages[EXISTING_TOPIC]
+    html, count = re.subn(
+        r'(<button class="topic-point lesson-launch"[^>]*)(>)',
+        lambda match: re.sub(r' data-lesson-src="[^"]*"', '', match[1]) + source_attr + match[2],
+        html, count=1)
+    if count != 1:
+        raise ValueError("Expected one lesson launch button in existing 1.1 content.")
+    html, count = re.subn(
+        r'(<dialog class="lesson-modal"[^>]*>\s*<div class="lesson-modal-heading">.*?</div>)\s*.*?(\s*</dialog>)',
+        lambda match: match[1] + '\n    ' + native_player(existing['title'], source) + match[2],
+        html, count=1, flags=re.S)
+    if count != 1:
+        raise ValueError("Expected one lesson dialog in existing 1.1 content.")
+    html = re.sub(r'\n  <link rel="stylesheet" href="[^\"]*selfhosted-slides\.css[^\"]*">', '', html)
+    html = re.sub(r'(src="[^"]*/assets/)(?:selfhosted-lesson|course-lesson)\.js\?v=\d+', r'\1course-lesson.js?v=4', html)
+    pages[EXISTING_TOPIC] = html
     for path, html in pages.items():
         html, count = re.subn(r'  <aside class="site-sidebar".*?</aside>', lambda _: sidebar(units, path), html, count=1, flags=re.S)
         if count != 1:
             raise ValueError(f"Expected exactly one sidebar in {path}")
         html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=tutorials-1", html)
+        html = re.sub(r'course-topic\.css\?v=\d+', "course-topic.css?v=5", html)
         pages[path] = html
     return pages
 

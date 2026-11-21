@@ -1,5 +1,11 @@
 # Activate CSRevision Slide Sync
 
+**Historical tool: do not activate for GCSE.** The site links the authoritative
+myearwood-owned native lessons directly, and the production PDF catalogue is
+empty. No exporter token, new consent or timer is required for the current route.
+See [current delivery](../../docs/slide-synchronisation.md). The older setup
+record below is retained without authorising activation.
+
 This is the older PDF-export fallback. The user now prefers a native
 [Google-to-Google mirror with one fixed source](../google-slides-mirror/README.md).
 Do not finish this exporter's pending token/consent setup just to activate it.

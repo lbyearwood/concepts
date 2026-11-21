@@ -7,7 +7,11 @@ const vm = require('node:vm');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'scripts/google-apps-script/Code.gs'), 'utf8');
-const catalogue = JSON.parse(fs.readFileSync(path.join(root, 'data/slide-sync.json')));
+// The exporter is retained as an inactive historical tool. Production now
+// links only school-owned native previews; use a synthetic approved fixture.
+const catalogue = { decks: [{ key: 'gcse-1-1', approvedStudent: true,
+  title: 'Fixture student lesson', googleFileId: 'synthetic_student_file_123456',
+  output: 'assets/slide-decks/fixture', sourcePdf: 'assets/slide-decks/fixture/bootstrap.pdf' }] };
 
 function harness(options = {}) {
   const config = structuredClone(catalogue);
