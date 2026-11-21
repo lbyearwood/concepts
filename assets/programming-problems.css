@@ -53,6 +53,39 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-question-content li + li { margin-top:5px; }
 .tutorial-help > summary { color:#1433ff; font-size:14px; font-weight:800; cursor:pointer; }
 .tutorial-help-content { padding-top:18px; }
+.tutorial-walkthrough { min-width:0; }
+.tutorial-modal[data-problem="problem-1"] .tutorial-help-content { display:grid; grid-template-columns:minmax(0,7fr) minmax(270px,3fr); gap:22px; align-items:start; }
+.tutorial-tutor { position:sticky; top:0; max-height:calc(var(--tutorial-body-height,60dvh) - 80px); overflow-y:auto; overscroll-behavior:contain; padding:18px; border:2px solid #101223; background:#fff; scrollbar-gutter:stable; }
+.tutor-line-label { margin:0 0 8px; color:#1433ff; font-size:11px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+.tutor-heading h3 { margin:0 0 14px; font:900 19px/1.25 "Arial Black",Arial,sans-serif; letter-spacing:-.3px; }
+.tutor-play { display:flex; justify-content:center; align-items:center; gap:8px; width:100%; min-height:42px; padding:9px 10px; border:2px solid #101223; background:#ffe500; color:#101223; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
+.tutor-play-icon { font-size:12px; }
+.tutor-play:hover { background:#00d6c0; }
+.tutor-audio-status { margin:8px 0 0; color:#8b1642; font-size:12px; }
+.tutor-audio-status:empty { display:none; }
+.tutor-views { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:14px; }
+.tutor-views button { min-height:34px; padding:7px 4px; border:1px solid #101223; background:#fff; color:#101223; font:700 12px/1.3 Arial,Helvetica,sans-serif; }
+.tutor-views button[aria-pressed="true"] { background:#1433ff; color:#fff; }
+.tutor-views button:hover:not([aria-pressed="true"]) { background:#fff9c9; }
+.tutor-explanation { margin-top:16px; }
+.tutor-explanation p { margin:0 0 13px; font-size:14px; line-height:1.6; }
+.tutor-reminder { padding:12px; border-left:4px solid #00d6c0; background:#e1faf6; }
+.tutor-reminder strong { font-size:12px; }
+.tutor-reminder p { margin:5px 0 0; font-size:13px; line-height:1.5; }
+.tutor-check { min-width:0; margin:18px 0 0; padding:0; border:0; }
+.tutor-check legend { padding:0 5px 0 0; font-size:14px; font-weight:900; }
+.tutor-check-prompt { margin:0 0 12px; font-size:14px; font-weight:700; }
+.tutor-choice { display:flex; align-items:flex-start; gap:8px; padding:10px; margin:8px 0; border:1px solid #b6b7c1; cursor:pointer; font-size:13px; line-height:1.5; }
+.tutor-choice:hover { background:#fff9c9; }
+.tutor-choice:has(input:checked) { border:2px solid #1433ff; padding:9px; background:#f3f5ff; }
+.tutor-choice input { flex:none; margin:4px 0 0; accent-color:#1433ff; }
+.tutor-feedback { margin:12px 0 0; padding:11px; border-left:4px solid; font-size:13px; line-height:1.5; }
+.tutor-feedback.is-correct { border-color:#007a4b; background:#e1faf0; color:#004c31; }
+.tutor-feedback.is-incorrect { border-color:#d90058; background:#fff0f6; color:#8b1642; }
+@media(max-width:1050px) {
+  .tutorial-modal[data-problem="problem-1"] .tutorial-help-content { grid-template-columns:minmax(0,1fr); }
+  .tutorial-tutor { position:static; max-height:none; }
+}
 .tutorial-steps { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:0 0 19px; }
 .tutorial-step-button { width:31px; height:31px; padding:0; border:2px solid #d4d5dc; background:#fff; color:#101223; font-weight:800; }
 .tutorial-step-button[aria-current="step"] { border-color:#101223; background:#00d6c0; }

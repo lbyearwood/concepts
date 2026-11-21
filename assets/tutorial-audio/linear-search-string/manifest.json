@@ -1,0 +1,79 @@
+{
+  "lines": {
+    "1": {
+      "identity": "5f80481603643c379fe24a5769daa112426e245ccb48ded3d5eb5cb945bf5c2f",
+      "sha256": "2acbd2c0bd0816401456e0187d3149a21ab739241f2aa96dc5f84c43f9507bea",
+      "seconds": 20.48,
+      "bytes": 205440,
+      "transcript": "Read and store the text. the input function displays the prompt and waits for the user to type. The value they enter is stored in the variable text. The result is a string: a sequence of characters. The search will check those characters one at a time. Remember: Even if the user types digits, the input function returns a string unless the program converts it."
+    },
+    "2": {
+      "identity": "dfe715ddeffcc380043644ea482aa081f7530a94ec80360ec1bd5a0c2cac75ac",
+      "sha256": "a6c4197400945a9d7f53eb8c20909545e583b31fec1fa890283b1d995127ee2e",
+      "seconds": 22.29,
+      "bytes": 223440,
+      "transcript": "Why start with False?. found is a Boolean flag. It remembers whether the search has found the letter. We start it at False because no match has been found yet. The text has not been searched, so this does not mean the letter is definitely absent. A matching character will change the flag to True. Remember: Set this starting value before the loop. Resetting it on every iteration could erase an earlier match."
+    },
+    "3": {
+      "identity": "8d23b7b2c0869514f9bbab4726d6d5cfdea0d2a4866172e964853f0083c67c69",
+      "sha256": "65101a3307c06c1d221a8a9c952269f9e353498fc1f4acceedf17a140cd5f06e",
+      "seconds": 24.22,
+      "bytes": 242880,
+      "transcript": "Visit each character position. the length of text gives the number of characters. a range based on that length produces their positions, beginning at 0 and ending one before that length. The loop puts each position into i. For five characters, i takes the values 0, 1, 2, 3 and 4, unless the search stops early. Remember: The final valid position is length minus one. Position 5 would be outside a five-character string."
+    },
+    "4": {
+      "identity": "ea83a325c1896828c0df81651ba5277e07a2a73208133ea64f636409afd72e30",
+      "sha256": "93872baffcca60852fb9dad1d9d686c0ae49c9688b98980f1018fdf35c65db16",
+      "seconds": 25.45,
+      "bytes": 255120,
+      "transcript": "Compare the current character. indexing into text reads the character at the current position. The double equals sign compares it with the lowercase letter a. If that comparison is True, Python runs the more deeply indented lines below it. If it is False, those lines are skipped and the loop moves on. Remember: This comparison is case sensitive. Uppercase A does not match lowercase a. A single equals sign stores a value; it is not this comparison."
+    },
+    "5": {
+      "identity": "9f122eac9f74d37d01c0b04ffec94806bed5d427497b59723b7fa5a34252b165",
+      "sha256": "22a0dfb6dbf4f4c3e69c009baabb3f8011711480bfc4a79141b7f149b450cc0b",
+      "seconds": 22.21,
+      "bytes": 222720,
+      "transcript": "Remember that a match was found. A matching character has been found, so the flag changes to True. The program can use that remembered result after the loop. This line is inside both the loop and the if statement. It runs only when the current character matches lowercase a. Remember: Keep the indentation. If this assignment ran for every character, the flag could incorrectly report a match."
+    },
+    "6": {
+      "identity": "2f503358c2c44a32f06d34aeaf0e571b3474772bc610acc6669fae5f40315910",
+      "sha256": "c8b63e949f7fd89e794bfa7336e1aad55914f6f08e44fffd2820bf34da5502c8",
+      "seconds": 22.4,
+      "bytes": 224640,
+      "transcript": "Stop searching after the first match. break exits the loop immediately. We only need to know whether the letter exists, so checking the remaining characters is unnecessary. The program continues with the first line after the loop. The flag stays True, ready for the result message. Remember: break must stay inside the matching if statement. Otherwise the search could stop after checking only the first character."
+    },
+    "7": {
+      "identity": "28a5a4a514fef9ddaf29d4cc7650370e5c570a7c9904a1a5b56cf2feb3d90d19",
+      "sha256": "a9d90b47603f74651e309bbf592f1741a3af55e3f41b50c90360dccf3b7292ab",
+      "seconds": 22.34,
+      "bytes": 223920,
+      "transcript": "Use the saved search result. The search is over. This if statement checks the Boolean flag: it runs its first branch when found is True. Notice that the line is back at the left margin. It belongs after the loop, so the program reports one result rather than printing a message for every character. Remember: if found checks the value already stored in the flag. It does not search the string again."
+    },
+    "8": {
+      "identity": "fdca695853eb749566b3bb82dcd6eca1a10fa714d3b1e23808f77db8a1dc4a2b",
+      "sha256": "adfacda04e30e09f0eeb7d8f0db4d532d8e2adba16ff33b7ea331f40be993bdb",
+      "seconds": 23.03,
+      "bytes": 230880,
+      "transcript": "Report a successful search. This message is printed only when found is True. That means a previous comparison found a lowercase a. The indentation places print inside the if found branch. Printing the message does not change the flag or the original text. Remember: A flag set incorrectly would produce the wrong message. The result is reliable because the earlier matching test controls the flag."
+    },
+    "9": {
+      "identity": "18ec2301fce0549df5e422e9067676cdc06fb0bc0c7bc1e3b58aadc1288c05ae",
+      "sha256": "7814742970fc279c790091778232a28e198df5a606722aeb9c028e721c992399",
+      "seconds": 19.22,
+      "bytes": 192720,
+      "transcript": "Choose the alternative result. else supplies the other branch of if found. It is used when the flag is False. It lines up with if found, not with the loop's inner comparison. Only one of these two result branches will run. Remember: The colon introduces the branch. The message belonging to else must be indented on the next line."
+    },
+    "10": {
+      "identity": "c4366038162675696d1cb07c73d2825fd23d5ec4c2cdf8b4debb0b53f123db18",
+      "sha256": "fe9461b2034e4a1bcc7a9e2ab6bddf647498c79b96c3d0cf698469344bfff945",
+      "seconds": 23.72,
+      "bytes": 237840,
+      "transcript": "Report that no match was found. If the loop finishes without finding lowercase a, found is still False and this message is printed. At this point the search really has checked every available character. This is different from the initial False value before searching. Empty text also produces this result because it contains no characters to match. Remember: Uppercase A alone does not count as a match in this program."
+    }
+  },
+  "engine": "Kokoro ONNX 0.6.1",
+  "voice": "bf_emma",
+  "language": "en-gb",
+  "model_sha256": "ae315a79b623f244700e4afb9246c46a26066782e049ba174bf3ba433970ee9c",
+  "voices_sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+}

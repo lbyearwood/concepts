@@ -9,10 +9,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / 'courses/gcse-computer-science/tutorials/programming-problems.html'
 CATALOGUE = ROOT / 'data/programming-problems.json'
+GUIDES = ROOT / 'data/tutorial-guides.json'
 TEMPLATE = ROOT / 'scripts/templates/programming-problems.html'
 
 def output():
     data = json.loads(CATALOGUE.read_text(encoding='utf-8'))
+    guides = json.loads(GUIDES.read_text(encoding='utf-8'))
     category_ids = {category['id'] for category in data['categories']}
     ids = set()
     for problem in data['problems']:
@@ -25,6 +27,21 @@ def output():
                 raise ValueError(f"Empty tutorial step: {problem['id']}")
             if any(block['type'] not in {'paragraph', 'code', 'question', 'error'} for block in step['blocks']):
                 raise ValueError(f"Unknown tutorial block: {problem['id']}")
+    for problem_id, guide in guides['problems'].items():
+        problem = next((item for item in data['problems'] if item['id'] == problem_id), None)
+        if not problem:
+            raise ValueError(f'Unknown guided problem: {problem_id}')
+        code_lines = [line for step in problem['steps'] for block in step['blocks'] if block['type'] == 'code' for line in block['text'].split('\n')]
+        if [line['code'] for line in guide['lines']] != code_lines:
+            raise ValueError(f'Tutor explanations do not match code: {problem_id}')
+        for line in guide['lines']:
+            if not line['title'] or not line['paragraphs'] or not all(line['paragraphs']) or not line['watchOut'] or not line['narration']:
+                raise ValueError(f'Empty tutor explanation: {problem_id}')
+            if not re.fullmatch(r'assets/tutorial-audio/[a-z0-9-]+/line-\d{2}\.mp3', line['audio']):
+                raise ValueError('Invalid local audio path')
+            question = line.get('question')
+            if question and (len(question['choices']) < 2 or sum(choice['correct'] is True for choice in question['choices']) != 1 or not all(choice['text'] and choice['feedback'] for choice in question['choices'])):
+                raise ValueError(f'Invalid tutor check: {problem_id}')
     previous = PAGE.read_text(encoding='utf-8')
     sidebar = re.search(r'  <aside class="site-sidebar".*?</aside>', previous, re.S)
     if not sidebar:
@@ -39,7 +56,7 @@ def output():
     for index, problem in enumerate(problems, 1):
         items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open question</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
     content = TEMPLATE.read_text(encoding='utf-8')
-    values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
+    values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c'), '__TUTOR_GUIDE_DATA__': json.dumps(guides, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
     for token, value in values.items():
         if content.count(token) != 1:
             raise ValueError(f'Missing or duplicate template token: {token}')

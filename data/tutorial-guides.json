@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "problems": {
+    "problem-1": {
+      "voice": {
+        "engine": "Kokoro",
+        "name": "bf_emma",
+        "language": "en-gb",
+        "kind": "Generated narration"
+      },
+      "lines": [
+        {
+          "code": "text = input(\"Enter some text: \")",
+          "title": "Read and store the text",
+          "paragraphs": [
+            "input() displays the prompt and waits for the user to type. The value they enter is stored in the variable text.",
+            "The result is a string: a sequence of characters. The search will check those characters one at a time."
+          ],
+          "watchOut": "Even if the user types digits, input() returns a string unless the program converts it.",
+          "audio": "assets/tutorial-audio/linear-search-string/line-01.mp3",
+          "narration": "Read and store the text. input() displays the prompt and waits for the user to type. The value they enter is stored in the variable text. The result is a string: a sequence of characters. The search will check those characters one at a time. Remember: Even if the user types digits, input() returns a string unless the program converts it."
+        },
+        {
+          "code": "found = False",
+          "title": "Why start with False?",
+          "paragraphs": [
+            "found is a Boolean flag. It remembers whether the search has found the letter.",
+            "We start it at False because no match has been found yet. The text has not been searched, so this does not mean the letter is definitely absent. A matching character will change the flag to True."
+          ],
+          "watchOut": "Set this starting value before the loop. Resetting it on every iteration could erase an earlier match.",
+          "question": {
+            "prompt": "What does the starting value False tell us?",
+            "choices": [
+              {
+                "text": "The text definitely contains no lowercase a.",
+                "feedback": "The text has not been searched yet. False means that no match has been found so far.",
+                "correct": false
+              },
+              {
+                "text": "The search has not found a match yet.",
+                "feedback": "Correct. The flag records what the search has found so far. Its starting value is not the final search result.",
+                "correct": true
+              },
+              {
+                "text": "The search has finished.",
+                "feedback": "Setting the flag only prepares the search. The loop has not run yet.",
+                "correct": false
+              }
+            ]
+          },
+          "audio": "assets/tutorial-audio/linear-search-string/line-02.mp3",
+          "narration": "Why start with False?. found is a Boolean flag. It remembers whether the search has found the letter. We start it at False because no match has been found yet. The text has not been searched, so this does not mean the letter is definitely absent. A matching character will change the flag to True. Remember: Set this starting value before the loop. Resetting it on every iteration could erase an earlier match."
+        },
+        {
+          "code": "for i in range(len(text)):",
+          "title": "Visit each character position",
+          "paragraphs": [
+            "len(text) gives the number of characters. range(len(text)) produces their positions, beginning at 0 and ending one before that length.",
+            "The loop puts each position into i. For five characters, i takes the values 0, 1, 2, 3 and 4, unless the search stops early."
+          ],
+          "watchOut": "The final valid position is length minus one. Position 5 would be outside a five-character string.",
+          "question": {
+            "prompt": "If text has five characters, which positions does this loop visit?",
+            "choices": [
+              {
+                "text": "0, 1, 2, 3, 4",
+                "feedback": "Correct. Python starts at position 0, and range stops before 5.",
+                "correct": true
+              },
+              {
+                "text": "1, 2, 3, 4, 5",
+                "feedback": "Python strings start at position 0. Starting at 1 misses the first character, and position 5 is outside this string.",
+                "correct": false
+              },
+              {
+                "text": "0, 1, 2, 3, 4, 5",
+                "feedback": "range does not include its stopping value. A five-character string has no character at position 5.",
+                "correct": false
+              }
+            ]
+          },
+          "audio": "assets/tutorial-audio/linear-search-string/line-03.mp3",
+          "narration": "Visit each character position. len(text) gives the number of characters. range(len(text)) produces their positions, beginning at 0 and ending one before that length. The loop puts each position into i. For five characters, i takes the values 0, 1, 2, 3 and 4, unless the search stops early. Remember: The final valid position is length minus one. Position 5 would be outside a five-character string."
+        },
+        {
+          "code": "    if text[i] == 'a':",
+          "title": "Compare the current character",
+          "paragraphs": [
+            "text[i] reads the character at the current position. The double equals sign compares it with the lowercase letter a.",
+            "If that comparison is True, Python runs the more deeply indented lines below it. If it is False, those lines are skipped and the loop moves on."
+          ],
+          "watchOut": "This comparison is case sensitive. Uppercase A does not match lowercase a. A single equals sign stores a value; it is not this comparison.",
+          "question": {
+            "prompt": "Which character makes this comparison True?",
+            "choices": [
+              {
+                "text": "Only lowercase a",
+                "feedback": "Correct. The program compares with exactly the lowercase character a.",
+                "correct": true
+              },
+              {
+                "text": "Only uppercase A",
+                "feedback": "Uppercase A is a different character. This line checks for lowercase a.",
+                "correct": false
+              },
+              {
+                "text": "Both lowercase a and uppercase A",
+                "feedback": "Python string comparisons are case sensitive. This program does not convert the text to lowercase.",
+                "correct": false
+              }
+            ]
+          },
+          "audio": "assets/tutorial-audio/linear-search-string/line-04.mp3",
+          "narration": "Compare the current character. text[i] reads the character at the current position. The double equals sign compares it with the lowercase letter a. If that comparison is True, Python runs the more deeply indented lines below it. If it is False, those lines are skipped and the loop moves on. Remember: This comparison is case sensitive. Uppercase A does not match lowercase a. A single equals sign stores a value; it is not this comparison."
+        },
+        {
+          "code": "        found = True",
+          "title": "Remember that a match was found",
+          "paragraphs": [
+            "A matching character has been found, so the flag changes to True. The program can use that remembered result after the loop.",
+            "This line is inside both the loop and the if statement. It runs only when the current character matches lowercase a."
+          ],
+          "watchOut": "Keep the indentation. If this assignment ran for every character, the flag could incorrectly report a match.",
+          "audio": "assets/tutorial-audio/linear-search-string/line-05.mp3",
+          "narration": "Remember that a match was found. A matching character has been found, so the flag changes to True. The program can use that remembered result after the loop. This line is inside both the loop and the if statement. It runs only when the current character matches lowercase a. Remember: Keep the indentation. If this assignment ran for every character, the flag could incorrectly report a match."
+        },
+        {
+          "code": "        break",
+          "title": "Stop searching after the first match",
+          "paragraphs": [
+            "break exits the loop immediately. We only need to know whether the letter exists, so checking the remaining characters is unnecessary.",
+            "The program continues with the first line after the loop. The flag stays True, ready for the result message."
+          ],
+          "watchOut": "break must stay inside the matching if statement. Otherwise the search could stop after checking only the first character.",
+          "question": {
+            "prompt": "What does break exit here?",
+            "choices": [
+              {
+                "text": "The entire program",
+                "feedback": "break exits the loop, not the entire program. The result message can still run afterwards.",
+                "correct": false
+              },
+              {
+                "text": "The for loop",
+                "feedback": "Correct. The search stops, and execution continues after the loop.",
+                "correct": true
+              },
+              {
+                "text": "Only the if statement, then the next character is checked",
+                "feedback": "break exits the enclosing loop. It does more than finish the if statement.",
+                "correct": false
+              }
+            ]
+          },
+          "audio": "assets/tutorial-audio/linear-search-string/line-06.mp3",
+          "narration": "Stop searching after the first match. break exits the loop immediately. We only need to know whether the letter exists, so checking the remaining characters is unnecessary. The program continues with the first line after the loop. The flag stays True, ready for the result message. Remember: break must stay inside the matching if statement. Otherwise the search could stop after checking only the first character."
+        },
+        {
+          "code": "if found:",
+          "title": "Use the saved search result",
+          "paragraphs": [
+            "The search is over. This if statement checks the Boolean flag: it runs its first branch when found is True.",
+            "Notice that the line is back at the left margin. It belongs after the loop, so the program reports one result rather than printing a message for every character."
+          ],
+          "watchOut": "if found checks the value already stored in the flag. It does not search the string again.",
+          "audio": "assets/tutorial-audio/linear-search-string/line-07.mp3",
+          "narration": "Use the saved search result. The search is over. This if statement checks the Boolean flag: it runs its first branch when found is True. Notice that the line is back at the left margin. It belongs after the loop, so the program reports one result rather than printing a message for every character. Remember: if found checks the value already stored in the flag. It does not search the string again."
+        },
+        {
+          "code": "    print(\"The letter 'a' exists in the text.\")",
+          "title": "Report a successful search",
+          "paragraphs": [
+            "This message is printed only when found is True. That means a previous comparison found a lowercase a.",
+            "The indentation places print inside the if found branch. Printing the message does not change the flag or the original text."
+          ],
+          "watchOut": "A flag set incorrectly would produce the wrong message. The result is reliable because the earlier matching test controls the flag.",
+          "audio": "assets/tutorial-audio/linear-search-string/line-08.mp3",
+          "narration": "Report a successful search. This message is printed only when found is True. That means a previous comparison found a lowercase a. The indentation places print inside the if found branch. Printing the message does not change the flag or the original text. Remember: A flag set incorrectly would produce the wrong message. The result is reliable because the earlier matching test controls the flag."
+        },
+        {
+          "code": "else:",
+          "title": "Choose the alternative result",
+          "paragraphs": [
+            "else supplies the other branch of if found. It is used when the flag is False.",
+            "It lines up with if found, not with the loop's inner comparison. Only one of these two result branches will run."
+          ],
+          "watchOut": "The colon introduces the branch. The message belonging to else must be indented on the next line.",
+          "audio": "assets/tutorial-audio/linear-search-string/line-09.mp3",
+          "narration": "Choose the alternative result. else supplies the other branch of if found. It is used when the flag is False. It lines up with if found, not with the loop's inner comparison. Only one of these two result branches will run. Remember: The colon introduces the branch. The message belonging to else must be indented on the next line."
+        },
+        {
+          "code": "    print(\"The letter 'a' does not exist in the text.\")",
+          "title": "Report that no match was found",
+          "paragraphs": [
+            "If the loop finishes without finding lowercase a, found is still False and this message is printed.",
+            "At this point the search really has checked every available character. This is different from the initial False value before searching. Empty text also produces this result because it contains no characters to match."
+          ],
+          "watchOut": "Uppercase A alone does not count as a match in this program.",
+          "question": {
+            "prompt": "What happens if the user enters Cab?",
+            "choices": [
+              {
+                "text": "The program reports that lowercase a exists.",
+                "feedback": "Correct. Cab contains a lowercase a in position 1. The flag becomes True, so the successful-search message is printed.",
+                "correct": true
+              },
+              {
+                "text": "The program reports that lowercase a does not exist.",
+                "feedback": "Cab has a lowercase a as its second character. The uppercase C does not prevent that later match.",
+                "correct": false
+              },
+              {
+                "text": "Both result messages are printed.",
+                "feedback": "The if and else are alternative branches. Only the branch matching the flag's value runs.",
+                "correct": false
+              }
+            ]
+          },
+          "audio": "assets/tutorial-audio/linear-search-string/line-10.mp3",
+          "narration": "Report that no match was found. If the loop finishes without finding lowercase a, found is still False and this message is printed. At this point the search really has checked every available character. This is different from the initial False value before searching. Empty text also produces this result because it contains no characters to match. Remember: Uppercase A alone does not count as a match in this program."
+        }
+      ]
+    }
+  }
+}

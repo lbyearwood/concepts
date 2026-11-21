@@ -100,6 +100,18 @@ other tutorials retain their current layout and step navigation. Playback
 logic and cancellation tests live in `assets/tutorial-typewriter.js` and
 `tests/tutorial-typewriter.test.cjs`; the catalogue remains the source of code.
 
+The same pilot has a roughly 70/30 code/tutor split on desktop. Its right-hand
+tutor follows the current line with detailed written explanations, reminders
+and optional prepared British English audio. Five checkpoints offer a Quick
+check view with individual feedback for each misconception. Playback starts
+only when requested, supports pause/resume/replay and unloads on line changes,
+collapse or Close. Answers persist while navigating an open walkthrough and
+reset on reopening. Narrow screens stack the tutor below the code.
+`data/tutorial-guides.json` owns the explanations, checks and audio references.
+The builder rejects mismatched code/explanations; tests verify every audio digest
+and transcript. The original problem catalogue and the other 21 tutorials are
+preserved. See `assets/tutorial-audio/README.md` for generation and credits.
+
 The web adaptations reconcile question/code inconsistencies, make the letter
 counter case insensitive for the chosen letter, use the stated safe-reading
 range, and include a worked username subroutine. The source document is

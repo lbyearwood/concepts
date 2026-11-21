@@ -14,6 +14,8 @@
   const body = dialog.querySelector('.tutorial-body');
   const help = dialog.querySelector('.tutorial-help');
   const footer = dialog.querySelector('.tutorial-footer');
+  const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), JSON.parse(document.getElementById('tutorial-guide-data').textContent));
+  new ResizeObserver(() => dialog.style.setProperty('--tutorial-body-height', body.clientHeight + 'px')).observe(body);
   const { tutorialCodeLines, createTypewriter } = window.CSRCodeWalkthrough;
   const typewriter = createTypewriter();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -143,11 +145,13 @@
         }
       } else {
         // A stage's check question follows its complete code, not an unfinished branch.
-        if (typed && block.type === 'question' && lines[state.line + 1]?.step === state.step) return;
+        if (typed && block.type === 'question') return;
         const className = block.type === 'question' ? 'understanding-question' : block.type === 'error' ? 'common-error' : '';
         content.append(element('p', className, block.text));
       }
     });
+    if (typed && help.open) tutor.show(problem.id, state.line);
+    else tutor.hide();
     const last = typed ? state.line === lines.length - 1 : state.step === problem.steps.length - 1;
     const progress = 'Step ' + (state.step + 1) + ' of ' + problem.steps.length;
     dialog.querySelector('.tutorial-counter').textContent = typed ? 'Line ' + (state.line + 1) + ' of ' + lines.length + ' · ' + progress : progress;
@@ -164,6 +168,7 @@
     const problem = data.problems.find(item => item.id === id);
     if (!problem) return;
     launcher = button;
+    tutor.reset();
     dialog.dataset.problem = problem.id;
     state.problem = id;
     state.step = 0;
@@ -185,7 +190,7 @@
   help.addEventListener('toggle', () => {
     footer.hidden = !help.open;
     if (state.problem && help.open) renderStep();
-    else typewriter.cancel();
+    else { typewriter.cancel(); tutor.hide(); }
   });
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) typewriter.finish(); });
   list.addEventListener('click', event => {
@@ -250,6 +255,7 @@
   });
   dialog.addEventListener('close', () => {
     typewriter.cancel();
+    tutor.reset();
     state.problem = null;
     if (launcher?.isConnected) launcher.focus();
   });
