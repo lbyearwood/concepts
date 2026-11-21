@@ -37,6 +37,11 @@ Google Slides preview in the existing lightbox, with an Open in Google Slides
 link alongside it. Google access follows each deck's existing permissions;
 students should use their school Google account if prompted.
 
+The lesson heading has a **Full screen** button beside Close. It fills the
+screen with the lesson and keeps Exit full screen/Close available. Leaving
+fullscreen keeps the current slide. If the browser declines fullscreen, the
+lesson fills the browser window instead and offers Exit expanded view.
+
 Make future lesson amendments in these **school-owned versions**. No personal
 lbyearwood presentation or old static export is used by the course pages.
 No new public publishing, copying, sharing change, Apps Script authorisation,

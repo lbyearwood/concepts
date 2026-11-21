@@ -99,15 +99,23 @@ def native_player(title, source):
     <p class="lesson-access">Use your school Google account if asked to sign in. <a class="lesson-open-link" href="{escape(source, quote=True)}" target="_blank" rel="noopener noreferrer">Open in Google Slides ↗</a></p>'''
 
 
+def lesson_dialog(number, title, source, deck=None):
+    player = selfhosted_player(deck["output"]) if deck else native_player(title, source)
+    return f'''<dialog class="lesson-modal" id="lesson-modal" aria-labelledby="lesson-title">
+    <div class="lesson-fullscreen-container">
+      <div class="lesson-modal-heading"><h2 id="lesson-title">{escape(number)} Lesson</h2><button class="lesson-fullscreen" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg><span>Full screen</span></button><button class="modal-close" type="button">Close</button></div>
+      {player}
+      <p class="lesson-fullscreen-status" role="status" hidden></p>
+    </div>
+  </dialog>'''
+
+
 def new_topic(unit, topic, deck=None):
     title = escape(topic["title"])
-    short_title = escape(topic["title"].split(" ", 1)[1])
-    number = escape(topic["title"].split(" ", 1)[0])
     source = topic.get("lessonSrc")
     source_attr = f' data-lesson-src="{escape(source, quote=True)}"' if source else ""
-    lesson_script = "selfhosted-lesson.js?v=1" if deck else "course-lesson.js?v=4"
+    lesson_script = "selfhosted-lesson.js?v=1" if deck else "course-lesson.js?v=5"
     lesson_css = '\n  <link rel="stylesheet" href="../../assets/selfhosted-slides.css?v=2">' if deck else ""
-    player = selfhosted_player(deck["output"]) if deck else native_player(topic["title"], source)
     if deck:
         source_attr = ""
     return f'''<!DOCTYPE html>
@@ -120,7 +128,7 @@ def new_topic(unit, topic, deck=None):
   <link rel="stylesheet" href="../../assets/sidebar.css?v=units-1">
   <link rel="stylesheet" href="../../assets/colour-block.css?v=2">
   <link rel="stylesheet" href="../../assets/concept-viewport.css?v=1">
-  <link rel="stylesheet" href="../../assets/course-topic.css?v=5">{lesson_css}
+  <link rel="stylesheet" href="../../assets/course-topic.css?v=6">{lesson_css}
   <script src="../../assets/concept-viewport.js?v=1" defer></script>
   <script src="../../assets/{lesson_script}" defer></script>
 </head>
@@ -144,10 +152,7 @@ def new_topic(unit, topic, deck=None):
       </div>
     </main>
   </div></div>
-  <dialog class="lesson-modal" id="lesson-modal" aria-labelledby="lesson-title">
-    <div class="lesson-modal-heading"><h2 id="lesson-title">{number} Lesson</h2><button class="modal-close" type="button">Close</button></div>
-    {player}
-  </dialog>
+  {lesson_dialog(topic["title"].split(" ", 1)[0], topic["title"], source, deck)}
 </body>
 </html>
 '''
@@ -194,20 +199,20 @@ def outputs():
     if count != 1:
         raise ValueError("Expected one lesson launch button in existing 1.1 content.")
     html, count = re.subn(
-        r'(<dialog class="lesson-modal"[^>]*>\s*<div class="lesson-modal-heading">.*?</div>)\s*.*?(\s*</dialog>)',
-        lambda match: match[1] + '\n    ' + native_player(existing['title'], source) + match[2],
+        r'<dialog class="lesson-modal"[^>]*>.*?</dialog>',
+        lambda match: lesson_dialog(existing['title'].split(" ", 1)[0], existing['title'], source),
         html, count=1, flags=re.S)
     if count != 1:
         raise ValueError("Expected one lesson dialog in existing 1.1 content.")
     html = re.sub(r'\n  <link rel="stylesheet" href="[^\"]*selfhosted-slides\.css[^\"]*">', '', html)
-    html = re.sub(r'(src="[^"]*/assets/)(?:selfhosted-lesson|course-lesson)\.js\?v=\d+', r'\1course-lesson.js?v=4', html)
+    html = re.sub(r'(src="[^"]*/assets/)(?:selfhosted-lesson|course-lesson)\.js\?v=\d+', r'\1course-lesson.js?v=5', html)
     pages[EXISTING_TOPIC] = html
     for path, html in pages.items():
         html, count = re.subn(r'  <aside class="site-sidebar".*?</aside>', lambda _: sidebar(units, path), html, count=1, flags=re.S)
         if count != 1:
             raise ValueError(f"Expected exactly one sidebar in {path}")
         html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=tutorials-1", html)
-        html = re.sub(r'course-topic\.css\?v=\d+', "course-topic.css?v=5", html)
+        html = re.sub(r'course-topic\.css\?v=\d+', "course-topic.css?v=6", html)
         pages[path] = html
     return pages
 
