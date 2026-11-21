@@ -45,6 +45,7 @@ jobs:
           node --test tests/slide-sync.test.cjs
           node --test tests/slide-mirror.test.cjs
           node --test tests/course-lesson.test.cjs
+          node --test tests/tutorial-typewriter.test.cjs
           python scripts/build-course.py --check
           python scripts/build-problems.py --check
 

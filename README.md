@@ -89,6 +89,17 @@ Both scripts accept `--check`. Keep stable problem IDs and include the complete
 Python solution alongside its displayed steps so the teaching algorithm can be
 checked. Preserve Python indentation in code blocks.
 
+The `problem-1` pilot (Linear search on a string) fills the right pane and
+builds its solution one line at a time. Next line appends a line with a
+character-by-character typing animation; earlier lines remain above it in the
+same code block. A quick Next line click completes the current line before
+advancing. Back shows the preceding line immediately, and the four numbered
+stages jump to their first line. Closing or collapsing the tutorial cancels
+playback. Reduced-motion preferences show each new line immediately. The
+other tutorials retain their current layout and step navigation. Playback
+logic and cancellation tests live in `assets/tutorial-typewriter.js` and
+`tests/tutorial-typewriter.test.cjs`; the catalogue remains the source of code.
+
 The web adaptations reconcile question/code inconsistencies, make the letter
 counter case insensitive for the chosen letter, use the stated safe-reading
 range, and include a worked username subroutine. The source document is
@@ -185,7 +196,7 @@ scrolls. Test Keywords, modal focus, Escape and the return to the lesson.
 
 Before release, install `scripts/requirements-slides.txt`, run
 `python -m unittest discover -s tests -p test_slide_sync.py`,
-`node --test tests/slide-sync.test.cjs`, both site builders with `--check`,
+`node --test tests/*.test.cjs`, both site builders with `--check`,
 and `python scripts/sync-slides.py` twice (the second run must skip). Review `git diff`
 and run `git diff --check`. Commit the intended
 files and push `main`; GitHub Pages builds and publishes the site automatically.

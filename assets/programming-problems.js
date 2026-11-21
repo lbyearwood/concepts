@@ -6,7 +6,7 @@
   const data = JSON.parse(dataNode.textContent);
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Level 1 problems', level2: 'Level 2', level3: 'Level 3'};
-  const state = {collection: 'exam', category: 'traversal', problem: null, step: 0};
+  const state = {collection: 'exam', category: 'traversal', problem: null, step: 0, line: 0};
   const list = document.querySelector('.problem-list');
   const categoryTabs = document.querySelector('.problem-categories');
   const categoryPanel = document.getElementById('category-panel');
@@ -14,6 +14,10 @@
   const body = dialog.querySelector('.tutorial-body');
   const help = dialog.querySelector('.tutorial-help');
   const footer = dialog.querySelector('.tutorial-footer');
+  const { tutorialCodeLines, createTypewriter } = window.CSRCodeWalkthrough;
+  const typewriter = createTypewriter();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const isTypedTutorial = problem => problem.id === 'problem-1';
   let launcher = null;
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -26,6 +30,10 @@
     node.setAttribute('aria-hidden', 'true');
     return node;
   };
+  function keepCodeVisible(node) {
+    const overflow = node.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom;
+    if (overflow > 0) body.scrollTop += overflow + 16;
+  }
   function renderList() {
     const exam = state.collection === 'exam';
     document.querySelectorAll('[data-collection]').forEach(button => {
@@ -67,9 +75,46 @@
     document.querySelector('.problem-list-scroll').scrollTop = 0;
     document.querySelector('.problem-announcement').textContent = title + '. ' + problems.length + (problems.length === 1 ? ' problem.' : ' problems.');
   }
-  function renderStep() {
+  function renderTypedCode(lines, animate) {
+    const pre = element('pre', 'tutorial-code-editor');
+    const code = element('code');
+    pre.setAttribute('aria-label', 'Python code, line ' + (state.line + 1) + ' of ' + lines.length);
+    let activeText;
+    lines.slice(0, state.line + 1).forEach((line, index) => {
+      const row = element('span', 'tutorial-code-line' + (index === state.line ? ' is-current' : ''));
+      const text = element('span', 'tutorial-code-text', index === state.line ? '' : line.text);
+      row.append(text);
+      code.append(row);
+      if (index === state.line) activeText = text;
+    });
+    pre.append(code);
+    content.append(pre);
+    const instant = !animate || !help.open || reducedMotion.matches;
+    pre.classList.toggle('is-typing', !instant);
+    pre.setAttribute('aria-busy', String(!instant));
+    typewriter.play(lines[state.line].text, {
+      instant,
+      write: text => {
+        activeText.textContent = text;
+        if (help.open) keepCodeVisible(activeText);
+      },
+      done: () => {
+        pre.classList.remove('is-typing');
+        pre.setAttribute('aria-busy', 'false');
+      }
+    });
+    return activeText;
+  }
+  function renderStep(animate = true) {
+    typewriter.cancel();
     const problem = data.problems.find(item => item.id === state.problem);
     if (!problem) return;
+    const typed = isTypedTutorial(problem);
+    const lines = typed ? tutorialCodeLines(problem) : null;
+    if (typed) {
+      state.line = Math.max(0, Math.min(state.line, lines.length - 1));
+      state.step = lines[state.line].step;
+    }
     state.step = Math.max(0, Math.min(state.step, problem.steps.length - 1));
     const step = problem.steps[state.step];
     dialog.querySelector('.tutorial-path').textContent = 'Exam questions / ' + categoryNames.get(problem.category);
@@ -86,23 +131,33 @@
       steps.append(button);
     });
     content.replaceChildren();
+    let activeText;
     step.blocks.forEach(block => {
       if (block.type === 'code') {
-        const pre = element('pre');
-        pre.append(element('code', '', block.text));
-        content.append(pre);
+        if (typed) {
+          if (!activeText) activeText = renderTypedCode(lines, animate);
+        } else {
+          const pre = element('pre');
+          pre.append(element('code', '', block.text));
+          content.append(pre);
+        }
       } else {
+        // A stage's check question follows its complete code, not an unfinished branch.
+        if (typed && block.type === 'question' && lines[state.line + 1]?.step === state.step) return;
         const className = block.type === 'question' ? 'understanding-question' : block.type === 'error' ? 'common-error' : '';
         content.append(element('p', className, block.text));
       }
     });
-    dialog.querySelector('.tutorial-counter').textContent = 'Step ' + (state.step + 1) + ' of ' + problem.steps.length;
-    dialog.querySelector('.tutorial-back').disabled = state.step === 0;
-    dialog.querySelector('[data-next-label]').textContent = state.step === problem.steps.length - 1 ? 'Done' : 'Next';
-    dialog.querySelector('.tutorial-next .problem-icon').hidden = state.step === problem.steps.length - 1;
-    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title : problem.title + '. Exam question. Tutorial collapsed.';
+    const last = typed ? state.line === lines.length - 1 : state.step === problem.steps.length - 1;
+    const progress = 'Step ' + (state.step + 1) + ' of ' + problem.steps.length;
+    dialog.querySelector('.tutorial-counter').textContent = typed ? 'Line ' + (state.line + 1) + ' of ' + lines.length + ' · ' + progress : progress;
+    dialog.querySelector('.tutorial-back').disabled = typed ? state.line === 0 : state.step === 0;
+    dialog.querySelector('[data-next-label]').textContent = last ? 'Done' : typed ? 'Next line' : 'Next';
+    dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
+    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length : '') : problem.title + '. Exam question. Tutorial collapsed.';
     if (help.open) {
       body.scrollTop += help.getBoundingClientRect().top - body.getBoundingClientRect().top - parseFloat(getComputedStyle(body).paddingTop);
+      if (activeText) keepCodeVisible(activeText);
     } else body.scrollTop = 0;
   }
   function openTutorial(id, button) {
@@ -112,6 +167,7 @@
     dialog.dataset.problem = problem.id;
     state.problem = id;
     state.step = 0;
+    state.line = 0;
     const question = dialog.querySelector('.tutorial-question');
     question.open = true;
     help.open = false;
@@ -129,7 +185,9 @@
   help.addEventListener('toggle', () => {
     footer.hidden = !help.open;
     if (state.problem && help.open) renderStep();
+    else typewriter.cancel();
   });
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) typewriter.finish(); });
   list.addEventListener('click', event => {
     const button = event.target.closest('[data-problem]');
     if (button) openTutorial(button.dataset.problem, button);
@@ -162,16 +220,26 @@
     const button = event.target.closest('[data-step]');
     if (!button) return;
     state.step = Number(button.dataset.step);
+    const problem = data.problems.find(item => item.id === state.problem);
+    if (isTypedTutorial(problem)) state.line = tutorialCodeLines(problem).findIndex(line => line.step === state.step);
     renderStep();
     dialog.querySelector('[data-step="' + state.step + '"]').focus();
   });
   dialog.querySelector('.tutorial-back').addEventListener('click', () => {
-    state.step--;
-    renderStep();
+    const problem = data.problems.find(item => item.id === state.problem);
+    if (isTypedTutorial(problem)) state.line--;
+    else state.step--;
+    renderStep(false);
     if (state.step === 0) dialog.querySelector('[data-step="0"]').focus();
   });
   dialog.querySelector('.tutorial-next').addEventListener('click', () => {
     const problem = data.problems.find(item => item.id === state.problem);
+    if (isTypedTutorial(problem)) {
+      typewriter.finish();
+      if (state.line === tutorialCodeLines(problem).length - 1) dialog.close();
+      else { state.line++; renderStep(); }
+      return;
+    }
     if (state.step === problem.steps.length - 1) dialog.close();
     else { state.step++; renderStep(); }
   });
@@ -181,6 +249,7 @@
     if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
   });
   dialog.addEventListener('close', () => {
+    typewriter.cancel();
     state.problem = null;
     if (launcher?.isConnected) launcher.focus();
   });
