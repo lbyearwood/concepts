@@ -2,9 +2,10 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { tokenizePython, visibleTokens, tutorSegments, renderPython, renderTutorText } = require('../assets/tutorial-code-style.js');
 const guide = require('../data/tutorial-guides.json').problems['problem-1'];
+const allGuides = Object.values(require('../data/tutorial-guides.json').problems);
 
 test('every typed prefix and completed line preserves the exact approved Python', () => {
-  for (const { code } of guide.lines) {
+  for (const { code } of allGuides.flatMap(guide => guide.lines)) {
     assert.equal(tokenizePython(code).map(token => token.text).join(''), code);
     for (let count = 0; count <= code.length; count++) {
       assert.equal(visibleTokens(code, count).map(token => token.text).join(''), code.slice(0, count));
@@ -12,6 +13,19 @@ test('every typed prefix and completed line preserves the exact approved Python'
   }
   const text = '    print("<script> & \\"quoted\\" ✓🙂") # keep spaces';
   assert.equal(tokenizePython(text).map(token => token.text).join(''), text);
+});
+
+test('file methods, subroutines, inclusive operators and formatted strings retain actual Python tokens', () => {
+  assert.equal(tokenizePython('open("x", "r")')[0].type, 'builtin');
+  for (const name of ['readline', 'rstrip', 'write', 'close', 'split', 'append', 'lower', 'replace']) {
+    assert.equal(tokenizePython('file.' + name + '()').find(t => t.text === name).type, 'builtin');
+  }
+  assert.equal(tokenizePython('def valid_score(score):')[0].type, 'keyword');
+  assert.equal(tokenizePython('pass')[0].type, 'keyword');
+  assert.equal(visibleTokens('f"{count}"', 1)[0].type, 'string');
+  assert.equal(tokenizePython('f"{count}"')[0].text, 'f"{count}"');
+  const text = 'score is tested before result is returned.';
+  assert.deepEqual(tutorSegments(text, ['score','result']).filter(p => p.type === 'code').map(p => p.text), ['score','result']);
 });
 
 test('function names and strings have their final colour from the first typed character', () => {

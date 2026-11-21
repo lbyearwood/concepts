@@ -46,12 +46,14 @@ jobs:
           node --test tests/slide-mirror.test.cjs
           node --test tests/course-lesson.test.cjs
           node --test tests/tutorial-typewriter.test.cjs
+          node --test tests/tutorial-rollout.test.cjs
           node --test tests/tutorial-tutor.test.cjs
           node --test tests/tutorial-fit.test.cjs
           node --test tests/tutorial-code-style.test.cjs
           node --test tests/tutorial-typing-sound.test.cjs
           node --test tests/tutorial-dismissal.test.cjs
           python -m unittest discover -s tests -p 'test_tutorial_guides.py'
+          python -m unittest discover -s tests -p 'test_programming_algorithms.py'
           python scripts/build-course.py --check
           python scripts/build-problems.py --check
 

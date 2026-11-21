@@ -11,7 +11,7 @@ function harness(protectedTutorial) {
   return { dialog, listeners, close, get closed() { return closed; } };
 }
 
-test('the pilot ignores backdrop/menu-area clicks, Escape and Done, and accepts explicit Close', () => {
+test('guided exam dialogs ignore backdrop/menu-area clicks, Escape and Done, and accepts explicit Close', () => {
   const h = harness(true);
   h.listeners.get('click')({ target: h.dialog, clientX: 40, clientY: 200 });
   h.listeners.get('click')({ target: h.dialog, clientX: 950, clientY: 200 });
@@ -21,7 +21,7 @@ test('the pilot ignores backdrop/menu-area clicks, Escape and Done, and accepts 
   assert.equal(h.close('close-button'), true); assert.equal(h.closed, 1);
 });
 
-test('inside/focus-like clicks do not dismiss and the other tutorials keep their existing dismissal paths', () => {
+test('inside/focus-like clicks do not dismiss and unguarded dialogs retain their cancellation paths', () => {
   const h = harness(false);
   h.listeners.get('click')({ target: h.dialog, clientX: 200, clientY: 200 });
   assert.equal(h.closed, 0);

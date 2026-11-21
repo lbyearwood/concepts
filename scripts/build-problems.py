@@ -31,15 +31,22 @@ def output():
         problem = next((item for item in data['problems'] if item['id'] == problem_id), None)
         if not problem:
             raise ValueError(f'Unknown guided problem: {problem_id}')
-        code_lines = [line for step in problem['steps'] for block in step['blocks'] if block['type'] == 'code' for line in block['text'].split('\n')]
+        code_lines = problem['solution'].split('\n')
         if [line['code'] for line in guide['lines']] != code_lines:
             raise ValueError(f'Tutor explanations do not match code: {problem_id}')
         checkpoint_ids = set()
+        mapped_steps = []
         for index, line in enumerate(guide['lines']):
-            if not line['title'] or not line['paragraphs'] or not all(line['paragraphs']) or not line['watchOut'] or not line['narration']:
+            if not line['title'] or not line['paragraphs'] or not all(line['paragraphs']) or not line['watchOut']:
                 raise ValueError(f'Empty tutor explanation: {problem_id}')
-            if not re.fullmatch(r'assets/tutorial-audio/[a-z0-9-]+/line-\d{2}\.mp3', line['audio']):
-                raise ValueError('Invalid local audio path')
+            if 'audio' in line:
+                if not re.fullmatch(r'assets/tutorial-audio/[a-z0-9-]+/line-\d{2}\.mp3', line['audio']) or not line.get('narration'):
+                    raise ValueError('Invalid retained local audio reference')
+            if guide.get('stageReviews'):
+                step = line.get('step')
+                if not isinstance(step, int) or not 0 <= step < len(problem['steps']):
+                    raise ValueError(f'Invalid line/stage mapping: {problem_id}')
+                mapped_steps.append(step)
             for kind in ('question', 'prediction'):
                 question = line.get(kind)
                 if not question:
@@ -52,6 +59,14 @@ def output():
                         or (kind == 'prediction' and index == len(guide['lines']) - 1)):
                     raise ValueError(f'Invalid tutor {kind}: {problem_id}')
                 checkpoint_ids.add(identity)
+        if mapped_steps:
+            if mapped_steps != sorted(mapped_steps):
+                raise ValueError(f'Out-of-order stages: {problem_id}')
+            coding_steps = {i for i, step in enumerate(problem['steps']) if any(b['type'] == 'code' for b in step['blocks'])}
+            if not coding_steps.issubset(set(mapped_steps)):
+                raise ValueError(f'Missing coding stage: {problem_id}')
+    if set(guides['problems']) != ids:
+        raise ValueError('Every existing Exam question requires a complete guide')
     previous = PAGE.read_text(encoding='utf-8')
     sidebar = re.search(r'  <aside class="site-sidebar".*?</aside>', previous, re.S)
     if not sidebar:

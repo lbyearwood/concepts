@@ -8,10 +8,22 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class TutorialGuideTests(unittest.TestCase):
-    def test_guides_match_the_original_code_and_one_tutorial_scope(self):
+    def test_all_exam_guides_match_solutions_and_keep_the_approved_pilot(self):
         guides = json.loads((ROOT / 'data/tutorial-guides.json').read_text(encoding='utf-8'))['problems']
         catalogue = json.loads((ROOT / 'data/programming-problems.json').read_text(encoding='utf-8'))['problems']
-        self.assertEqual(list(guides), ['problem-1'])
+        self.assertEqual(set(guides), {p['id'] for p in catalogue})
+        for problem in catalogue:
+            guide = guides[problem['id']]
+            self.assertEqual('\n'.join(line['code'] for line in guide['lines']), problem['solution'])
+            for line in guide['lines']:
+                self.assertTrue(line['title'] and line['watchOut'])
+                self.assertGreaterEqual(len(' '.join(line['paragraphs']).split()), 20)
+            if guide.get('stageReviews'):
+                self.assertGreaterEqual(sum('question' in line for line in guide['lines']), 3)
+                self.assertIn(sum('prediction' in line for line in guide['lines']), (1, 2))
+                mapped = [line['step'] for line in guide['lines']]
+                self.assertEqual(mapped, sorted(mapped))
+                self.assertTrue(all(0 <= step < len(problem['steps']) for step in mapped))
         original = next(p for p in catalogue if p['id'] == 'problem-1')
         lines = guides['problem-1']['lines']
         self.assertEqual('\n'.join(line['code'] for line in lines), original['solution'])

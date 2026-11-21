@@ -20,7 +20,7 @@
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Level 1 problems', level2: 'Level 2', level3: 'Level 3'};
   const state = {collection: 'exam', category: 'traversal', problem: null, step: 0, line: 0, frame: 0};
-  const requestClose = createDismissalGuard(dialog, () => state.problem === 'problem-1');
+  const requestClose = createDismissalGuard(dialog, () => !!guides.problems[state.problem]);
   const list = document.querySelector('.problem-list');
   const categoryTabs = document.querySelector('.problem-categories');
   const categoryPanel = document.getElementById('category-panel');
@@ -34,7 +34,7 @@
   const typingSound = window.CSRTutorialTypingSound.createTypingSound({
     baseUrl: new URL('../../../assets/tutorial-sounds/', window.location.href).href,
     createContext: () => { const Context = window.AudioContext || window.webkitAudioContext; return Context ? new Context() : null; },
-    isVisible: () => !document.hidden && dialog.open && help.open && state.problem === 'problem-1',
+    isVisible: () => !document.hidden && dialog.open && help.open && !!guides.problems[state.problem],
     onChange: status => {
       soundToggle.setAttribute('aria-pressed', String(status.enabled));
       soundToggle.setAttribute('aria-label', status.enabled ? 'Mute all sound effects' : 'Enable sound effects');
@@ -55,17 +55,18 @@
     }
   });
   const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
+    problems: data.problems,
     onAnswer: correct => { refreshCheckpointControls(); void typingSound.answer(correct); }
   });
   const { renderPython } = window.CSRTutorialCodeStyle;
   let codePager = null, examPager = null;
   new ResizeObserver(fitWorkspace).observe(body);
-  const { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit } = window.CSRCodeWalkthrough;
+  const { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep } = window.CSRCodeWalkthrough;
   const typewriter = createTypewriter();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const compactView = window.matchMedia('(max-width:600px), (max-height:500px)');
   const framesFor = problem => walkthroughFrames(problem, guides.problems[problem.id], compactView.matches);
-  const isTypedTutorial = problem => problem.id === 'problem-1';
+  const isTypedTutorial = problem => !!guides.problems[problem.id];
   const limitFor = (problem, frames) => checkpointLimit(frames, id => tutor.isCorrect(problem.id, id));
   function canVisitFrame(target) {
     const problem = data.problems.find(item => item.id === state.problem);
@@ -76,11 +77,11 @@
     next.removeAttribute('aria-describedby');
     const problem = data.problems.find(item => item.id === state.problem);
     if (!problem || !isTypedTutorial(problem)) return;
-    const frames = framesFor(problem), lines = tutorialCodeLines(problem), limit = limitFor(problem, frames);
+    const frames = framesFor(problem), lines = tutorialCodeLines(problem, guides.problems[problem.id]), limit = limitFor(problem, frames);
     next.disabled = state.frame >= limit;
     if (frames[state.frame].checkpoint) next.setAttribute('aria-describedby', 'tutor-check-instruction');
     dialog.querySelectorAll('[data-step]').forEach(button => {
-      const target = frames.findIndex(frame => lines[frame.line].step === Number(button.dataset.step));
+      const target = frames.findIndex(frame => frameStep(frame, lines) === Number(button.dataset.step));
       button.disabled = target > limit;
       button.title = button.disabled ? 'Answer the earlier question correctly first.' : '';
     });
@@ -98,12 +99,12 @@
     return node;
   };
   function keepCodeVisible(node) {
-    if (state.problem === 'problem-1') { codePager?.layout(true); return; }
+    if (!!guides.problems[state.problem]) { codePager?.layout(true); return; }
     const overflow = node.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom;
     if (overflow > 0) body.scrollTop += overflow + 16;
   }
   function fitWorkspace() {
-    if (state.problem !== 'problem-1') return;
+    if (!guides.problems[state.problem]) return;
     const bottom = body.getBoundingClientRect().bottom - parseFloat(getComputedStyle(body).paddingBottom);
     if (question.open && !help.open) {
       const gap = parseFloat(getComputedStyle(body).gap) || 0;
@@ -200,13 +201,13 @@
     if (!problem) return;
     const typed = isTypedTutorial(problem);
     soundToggle.hidden = !typed;
-    const lines = typed ? tutorialCodeLines(problem) : null;
+    const lines = typed ? tutorialCodeLines(problem, guides.problems[problem.id]) : null;
     const frames = typed ? framesFor(problem) : null;
     let kind = 'explanation';
     if (typed) {
       state.frame = Math.max(0, Math.min(state.frame, frames.length - 1));
       state.line = frames[state.frame].line; kind = frames[state.frame].kind;
-      state.step = lines[state.line].step;
+      state.step = frameStep(frames[state.frame], lines);
     }
     dialog.dataset.tutorialView = kind;
     state.step = Math.max(0, Math.min(state.step, problem.steps.length - 1));
@@ -226,24 +227,24 @@
     });
     content.replaceChildren();
     let activeText;
-    step.blocks.forEach(block => {
+    if (typed) {
+      const guide = guides.problems[problem.id];
+      const intro = guide.stageReviews ? kind === 'review' ? 'Review this stage alongside the code.' : guide.lines[state.line].title + '.' : guide.lines[state.line].stageDescription || step.blocks.find(block => block.type === 'paragraph')?.text;
+      if (intro) content.append(element('p', '', intro));
+      activeText = renderTypedCode(lines, animate && (kind === 'code' || kind === 'explanation'));
+    } else {
+      step.blocks.forEach(block => {
       if (block.type === 'code') {
-        if (typed) {
-          if (!activeText) activeText = renderTypedCode(lines, animate && !frames[state.frame].checkpoint);
-        } else {
-          const pre = element('pre');
-          pre.append(element('code', '', block.text));
-          content.append(pre);
-        }
+        const pre = element('pre');
+        pre.append(element('code', '', block.text));
+        content.append(pre);
       } else {
-        // A stage's check question follows its complete code, not an unfinished branch.
-        if (typed && block.type === 'question') return;
         const className = block.type === 'question' ? 'understanding-question' : block.type === 'error' ? 'common-error' : '';
-        const text = typed && block.type === 'paragraph' ? guides.problems[problem.id].lines[state.line].stageDescription || block.text : block.text;
-        content.append(element('p', className, text));
+        content.append(element('p', className, block.text));
       }
     });
-    if (typed && help.open && kind !== 'code') tutor.show(problem.id, state.line, kind);
+    }
+    if (typed && help.open && kind !== 'code') tutor.show(problem.id, state.line, kind, state.step);
     else tutor.hide();
     const last = typed ? state.frame === frames.length - 1 : state.step === problem.steps.length - 1;
     const progress = 'Step ' + (state.step + 1) + ' of ' + problem.steps.length;
@@ -251,7 +252,7 @@
     counter.hidden = typed; counter.textContent = typed ? '' : progress;
     dialog.querySelector('.tutorial-back').disabled = typed ? state.frame === 0 : state.step === 0;
     dialog.querySelector('.tutorial-next').disabled = typed && last;
-    dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'prediction' ? 'Predict' : frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
+    dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].kind === 'review' ? 'Review' : frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'prediction' ? 'Predict' : frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
     dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
     refreshCheckpointControls();
     dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length + (kind === 'prediction' ? '. Predict the next step.' : '') : '') : problem.title + '. Exam question. Tutorial collapsed.';
@@ -267,6 +268,7 @@
     launcher = button;
     tutor.reset();
     dialog.dataset.problem = problem.id;
+    dialog.dataset.guided = String(isTypedTutorial(problem));
     dialog.setAttribute('closedby', isTypedTutorial(problem) ? 'none' : 'closerequest');
     state.problem = id;
     state.step = 0;
@@ -294,22 +296,23 @@
     fitWorkspace();
   }
   help.addEventListener('toggle', () => {
-    if (state.problem === 'problem-1' && help.open) question.open = false;
+    if (!!guides.problems[state.problem] && help.open) question.open = false;
     footer.hidden = !help.open;
     if (state.problem && help.open) renderStep();
     else { typewriter.cancel(); typingSound.stop(); tutor.hide(); fitWorkspace(); }
   });
-  help.querySelector('summary').addEventListener('click', () => { if (state.problem === 'problem-1' && !help.open) void typingSound.unlock(); });
+  help.querySelector('summary').addEventListener('click', () => { if (!!guides.problems[state.problem] && !help.open) void typingSound.unlock(); });
   soundToggle.addEventListener('click', () => typingSound.setEnabled(!typingSound.enabled));
   document.addEventListener('visibilitychange', () => { if (document.hidden) typingSound.stop(); });
   window.addEventListener('pagehide', typingSound.dispose);
-  question.addEventListener('toggle', () => { if (state.problem === 'problem-1' && question.open && help.open) help.open = false; fitWorkspace(); });
+  question.addEventListener('toggle', () => { if (!!guides.problems[state.problem] && question.open && help.open) help.open = false; fitWorkspace(); });
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) typewriter.finish(); });
   compactView.addEventListener('change', () => {
-    if (state.problem !== 'problem-1') return;
+    if (!guides.problems[state.problem]) return;
     const problem = data.problems.find(item => item.id === state.problem), frames = framesFor(problem);
     const kind = dialog.dataset.tutorialView;
-    state.frame = frames.findIndex(frame => frame.line === state.line && frame.kind === kind);
+    const lines = tutorialCodeLines(problem, guides.problems[problem.id]);
+    state.frame = frames.findIndex(frame => frame.line === state.line && frame.kind === kind && frameStep(frame, lines) === state.step);
     if (state.frame < 0) state.frame = frames.findIndex(frame => frame.line === state.line && frame.kind === 'explanation');
     renderStep(false);
   });
@@ -348,8 +351,8 @@
     const problem = data.problems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
       void typingSound.unlock();
-      const lines = tutorialCodeLines(problem);
-      const target = framesFor(problem).findIndex(frame => lines[frame.line].step === targetStep);
+      const lines = tutorialCodeLines(problem, guides.problems[problem.id]);
+      const target = framesFor(problem).findIndex(frame => frameStep(frame, lines) === targetStep);
       if (!canVisitFrame(target)) return;
       state.frame = target;
     } else state.step = targetStep;

@@ -56,7 +56,7 @@ The older PDF exporter and personal-master mirror are **historical and must not
 be activated for these GCSE resources**. Their code/assets are retained, with
 no active PDF decks in `data/slide-sync.json`. See the
 [current school-link delivery and earlier pilot record](docs/slide-synchronisation.md).
-Slide delivery retains the **£0 additional-running-cost requirement**.
+Slide delivery retains the **Â£0 additional-running-cost requirement**.
 
 ## Navigation
 
@@ -89,82 +89,67 @@ Both scripts accept `--check`. Keep stable problem IDs and include the complete
 Python solution alongside its displayed steps so the teaching algorithm can be
 checked. Preserve Python indentation in code blocks.
 
-The `problem-1` pilot (Linear search on a string) fills the right pane and
-builds its solution one line at a time. Next line appends a line with a
-character-by-character typing animation; earlier lines remain above it in the
-same code block. A quick Next line click completes the current line before
-advancing. Back shows the preceding line immediately, and the four numbered
-stages jump to their first line. Closing or collapsing the tutorial cancels
-playback. Reduced-motion preferences show each new line immediately. The
-other tutorials retain their current layout and step navigation. Playback
-logic and cancellation tests live in `assets/tutorial-typewriter.js` and
-`tests/tutorial-typewriter.test.cjs`; the catalogue remains the source of code.
+All **22 Exam questions** use the approved guided workspace. It fills the right
+pane with a roughly 60/40 cumulative Python/tutor split on desktop. Each new
+line types character by character, with syntax colours, line numbers and an
+active-line marker; earlier lines remain available. Back shows preceding code
+without retyping, and numbered controls retain each problem's original stages.
+Reduced-motion rendering is immediate. Compact/short screens use successive
+code, explanation and question views, with fitted pages for long content.
 
-The same pilot has a roughly 60/40 code/tutor split on desktop. Its wider,
-unboxed right-hand area follows the current line with explanations, useful
-Remember guidance in a compact yellow card. The tutor is written only; spoken
-playback and its Play control have been removed at the user's request.
-Questions follow their explanations in the existing Next/Back flow;
-there are no Explanation or Quick check tabs. Opening the walkthrough closes
-the exam text so the two views do not compete for height. Both fit without
-internal scrolling. On small or short screens, code and explanation use
-successive views; short pages preserve any overflow text or earlier code.
-Answers persist inside an attempt and reset
-on reopening. All content remains available, including on the compact pages.
-Two selected **Predict the next step** checkpoints also appear before the scan
-starts and before the search stops at its first match. They follow the existing
-understanding checks and require a correct answer before the next code line or
-its explanation is shown. Each question has a distinct stable identity, so a
-prediction cannot inherit another question's answer. Next and stage jumps use
-the same earliest-unpassed-checkpoint limit; Back retains choices and reopening
-resets them all. Correct answers unlock without automatically moving on.
-The pilot's Exam question and Tutorial disclosures use the same larger type;
-Tutorial follows the question content directly. Long exam text still uses fitted
-pages on compact screens.
-`data/tutorial-guides.json` owns the explanations, checks and audio references.
-The builder rejects mismatched code/explanations; tests verify every audio digest
-and transcript. The original problem catalogue and the other 21 tutorials are
-preserved. See `assets/tutorial-audio/README.md` for generation and credits.
+There are **167 exact solution lines**, **88 understanding questions** and
+**42 selected next-action predictions** across the 111 original stages.
+Every code line has an algorithm-specific written explanation and useful
+Remember guidance. No spoken narration or Play control is used. Definitions,
+parameters, returns, accumulators, string methods, file modes/EOF, record
+formatting and boundary rules are explained in their actual program context.
 
-Python syntax colours appear with each typed character and remain on completed
-lines. Inline code in the tutor uses the same palette and heavier type; the
-underlying code and teaching text stay unchanged and selectable. Correct and
-incorrect answers have green/red feedback cards, a tick/cross and a text label.
-The Sound on/off control sits in the footer and governs quiet typing clicks,
-a correct-answer recording and a wrong-answer recording supplied by the user.
-Typing uses the original quiet, locally generated 18ms character clicks at the
-original modest level. There is no keyboard-file request or recorded lead-in.
-The supplied keyboard MP3 remains stored but inactive. The two selected answer
-MP3s are downloaded/decoded when the pilot first opens with Sound on, before
-Tutorial is expanded, then reused. Prepared answers start directly from cached
-buffers, without a new fetch/decode on selection. An unusually early current
-answer waits for its existing preload; obsolete requests remain cancelled.
-Typing follows real character ticks; instant/reduced-motion rendering creates
-no sound burst. Original MP3s and hashes remain retained.
-Sounds start only after an actual tutorial action/answer
-change. Restoring a saved answer is silent. Navigation, collapse,
-Close and hiding the page cancel active/pending effects. Muting stops all effects
-and is kept for the current page visit; enabling never replays an old sound.
-Unsupported sound leaves the tutorial usable.
-No external sound service or paid call is involved. The two runtime MP3s total
-88,215 bytes. All three supplied originals remain byte-for-byte unchanged.
-`assets/tutorial-code-style.js` and `assets/tutorial-typing-sound.js` contain the
-small isolated render/sound helpers, covered by exact-text and lifecycle tests.
+All 130 checkpoints use separate stable IDs. Unanswered or currently wrong
+answers block Next and all later stage targets. Correct unlocks without
+advancing automatically; changing to a wrong answer relocks. Predictions occur
+before their target code/explanation, rather than on every line. Back retains
+choices within an attempt; reopening or switching problem clears them. Sound
+availability has no role in passing a checkpoint.
 
-Only the pilot's explicit Close button dismisses its dialog. Backdrop/sidebar
-clicks and Escape leave the current line and answer intact. The final Next
-control becomes a disabled End button. The duplicated footer progress counter
-is hidden for the pilot; retain the blue tutor progress and four stage buttons.
-Other tutorials keep their current dismissal and progress behavior. Stored
-recordings, guide data and transcript checks remain intact as unused assets.
+The original catalogue, solutions and stage material are preserved. The 21
+new guides include **stage reviews** containing their original descriptions,
+reflection questions, common errors and test/extension stages. Temporary pass
+statements and diagnostic print examples are labelled practice examples, not
+appended to the final program. Explicit line-to-stage mappings prevent repeated
+step fragments duplicating the solution; blank separator lines are preserved.
+The approved string-search pilot retains its existing sequence and content.
+See [the per-tutorial coverage record](docs/exam-tutorial-coverage.md).
 
-The five pilot questions are checkpoints. Next stays disabled until the selected
-answer is correct, and later stage jumps cannot skip an unanswered or wrong
-checkpoint. Earlier views and Back remain available. A correct answer unlocks
-Next without automatically advancing; selecting a wrong answer again relocks
-progress. Selection/pass state lasts for the current attempt and clears on
-reopening. This works independently of sound or audio loading. A short prompt
-explains the lock, with the next control linked to it for assistive technology.
+Every dialog opens with Exam question expanded and Tutorial collapsed; the two
+views are mutually exclusive. Their disclosure headings have matching larger
+type. Tutorial follows the question content directly, with fitted exam pages
+when necessary. Header/footer, the original stage controls and Close remain
+reachable without internal scrolling. Only the explicit Close button dismisses
+a guided exam dialog; outside/menu clicks, Escape and the final disabled End
+control keep the attempt open. Blue tutor progress replaces the duplicate
+footer counter.
+
+Code references use coloured, heavier inline type. Correct/incorrect choices
+retain the green/red tick/cross feedback and option-specific teaching advice.
+The shared Sound switch controls the original quiet generated 18ms typing
+clicks and the user's exact correct/wrong MP3s. Both recordings prepare on the
+first real opening gesture and share the cache across tutorials. A prepared
+answer starts directly from its cached buffer; an exceptionally early valid
+answer may await the in-flight initial load. Muting/navigation/collapse/hiding/
+Close stop active effects and invalidate old requests. Restoration and enabling
+sound never replay an answer. Instant/reduced-motion rendering makes no burst
+of clicks. The supplied keyboard recording remains retained and inactive.
+There is no inference service, chatbot, pupil tracking, paid call or new spoken
+audio. The two runtime MP3s total 88,215 bytes and all supplied originals remain
+unchanged.
+
+`data/tutorial-guides.json` owns the line mappings, explanations and checkpoint
+content. The builder requires a complete guide for each existing Exam question.
+The isolated renderer/frame/tutor/sound helpers have per-program mapping/gating,
+state/reset, exact-prefix/highlighter and cancellation tests. Independent Python
+cases check every complete algorithm, including duplicate/absent matches,
+inclusive boundaries, function reuse and file preservation/empty-input cases.
+Retained pilot audio/transcript integrity tests remain in place.
 
 The web adaptations reconcile question/code inconsistencies, make the letter
 counter case insensitive for the chosen letter, use the stated safe-reading
@@ -291,7 +276,7 @@ web-font connection is needed at runtime.
 - 9 November 2026: built the approved Exam questions design with all four main
   tabs, four source categories, 13 native tutorials and 66 guided steps. Added
   public structured content, a deterministic page builder and accessible popup
-  controls. Empty File Handling and Level 1–3 collections await further content.
+  controls. Empty File Handling and Level 1â€“3 collections await further content.
 
 - 9 November 2026: added Tutorials / Programming Problems under GCSE Computer
   Science on every page, with a native landing page ready for the user's list.

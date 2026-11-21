@@ -1,19 +1,29 @@
 /* Line playback is separate from the page so cancellation can be tested without a browser. */
 (() => {
   'use strict';
-  function tutorialCodeLines(problem) {
+  function tutorialCodeLines(problem, guide) {
+    if (guide?.stageReviews) return guide.lines.map(line => ({ step: line.step, text: line.code }));
     return problem.steps.flatMap((step, stepIndex) => step.blocks
       .filter(block => block.type === 'code')
       .flatMap(block => block.text.split('\n').map(text => ({ step: stepIndex, text }))));
   }
   function walkthroughFrames(problem, guide, compact = false) {
-    return tutorialCodeLines(problem).flatMap((_, line) => [
+    const lines = tutorialCodeLines(problem, guide);
+    const forLine = line => [
       ...(compact ? [{ line, kind: 'code' }] : []),
       { line, kind: 'explanation' },
       ...['question', 'prediction'].filter(kind => guide.lines[line][kind])
         .map(kind => ({ line, kind, checkpoint: guide.lines[line][kind].id }))
-    ]);
+    ];
+    if (!guide.stageReviews) return lines.flatMap((_, line) => forLine(line));
+    let lastLine = 0;
+    return problem.steps.flatMap((_, step) => {
+      const stageLines = lines.flatMap((item, line) => item.step === step ? [line] : []);
+      if (stageLines.length) lastLine = stageLines.at(-1);
+      return [...stageLines.flatMap(forLine), { line: lastLine, step, kind: 'review' }];
+    });
   }
+  function frameStep(frame, lines) { return frame.step ?? lines[frame.line].step; }
   function checkpointLimit(frames, isCorrect) {
     const locked = frames.findIndex(frame => frame.checkpoint && !isCorrect(frame.checkpoint));
     return locked < 0 ? frames.length - 1 : locked;
@@ -54,7 +64,7 @@
     }
     return { play, cancel, finish, get playing() { return active !== null; } };
   }
-  const api = { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit };
+  const api = { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRCodeWalkthrough = api;
 })();

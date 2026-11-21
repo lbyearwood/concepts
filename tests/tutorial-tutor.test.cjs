@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const { checkAnswer, createTutor } = require('../assets/tutorial-tutor.js');
 const guides = require('../data/tutorial-guides.json');
 const codeStyle = require('../assets/tutorial-code-style.js');
+const catalogue = require('../data/programming-problems.json');
 
 function harness() {
   class Node {
@@ -23,7 +24,7 @@ function harness() {
     createTextNode: text => { const node = new Node('#text'); node.textContent = text; return node; }, createDocumentFragment: () => new Node('#fragment') };
   global.window = { CSRTutorialCodeStyle: codeStyle, CSRTutorialFit: { createPager: () => ({ layout() {} }) } };
   const panel = new Node('aside'), sounds = [];
-  const tutor = createTutor(panel, guides, { onAnswer: correct => sounds.push(correct) });
+  const tutor = createTutor(panel, guides, { onAnswer: correct => sounds.push(correct), problems: catalogue.problems });
   return { panel, tutor, sounds, nodes: () => walk(panel), cleanup() { delete global.document; delete global.window; } };
 }
 
@@ -36,6 +37,34 @@ test('written explanations and Remember are intact without any playback button o
     assert.ok(h.panel.textContent.includes('Remember: ' + guides.problems['problem-1'].lines[1].watchOut));
     assert.equal(h.nodes().filter(node => node.tagName === 'button' || node.tagName === 'audio').length, 0);
     assert.ok(h.nodes().some(node => node.className === 'tutor-inline-code'));
+  } finally { h.cleanup(); }
+});
+
+for (const problem of catalogue.problems) test(problem.id + ' preserves every checkpoint independently, restores silently and clears the attempt', () => {
+  const h = harness(), guide = guides.problems[problem.id];
+  try {
+    const checks = guide.lines.flatMap((line, index) => ['question','prediction'].filter(kind => line[kind]).map(kind => ({line:index,kind,q:line[kind]})));
+    for (const {line,kind,q} of checks) {
+      h.tutor.show(problem.id,line,kind);
+      assert.equal(h.tutor.isCorrect(problem.id,q.id),false);
+      let inputs=h.nodes().filter(n=>n.tagName==='input');
+      const right=q.choices.findIndex(c=>c.correct), wrong=q.choices.findIndex(c=>!c.correct);
+      inputs[wrong].events.change(); assert.equal(h.tutor.isCorrect(problem.id,q.id),false);
+      inputs[right].events.change(); assert.equal(h.tutor.isCorrect(problem.id,q.id),true);
+      const played=h.sounds.length;
+      h.tutor.show(problem.id,line,kind);
+      assert.equal(h.sounds.length,played);
+      inputs=h.nodes().filter(n=>n.tagName==='input'); assert.equal(inputs[right].checked,true);
+      inputs[wrong].events.change(); assert.equal(h.tutor.isCorrect(problem.id,q.id),false);
+      inputs[right].events.change();
+    }
+    h.tutor.reset();
+    checks.forEach(({q})=>assert.equal(h.tutor.isCorrect(problem.id,q.id),false));
+    if(guide.stageReviews) problem.steps.forEach((step,index)=>{
+      const line=guide.lines.findLastIndex(l=>l.step<=index);
+      h.tutor.show(problem.id,line,'review',index);
+      step.blocks.filter(b=>b.type!=='code').forEach(b=>assert.ok(h.panel.textContent.includes(b.text),problem.id+' stage '+index));
+    });
   } finally { h.cleanup(); }
 });
 
