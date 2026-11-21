@@ -15,7 +15,7 @@
     for (let i = 0; i < all.length; i += words) parts.push(all.slice(i, i + words).join(' '));
     return parts;
   }
-  function createPager(host, viewport, getItems, name) {
+  function createPager(host, viewport, getItems, name, decorate = (node, text) => { node.textContent = text; }) {
     const nav = document.createElement('div'); nav.className = 'fit-pager';
     const previous = document.createElement('button'), next = document.createElement('button'), label = document.createElement('span');
     previous.type = next.type = 'button'; previous.textContent = '‹'; next.textContent = '›';
@@ -45,7 +45,7 @@
           if (!oversized.length) break;
           oversized.forEach(item => {
             const count = Math.min(12, Math.ceil(item.textContent.split(/\s+/).length / 2));
-            const parts = textParts(item.textContent, count).map(text => { const copy = item.cloneNode(false); copy.textContent = text; return copy; });
+            const parts = textParts(item.textContent, count).map(text => { const copy = item.cloneNode(false); decorate(copy, text); return copy; });
             item.replaceWith(...parts);
           });
           items = getItems();

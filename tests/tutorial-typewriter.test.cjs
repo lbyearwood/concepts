@@ -75,3 +75,15 @@ test('reduced-motion and Back playback show the line immediately with no timer',
   assert.deepEqual(writes, ['', '    break']); assert.equal(completed, 1);
   assert.equal(timer.size, 0); assert.equal(player.playing, false);
 });
+
+test('key clicks follow real typed characters only, with no burst on finish, Back or cancellation', () => {
+  const timer = clock(), player = createTypewriter(timer), characters = [];
+  const options = { write() {}, onCharacter: character => characters.push(character) };
+  player.play('a🙂z', options); timer.tick(); timer.tick();
+  assert.deepEqual(characters, ['a', '🙂']);
+  player.finish(); assert.deepEqual(characters, ['a', '🙂']);
+  player.play('instant', { ...options, instant: true }); assert.equal(timer.size, 0);
+  player.play('stale', options); const stale = timer.callback;
+  player.cancel(); stale(); assert.deepEqual(characters, ['a', '🙂']);
+  player.play('new', options); timer.drain(); assert.deepEqual(characters, ['a', '🙂', 'n', 'e', 'w']);
+});

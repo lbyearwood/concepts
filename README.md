@@ -102,7 +102,7 @@ logic and cancellation tests live in `assets/tutorial-typewriter.js` and
 
 The same pilot has a roughly 60/40 code/tutor split on desktop. Its wider,
 unboxed right-hand area follows the current line with explanations, useful
-Remember guidance and a small play/pause icon for prepared British English
+Remember guidance in a compact yellow card and a small play/pause icon for prepared British English
 audio. Questions follow their explanations in the existing Next/Back flow;
 there are no Explanation or Quick check tabs. Opening the walkthrough closes
 the exam text so the two views do not compete for height. Both fit without
@@ -115,6 +115,18 @@ on reopening. All content remains available, including on the compact pages.
 The builder rejects mismatched code/explanations; tests verify every audio digest
 and transcript. The original problem catalogue and the other 21 tutorials are
 preserved. See `assets/tutorial-audio/README.md` for generation and credits.
+
+Python syntax colours appear with each typed character and remain on completed
+lines. Inline code in the tutor uses the same palette and heavier type; the
+underlying code and teaching text stay unchanged and selectable. Correct and
+incorrect answers have green/red feedback cards, a tick/cross and a text label.
+The keyboard icon toggles quiet typing clicks. These use a short locally
+generated Web Audio buffer, start only after a tutorial action, stop on
+navigation/collapse/Close and stay silent while narration plays. Muting is kept
+for the current page visit. Unsupported sound leaves the tutorial usable.
+No external service, paid call or additional audio download is involved.
+`assets/tutorial-code-style.js` and `assets/tutorial-typing-sound.js` contain the
+small isolated render/sound helpers, covered by exact-text and lifecycle tests.
 
 The web adaptations reconcile question/code inconsistencies, make the letter
 counter case insensitive for the chosen letter, use the stated safe-reading

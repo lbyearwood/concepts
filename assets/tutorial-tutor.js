@@ -43,7 +43,7 @@
     const choice = question.choices[index];
     return { correct: choice.correct, text: choice.feedback };
   }
-  function createTutor(panel, guides) {
+  function createTutor(panel, guides, { onNarrationState = () => {} } = {}) {
     const answers = new Map();
     let pager = null, playButton = null, playIcon = null, audioStatus = null;
     const node = (tag, className, text) => {
@@ -52,9 +52,11 @@
       if (text !== undefined) item.textContent = text;
       return item;
     };
+    const { renderTutorText, renderPython } = window.CSRTutorialCodeStyle;
     const player = createNarrationPlayer({
       createAudio: () => document.createElement('audio'),
       onState: phase => {
+        onNarrationState(phase);
         if (!playButton) return;
         const label = ({ playing: 'Pause explanation', paused: 'Resume explanation', ended: 'Replay explanation', loading: 'Loading audio' })[phase] || 'Play explanation';
         playButton.disabled = phase === 'loading';
@@ -66,7 +68,7 @@
       }
     });
     function show(problemId, lineIndex, kind = 'explanation') {
-      player.stop(); pager = null;
+      player.stop(); onNarrationState('stopped'); pager = null;
       const guide = guides.problems[problemId], line = guide?.lines[lineIndex];
       panel.hidden = !line;
       if (!line) return;
@@ -75,7 +77,7 @@
       const heading = node('header', 'tutor-heading');
       const copy = node('div', 'tutor-heading-copy');
       copy.append(node('p', 'tutor-line-label', 'Line ' + (lineIndex + 1) + ' of ' + guide.lines.length));
-      copy.append(node('h3', '', kind === 'question' ? 'Question' : line.title));
+      const title = node('h3'); renderTutorText(title, kind === 'question' ? 'Question' : line.title); copy.append(title);
       playButton = node('button', 'tutor-play'); playButton.type = 'button';
       playIcon = node('span', 'tutor-play-icon', '▶'); playIcon.setAttribute('aria-hidden', 'true');
       playButton.append(playIcon); playButton.addEventListener('click', player.toggle);
@@ -84,8 +86,9 @@
       panel.append(audioStatus);
       if (kind === 'question' && line.question) {
         const question = line.question, key = problemId + ':' + lineIndex;
-        panel.append(node('code', 'tutor-question-code', line.code.trim()));
+        const contextCode = node('code', 'tutor-question-code'); renderPython(contextCode, line.code.trim()); panel.append(contextCode);
         const prompt = node('p', 'tutor-check-prompt', question.prompt);
+        renderTutorText(prompt, question.prompt);
         prompt.id = 'tutor-prompt'; panel.append(prompt);
         const viewport = node('div', 'tutor-content');
         viewport.setAttribute('role', 'radiogroup'); viewport.setAttribute('aria-labelledby', prompt.id);
@@ -94,10 +97,13 @@
         function answer(index) {
           const result = checkAnswer(question, index); answers.set(key, index);
           viewport.querySelectorAll('[data-feedback]').forEach(item => item.remove());
-          const part = node('p', 'tutor-feedback ' + (result.correct ? 'is-correct' : 'is-incorrect'), result.text);
+          const body = result.text.replace(/^Correct\.\s*/, '');
+          const label = result.correct ? '✅ Correct. ' : '❌ Incorrect. ';
+          const part = node('p', 'tutor-feedback ' + (result.correct ? 'is-correct' : 'is-incorrect'));
+          renderTutorText(part, label + body);
           part.dataset.feedback = 'true'; part.dataset.fitText = 'true';
           part.setAttribute('aria-hidden', 'true'); viewport.append(part);
-          announcement.textContent = result.text;
+          announcement.textContent = (result.correct ? 'Correct. ' : 'Incorrect. ') + body;
           pager?.layout(); pager?.layout(false, viewport.querySelector('[data-feedback]'));
         }
         question.choices.forEach((choice, index) => {
@@ -105,23 +111,24 @@
           input.type = 'radio'; input.name = 'tutor-answer-' + lineIndex; input.value = String(index);
           input.checked = answers.get(key) === index;
           input.addEventListener('change', () => answer(index));
-          label.append(input, node('span', '', choice.text)); viewport.append(label);
+          const text = node('span'); renderTutorText(text, choice.text); label.append(input, text); viewport.append(label);
         });
         panel.append(viewport, announcement);
-        pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'answer');
+        pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'answer', renderTutorText);
         if (answers.has(key)) answer(answers.get(key));
       } else {
         const viewport = node('div', 'tutor-content tutor-explanation');
         [...line.paragraphs, 'Remember: ' + line.watchOut].forEach((text, index) => {
-          const part = node('p', index === line.paragraphs.length ? 'tutor-reminder' : '', text);
+          const part = node('p', index === line.paragraphs.length ? 'tutor-reminder' : '');
+          renderTutorText(part, text);
           part.dataset.fitText = 'true'; viewport.append(part);
         });
         panel.append(viewport);
-        pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'explanation');
+        pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'explanation', renderTutorText);
       }
       player.setSource(new URL('../../../' + line.audio, window.location.href).href);
     }
-    function hide() { player.stop(); panel.hidden = true; pager = null; }
+    function hide() { player.stop(); onNarrationState('stopped'); panel.hidden = true; pager = null; }
     function reset() { answers.clear(); hide(); }
     return { show, hide, reset, layout: () => pager?.layout() };
   }

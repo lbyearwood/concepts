@@ -27,9 +27,9 @@
       line.write(line.characters.join(''));
       line.done();
     }
-    function play(text, { write, done = () => {}, instant = false }) {
+    function play(text, { write, done = () => {}, onCharacter = () => {}, instant = false }) {
       cancel();
-      const line = { characters: Array.from(text), position: 0, write, done };
+      const line = { characters: Array.from(text), position: 0, write, done, onCharacter };
       active = line;
       if (instant || line.characters.length === 0) { finish(); return; }
       write('');
@@ -38,6 +38,7 @@
         timer = null;
         line.position++;
         write(line.characters.slice(0, line.position).join(''));
+        line.onCharacter(line.characters[line.position - 1]);
         if (line.position === line.characters.length) {
           active = null;
           done();

@@ -1,0 +1,71 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { tokenizePython, visibleTokens, tutorSegments, renderPython, renderTutorText } = require('../assets/tutorial-code-style.js');
+const guide = require('../data/tutorial-guides.json').problems['problem-1'];
+
+test('every typed prefix and completed line preserves the exact approved Python', () => {
+  for (const { code } of guide.lines) {
+    assert.equal(tokenizePython(code).map(token => token.text).join(''), code);
+    for (let count = 0; count <= code.length; count++) {
+      assert.equal(visibleTokens(code, count).map(token => token.text).join(''), code.slice(0, count));
+    }
+  }
+  const text = '    print("<script> & \\"quoted\\" ✓🙂") # keep spaces';
+  assert.equal(tokenizePython(text).map(token => token.text).join(''), text);
+});
+
+test('function names and strings have their final colour from the first typed character', () => {
+  assert.deepEqual(visibleTokens('input("Enter some text: ")', 1), [{ text: 'i', type: 'builtin' }]);
+  assert.deepEqual(visibleTokens('"Enter some text: "', 6), [{ text: '"Enter', type: 'string' }]);
+  const source = tokenizePython("if text[i] == 'a':");
+  assert.equal(source.find(token => token.text === 'if').type, 'keyword');
+  assert.equal(source.find(token => token.text === 'text').type, 'identifier');
+  assert.equal(source.find(token => token.text === "'a'").type, 'string');
+  assert.equal(tokenizePython('found = False').at(-1).type, 'constant');
+  assert.equal(tokenizePython('range(5)')[2].type, 'number');
+});
+
+test('inline expressions stay whole and formatting does not alter teaching text', () => {
+  const text = 'input() stores text. found = False, text[i], range(len(text)) and if found use the saved flag.';
+  const segments = tutorSegments(text);
+  assert.equal(segments.map(segment => segment.text).join(''), text);
+  const code = segments.filter(segment => segment.type === 'code').map(segment => segment.text);
+  for (const expression of ['input()', 'found = False', 'text[i]', 'range(len(text))', 'if found']) assert.ok(code.includes(expression));
+  assert.deepEqual(tutorSegments('A match has been found.').filter(segment => segment.type === 'code'), []);
+  for (const line of guide.lines) {
+    const texts = [line.title, ...line.paragraphs, line.watchOut, ...(line.question ? [line.question.prompt, ...line.question.choices.flatMap(choice => [choice.text, choice.feedback])] : [])];
+    for (const text of texts) assert.equal(tutorSegments(text).map(segment => segment.text).join(''), text);
+  }
+});
+
+function dom() {
+  class Node {
+    constructor(tag) { this.tagName = tag; this.children = []; this.className = ''; this.value = ''; }
+    append(...nodes) { for (const node of nodes) this.children.push(...(node.tagName === '#fragment' ? node.children : [node])); }
+    replaceChildren(...nodes) { this.children = []; this.value = ''; this.append(...nodes); }
+    set textContent(value) { this.value = value; this.children = []; }
+    get textContent() { return this.value + this.children.map(node => node.textContent).join(''); }
+    get firstChild() { return this.children[0]; }
+  }
+  return {
+    createElement: tag => new Node(tag), createDocumentFragment: () => new Node('#fragment'),
+    createTextNode: text => { const node = new Node('#text'); node.textContent = text; return node; }
+  };
+}
+
+test('DOM rendering keeps copying exact, treats markup as text and emphasizes labels', () => {
+  global.document = dom();
+  try {
+    const target = document.createElement('code'), source = '    print("<img src=x onerror=alert(1)>")';
+    renderPython(target, source);
+    assert.equal(target.textContent, source);
+    assert.ok(target.children.every(node => node.tagName === 'span'));
+    assert.equal(target.children.find(node => node.className === 'syntax-string').textContent, '"<img src=x onerror=alert(1)>"');
+    for (const label of ['Remember: ', '✅ Correct. ', '❌ Incorrect. ']) {
+      const text = label + 'input() returns text; found = False until a match.';
+      renderTutorText(target, text); assert.equal(target.textContent, text);
+      assert.equal(target.firstChild.tagName, 'strong');
+      assert.ok(target.children.some(node => node.className === 'tutor-inline-code'));
+    }
+  } finally { delete global.document; }
+});

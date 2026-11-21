@@ -16,7 +16,24 @@
   const footer = dialog.querySelector('.tutorial-footer');
   const question = dialog.querySelector('.tutorial-question');
   const guides = JSON.parse(document.getElementById('tutorial-guide-data').textContent);
-  const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides);
+  const soundToggle = dialog.querySelector('.typing-sound-toggle');
+  const typingSound = window.CSRTutorialTypingSound.createTypingSound({
+    createContext: () => { const Context = window.AudioContext || window.webkitAudioContext; return Context ? new Context() : null; },
+    isVisible: () => !document.hidden && dialog.open && help.open && state.problem === 'problem-1',
+    onChange: status => {
+      soundToggle.setAttribute('aria-pressed', String(status.enabled));
+      soundToggle.setAttribute('aria-label', status.enabled ? 'Mute typing sound' : 'Enable typing sound');
+      soundToggle.title = status.unavailable ? 'Typing sound unavailable; click to retry' : status.enabled ? status.narrating ? 'Typing sound on; quiet during narration' : 'Typing sound on' : 'Typing sound off';
+      soundToggle.querySelector('.typing-sound-label').textContent = status.enabled ? 'Sound on' : 'Sound off';
+      soundToggle.dataset.audioReady = String(status.ready);
+      soundToggle.dataset.narrationQuiet = String(status.narrating);
+      soundToggle.dataset.clicksPlayed = String(status.played);
+    }
+  });
+  const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
+    onNarrationState: phase => typingSound.setNarrating(phase === 'loading' || phase === 'playing')
+  });
+  const { renderPython } = window.CSRTutorialCodeStyle;
   let codePager = null, examPager = null;
   new ResizeObserver(fitWorkspace).observe(body);
   const { tutorialCodeLines, createTypewriter, walkthroughFrames } = window.CSRCodeWalkthrough;
@@ -106,7 +123,8 @@
     lines.slice(0, state.line + 1).forEach((line, index) => {
       const row = element('span', 'tutorial-code-line' + (index === state.line ? ' is-current' : ''));
       row.dataset.line = String(index + 1);
-      const text = element('span', 'tutorial-code-text', index === state.line ? '' : line.text);
+      const text = element('span', 'tutorial-code-text');
+      renderPython(text, line.text, index === state.line ? 0 : line.text.length);
       row.append(text);
       code.append(row);
       if (index === state.line) activeText = text;
@@ -120,9 +138,10 @@
     typewriter.play(lines[state.line].text, {
       instant,
       write: text => {
-        activeText.textContent = text;
+        renderPython(activeText, lines[state.line].text, text.length);
         if (help.open) keepCodeVisible(activeText);
       },
+      onCharacter: character => typingSound.tap(character),
       done: () => {
         pre.classList.remove('is-typing');
         pre.setAttribute('aria-busy', 'false');
@@ -132,10 +151,12 @@
   }
   function renderStep(animate = true) {
     typewriter.cancel();
+    typingSound.stop();
     codePager = null;
     const problem = data.problems.find(item => item.id === state.problem);
     if (!problem) return;
     const typed = isTypedTutorial(problem);
+    soundToggle.hidden = !typed;
     const lines = typed ? tutorialCodeLines(problem) : null;
     const frames = typed ? framesFor(problem) : null;
     let kind = 'explanation';
@@ -227,8 +248,12 @@
     if (state.problem === 'problem-1' && help.open) question.open = false;
     footer.hidden = !help.open;
     if (state.problem && help.open) renderStep();
-    else { typewriter.cancel(); tutor.hide(); fitWorkspace(); }
+    else { typewriter.cancel(); typingSound.stop(); tutor.hide(); fitWorkspace(); }
   });
+  help.querySelector('summary').addEventListener('click', () => { if (state.problem === 'problem-1' && !help.open) void typingSound.unlock(); });
+  soundToggle.addEventListener('click', () => typingSound.setEnabled(!typingSound.enabled));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) typingSound.stop(); });
+  window.addEventListener('pagehide', typingSound.dispose);
   question.addEventListener('toggle', () => { if (state.problem === 'problem-1' && question.open && help.open) help.open = false; fitWorkspace(); });
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) typewriter.finish(); });
   compactView.addEventListener('change', () => {
@@ -273,6 +298,7 @@
     state.step = Number(button.dataset.step);
     const problem = data.problems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
+      void typingSound.unlock();
       const lines = tutorialCodeLines(problem);
       state.frame = framesFor(problem).findIndex(frame => lines[frame.line].step === state.step);
     }
@@ -289,6 +315,7 @@
   dialog.querySelector('.tutorial-next').addEventListener('click', () => {
     const problem = data.problems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
+      void typingSound.unlock();
       typewriter.finish();
       const frames = framesFor(problem);
       if (state.frame === frames.length - 1) dialog.close();
@@ -305,6 +332,7 @@
   });
   dialog.addEventListener('close', () => {
     typewriter.cancel();
+    typingSound.stop();
     tutor.reset();
     state.problem = null;
     if (launcher?.isConnected) launcher.focus();
