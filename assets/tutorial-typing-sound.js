@@ -1,30 +1,45 @@
-/* Quiet, locally generated key/answer effects. One mute switch; no queued backlog. */
+/* User-selected recordings, shared mute and cancellation; no queued playback. */
 (() => {
   'use strict';
-  function createTypingSound({ createContext, isVisible = () => true, onChange = () => {}, random = Math.random }) {
-    let context = null, gain = null, enabled = true, unavailable = false, played = 0, answersPlayed = 0, lastAnswer = '', generation = 0;
-    let buffers = new Map();
+  const soundFiles = Object.freeze({
+    typing: 'dragon-studio-keyboard-typing-sound-effect-335503.mp3',
+    correct: 'dragon-studio-correct-472358.mp3',
+    incorrect: 'universfield-wrong-answer-126515.mp3'
+  });
+  async function fetchBuffer(url, context) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Sound unavailable');
+    return context.decodeAudioData(await response.arrayBuffer());
+  }
+  function createTypingSound({ createContext, baseUrl, loadBuffer = fetchBuffer, isVisible = () => true, onChange = () => {} }) {
+    let context = null, gains = null, buffers = new Map(), enabled = true, unavailable = false, generation = 0;
+    let played = 0, answersPlayed = 0, lastAnswer = '', errorKind = '', typingSource = null, typingPending = null, typingEpoch = 0;
     const sources = new Set();
-    const report = () => onChange({ enabled, unavailable, ready: context?.state === 'running', played, answersPlayed, lastAnswer });
-    function stop() {
-      generation++;
-      for (const source of sources) { try { source.stop(); source.disconnect(); } catch (_) {} }
-      sources.clear();
+    const report = () => onChange({ enabled, unavailable, ready: context?.state === 'running', played, answersPlayed, lastAnswer,
+      typingActive: !!typingSource, activeEffects: sources.size, errorKind, lastAnswerFile: lastAnswer ? soundFiles[lastAnswer] : '' });
+    const visible = () => enabled && isVisible() && context?.state === 'running';
+    function stopSource(source) {
+      sources.delete(source);
+      try { source.stop(); source.disconnect(); } catch (_) {}
     }
-    function getBuffer(kind) {
-      if (buffers.has(kind)) return buffers.get(kind);
-      const duration = kind === 'correct' ? 0.42 : kind === 'incorrect' ? 0.18 : 0.018;
-      const buffer = context.createBuffer(1, Math.ceil(context.sampleRate * duration), context.sampleRate);
-      const samples = buffer.getChannelData(0);
-      for (let i = 0; i < samples.length; i++) {
-        const time = i / context.sampleRate, wave = frequency => Math.sin(time * Math.PI * 2 * frequency);
-        samples[i] = kind === 'typing'
-          ? ((random() * 2 - 1) * 0.6 + wave(180) * 0.25) * Math.exp(-time * 260)
-          : kind === 'correct'
-            ? (wave(880) + wave(1320) * 0.28 + wave(1760) * 0.13) / 1.41 * Math.min(1, time / 0.004) * Math.exp(-time * 9)
-            : (wave(140) + wave(280) * 0.35 + wave(420) * 0.2) / 1.55 * Math.min(1, time / 0.004, (duration - time) / 0.03) * 0.8;
+    function stopTyping() {
+      typingEpoch++; typingPending = null;
+      if (typingSource) stopSource(typingSource);
+      typingSource = null; report();
+    }
+    function stop() {
+      generation++; stopTyping();
+      for (const source of sources) stopSource(source);
+      report();
+    }
+    function bufferFor(kind) {
+      if (!buffers.has(kind)) {
+        const cache = buffers, current = context;
+        const pending = Promise.resolve().then(() => loadBuffer(new URL(soundFiles[kind], baseUrl).href, current))
+          .catch(error => { if (cache.get(kind) === pending) cache.delete(kind); throw error; });
+        cache.set(kind, pending);
       }
-      buffers.set(kind, buffer); return buffer;
+      return buffers.get(kind);
     }
     async function unlock() {
       if (!enabled) return false;
@@ -32,37 +47,53 @@
         if (!context || context.state === 'closed') {
           context = createContext();
           if (!context) throw new Error('No Web Audio support');
-          gain = context.createGain(); gain.gain.value = 0.045; gain.connect(context.destination);
-          buffers = new Map(); getBuffer('typing');
+          gains = { typing: context.createGain(), answer: context.createGain() };
+          gains.typing.gain.value = 0.8; gains.answer.gain.value = 0.22;
+          Object.values(gains).forEach(gain => gain.connect(context.destination));
+          buffers = new Map();
         }
         if (context.state !== 'running') await context.resume();
         unavailable = false; report(); return context.state === 'running';
       } catch (_) { unavailable = true; enabled = false; stop(); report(); return false; }
     }
-    function play(kind, rate = 1) {
-      if (!enabled || !isVisible() || context?.state !== 'running') return false;
+    function play(kind, buffer, loop = false) {
+      if (!visible()) return null;
+      const source = context.createBufferSource();
       try {
-        const source = context.createBufferSource();
-        source.buffer = getBuffer(kind); source.playbackRate.value = rate;
-        source.connect(gain); sources.add(source);
-        source.onended = () => { sources.delete(source); source.disconnect(); };
-        source.start();
-        if (kind === 'typing') played++;
-        else { answersPlayed++; lastAnswer = kind; }
-        report(); return true;
-      } catch (_) { unavailable = true; enabled = false; stop(); report(); return false; }
+        source.buffer = buffer; source.loop = loop;
+        source.connect(kind === 'typing' ? gains.typing : gains.answer); sources.add(source);
+        source.onended = () => { sources.delete(source); if (typingSource === source) typingSource = null; source.disconnect(); report(); };
+        source.start(); return source;
+      } catch (error) { stopSource(source); throw error; }
     }
-    function tap(character) { if (character !== '\n') play('typing', character === ' ' ? 0.8 : 0.92 + random() * 0.16); }
+    function tap(character) {
+      if (character === '\n' || !visible()) return;
+      played++; report();
+      if (typingSource || typingPending) return;
+      const request = { generation, epoch: typingEpoch, context };
+      typingPending = request;
+      void bufferFor('typing').then(buffer => {
+        if (request.generation !== generation || request.epoch !== typingEpoch || request.context !== context || !visible()) return;
+        typingSource = play('typing', buffer, true); errorKind = ''; report();
+      }).catch(() => { if (request.generation === generation && request.epoch === typingEpoch) { errorKind = 'typing'; report(); } })
+        .finally(() => { if (typingPending === request) typingPending = null; });
+    }
     async function answer(correct) {
-      stop(); const request = generation;
+      stop(); const request = generation, kind = correct ? 'correct' : 'incorrect';
       if (!enabled || !isVisible() || !await unlock() || request !== generation) return false;
-      return play(correct ? 'correct' : 'incorrect');
+      const current = context;
+      try {
+        const buffer = await bufferFor(kind);
+        if (request !== generation || current !== context || !visible()) return false;
+        if (!play(kind, buffer)) return false;
+        answersPlayed++; lastAnswer = kind; errorKind = ''; report(); return true;
+      } catch (_) { if (request === generation) { errorKind = kind; report(); } return false; }
     }
     function setEnabled(value) { enabled = value; if (!enabled) stop(); report(); if (enabled) void unlock(); }
     function dispose() { stop(); if (context && context.state !== 'closed') void context.close().catch(() => {}); }
-    return { unlock, tap, answer, stop, dispose, setEnabled, get enabled() { return enabled; } };
+    return { unlock, tap, answer, stopTyping, stop, dispose, setEnabled, get enabled() { return enabled; } };
   }
-  const api = { createTypingSound };
+  const api = { createTypingSound, soundFiles };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRTutorialTypingSound = api;
 })();

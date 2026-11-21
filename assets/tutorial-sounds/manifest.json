@@ -1,0 +1,30 @@
+{
+  "provided": "2026-11-21",
+  "source": "User-supplied recordings; copied without modification",
+  "sounds": {
+    "typing": {
+      "file": "dragon-studio-keyboard-typing-sound-effect-335503.mp3",
+      "bytes": 259134,
+      "sha256": "cd043f1b6a0f52388b2754e5b648f343baeda4b1af93cf5e35582839568eef4c",
+      "duration": 8.097959183673469,
+      "sampleRate": 44100,
+      "channels": 2
+    },
+    "correct": {
+      "file": "dragon-studio-correct-472358.mp3",
+      "bytes": 42240,
+      "sha256": "a106868fd8a145542ed741b1a784a9324c3b6bcbadbef1cb5680f6ac0dad0097",
+      "duration": 1.32,
+      "sampleRate": 48000,
+      "channels": 2
+    },
+    "incorrect": {
+      "file": "universfield-wrong-answer-126515.mp3",
+      "bytes": 45975,
+      "sha256": "16098fa3e3c9b98a9b53397f935edbcc8bb6970d991a0fbad6305811585d7796",
+      "duration": 1.436734693877551,
+      "sampleRate": 44100,
+      "channels": 2
+    }
+  }
+}

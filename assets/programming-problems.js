@@ -32,6 +32,7 @@
   const guides = JSON.parse(document.getElementById('tutorial-guide-data').textContent);
   const soundToggle = dialog.querySelector('.typing-sound-toggle');
   const typingSound = window.CSRTutorialTypingSound.createTypingSound({
+    baseUrl: new URL('../../../assets/tutorial-sounds/', window.location.href).href,
     createContext: () => { const Context = window.AudioContext || window.webkitAudioContext; return Context ? new Context() : null; },
     isVisible: () => !document.hidden && dialog.open && help.open && state.problem === 'problem-1',
     onChange: status => {
@@ -43,6 +44,10 @@
       soundToggle.dataset.clicksPlayed = String(status.played);
       soundToggle.dataset.answersPlayed = String(status.answersPlayed);
       soundToggle.dataset.lastAnswer = status.lastAnswer;
+      soundToggle.dataset.lastAnswerFile = status.lastAnswerFile;
+      soundToggle.dataset.typingActive = String(status.typingActive);
+      soundToggle.dataset.activeEffects = String(status.activeEffects);
+      soundToggle.dataset.soundError = status.errorKind;
     }
   });
   const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
@@ -158,6 +163,7 @@
       },
       onCharacter: character => typingSound.tap(character),
       done: () => {
+        typingSound.stopTyping();
         pre.classList.remove('is-typing');
         pre.setAttribute('aria-busy', 'false');
       }
