@@ -36,6 +36,8 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-modal { position:fixed; inset:24px 24px 24px calc(var(--sidebar-width) + 24px); width:min(720px,calc(100vw - var(--sidebar-width) - 48px)); height:fit-content; max-width:none; max-height:calc(100dvh - 48px); margin:0 auto; padding:0; overflow:visible; border:3px solid #101223; background:#fff; color:#101223; box-shadow:7px 7px 0 rgb(16 18 35 / .18); font:14px/1.5 Arial,Helvetica,sans-serif; }
 .tutorial-modal [hidden] { display:none !important; }
 .tutorial-modal[open] { display:flex; flex-direction:column; }
+.tutorial-modal[data-problem="problem-1"] { inset:0 0 0 var(--sidebar-width); width:auto; height:auto; max-height:none; margin:0; box-shadow:none; }
+.tutorial-modal[data-problem="problem-1"] .tutorial-body { flex:1; }
 .tutorial-modal::backdrop { background:rgb(16 18 35 / .42); }
 .tutorial-header { display:flex; flex:none; justify-content:space-between; gap:20px; align-items:center; padding:19px 22px; background:#1433ff; color:#fff; }
 .tutorial-path { margin:0 0 5px; font-size:11px; font-weight:700; opacity:.85; }

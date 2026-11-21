@@ -109,6 +109,7 @@
     const problem = data.problems.find(item => item.id === id);
     if (!problem) return;
     launcher = button;
+    dialog.dataset.problem = problem.id;
     state.problem = id;
     state.step = 0;
     const question = dialog.querySelector('.tutorial-question');
