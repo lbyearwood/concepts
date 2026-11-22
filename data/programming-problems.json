@@ -15,6 +15,38 @@
     {
       "id": "files",
       "title": "File Handling"
+    },
+    {
+      "id": "arrays-nested-loops",
+      "title": "2D Arrays & Nested Loops"
+    },
+    {
+      "id": "calculations",
+      "title": "Calculations"
+    },
+    {
+      "id": "strings",
+      "title": "String Handling"
+    },
+    {
+      "id": "validation-authentication",
+      "title": "Validation & Authentication"
+    },
+    {
+      "id": "random-numbers",
+      "title": "Random Numbers"
+    },
+    {
+      "id": "searching-sorting",
+      "title": "Searching & Sorting"
+    },
+    {
+      "id": "tracing-debugging-testing",
+      "title": "Tracing, Debugging & Testing"
+    },
+    {
+      "id": "sql",
+      "title": "SQL"
     }
   ],
   "problems": [

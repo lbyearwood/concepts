@@ -90,11 +90,13 @@ def output():
     sidebar = re.search(r'  <aside class="site-sidebar".*?</aside>', previous, re.S)
     if not sidebar:
         raise ValueError('Missing shared sidebar')
-    categories = []
+    categories, category_options = [], []
     for index, category in enumerate(data['categories']):
         count = sum(problem['category'] == category['id'] for problem in data['problems'])
         badge = f' <span class="category-count">{count}</span>' if count else ''
-        categories.append(f'        <button id="category-{category["id"]}" type="button" role="tab" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-category="{category["id"]}" tabindex="{0 if index == 0 else -1}">{escape(category["title"])}{badge}</button>')
+        categories.append(f'        <button id="category-{category["id"]}" type="button" role="tab" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-category="{category["id"]}" tabindex="{0 if index == 0 else -1}"><span class="category-name">{escape(category["title"])}</span>{badge}</button>')
+        option_label = category['title'] + (f' ({count})' if count else '')
+        category_options.append(f'          <option value="{category["id"]}">{escape(option_label)}</option>')
     problems = [problem for problem in data['problems'] if problem['category'] == 'traversal']
     practice_categories = []
     for index, category in enumerate(data['practiceCategories']):
@@ -106,7 +108,7 @@ def output():
     for index, problem in enumerate(problems, 1):
         items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open question</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
     content = TEMPLATE.read_text(encoding='utf-8')
-    values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__PRACTICE_CATEGORIES__': '\n'.join(practice_categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c'), '__TUTOR_GUIDE_DATA__': json.dumps(guides, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
+    values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__CATEGORY_OPTIONS__': '\n'.join(category_options), '__PRACTICE_CATEGORIES__': '\n'.join(practice_categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c'), '__TUTOR_GUIDE_DATA__': json.dumps(guides, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
     for token, value in values.items():
         if content.count(token) != 1:
             raise ValueError(f'Missing or duplicate template token: {token}')
