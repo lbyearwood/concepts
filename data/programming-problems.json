@@ -33,7 +33,19 @@
           "Compare each character with lowercase a and update the flag when a match is found.",
           "Stop searching once a match is found.",
           "Display a clear message saying whether a was found."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Collect and store the user's text input.",
+            "Initialise the Boolean flag to False before searching.",
+            "Visit valid character indices in order.",
+            "Compare the indexed character with lowercase a and set the flag on a match.",
+            "Stop scanning as soon as a match has been found.",
+            "Output an appropriate found or not-found message using the resulting flag."
+          ]
+        }
       },
       "steps": [
         {
@@ -120,7 +132,19 @@
           "Asks the user to enter a score they want to look for and stores this value.",
           "Goes through each stored score in turn and compares it with the user’s chosen score.",
           "Shows a clear message to say that the score has been found if any of the values match the one the user entered."
-        ]
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.pbjrso3inssu",
+          "sourceTitle": "[4] Linear search on a list",
+          "points": [
+            "A suitable group of whole number scores is stored ready to be checked.",
+            "The user is asked for a score to search for and this value is stored.",
+            "Each stored score is compared in turn with the user’s chosen score.",
+            "A clear message is shown when a matching score is found."
+          ]
+        }
       },
       "steps": [
         {
@@ -224,7 +248,19 @@
           "Goes through each animal in the list from the first to the last.",
           "For each animal, carries out a simple action, such as displaying its name.",
           "Makes sure all animal names in the list have been shown by the end of the program."
-        ]
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.6ij9q2d5b4g2",
+          "sourceTitle": "[4] For each loop",
+          "points": [
+            "A suitable list of animal names is created and stored.",
+            "The solution clearly goes through each animal in the list in order.",
+            "An appropriate action (for example, displaying the animal name) is carried out for every item in the list.",
+            "The final output shows that all animals in the list have been processed."
+          ]
+        }
       },
       "steps": [
         {
@@ -306,7 +342,19 @@
           "Works out how many positions are in the list before any checking starts.",
           "Uses position numbers to visit each product from the first position to the last and prints each product.",
           "Makes sure that every position in the list is visited once so that all products are shown in order."
-        ]
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.tydfa9ddl5t6",
+          "sourceTitle": "[4] For in range loop",
+          "points": [
+            "A suitable list of product names is created and stored.",
+            "The total number of positions in the list is obtained before the loop starts.",
+            "Position numbers are used to visit and print each product from the first to the last, with no positions skipped or repeated.",
+            "The final output clearly shows that all products in the list have been printed in order."
+          ]
+        }
       },
       "steps": [
         {
@@ -393,7 +441,19 @@
           "Repeats a fixed number of times, each time asking the user to enter one shopping item and adding it to the stored list.",
           "After all items have been entered, displays the complete shopping list.",
           "Makes sure the final message clearly shows every item that was entered."
-        ]
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.yk1w4lxohvj8",
+          "sourceTitle": "[4] Append",
+          "points": [
+            "An empty storage for shopping items is set up before any input is taken.",
+            "A fixed number of repeats is used, and during each repeat the user is asked to enter a single shopping item.",
+            "Each new item is added to the stored shopping list as it is entered.",
+            "After all entries are complete, the whole list of items is shown clearly in the final output."
+          ]
+        }
       },
       "steps": [
         {
@@ -503,7 +563,19 @@
           "Check whether that value is an empty string.",
           "Display the index of the first empty position.",
           "Stop the search immediately after that position is found."
-        ]
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.f0he2npx2jfo",
+          "sourceTitle": "[4] Empty position",
+          "points": [
+            "A suitable list with a mixture of filled and empty positions is created and stored.",
+            "Each position in the list is checked in order until an empty one is found.",
+            "When an empty position is found, its index (position number) is shown clearly in the output.",
+            "The search stops once the first empty position has been found and shown."
+          ]
+        }
       },
       "steps": [
         {
@@ -649,7 +721,21 @@
           "2) Goes through every position in the list one at a time using index numbers.\n3) Reads the value stored at each index before checking it.\n4) Checks whether the value meets two conditions at the same time (inside a specific range).",
           "5) When the first value that meets both conditions is found, shows its index and its value.",
           "6) Stops searching immediately after the first match."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.bt3magr80hfb",
+          "sourceTitle": "[6] Two Conditions",
+          "points": [
+            "A suitable list of whole number readings is created and stored.",
+            "Every index position in the list is checked in order.",
+            "The value at each index is correctly read before checking the conditions.",
+            "Two conditions are checked at the same time to decide whether the value is inside the required range.",
+            "When the first value meeting both conditions is found, its index and value are shown clearly.",
+            "The search stops immediately after the first matching value is found."
+          ]
+        }
       },
       "steps": [
         {
@@ -796,7 +882,21 @@
           "Checks whether the value at the current position matches the user’s choice.",
           "When a match is found, shows the index where the value was found.",
           "Stops checking after the correct index has been shown."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.9py6fdz666b8",
+          "sourceTitle": "[6] Print the index number",
+          "points": [
+            "A suitable list of values is created and stored ready to search.",
+            "The user’s chosen value is requested and stored correctly.",
+            "Every index position in the list is checked in order.",
+            "The value at each index is compared correctly with the user’s choice.",
+            "When a match is found, the index where it occurs is clearly shown in the output.",
+            "The search ends after the position of the matching value has been found and shown."
+          ]
+        }
       },
       "steps": [
         {
@@ -903,7 +1003,21 @@
           "Increases the counter every time the current character matches the chosen letter (you can assume this is case insensitive).",
           "Displays a clear message showing how many times the letter appeared in the text.",
           "Assume that the user enters exactly one letter."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.auonvxwk15lb",
+          "sourceTitle": "[6] Count a letter",
+          "points": [
+            "Input is collected for the full line of text.",
+            "Input is collected for the single letter to search for.",
+            "A counter variable is created and set to 0 before the loop starts.",
+            "A loop goes through every character position in the text without going out of range.",
+            "The program correctly checks if the current character matches the chosen letter (case insensitive) and increases the counter.",
+            "The final output clearly displays the count with a meaningful message."
+          ]
+        }
       },
       "steps": [
         {
@@ -1029,7 +1143,21 @@
           "Goes through each score one at a time and decides whether it is even or odd.",
           "Increases the correct total each time a new score is checked.",
           "At the end, clearly shows how many scores were even and how many were odd."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.qnbsc25iyvxl",
+          "sourceTitle": "[6] Count even or odd",
+          "points": [
+            "The solution uses a list of whole number scores that will be checked.",
+            "The total for even scores is clearly shown to start at 0 before any scores are checked.",
+            "The total for odd scores is clearly shown to start at 0 before any scores are checked.",
+            "Every score in the list is checked one at a time (none are missed or checked more than once).",
+            "For each score, the method correctly decides whether it is even or odd and increases the correct total.",
+            "At the end, the solution clearly shows how many scores were even and how many were odd in a sensible message."
+          ]
+        }
       },
       "steps": [
         {
@@ -1177,7 +1305,21 @@
           "Goes through each reading one at a time and decides whether it is above the threshold or below/equal to it.",
           "Increases the correct total each time a reading is checked.",
           "At the end, clearly shows how many readings were above the threshold and how many were below or equal to it."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.htg2nx4s9nz3",
+          "sourceTitle": "[6] Count threshold",
+          "points": [
+            "A suitable list of whole number readings is created and stored ready to be checked.",
+            "The threshold value is clearly stored before any comparisons are made.",
+            "The total for values above the threshold is clearly set to 0 before checking begins.",
+            "The total for values below or equal to the threshold is clearly set to 0 before checking begins.",
+            "Every reading is checked once and correctly classified as above or below/equal to the threshold, with the correct total increased.",
+            "The final answer clearly shows the number of values above the threshold and the number below or equal to the threshold in a sensible message."
+          ]
+        }
       },
       "steps": [
         {
@@ -1324,7 +1466,21 @@
           "Goes through each reading one at a time and decides whether it is between the lower and upper limits, including the limits themselves.",
           "Increases the total each time a reading is inside the target range.",
           "At the end, clearly shows how many readings were inside the chosen range."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.1h2zoq4vs9rn",
+          "sourceTitle": "[6] Count a range",
+          "points": [
+            "A suitable list of whole number readings is created and stored ready to be checked.",
+            "Both a lower limit and an upper limit for the range are stored before any checking begins.",
+            "The total for readings inside the range is clearly set to 0 before checking begins.",
+            "Every reading in the list is checked once against both limits (none are missed or repeated).",
+            "Each reading that is between the lower and upper limits, including the limits, correctly increases the total.",
+            "The final answer clearly shows the number of readings inside the chosen range in a sensible message."
+          ]
+        }
       },
       "steps": [
         {
@@ -1475,7 +1631,21 @@
           "In the subroutine, removes extra spaces from the start and end of each value.",
           "In the subroutine, converts the values to lower case and removes any spaces inside the surname.",
           "In the subroutine, creates the username and prints it directly (do not return it)."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "ebook",
+          "sourceTab": "t.uy539s1hl95",
+          "sourceTitle": "[6] Process String",
+          "points": [
+            "Inputs collected for first name and surname",
+            "A subroutine is used that receives both string values from the main program",
+            "Spaces removed from the start and end of the strings (strip)",
+            "Values converted to lower case correctly",
+            "Spaces removed from inside the surname",
+            "Username is created and printed inside the subroutine (no return used)"
+          ]
+        }
       },
       "steps": [
         {
@@ -1596,7 +1766,18 @@
           "Return the price to the calling program. Do not print inside the function.",
           "In the main program, input the customer's age as an integer.",
           "Call ticket_price with that age and display the returned price."
-        ]
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Define ticket_price with its age parameter and use that parameter.",
+            "Use the under-16 boundary to select 6 or 10 correctly.",
+            "Return the selected price from the function rather than printing it there.",
+            "Input the age and convert it to an integer in the main program.",
+            "Call the function with that age and display its returned price."
+          ]
+        }
       },
       "steps": [
         {
@@ -1722,7 +1903,19 @@
           "In the main program, input a score as an integer.",
           "Use the function in a loop to reject scores outside the range and ask again.",
           "After a valid score is entered, display it with the message Accepted score:."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Define valid_score with its score parameter.",
+            "Return the correct Boolean result for the inclusive range 0 to 100.",
+            "Input a score and convert it to an integer.",
+            "Use the function result to repeat while the score is invalid.",
+            "Collect a fresh score during each invalid iteration.",
+            "After validation, output Accepted score: and the valid value."
+          ]
+        }
       },
       "steps": [
         {
@@ -1848,7 +2041,19 @@
           "Return the total after every mark has been processed.",
           "In the main program, use the list [3, 5, 0, 4].",
           "Call total_marks with the list and display the returned total."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Define total_marks with a list parameter.",
+            "Initialise a local accumulator to zero.",
+            "Loop over every mark in the supplied list.",
+            "Add each mark to the accumulator without using sum.",
+            "Return the accumulated total after the loop, including zero for an empty list.",
+            "Call the function with the specified marks and display its returned total."
+          ]
+        }
       },
       "steps": [
         {
@@ -1974,7 +2179,19 @@
           "Visit the stock list by index and add the index of every item whose quantity is strictly below reorder_level to the new list.",
           "Return the new list after checking every item. Do not change stock_levels.",
           "In the main program, call the function with [8, 2, 10, 0, 5] and a reorder level of 5, then display the returned list."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Define restock_items with both required parameters and use them.",
+            "Create a new empty result list inside the function.",
+            "Visit every stock position by index.",
+            "Select stock quantities strictly below the reorder level.",
+            "Append matching indices to the result without changing the supplied stock list.",
+            "Return the result after the scan, then call the function with the given data and display the returned list."
+          ]
+        }
       },
       "steps": [
         {
@@ -2100,7 +2317,18 @@
           "Display each name on its own line without adding an extra blank line.",
           "Do not skip the first or final name, including when the final line has no newline character.",
           "Close the file after the loop."
-        ]
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Open visitors.txt in reading mode.",
+            "Read the first line before testing the end-of-file condition.",
+            "Loop until readline returns an empty string and obtain the next line on each iteration.",
+            "Display each complete name once without an extra blank line, retaining a final name with no newline.",
+            "Close the input file after processing all names."
+          ]
+        }
       },
       "steps": [
         {
@@ -2222,7 +2450,17 @@
           "Write the new name followed by a newline character.",
           "Close the file after writing.",
           "Display Member saved only after the file has been closed."
-        ]
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Input and store the new member's full name.",
+            "Open members.txt in append mode, preserving existing contents.",
+            "Write the new name followed by one newline.",
+            "Close the file before displaying Member saved."
+          ]
+        }
       },
       "steps": [
         {
@@ -2344,7 +2582,19 @@
           "Process the scores in their original order and select PASS or RETRY for each one.",
           "Write one line per score in the format score,status, for example 67,PASS.",
           "End each record with a newline and close the file after all scores have been written."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the given scores and open results.txt in writing mode, replacing old contents.",
+            "Visit every score once in the given order.",
+            "Select PASS for scores greater than or equal to 50.",
+            "Select RETRY for scores below 50.",
+            "Write each score and its status as a comma-separated record followed by a newline.",
+            "Close the output file after all records have been written."
+          ]
+        }
       },
       "steps": [
         {
@@ -2470,7 +2720,19 @@
           "Read every line and convert its text to an integer.",
           "Count readings greater than or equal to 25.",
           "Close the file and display High readings: followed by the count. An empty file must produce a count of 0."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Open readings.txt for reading and initialise the counter to zero.",
+            "Read every line of the input file.",
+            "Convert each reading from text to an integer.",
+            "Select readings greater than or equal to 25.",
+            "Increase the counter once for each high reading.",
+            "Close the file and display High readings: with the count, including zero for an empty file."
+          ]
+        }
       },
       "steps": [
         {
@@ -2593,7 +2855,19 @@
           "Copy records with at least 4 places to groups.txt in their original order.",
           "Write each selected record on its own line and count how many records were copied.",
           "Close both files, then display Bookings copied: followed by the count. An empty input must leave an empty output file and display 0."
-        ]
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Open bookings.txt for reading and groups.txt for writing, replacing previous output contents.",
+            "Read each record, separate its fields and convert places to an integer.",
+            "Select records with at least four places.",
+            "Copy each selected record in its original order with one newline per record.",
+            "Count each copied record once, starting from zero.",
+            "Close both files and display Bookings copied: with the final count, including zero for an empty file."
+          ]
+        }
       },
       "steps": [
         {
@@ -2717,6 +2991,49 @@
       "title": "Python tutorial: Reading and writing files",
       "url": "https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files",
       "purpose": "Verify file modes, line endings, end-of-file and closing semantics"
+    }
+  ],
+  "interface": "console",
+  "practiceCategories": [
+    {
+      "id": "science",
+      "title": "Science"
+    },
+    {
+      "id": "maths",
+      "title": "Maths"
+    },
+    {
+      "id": "finance",
+      "title": "Finance"
+    },
+    {
+      "id": "computing",
+      "title": "Computing"
+    },
+    {
+      "id": "gaming",
+      "title": "Gaming"
+    },
+    {
+      "id": "creative-media",
+      "title": "Creative & Media",
+      "shortTitle": "Creative"
+    },
+    {
+      "id": "social-community",
+      "title": "Social & Community",
+      "shortTitle": "Social"
+    },
+    {
+      "id": "health-fitness",
+      "title": "Health & Fitness",
+      "shortTitle": "Fitness"
+    },
+    {
+      "id": "environment-sustainability",
+      "title": "Environment & Sustainability",
+      "shortTitle": "Environment"
     }
   ]
 }

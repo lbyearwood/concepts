@@ -12,15 +12,34 @@ CATALOGUE = ROOT / 'data/programming-problems.json'
 GUIDES = ROOT / 'data/tutorial-guides.json'
 TEMPLATE = ROOT / 'scripts/templates/programming-problems.html'
 
+def validate_assessment(question):
+    marks = question.get('marks')
+    marking = question.get('marking', {})
+    points = marking.get('points', [])
+    if (type(marks) is not int or not 1 <= marks <= 6
+            or marking.get('basis') not in {'ebook', 'csrevision'}
+            or len(points) != marks or not all(isinstance(point, str) and point.strip() for point in points)):
+        raise ValueError('Each exam question needs a justified allocation of 1 to 6 marks')
+    if marking['basis'] == 'ebook' and not (marking.get('sourceTab') and marking.get('sourceTitle')):
+        raise ValueError('An eBook allocation needs its exact source tab')
+
 def output():
     data = json.loads(CATALOGUE.read_text(encoding='utf-8'))
     guides = json.loads(GUIDES.read_text(encoding='utf-8'))
+    if data.get('interface') != 'console':
+        raise ValueError('Programming problems must use console input and output')
+    practice_ids = [category['id'] for category in data['practiceCategories']]
+    if (not practice_ids or len(set(practice_ids)) != len(practice_ids)
+            or any(not re.fullmatch(r'[a-z][a-z0-9-]*', identity) for identity in practice_ids)
+            or not all(category['title'].strip() for category in data['practiceCategories'])):
+        raise ValueError('Invalid practice categories')
     category_ids = {category['id'] for category in data['categories']}
     ids = set()
     for problem in data['problems']:
         if problem['id'] in ids or problem['category'] not in category_ids or not problem['steps']:
             raise ValueError(f"Invalid tutorial: {problem['id']}")
         ids.add(problem['id'])
+        validate_assessment(problem['question'])
         ast.parse(problem['solution'])
         for step in problem['steps']:
             if not step['title'] or not step['blocks']:
@@ -77,11 +96,17 @@ def output():
         badge = f' <span class="category-count">{count}</span>' if count else ''
         categories.append(f'        <button id="category-{category["id"]}" type="button" role="tab" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-category="{category["id"]}" tabindex="{0 if index == 0 else -1}">{escape(category["title"])}{badge}</button>')
     problems = [problem for problem in data['problems'] if problem['category'] == 'traversal']
+    practice_categories = []
+    for index, category in enumerate(data['practiceCategories']):
+        label = escape(category['title'])
+        if category.get('shortTitle'):
+            label = f'<span class="practice-name-full">{label}</span><span class="practice-name-short" aria-hidden="true">{escape(category["shortTitle"])}</span>'
+        practice_categories.append(f'        <button id="practice-category-{category["id"]}" type="button" role="tab" aria-label="{escape(category["title"], quote=True)}" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-practice-category="{category["id"]}" tabindex="{0 if index == 0 else -1}">{label}</button>')
     items = []
     for index, problem in enumerate(problems, 1):
         items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open question</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
     content = TEMPLATE.read_text(encoding='utf-8')
-    values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c'), '__TUTOR_GUIDE_DATA__': json.dumps(guides, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
+    values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__PRACTICE_CATEGORIES__': '\n'.join(practice_categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c'), '__TUTOR_GUIDE_DATA__': json.dumps(guides, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
     for token, value in values.items():
         if content.count(token) != 1:
             raise ValueError(f'Missing or duplicate template token: {token}')

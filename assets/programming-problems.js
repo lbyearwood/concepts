@@ -18,11 +18,13 @@
   if (!dataNode || !dialog) return;
   const data = JSON.parse(dataNode.textContent);
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
-  const collectionNames = {exam: 'Exam questions', level1: 'Level 1 problems', level2: 'Level 2', level3: 'Level 3'};
-  const state = {collection: 'exam', category: 'traversal', problem: null, step: 0, line: 0, frame: 0};
+  const practiceNames = new Map(data.practiceCategories.map(category => [category.id, category.title]));
+  const collectionNames = {exam: 'Exam questions', level1: 'Easy', level2: 'Medium', level3: 'Hard'};
+  const state = {collection: 'exam', category: 'traversal', practiceCategory: data.practiceCategories[0].id, problem: null, step: 0, line: 0, frame: 0};
   const requestClose = createDismissalGuard(dialog, () => !!guides.problems[state.problem]);
   const list = document.querySelector('.problem-list');
   const categoryTabs = document.querySelector('.problem-categories');
+  const practiceTabs = document.querySelector('.practice-categories');
   const categoryPanel = document.getElementById('category-panel');
   const content = dialog.querySelector('.tutorial-step-content');
   const body = dialog.querySelector('.tutorial-body');
@@ -126,15 +128,22 @@
     });
     document.getElementById('problem-panel').setAttribute('aria-labelledby', 'collection-' + state.collection);
     categoryTabs.hidden = !exam;
+    practiceTabs.hidden = exam;
+    document.querySelector('.practice-console-note').hidden = exam;
     document.querySelectorAll('[data-category]').forEach(button => {
       const selected = button.dataset.category === state.category;
       button.setAttribute('aria-selected', String(selected));
       button.tabIndex = selected ? 0 : -1;
     });
-    // The level collections are empty until their problems are supplied.
-    const title = exam ? categoryNames.get(state.category) : collectionNames[state.collection];
-    categoryPanel.setAttribute('role', exam ? 'tabpanel' : 'region');
-    categoryPanel.setAttribute('aria-labelledby', exam ? 'category-' + state.category : 'problem-category-title');
+    document.querySelectorAll('[data-practice-category]').forEach(button => {
+      const selected = button.dataset.practiceCategory === state.practiceCategory;
+      button.setAttribute('aria-selected', String(selected));
+      button.tabIndex = selected ? 0 : -1;
+    });
+    // Practice categories are ready for the user's later console problems.
+    const title = exam ? categoryNames.get(state.category) : collectionNames[state.collection] + ' · ' + practiceNames.get(state.practiceCategory);
+    categoryPanel.setAttribute('role', 'tabpanel');
+    categoryPanel.setAttribute('aria-labelledby', exam ? 'category-' + state.category : 'practice-category-' + state.practiceCategory);
     document.getElementById('problem-category-title').textContent = title;
     const problems = exam ? data.problems.filter(problem => problem.category === state.category) : [];
     list.setAttribute('aria-label', title + (title.endsWith('problems') ? '' : ' problems'));
@@ -154,7 +163,8 @@
     });
     const empty = document.querySelector('.problem-empty');
     empty.hidden = problems.length > 0;
-    empty.textContent = exam ? 'No problems in this section yet.' : 'No problems have been added to this level yet.';
+    empty.textContent = exam ? 'No problems in this section yet.' : 'No problems in this category yet.';
+    document.querySelector('.problem-list-instruction').textContent = exam ? 'Choose a problem to open its exam question' : 'Choose a console problem';
     document.querySelector('.problem-list-scroll').scrollTop = 0;
     document.querySelector('.problem-announcement').textContent = title + '. ' + problems.length + (problems.length === 1 ? ' problem.' : ' problems.');
   }
@@ -285,6 +295,7 @@
     const requirements = element('ol');
     problem.question.requirements.forEach((text, index) => { const item = element('li', '', text); item.value = index + 1; requirements.append(item); });
     questionText.append(requirements);
+    questionText.append(element('p', 'tutorial-question-marks', '(' + problem.question.marks + ' marks)'));
     examPager = null;
     if (isTypedTutorial(problem)) {
       questionContent.append(questionText);
@@ -330,6 +341,12 @@
     const button = event.target.closest('[data-category]');
     if (!button) return;
     state.category = button.dataset.category;
+    renderList();
+  });
+  practiceTabs.addEventListener('click', event => {
+    const button = event.target.closest('[data-practice-category]');
+    if (!button) return;
+    state.practiceCategory = button.dataset.practiceCategory;
     renderList();
   });
   document.querySelectorAll('[role="tablist"]').forEach(tablist => {
