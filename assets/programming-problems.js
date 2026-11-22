@@ -96,7 +96,7 @@
   const { lineCheckpoints, tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep } = window.CSRCodeWalkthrough;
   const typewriter = createTypewriter();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const {renderDatabaseTable, createCompletion} = window.CSRTutorialPresentation;
+  const {renderDatabaseQuestion, createCompletion} = window.CSRTutorialPresentation;
   const completion = createCompletion({badge: dialog.querySelector('.tutorial-complete-status'),
     overlay: dialog.querySelector('.tutorial-confetti'), next: dialog.querySelector('.tutorial-next'),
     label: dialog.querySelector('[data-next-label]'), reducedMotion: () => reducedMotion.matches});
@@ -190,6 +190,7 @@
     if (!guides.problems[state.problem]) return;
     const bottom = body.getBoundingClientRect().bottom - parseFloat(getComputedStyle(body).paddingBottom);
     if (question.open && !help.open) {
+      if (dialog.dataset.questionLayout === 'sql') { dialog.style.removeProperty('--exam-content-height'); return; }
       const gap = parseFloat(getComputedStyle(body).gap) || 0;
       const height = bottom - question.querySelector('summary').getBoundingClientRect().bottom - help.querySelector('summary').getBoundingClientRect().height - gap;
       dialog.style.setProperty('--exam-content-height', Math.max(0, Math.floor(height)) + 'px');
@@ -376,6 +377,8 @@
     launcher = button || list.querySelector('[data-problem="' + id + '"]') || launcher;
     dialog.dataset.problem = problem.id;
     dialog.dataset.guided = String(isTypedTutorial(problem));
+    const sqlQuestion = problem.database && problem.language === 'sql';
+    dialog.dataset.questionLayout = sqlQuestion ? 'sql' : 'standard';
     dialog.setAttribute('closedby', isTypedTutorial(problem) ? 'none' : 'closerequest');
     state.problem = id;
     state.step = saved?.step || 0;
@@ -387,24 +390,25 @@
     footer.hidden = !help.open;
     const questionContent = dialog.querySelector('.tutorial-question-content');
     questionContent.replaceChildren();
-    const questionText = isTypedTutorial(problem) ? element('div', 'tutorial-question-text') : questionContent;
-    problem.question.context.forEach(text => questionText.append(element('p', '', text)));
-    if (problem.database && problem.language === 'sql') questionText.append(renderDatabaseTable(problem.database));
-    else if (problem.question.givenCode) {
-      problem.question.givenCode.split('\n').forEach(text => {
-        const line = element('p', 'exam-given-code', text || ' ');
-        line.dataset.fitText = 'true'; questionText.append(line);
-      });
+    const questionText = sqlQuestion ? renderDatabaseQuestion(problem) : isTypedTutorial(problem) ? element('div', 'tutorial-question-text') : questionContent;
+    if (!sqlQuestion) {
+      problem.question.context.forEach(text => questionText.append(element('p', '', text)));
+      if (problem.question.givenCode) {
+        problem.question.givenCode.split('\n').forEach(text => {
+          const line = element('p', 'exam-given-code', text || ' ');
+          line.dataset.fitText = 'true'; questionText.append(line);
+        });
+      }
+      questionText.append(element('p', '', problem.question.command || 'Write an algorithm that:'));
+      const requirements = element('ol');
+      problem.question.requirements.forEach((text, index) => { const item = element('li', '', text); item.value = index + 1; requirements.append(item); });
+      questionText.append(requirements);
+      questionText.append(element('p', 'tutorial-question-marks', '(' + problem.question.marks + ' marks)'));
     }
-    questionText.append(element('p', '', problem.question.command || 'Write an algorithm that:'));
-    const requirements = element('ol');
-    problem.question.requirements.forEach((text, index) => { const item = element('li', '', text); item.value = index + 1; requirements.append(item); });
-    questionText.append(requirements);
-    questionText.append(element('p', 'tutorial-question-marks', '(' + problem.question.marks + ' marks)'));
     examPager = null;
     if (isTypedTutorial(problem)) {
       questionContent.append(questionText);
-      examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > table, :scope > ol > li')], 'exam question');
+      if (!sqlQuestion) examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > ol > li')], 'exam question');
     }
     renderStep(false);
     if (!dialog.open) dialog.showModal();

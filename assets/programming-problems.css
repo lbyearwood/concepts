@@ -35,6 +35,23 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .exam-db-table th, .exam-db-table td { border:2px solid #737687; padding:7px 9px; text-align:center; overflow-wrap:anywhere; }
 .exam-db-table th { background:#3600ff; color:#fff; }
 .exam-db-table tbody tr:nth-child(even) { background:#f4f4ff; }
+.tutorial-modal[data-question-layout="sql"] .tutorial-question-content { max-height:none; }
+.sql-exam-question { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px 24px; align-items:start; overflow:visible; flex:none; }
+.sql-exam-context { grid-column:1 / -1; min-width:0; }
+.sql-exam-context p:last-child { margin-bottom:0; }
+.sql-exam-instructions, .sql-exam-data { min-width:0; }
+.sql-exam-instructions > p:first-child { font-weight:700; }
+.sql-exam-data .exam-db-table { margin:0; }
+@media(max-width:600px) {
+  .sql-exam-question { grid-template-columns:minmax(0,1fr); gap:8px; font-size:11.5px; line-height:1.3; }
+  .sql-exam-question p { margin-bottom:6px; }
+  .sql-exam-question li + li { margin-top:4px; }
+  .sql-exam-instructions .tutorial-question-marks { margin-top:7px; }
+}
+@media(max-height:500px) and (min-width:601px) {
+  .sql-exam-question { gap:8px 16px; }
+  .sql-exam-question p, .sql-exam-question li { font-size:12px; line-height:1.3; }
+}
 .tutorial-complete-status { display:table; margin:8px 0 0; padding:4px 9px; border:2px solid #101223; background:#b8ff4c; color:#101223; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
 .tutorial-next:disabled.is-complete { background:#00856b; color:#fff; border-color:#005744; opacity:1; }
 .tutorial-confetti { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:5; }

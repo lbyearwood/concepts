@@ -19,6 +19,22 @@
     table.append(caption, head, body);
     return table;
   }
+  function renderDatabaseQuestion(problem) {
+    const layout = document.createElement('div'); layout.className = 'tutorial-question-text sql-exam-question';
+    const context = document.createElement('div'); context.className = 'sql-exam-context';
+    problem.question.context.forEach(text => { const paragraph = document.createElement('p'); paragraph.textContent = text; context.append(paragraph); });
+    const instructions = document.createElement('section'); instructions.className = 'sql-exam-instructions';
+    instructions.setAttribute('aria-label', 'Instructions');
+    const command = document.createElement('p'); command.textContent = problem.question.command || 'Write SQL to:';
+    const requirements = document.createElement('ol');
+    problem.question.requirements.forEach((text, index) => { const item = document.createElement('li'); item.value = index + 1; item.textContent = text; requirements.append(item); });
+    const marks = document.createElement('p'); marks.className = 'tutorial-question-marks'; marks.textContent = '(' + problem.question.marks + ' marks)';
+    instructions.append(command, requirements, marks);
+    const example = document.createElement('section'); example.className = 'sql-exam-data'; example.setAttribute('aria-label', 'Database table');
+    example.append(renderDatabaseTable(problem.database));
+    layout.append(context, instructions, example);
+    return layout;
+  }
   function createCompletion({badge, overlay, next, label, reducedMotion = () => false,
     schedule = setTimeout, unschedule = clearTimeout, random = Math.random}) {
     const celebrated = new Set(); let timer = null;
@@ -55,7 +71,7 @@
     function reset() { stop(); celebrated.clear(); badge.hidden = true; next.classList.toggle('is-complete', false); }
     return {update, stop, reset};
   }
-  const api = {renderDatabaseTable, createCompletion};
+  const api = {renderDatabaseTable, renderDatabaseQuestion, createCompletion};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRTutorialPresentation = api;
 })();

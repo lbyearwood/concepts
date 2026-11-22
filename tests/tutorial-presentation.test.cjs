@@ -1,6 +1,6 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const {renderDatabaseTable,createCompletion}=require('../assets/tutorial-presentation.js');
+const {renderDatabaseTable,renderDatabaseQuestion,createCompletion}=require('../assets/tutorial-presentation.js');
 const {lineCheckpoints,walkthroughFrames}=require('../assets/tutorial-typewriter.js');
 const data=require('../data/programming-problems.json');
 const guides=require('../data/tutorial-guides.json').problems;
@@ -11,8 +11,8 @@ function harness(reduced=false){
     append(...nodes){this.children.push(...nodes);}
     replaceChildren(...nodes){this.children=[...nodes];}
     setAttribute(key,value){this.attributes[key]=value;}
-    set textContent(value){this.value=value;this.children=[];}
-    get textContent(){return this.value+this.children.map(n=>n.textContent).join('');}
+    set textContent(value){this.textValue=value;this.children=[];}
+    get textContent(){return (this.textValue||'')+this.children.map(n=>n.textContent).join('');}
   }
   global.document={createElement:tag=>new Node(tag)};
   const badge=new Node('p'),overlay=new Node('div'),next=new Node('button'),label=new Node('span'),timers=new Map();let serial=0;
@@ -34,6 +34,25 @@ test('database examples use real table headers and cells and preserve every valu
     }
     const table=renderDatabaseTable({table:'Example',columns:[{name:'Text'}],rows:[['<img src=x onerror=alert(1)>']]});
     assert.equal(table.children[2].children[0].children[0].textContent,'<img src=x onerror=alert(1)>');
+  }finally{h.cleanup();}
+});
+
+test('each SQL question keeps its full context, numbered instructions, marks and complete table together',()=>{
+  const h=harness();
+  try{
+    for(const problem of data.problems.filter(p=>p.language==='sql')){
+      const layout=renderDatabaseQuestion(problem),[context,instructions,example]=layout.children;
+      assert.deepEqual(context.children.map(n=>n.textContent),problem.question.context);
+      assert.equal(instructions.attributes['aria-label'],'Instructions');
+      const [command,list,marks]=instructions.children;
+      assert.equal(command.textContent,problem.question.command);
+      assert.equal(list.tagName,'ol');
+      assert.deepEqual(list.children.map(n=>[n.value,n.textContent]),problem.question.requirements.map((text,i)=>[i+1,text]));
+      assert.equal(marks.textContent,'('+problem.question.marks+' marks)');
+      assert.equal(example.children[0].tagName,'table');
+      assert.equal(example.children[0].children[2].children.length,problem.database.rows.length);
+      assert.equal(layout.children.length,3,'all question sections belong to one layout');
+    }
   }finally{h.cleanup();}
 });
 
