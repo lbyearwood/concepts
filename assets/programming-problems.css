@@ -10,7 +10,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .problem-collections button:hover:not([aria-selected="true"]) { background:#fff9c9; }
 .problem-panel, .category-panel { display:flex; flex-direction:column; min-height:0; flex:1; }
 .problem-categories { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); flex:none; gap:4px 18px; padding:16px 0 0; margin-bottom:16px; border-bottom:1px solid #d4d5dc; }
-.problem-categories button { display:flex; min-width:0; min-height:44px; gap:7px; align-items:center; padding:8px 0; border:0; border-bottom:4px solid transparent; background:transparent; color:#535563; text-align:left; font:700 14px/1.35 Arial,Helvetica,sans-serif; }
+.problem-categories button { display:flex; min-width:0; min-height:44px; gap:7px; align-items:center; padding:8px 0; border:0; border-bottom:4px solid #b5b7c2; background:transparent; color:#535563; text-align:left; font:700 14px/1.35 Arial,Helvetica,sans-serif; }
 .category-name { min-width:0; overflow-wrap:anywhere; }
 .exam-category-picker { display:none; flex:none; gap:6px; margin:14px 0 16px; color:#535563; font-size:12px; font-weight:700; }
 .exam-category-picker select { width:100%; min-width:0; min-height:38px; padding:7px 24px 7px 8px; border:2px solid #101223; border-radius:0; background:#fff; color:#101223; font:700 13px/1.35 Arial,Helvetica,sans-serif; }
@@ -22,7 +22,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .problem-categories button[aria-selected="true"] { border-bottom-color:#d90058; color:#101223; }
 .problem-categories button:hover { color:#1433ff; }
 .practice-categories { display:grid; flex:none; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px 16px; padding:16px 0 0; margin-bottom:16px; border-bottom:1px solid #d4d5dc; }
-.practice-categories button { display:flex; align-items:center; min-width:0; min-height:42px; padding:5px 0 9px; border:0; border-bottom:4px solid transparent; background:transparent; color:#535563; text-align:left; font:700 13px/1.35 Arial,Helvetica,sans-serif; }
+.practice-categories button { display:flex; align-items:center; min-width:0; min-height:42px; padding:5px 0 9px; border:0; border-bottom:4px solid #b5b7c2; background:transparent; color:#535563; text-align:left; font:700 13px/1.35 Arial,Helvetica,sans-serif; }
 .practice-categories button[aria-selected="true"] { border-bottom-color:#d90058; color:#101223; }
 .practice-categories button:hover { color:#1433ff; }
 .practice-name-short { display:none; }
