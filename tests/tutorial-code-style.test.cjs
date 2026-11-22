@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { tokenizePython, visibleTokens, tutorSegments, renderPython, renderTutorText } = require('../assets/tutorial-code-style.js');
+const { tokenizeCode, tokenizePython, visibleTokens, tutorSegments, renderCode, renderPython, renderTutorText } = require('../assets/tutorial-code-style.js');
 const guide = require('../data/tutorial-guides.json').problems['problem-1'];
 const allGuides = Object.values(require('../data/tutorial-guides.json').problems);
 
@@ -66,6 +66,30 @@ function dom() {
     createTextNode: text => { const node = new Node('#text'); node.textContent = text; return node; }
   };
 }
+
+test('SQL query prefixes keep their exact text and SQL keyword colours', () => {
+  for (const problem of require('../data/programming-problems.json').problems.filter(p=>p.language==='sql')) {
+    for (const line of problem.solution.split('\n')) {
+      for(let count=0;count<=line.length;count++) assert.equal(visibleTokens(line,count,'sql').map(t=>t.text).join(''),line.slice(0,count));
+      for(const token of tokenizeCode(line,'sql').filter(t=>['SELECT','FROM','WHERE','AND','OR'].includes(t.text))) assert.equal(token.type,'keyword');
+    }
+  }
+  assert.equal(visibleTokens('SELECT Name',1,'sql')[0].type,'keyword');
+  assert.equal(tokenizeCode("WHERE Genre = 'Puzzle';",'sql').find(t=>t.text==="'Puzzle'").type,'string');
+  global.document=dom();
+  try {
+    const target=document.createElement('code');
+    renderCode(target,'SELECT Name',1,'sql');
+    assert.equal(target.textContent,'S');assert.equal(target.firstChild.className,'syntax-keyword');
+    renderTutorText(target,'SELECT chooses Name from Students.', ['Name','Students'],'sql');
+    assert.ok(target.children.filter(n=>n.tagName==='code').some(n=>n.textContent==='SELECT'));
+  } finally {delete global.document;}
+});
+
+test('new GCSE Python constructs use readable colours while retaining source', () => {
+  for(const word of ['import','elif']) assert.equal(tokenizePython(word)[0].type,'keyword');
+  for(const word of ['randint','upper','isdigit']) assert.equal(tokenizePython('value.'+word+'()').find(t=>t.text===word).type,'builtin');
+});
 
 test('DOM rendering keeps copying exact, treats markup as text and emphasizes labels', () => {
   global.document = dom();

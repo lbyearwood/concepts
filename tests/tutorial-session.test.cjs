@@ -8,17 +8,18 @@ const guides = require('../data/tutorial-guides.json').problems;
 
 test('header neighbours follow catalogue order and stop at every category boundary', () => {
   const session = createProblemSession(catalogue.problems);
-  for (const [start, end] of [[1,8], [9,12], [13,17], [18,22]]) {
-    for (let id = start; id <= end; id++) {
-      assert.equal(session.neighbour('problem-' + id, -1)?.id || null, id === start ? null : 'problem-' + (id - 1));
-      assert.equal(session.neighbour('problem-' + id, 1)?.id || null, id === end ? null : 'problem-' + (id + 1));
+  for (const category of catalogue.categories) {
+    const problems = catalogue.problems.filter(problem => problem.category === category.id);
+    for (const [index, problem] of problems.entries()) {
+      assert.equal(session.neighbour(problem.id, -1)?.id || null, problems[index - 1]?.id || null);
+      assert.equal(session.neighbour(problem.id, 1)?.id || null, problems[index + 1]?.id || null);
     }
   }
   assert.equal(session.neighbour('unknown', 1), null);
   assert.equal(session.neighbour('problem-1', 0), null);
 });
 
-test('all 22 positions remain independent while switching and Close clears the entire attempt', () => {
+test('all problem positions remain independent while switching and Close clears the entire attempt', () => {
   const session = createProblemSession(catalogue.problems);
   for (const [index, problem] of catalogue.problems.entries()) {
     assert.equal(session.get(problem.id), null);

@@ -3006,6 +3006,3238 @@
       ],
       "solution": "source_file = open(\"bookings.txt\", \"r\")\ngroup_file = open(\"groups.txt\", \"w\")\ncopied = 0\nfor line in source_file:\n    record = line.rstrip(\"\\n\")\n    fields = record.split(\",\")\n    places = int(fields[1])\n    if places >= 4:\n        group_file.write(record + \"\\n\")\n        copied = copied + 1\nsource_file.close()\ngroup_file.close()\nprint(\"Bookings copied:\", copied)",
       "origin": "Original CSRevision practice aligned to OCR GCSE Computer Science J277; not an official past-paper question."
+    },
+    {
+      "id": "problem-23",
+      "category": "arrays-nested-loops",
+      "title": "Read a seat from a 2D array",
+      "question": {
+        "context": [
+          "A small venue stores seat labels in two rows: A1, A2, A3 and B1, B2, B3. Row and column indexes start at zero. Assume the entered indexes are in range."
+        ],
+        "requirements": [
+          "Store the labels as a two-dimensional list.",
+          "Read a row index as an integer.",
+          "Read a column index as an integer.",
+          "Use both indexes, in row then column order, to display the chosen label."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the labels as a two-dimensional list.",
+            "Read a row index as an integer.",
+            "Read a column index as an integer.",
+            "Use both indexes, in row then column order, to display the chosen label."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Store the seating plan",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Each inner list is one row of seats."
+            },
+            {
+              "type": "code",
+              "text": "seats = [[\"A1\", \"A2\", \"A3\"], [\"B1\", \"B2\", \"B3\"]]"
+            },
+            {
+              "type": "question",
+              "text": "How many rows and columns are there?"
+            }
+          ]
+        },
+        {
+          "title": "Select and display a seat",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Convert the console inputs to indexes and use row before column."
+            },
+            {
+              "type": "code",
+              "text": "row = int(input(\"Row index: \"))\ncolumn = int(input(\"Column index: \"))\nprint(seats[row][column])"
+            },
+            {
+              "type": "question",
+              "text": "Which indexes select B3?"
+            }
+          ]
+        }
+      ],
+      "solution": "seats = [[\"A1\", \"A2\", \"A3\"], [\"B1\", \"B2\", \"B3\"]]\nrow = int(input(\"Row index: \"))\ncolumn = int(input(\"Column index: \"))\nprint(seats[row][column])"
+    },
+    {
+      "id": "problem-24",
+      "category": "arrays-nested-loops",
+      "title": "Total each team's scores",
+      "question": {
+        "context": [
+          "Three teams have scores stored as [[2, 3, 1], [4, 0, 2], [1, 1, 5]]. Each row is a team and each column is a round."
+        ],
+        "requirements": [
+          "Store the scores in a two-dimensional list.",
+          "Visit every team using an outer loop.",
+          "Reset a team total before processing that team.",
+          "Use an inner loop to add every score in the current row.",
+          "Display each team number, starting at 1, and its own total."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the scores in a two-dimensional list.",
+            "Visit every team using an outer loop.",
+            "Reset a team total before processing that team.",
+            "Use an inner loop to add every score in the current row.",
+            "Display each team number, starting at 1, and its own total."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Store the rounds",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Rows represent teams and contain their round scores."
+            },
+            {
+              "type": "code",
+              "text": "scores = [[2, 3, 1], [4, 0, 2], [1, 1, 5]]"
+            },
+            {
+              "type": "question",
+              "text": "Which scores belong to team 2?"
+            }
+          ]
+        },
+        {
+          "title": "Calculate one total per row",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Reset the total inside the outer loop and accumulate inside the inner loop."
+            },
+            {
+              "type": "code",
+              "text": "for team in range(len(scores)):\n    total = 0\n    for score in scores[team]:\n        total = total + score"
+            },
+            {
+              "type": "question",
+              "text": "What would happen if total were reset inside the inner loop?"
+            }
+          ]
+        },
+        {
+          "title": "Report each team",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Display a total after all rounds for that team."
+            },
+            {
+              "type": "code",
+              "text": "    print(\"Team\", team + 1, \"total:\", total)"
+            },
+            {
+              "type": "question",
+              "text": "Why is print outside the inner loop?"
+            }
+          ]
+        }
+      ],
+      "solution": "scores = [[2, 3, 1], [4, 0, 2], [1, 1, 5]]\nfor team in range(len(scores)):\n    total = 0\n    for score in scores[team]:\n        total = total + score\n    print(\"Team\", team + 1, \"total:\", total)"
+    },
+    {
+      "id": "problem-25",
+      "category": "arrays-nested-loops",
+      "title": "Find the largest grid reading",
+      "question": {
+        "context": [
+          "A sensor grid contains [[-4, -9], [-7, -2]]. All readings can be negative. The grid is non-empty and every row has at least one value."
+        ],
+        "requirements": [
+          "Store the sensor readings in a two-dimensional list.",
+          "Initialise the largest reading using a value from the grid.",
+          "Visit every value using nested loops.",
+          "Replace the largest reading only when a greater value is seen.",
+          "Display the largest reading after the search finishes."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the sensor readings in a two-dimensional list.",
+            "Initialise the largest reading using a value from the grid.",
+            "Visit every value using nested loops.",
+            "Replace the largest reading only when a greater value is seen.",
+            "Display the largest reading after the search finishes."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Choose a valid starting reading",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use an actual cell so negative-only data is handled."
+            },
+            {
+              "type": "code",
+              "text": "readings = [[-4, -9], [-7, -2]]\nlargest = readings[0][0]"
+            },
+            {
+              "type": "question",
+              "text": "Why is zero an unsafe starting maximum?"
+            }
+          ]
+        },
+        {
+          "title": "Compare all cells",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Visit each row and then each value in that row."
+            },
+            {
+              "type": "code",
+              "text": "for row in readings:\n    for value in row:\n        if value > largest:\n            largest = value"
+            },
+            {
+              "type": "question",
+              "text": "Which comparison should replace largest?"
+            }
+          ]
+        },
+        {
+          "title": "Display the maximum",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Report only after the grid has been processed."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Largest:\", largest)"
+            },
+            {
+              "type": "question",
+              "text": "Where should the final output be indented?"
+            }
+          ]
+        }
+      ],
+      "solution": "readings = [[-4, -9], [-7, -2]]\nlargest = readings[0][0]\nfor row in readings:\n    for value in row:\n        if value > largest:\n            largest = value\nprint(\"Largest:\", largest)"
+    },
+    {
+      "id": "problem-26",
+      "category": "arrays-nested-loops",
+      "title": "Update a stock table",
+      "question": {
+        "context": [
+          "A shop stores each stock record as [name, quantity]: [[\"Pens\", 12], [\"Books\", 5], [\"Rulers\", 9]]. Assume the item index is valid and the delivery quantity is a non-negative integer."
+        ],
+        "requirements": [
+          "Store the records in a two-dimensional list.",
+          "Read the index of the delivered item as an integer.",
+          "Read the delivered quantity as an integer.",
+          "Increase only the quantity field of the chosen record.",
+          "Display that item's name and updated quantity."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the records in a two-dimensional list.",
+            "Read the index of the delivered item as an integer.",
+            "Read the delivered quantity as an integer.",
+            "Increase only the quantity field of the chosen record.",
+            "Display that item's name and updated quantity."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read the delivery",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The row chooses an item and the delivery gives the quantity to add."
+            },
+            {
+              "type": "code",
+              "text": "stock = [[\"Pens\", 12], [\"Books\", 5], [\"Rulers\", 9]]\nitem = int(input(\"Item index: \"))\ndelivery = int(input(\"Delivered quantity: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Which field index contains a quantity?"
+            }
+          ]
+        },
+        {
+          "title": "Update one field",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Read the old quantity and store the increased value in the same cell."
+            },
+            {
+              "type": "code",
+              "text": "stock[item][1] = stock[item][1] + delivery\nprint(stock[item][0], stock[item][1])"
+            },
+            {
+              "type": "question",
+              "text": "Why should the item name stay unchanged?"
+            }
+          ]
+        }
+      ],
+      "solution": "stock = [[\"Pens\", 12], [\"Books\", 5], [\"Rulers\", 9]]\nitem = int(input(\"Item index: \"))\ndelivery = int(input(\"Delivered quantity: \"))\nstock[item][1] = stock[item][1] + delivery\nprint(stock[item][0], stock[item][1])"
+    },
+    {
+      "id": "problem-27",
+      "category": "arrays-nested-loops",
+      "title": "Count occupied seats by column",
+      "question": {
+        "context": [
+          "A seating grid is [[1, 0, 1], [0, 1, 1]]. A 1 means occupied and a 0 means empty. The rectangular grid is non-empty. Display an occupied-seat count for each column."
+        ],
+        "requirements": [
+          "Store the occupancy grid as a two-dimensional list.",
+          "Use an outer loop to visit each column index.",
+          "Reset the occupied count at the start of each column.",
+          "Use an inner row loop and count only cells equal to 1 in that column.",
+          "Display each column index and its occupied count after its row loop."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the occupancy grid as a two-dimensional list.",
+            "Use an outer loop to visit each column index.",
+            "Reset the occupied count at the start of each column.",
+            "Use an inner row loop and count only cells equal to 1 in that column.",
+            "Display each column index and its occupied count after its row loop."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Choose a column",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The first row determines how many columns this rectangular grid has."
+            },
+            {
+              "type": "code",
+              "text": "occupied = [[1, 0, 1], [0, 1, 1]]\nfor column in range(len(occupied[0])):"
+            },
+            {
+              "type": "question",
+              "text": "How is the number of columns different from the number of rows?"
+            }
+          ]
+        },
+        {
+          "title": "Count down that column",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Keep the column fixed while the inner loop varies the row."
+            },
+            {
+              "type": "code",
+              "text": "    count = 0\n    for row in range(len(occupied)):\n        if occupied[row][column] == 1:\n            count = count + 1"
+            },
+            {
+              "type": "question",
+              "text": "Which index must change when moving down a column?"
+            }
+          ]
+        },
+        {
+          "title": "Report each column count",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Output once after all rows in the current column."
+            },
+            {
+              "type": "code",
+              "text": "    print(\"Column\", column, \"occupied:\", count)"
+            },
+            {
+              "type": "question",
+              "text": "What is the last column's total?"
+            }
+          ]
+        }
+      ],
+      "solution": "occupied = [[1, 0, 1], [0, 1, 1]]\nfor column in range(len(occupied[0])):\n    count = 0\n    for row in range(len(occupied)):\n        if occupied[row][column] == 1:\n            count = count + 1\n    print(\"Column\", column, \"occupied:\", count)"
+    },
+    {
+      "id": "problem-28",
+      "category": "calculations",
+      "title": "Apply a percentage discount",
+      "question": {
+        "context": [
+          "A shop reduces an item by a percentage. Assume the original price is non-negative and the discount is between 0 and 100 inclusive."
+        ],
+        "requirements": [
+          "Read the original price and discount percentage as real numbers.",
+          "Calculate the discount amount as a percentage of the original price.",
+          "Subtract the discount amount from the original price.",
+          "Display the final price to two decimal places."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the original price and discount percentage as real numbers.",
+            "Calculate the discount amount as a percentage of the original price.",
+            "Subtract the discount amount from the original price.",
+            "Display the final price to two decimal places."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read real-number inputs",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Prices and percentages can include decimal parts."
+            },
+            {
+              "type": "code",
+              "text": "price = float(input(\"Original price: \"))\ndiscount = float(input(\"Discount percent: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Why would int be unsuitable for 12.50?"
+            }
+          ]
+        },
+        {
+          "title": "Calculate and display the reduced price",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Find the reduction before subtracting it."
+            },
+            {
+              "type": "code",
+              "text": "reduction = price * discount / 100\nfinal_price = price - reduction\nprint(f\"Price: {final_price:.2f}\")"
+            },
+            {
+              "type": "question",
+              "text": "What final price should a 100 percent discount produce?"
+            }
+          ]
+        }
+      ],
+      "solution": "price = float(input(\"Original price: \"))\ndiscount = float(input(\"Discount percent: \"))\nreduction = price * discount / 100\nfinal_price = price - reduction\nprint(f\"Price: {final_price:.2f}\")"
+    },
+    {
+      "id": "problem-29",
+      "category": "calculations",
+      "title": "Convert seconds to minutes and seconds",
+      "question": {
+        "context": [
+          "A timer stores a whole number of seconds. Assume the input is a non-negative integer. Convert it into whole minutes and the remaining seconds."
+        ],
+        "requirements": [
+          "Read the total number of seconds as an integer.",
+          "Use integer division to calculate complete minutes.",
+          "Use modulo to calculate the remaining seconds.",
+          "Display the minutes and remaining seconds clearly."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the total number of seconds as an integer.",
+            "Use integer division to calculate complete minutes.",
+            "Use modulo to calculate the remaining seconds.",
+            "Display the minutes and remaining seconds clearly."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read the duration",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The input is a count of whole seconds."
+            },
+            {
+              "type": "code",
+              "text": "seconds = int(input(\"Total seconds: \"))"
+            },
+            {
+              "type": "question",
+              "text": "How many complete minutes fit into 125 seconds?"
+            }
+          ]
+        },
+        {
+          "title": "Separate quotient and remainder",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "DIV gives complete groups and MOD gives what remains."
+            },
+            {
+              "type": "code",
+              "text": "minutes = seconds // 60\nremaining = seconds % 60\nprint(\"Minutes:\", minutes, \"Seconds:\", remaining)"
+            },
+            {
+              "type": "question",
+              "text": "Why must the remainder be less than 60?"
+            }
+          ]
+        }
+      ],
+      "solution": "seconds = int(input(\"Total seconds: \"))\nminutes = seconds // 60\nremaining = seconds % 60\nprint(\"Minutes:\", minutes, \"Seconds:\", remaining)"
+    },
+    {
+      "id": "problem-30",
+      "category": "calculations",
+      "title": "Work out the number of paint tins",
+      "question": {
+        "context": [
+          "One paint tin covers 12 square metres. A rectangular wall has non-negative whole-number width and height in metres. Only whole tins can be bought, and a zero-area wall needs no tins."
+        ],
+        "requirements": [
+          "Read width and height as integers and calculate the wall area.",
+          "Store the coverage of one tin as a named constant.",
+          "Use integer division to find how many complete coverage groups fit.",
+          "If any area remains, add one extra tin.",
+          "Display the minimum whole number of tins needed."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read width and height as integers and calculate the wall area.",
+            "Store the coverage of one tin as a named constant.",
+            "Use integer division to find how many complete coverage groups fit.",
+            "If any area remains, add one extra tin.",
+            "Display the minimum whole number of tins needed."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Calculate the area",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Multiply width by height and keep coverage under a clear name."
+            },
+            {
+              "type": "code",
+              "text": "width = int(input(\"Width: \"))\nheight = int(input(\"Height: \"))\narea = width * height\nCOVERAGE = 12"
+            },
+            {
+              "type": "question",
+              "text": "Why is wall area measured in square metres?"
+            }
+          ]
+        },
+        {
+          "title": "Round up only when necessary",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use DIV and MOD to distinguish exact coverage from a remainder."
+            },
+            {
+              "type": "code",
+              "text": "tins = area // COVERAGE\nif area % COVERAGE != 0:\n    tins = tins + 1"
+            },
+            {
+              "type": "question",
+              "text": "When is an extra tin required?"
+            }
+          ]
+        },
+        {
+          "title": "Display a whole-tin answer",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Report a quantity that covers the whole wall."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Tins:\", tins)"
+            },
+            {
+              "type": "question",
+              "text": "Should an exact multiple of 12 gain an extra tin?"
+            }
+          ]
+        }
+      ],
+      "solution": "width = int(input(\"Width: \"))\nheight = int(input(\"Height: \"))\narea = width * height\nCOVERAGE = 12\ntins = area // COVERAGE\nif area % COVERAGE != 0:\n    tins = tins + 1\nprint(\"Tins:\", tins)"
+    },
+    {
+      "id": "problem-31",
+      "category": "calculations",
+      "title": "Calculate a running average",
+      "question": {
+        "context": [
+          "A science club enters non-negative readings. The value -1 ends input and is not a reading. Display the mean, or No readings if the sentinel is entered first."
+        ],
+        "requirements": [
+          "Initialise a running total and reading count to zero.",
+          "Read real-number values until -1 is entered.",
+          "Add each real reading to the total and increase the count once.",
+          "Read another value inside the loop and exclude the sentinel.",
+          "Calculate total divided by count only when count is positive.",
+          "Display the mean, or No readings when no values were supplied."
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Initialise a running total and reading count to zero.",
+            "Read real-number values until -1 is entered.",
+            "Add each real reading to the total and increase the count once.",
+            "Read another value inside the loop and exclude the sentinel.",
+            "Calculate total divided by count only when count is positive.",
+            "Display the mean, or No readings when no values were supplied."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Prepare a sentinel-controlled input loop",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A sentinel ends input without becoming data."
+            },
+            {
+              "type": "code",
+              "text": "total = 0\ncount = 0\nreading = float(input(\"Reading, or -1 to finish: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Why must the first value be read before testing the loop?"
+            }
+          ]
+        },
+        {
+          "title": "Accumulate real readings",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Update total and count, then get the next value."
+            },
+            {
+              "type": "code",
+              "text": "while reading != -1:\n    total = total + reading\n    count = count + 1\n    reading = float(input(\"Reading, or -1 to finish: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Should -1 contribute to the count?"
+            }
+          ]
+        },
+        {
+          "title": "Handle the empty case",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Avoid dividing by zero when input ends immediately."
+            },
+            {
+              "type": "code",
+              "text": "if count > 0:\n    print(\"Mean:\", total / count)\nelse:\n    print(\"No readings\")"
+            },
+            {
+              "type": "question",
+              "text": "What should happen if the first input is -1?"
+            }
+          ]
+        }
+      ],
+      "solution": "total = 0\ncount = 0\nreading = float(input(\"Reading, or -1 to finish: \"))\nwhile reading != -1:\n    total = total + reading\n    count = count + 1\n    reading = float(input(\"Reading, or -1 to finish: \"))\nif count > 0:\n    print(\"Mean:\", total / count)\nelse:\n    print(\"No readings\")"
+    },
+    {
+      "id": "problem-32",
+      "category": "calculations",
+      "title": "Calculate a tiered journey fare",
+      "question": {
+        "context": [
+          "A taxi charges a base fare of 3 for journeys up to 2 km. Distance above 2 km up to 5 km costs 2 per km. Any distance above 5 km costs 1.50 per extra km. Assume a non-negative real distance."
+        ],
+        "requirements": [
+          "Store the base fare and the two distance rates as named constants.",
+          "Read the distance as a real number.",
+          "Use the base fare when distance is at most 2 km.",
+          "For a distance above 2 and at most 5, add only the kilometres beyond 2 at the standard rate.",
+          "Above 5, include the full standard-rate band and only the excess beyond 5 at the lower rate.",
+          "Display the fare to two decimal places."
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the base fare and the two distance rates as named constants.",
+            "Read the distance as a real number.",
+            "Use the base fare when distance is at most 2 km.",
+            "For a distance above 2 and at most 5, add only the kilometres beyond 2 at the standard rate.",
+            "Above 5, include the full standard-rate band and only the excess beyond 5 at the lower rate.",
+            "Display the fare to two decimal places."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Name the charges and read distance",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Constants make the tariff clear before choosing a band."
+            },
+            {
+              "type": "code",
+              "text": "BASE = 3\nRATE = 2\nEXTRA_RATE = 1.5\ndistance = float(input(\"Distance in km: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Which values describe the tariff rather than one journey?"
+            }
+          ]
+        },
+        {
+          "title": "Choose exactly one distance band",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "An if/elif/else chain separates the three charging rules."
+            },
+            {
+              "type": "code",
+              "text": "if distance <= 2:\n    fare = BASE\nelif distance <= 5:\n    fare = BASE + (distance - 2) * RATE\nelse:\n    fare = BASE + 3 * RATE + (distance - 5) * EXTRA_RATE"
+            },
+            {
+              "type": "question",
+              "text": "Which branch includes exactly 5 km?"
+            }
+          ]
+        },
+        {
+          "title": "Display the fare",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Format the result as a money amount."
+            },
+            {
+              "type": "code",
+              "text": "print(f\"Fare: {fare:.2f}\")"
+            },
+            {
+              "type": "question",
+              "text": "Why should only excess distance use the next rate?"
+            }
+          ]
+        }
+      ],
+      "solution": "BASE = 3\nRATE = 2\nEXTRA_RATE = 1.5\ndistance = float(input(\"Distance in km: \"))\nif distance <= 2:\n    fare = BASE\nelif distance <= 5:\n    fare = BASE + (distance - 2) * RATE\nelse:\n    fare = BASE + 3 * RATE + (distance - 5) * EXTRA_RATE\nprint(f\"Fare: {fare:.2f}\")"
+    },
+    {
+      "id": "problem-33",
+      "category": "strings",
+      "title": "Create an event code",
+      "question": {
+        "context": [
+          "An event code uses the first three letters of an event name in uppercase, followed by a hyphen and an integer event number. Assume the name has at least three letters."
+        ],
+        "requirements": [
+          "Read the event name and an integer event number.",
+          "Take exactly the first three characters of the name.",
+          "Convert those characters to uppercase.",
+          "Join the prefix, a hyphen and the event number as text, then display the code."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the event name and an integer event number.",
+            "Take exactly the first three characters of the name.",
+            "Convert those characters to uppercase.",
+            "Join the prefix, a hyphen and the event number as text, then display the code."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read the event details",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Keep the name as text and convert the event number to an integer."
+            },
+            {
+              "type": "code",
+              "text": "event = input(\"Event name: \")\nnumber = int(input(\"Event number: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Which input needs numeric conversion?"
+            }
+          ]
+        },
+        {
+          "title": "Construct the code",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Slice the prefix, change case and concatenate text."
+            },
+            {
+              "type": "code",
+              "text": "code = event[:3].upper() + \"-\" + str(number)\nprint(code)"
+            },
+            {
+              "type": "question",
+              "text": "What does the slice stop position exclude?"
+            }
+          ]
+        }
+      ],
+      "solution": "event = input(\"Event name: \")\nnumber = int(input(\"Event number: \"))\ncode = event[:3].upper() + \"-\" + str(number)\nprint(code)"
+    },
+    {
+      "id": "problem-34",
+      "category": "strings",
+      "title": "Reformat a fixed-format date",
+      "question": {
+        "context": [
+          "A date is entered as DD/MM/YYYY, for example 04/09/2026. Assume the date is valid and always has ten characters. Reformat it as YYYY-MM-DD without losing leading zeros."
+        ],
+        "requirements": [
+          "Read the date as text.",
+          "Extract the two-character day and two-character month using slices.",
+          "Extract the four-character year using a slice.",
+          "Display year, month and day joined with hyphens in the new order."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the date as text.",
+            "Extract the two-character day and two-character month using slices.",
+            "Extract the four-character year using a slice.",
+            "Display year, month and day joined with hyphens in the new order."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read and split the fields",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The fixed format gives known character positions for each field."
+            },
+            {
+              "type": "code",
+              "text": "date = input(\"Date DD/MM/YYYY: \")\nday = date[:2]\nmonth = date[3:5]\nyear = date[6:10]"
+            },
+            {
+              "type": "question",
+              "text": "Which positions contain the slash separators?"
+            }
+          ]
+        },
+        {
+          "title": "Join the new representation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Preserve the fields as strings so leading zeros remain."
+            },
+            {
+              "type": "code",
+              "text": "print(year + \"-\" + month + \"-\" + day)"
+            },
+            {
+              "type": "question",
+              "text": "Why should day and month not be converted to integers?"
+            }
+          ]
+        }
+      ],
+      "solution": "date = input(\"Date DD/MM/YYYY: \")\nday = date[:2]\nmonth = date[3:5]\nyear = date[6:10]\nprint(year + \"-\" + month + \"-\" + day)"
+    },
+    {
+      "id": "problem-35",
+      "category": "strings",
+      "title": "Mask a membership number",
+      "question": {
+        "context": [
+          "A console displays a membership number with only its final four characters visible. Every earlier character must become an asterisk. Assume the entered number contains at least four characters and keep it as text."
+        ],
+        "requirements": [
+          "Read the membership number as a string.",
+          "Extract its final four characters.",
+          "Create one asterisk for each earlier character.",
+          "Display the asterisks followed by the original final four characters."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the membership number as a string.",
+            "Extract its final four characters.",
+            "Create one asterisk for each earlier character.",
+            "Display the asterisks followed by the original final four characters."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Separate the visible suffix",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Negative indexes count from the end of a string."
+            },
+            {
+              "type": "code",
+              "text": "member = input(\"Membership number: \")\nvisible = member[-4:]"
+            },
+            {
+              "type": "question",
+              "text": "Why should a membership number stay as text?"
+            }
+          ]
+        },
+        {
+          "title": "Build the masked display",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Calculate the hidden length and join the two parts."
+            },
+            {
+              "type": "code",
+              "text": "hidden = \"*\" * (len(member) - 4)\nprint(hidden + visible)"
+            },
+            {
+              "type": "question",
+              "text": "How many asterisks are needed for a ten-character number?"
+            }
+          ]
+        }
+      ],
+      "solution": "member = input(\"Membership number: \")\nvisible = member[-4:]\nhidden = \"*\" * (len(member) - 4)\nprint(hidden + visible)"
+    },
+    {
+      "id": "problem-36",
+      "category": "strings",
+      "title": "Build an acronym from words",
+      "question": {
+        "context": [
+          "A club wants an acronym made from the first letter of every word in a phrase, in uppercase. Words are separated by spaces. If the phrase contains no words, display an empty line."
+        ],
+        "requirements": [
+          "Read the phrase as text and split it into words.",
+          "Start an empty acronym string.",
+          "Visit every word and take its first character.",
+          "Convert each selected character to uppercase and append it to the acronym.",
+          "Display the completed acronym once."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the phrase as text and split it into words.",
+            "Start an empty acronym string.",
+            "Visit every word and take its first character.",
+            "Convert each selected character to uppercase and append it to the acronym.",
+            "Display the completed acronym once."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Find the words",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "split separates whitespace-delimited words and ignores repeated spaces."
+            },
+            {
+              "type": "code",
+              "text": "phrase = input(\"Phrase: \")\nwords = phrase.split()"
+            },
+            {
+              "type": "question",
+              "text": "What happens to a spaces-only phrase?"
+            }
+          ]
+        },
+        {
+          "title": "Accumulate initial letters",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use a loop and string concatenation to build the result."
+            },
+            {
+              "type": "code",
+              "text": "acronym = \"\"\nfor word in words:\n    acronym = acronym + word[0].upper()"
+            },
+            {
+              "type": "question",
+              "text": "Why is the first character index zero?"
+            }
+          ]
+        },
+        {
+          "title": "Display the completed acronym",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Output after every word has contributed."
+            },
+            {
+              "type": "code",
+              "text": "print(acronym)"
+            },
+            {
+              "type": "question",
+              "text": "What would output inside the loop show?"
+            }
+          ]
+        }
+      ],
+      "solution": "phrase = input(\"Phrase: \")\nwords = phrase.split()\nacronym = \"\"\nfor word in words:\n    acronym = acronym + word[0].upper()\nprint(acronym)"
+    },
+    {
+      "id": "problem-37",
+      "category": "strings",
+      "title": "Check a word for symmetry",
+      "question": {
+        "context": [
+          "A palindrome reads the same forwards and backwards, ignoring case. Assume the input is one non-empty alphabetic word. Compare matching positions from opposite ends rather than using a reversing library call."
+        ],
+        "requirements": [
+          "Read the word and normalise it to lowercase.",
+          "Start a Boolean flag that assumes the word is a palindrome.",
+          "Compare opposite characters for only half of the word.",
+          "On any mismatch, set the flag to False and stop checking.",
+          "Display Palindrome or Not a palindrome from the final flag."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the word and normalise it to lowercase.",
+            "Start a Boolean flag that assumes the word is a palindrome.",
+            "Compare opposite characters for only half of the word.",
+            "On any mismatch, set the flag to False and stop checking.",
+            "Display Palindrome or Not a palindrome from the final flag."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Prepare the word and flag",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Start with a candidate that comparisons may disprove."
+            },
+            {
+              "type": "code",
+              "text": "word = input(\"Word: \").lower()\npalindrome = True"
+            },
+            {
+              "type": "question",
+              "text": "Why does a one-letter word need no pair comparison?"
+            }
+          ]
+        },
+        {
+          "title": "Compare opposite positions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The final index is len(word) - 1, and each pair moves inward."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(len(word) // 2):\n    if word[index] != word[len(word) - 1 - index]:\n        palindrome = False\n        break"
+            },
+            {
+              "type": "question",
+              "text": "Why is half the length enough?"
+            }
+          ]
+        },
+        {
+          "title": "Report the result",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use the flag after the comparisons."
+            },
+            {
+              "type": "code",
+              "text": "if palindrome:\n    print(\"Palindrome\")\nelse:\n    print(\"Not a palindrome\")"
+            },
+            {
+              "type": "question",
+              "text": "What does the first mismatch prove?"
+            }
+          ]
+        }
+      ],
+      "solution": "word = input(\"Word: \").lower()\npalindrome = True\nfor index in range(len(word) // 2):\n    if word[index] != word[len(word) - 1 - index]:\n        palindrome = False\n        break\nif palindrome:\n    print(\"Palindrome\")\nelse:\n    print(\"Not a palindrome\")"
+    },
+    {
+      "id": "problem-38",
+      "category": "validation-authentication",
+      "title": "Require a non-empty name",
+      "question": {
+        "context": [
+          "A registration console must not accept an empty name or a name containing only spaces. Remove whitespace at the ends, repeat the prompt until a name is present, then display the accepted name."
+        ],
+        "requirements": [
+          "Read a name and remove whitespace from its ends.",
+          "Test whether the cleaned string is empty.",
+          "Repeat the message and input while the name is empty, cleaning every replacement.",
+          "Display the accepted non-empty name."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read a name and remove whitespace from its ends.",
+            "Test whether the cleaned string is empty.",
+            "Repeat the message and input while the name is empty, cleaning every replacement.",
+            "Display the accepted non-empty name."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read and clean the name",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Presence is checked on the cleaned input."
+            },
+            {
+              "type": "code",
+              "text": "name = input(\"Name: \").strip()"
+            },
+            {
+              "type": "question",
+              "text": "Why should spaces-only input fail?"
+            }
+          ]
+        },
+        {
+          "title": "Repeat until something is present",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A condition-controlled loop requests a replacement."
+            },
+            {
+              "type": "code",
+              "text": "while name == \"\":\n    print(\"Enter a name\")\n    name = input(\"Name: \").strip()"
+            },
+            {
+              "type": "question",
+              "text": "What would happen without updating name in the loop?"
+            }
+          ]
+        },
+        {
+          "title": "Confirm the accepted name",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Output is reached only after the presence check passes."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Accepted:\", name)"
+            },
+            {
+              "type": "question",
+              "text": "Does presence prove the name is factually correct?"
+            }
+          ]
+        }
+      ],
+      "solution": "name = input(\"Name: \").strip()\nwhile name == \"\":\n    print(\"Enter a name\")\n    name = input(\"Name: \").strip()\nprint(\"Accepted:\", name)"
+    },
+    {
+      "id": "problem-39",
+      "category": "validation-authentication",
+      "title": "Check a password length",
+      "question": {
+        "context": [
+          "A practice registration form is represented by a text console. A password must contain between 8 and 12 characters inclusive. Spaces count as characters for this particular rule. Check length only."
+        ],
+        "requirements": [
+          "Read the password as text.",
+          "Reject a length below 8 or above 12.",
+          "Repeat the prompt until the length is within the inclusive range.",
+          "Display Length accepted without displaying the password."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read the password as text.",
+            "Reject a length below 8 or above 12.",
+            "Repeat the prompt until the length is within the inclusive range.",
+            "Display Length accepted without displaying the password."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read the candidate",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The entered string is preserved because this rule counts all characters."
+            },
+            {
+              "type": "code",
+              "text": "password = input(\"Password: \")"
+            },
+            {
+              "type": "question",
+              "text": "Should this length rule silently trim spaces?"
+            }
+          ]
+        },
+        {
+          "title": "Reject either out-of-range case",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "OR combines the two ways a length can be invalid."
+            },
+            {
+              "type": "code",
+              "text": "while len(password) < 8 or len(password) > 12:\n    print(\"Use 8 to 12 characters\")\n    password = input(\"Password: \")"
+            },
+            {
+              "type": "question",
+              "text": "Why would AND fail to reject short passwords?"
+            }
+          ]
+        },
+        {
+          "title": "Confirm the length rule",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Acceptance follows only after the rejection condition becomes false."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Length accepted\")"
+            },
+            {
+              "type": "question",
+              "text": "Does this rule check any other password property?"
+            }
+          ]
+        }
+      ],
+      "solution": "password = input(\"Password: \")\nwhile len(password) < 8 or len(password) > 12:\n    print(\"Use 8 to 12 characters\")\n    password = input(\"Password: \")\nprint(\"Length accepted\")"
+    },
+    {
+      "id": "problem-40",
+      "category": "validation-authentication",
+      "title": "Validate a reference format",
+      "question": {
+        "context": [
+          "A reference must be exactly two uppercase English letters followed by three decimal digits, for example AB123. Display True for a valid format and False otherwise. This is a one-attempt format check."
+        ],
+        "requirements": [
+          "Store the allowed uppercase letters and digits.",
+          "Read the reference and check that its length is exactly 5.",
+          "Only inspect indexed characters if that length check passed.",
+          "Check that positions 0 and 1 contain allowed letters.",
+          "Check that positions 2, 3 and 4 contain allowed digits.",
+          "Display the final Boolean validity result."
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Store the allowed uppercase letters and digits.",
+            "Read the reference and check that its length is exactly 5.",
+            "Only inspect indexed characters if that length check passed.",
+            "Check that positions 0 and 1 contain allowed letters.",
+            "Check that positions 2, 3 and 4 contain allowed digits.",
+            "Display the final Boolean validity result."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Check length before indexing",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A short input has no safe character at some required positions."
+            },
+            {
+              "type": "code",
+              "text": "LETTERS = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"\nDIGITS = \"0123456789\"\nreference = input(\"Reference: \")\nvalid = len(reference) == 5"
+            },
+            {
+              "type": "question",
+              "text": "Why must indexing wait for the length check?"
+            }
+          ]
+        },
+        {
+          "title": "Check the letter positions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Visit exactly the first two characters."
+            },
+            {
+              "type": "code",
+              "text": "if valid:\n    for index in range(2):\n        if reference[index] not in LETTERS:\n            valid = False"
+            },
+            {
+              "type": "question",
+              "text": "Would lowercase a satisfy this particular format?"
+            }
+          ]
+        },
+        {
+          "title": "Check the digit positions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Preserve any earlier failure and report one final result."
+            },
+            {
+              "type": "code",
+              "text": "    for index in range(2, 5):\n        if reference[index] not in DIGITS:\n            valid = False\nprint(valid)"
+            },
+            {
+              "type": "question",
+              "text": "Should a later matching character undo an earlier failure?"
+            }
+          ]
+        }
+      ],
+      "solution": "LETTERS = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"\nDIGITS = \"0123456789\"\nreference = input(\"Reference: \")\nvalid = len(reference) == 5\nif valid:\n    for index in range(2):\n        if reference[index] not in LETTERS:\n            valid = False\n    for index in range(2, 5):\n        if reference[index] not in DIGITS:\n            valid = False\nprint(valid)"
+    },
+    {
+      "id": "problem-41",
+      "category": "validation-authentication",
+      "title": "Check both login credentials",
+      "question": {
+        "context": [
+          "A practice console accepts the username pupil and the PIN 0246. Both must match exactly. Read both as text and display Access granted or Access denied after one attempt."
+        ],
+        "requirements": [
+          "Read a username and a PIN as strings.",
+          "Compare the username with pupil.",
+          "Compare the PIN with 0246, preserving its leading zero.",
+          "Grant access only when both comparisons are true.",
+          "Otherwise display Access denied."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Read a username and a PIN as strings.",
+            "Compare the username with pupil.",
+            "Compare the PIN with 0246, preserving its leading zero.",
+            "Grant access only when both comparisons are true.",
+            "Otherwise display Access denied."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Read the credentials",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The PIN is an identifier with a leading zero."
+            },
+            {
+              "type": "code",
+              "text": "username = input(\"Username: \")\npin = input(\"PIN: \")"
+            },
+            {
+              "type": "question",
+              "text": "Why should it stay a string?"
+            }
+          ]
+        },
+        {
+          "title": "Require both matches",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "AND requires both credentials for this practice account."
+            },
+            {
+              "type": "code",
+              "text": "if username == \"pupil\" and pin == \"0246\":"
+            },
+            {
+              "type": "question",
+              "text": "Why would OR grant access too easily?"
+            }
+          ]
+        },
+        {
+          "title": "Choose a single outcome",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "One conditional branch displays the result."
+            },
+            {
+              "type": "code",
+              "text": "    print(\"Access granted\")\nelse:\n    print(\"Access denied\")"
+            },
+            {
+              "type": "question",
+              "text": "Is a format check alone enough to authenticate this account?"
+            }
+          ]
+        }
+      ],
+      "solution": "username = input(\"Username: \")\npin = input(\"PIN: \")\nif username == \"pupil\" and pin == \"0246\":\n    print(\"Access granted\")\nelse:\n    print(\"Access denied\")"
+    },
+    {
+      "id": "problem-42",
+      "category": "validation-authentication",
+      "title": "Limit login attempts",
+      "question": {
+        "context": [
+          "A practice console allows at most three attempts to enter the password revision. Stop asking immediately after a successful attempt. Display Welcome for success, or Locked after three failures."
+        ],
+        "requirements": [
+          "Initialise an attempt counter and an authenticated flag.",
+          "Continue only while fewer than three attempts have been used and authentication has not succeeded.",
+          "Read one password and count each attempt exactly once.",
+          "Set the flag when the entered password matches revision.",
+          "Stop after success or the third failure.",
+          "Display Welcome or Locked from the final result."
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Initialise an attempt counter and an authenticated flag.",
+            "Continue only while fewer than three attempts have been used and authentication has not succeeded.",
+            "Read one password and count each attempt exactly once.",
+            "Set the flag when the entered password matches revision.",
+            "Stop after success or the third failure.",
+            "Display Welcome or Locked from the final result."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Prepare the attempt state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The counter and flag describe two separate reasons to stop."
+            },
+            {
+              "type": "code",
+              "text": "attempts = 0\nauthenticated = False"
+            },
+            {
+              "type": "question",
+              "text": "Why does authentication begin False?"
+            }
+          ]
+        },
+        {
+          "title": "Check bounded attempts",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Each input consumes one attempt and may change the flag."
+            },
+            {
+              "type": "code",
+              "text": "while attempts < 3 and not authenticated:\n    password = input(\"Password: \")\n    attempts = attempts + 1\n    if password == \"revision\":\n        authenticated = True"
+            },
+            {
+              "type": "question",
+              "text": "Should a successful third attempt be accepted?"
+            }
+          ]
+        },
+        {
+          "title": "Report the final state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The flag decides success even when all three attempts were used."
+            },
+            {
+              "type": "code",
+              "text": "if authenticated:\n    print(\"Welcome\")\nelse:\n    print(\"Locked\")"
+            },
+            {
+              "type": "question",
+              "text": "Why is attempts == 3 not enough to determine failure?"
+            }
+          ]
+        }
+      ],
+      "solution": "attempts = 0\nauthenticated = False\nwhile attempts < 3 and not authenticated:\n    password = input(\"Password: \")\n    attempts = attempts + 1\n    if password == \"revision\":\n        authenticated = True\nif authenticated:\n    print(\"Welcome\")\nelse:\n    print(\"Locked\")"
+    },
+    {
+      "id": "problem-43",
+      "category": "random-numbers",
+      "title": "Roll two dice",
+      "question": {
+        "context": [
+          "A console game rolls two ordinary six-sided dice. Generate each die independently, then display both values and their total. Each die must include the possible endpoints 1 and 6."
+        ],
+        "requirements": [
+          "Import Python's random module.",
+          "Generate the first die as a random integer from 1 to 6 inclusive.",
+          "Generate a separate second die with the same bounds.",
+          "Add the two generated values.",
+          "Display both dice and their total."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Import Python's random module.",
+            "Generate the first die as a random integer from 1 to 6 inclusive.",
+            "Generate a separate second die with the same bounds.",
+            "Add the two generated values.",
+            "Display both dice and their total."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Generate independent dice",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Each die needs its own bounded random draw."
+            },
+            {
+              "type": "code",
+              "text": "import random\nfirst = random.randint(1, 6)\nsecond = random.randint(1, 6)"
+            },
+            {
+              "type": "question",
+              "text": "Could both independent dice have the same value?"
+            }
+          ]
+        },
+        {
+          "title": "Calculate the total",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use the saved draws rather than generating more values for output."
+            },
+            {
+              "type": "code",
+              "text": "total = first + second\nprint(\"Dice:\", first, second, \"Total:\", total)"
+            },
+            {
+              "type": "question",
+              "text": "What are the smallest and largest totals?"
+            }
+          ]
+        }
+      ],
+      "solution": "import random\nfirst = random.randint(1, 6)\nsecond = random.randint(1, 6)\ntotal = first + second\nprint(\"Dice:\", first, second, \"Total:\", total)"
+    },
+    {
+      "id": "problem-44",
+      "category": "random-numbers",
+      "title": "Choose a random list item",
+      "question": {
+        "context": [
+          "A quiz stores topics in the non-empty list [\"Science\", \"Maths\", \"Computing\", \"Gaming\"]. Choose and display one random topic by generating a valid list index. Every stored topic must be reachable."
+        ],
+        "requirements": [
+          "Import random and store the topic list.",
+          "Calculate the final valid index from the list length.",
+          "Generate a random integer index from 0 to that final index inclusive.",
+          "Use the generated index to display the chosen list item."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Import random and store the topic list.",
+            "Calculate the final valid index from the list length.",
+            "Generate a random integer index from 0 to that final index inclusive.",
+            "Use the generated index to display the chosen list item."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Store the choices",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A list groups all available topic names."
+            },
+            {
+              "type": "code",
+              "text": "import random\ntopics = [\"Science\", \"Maths\", \"Computing\", \"Gaming\"]"
+            },
+            {
+              "type": "question",
+              "text": "What is the first valid index?"
+            }
+          ]
+        },
+        {
+          "title": "Choose a valid position",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The final index is one less than the length."
+            },
+            {
+              "type": "code",
+              "text": "last = len(topics) - 1\nindex = random.randint(0, last)"
+            },
+            {
+              "type": "question",
+              "text": "Why would len(topics) be an invalid inclusive upper bound?"
+            }
+          ]
+        },
+        {
+          "title": "Display the item at that position",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "An index identifies a topic but is not itself the topic."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Topic:\", topics[index])"
+            },
+            {
+              "type": "question",
+              "text": "How do brackets turn the chosen index into a name?"
+            }
+          ]
+        }
+      ],
+      "solution": "import random\ntopics = [\"Science\", \"Maths\", \"Computing\", \"Gaming\"]\nlast = len(topics) - 1\nindex = random.randint(0, last)\nprint(\"Topic:\", topics[index])"
+    },
+    {
+      "id": "problem-45",
+      "category": "random-numbers",
+      "title": "Keep one secret across guesses",
+      "question": {
+        "context": [
+          "A guessing game chooses one secret integer from 1 to 20 inclusive. Read guesses until the player matches it, displaying Too low or Too high after each wrong guess. Assume guesses are integers in range."
+        ],
+        "requirements": [
+          "Generate and store one secret integer from 1 to 20 inclusive.",
+          "Read the first integer guess.",
+          "Repeat while the guess differs from the stored secret.",
+          "Display Too low or Too high for a wrong guess.",
+          "Read a new guess inside the loop without changing the secret.",
+          "Display Correct once the guess matches."
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Generate and store one secret integer from 1 to 20 inclusive.",
+            "Read the first integer guess.",
+            "Repeat while the guess differs from the stored secret.",
+            "Display Too low or Too high for a wrong guess.",
+            "Read a new guess inside the loop without changing the secret.",
+            "Display Correct once the guess matches."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Choose one secret",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Random generation belongs before the guessing loop."
+            },
+            {
+              "type": "code",
+              "text": "import random\nsecret = random.randint(1, 20)\nguess = int(input(\"Guess: \"))"
+            },
+            {
+              "type": "question",
+              "text": "Why should the secret not change on each attempt?"
+            }
+          ]
+        },
+        {
+          "title": "Guide repeated guesses",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Compare a guess, give a directional hint and request another."
+            },
+            {
+              "type": "code",
+              "text": "while guess != secret:\n    if guess < secret:\n        print(\"Too low\")\n    else:\n        print(\"Too high\")\n    guess = int(input(\"Guess: \"))"
+            },
+            {
+              "type": "question",
+              "text": "When should another hint no longer be displayed?"
+            }
+          ]
+        },
+        {
+          "title": "Finish on a match",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The loop condition becoming false means success."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Correct\")"
+            },
+            {
+              "type": "question",
+              "text": "What should happen if the first guess is correct?"
+            }
+          ]
+        }
+      ],
+      "solution": "import random\nsecret = random.randint(1, 20)\nguess = int(input(\"Guess: \"))\nwhile guess != secret:\n    if guess < secret:\n        print(\"Too low\")\n    else:\n        print(\"Too high\")\n    guess = int(input(\"Guess: \"))\nprint(\"Correct\")"
+    },
+    {
+      "id": "problem-46",
+      "category": "random-numbers",
+      "title": "Choose two different captains",
+      "question": {
+        "context": [
+          "Four available players are Ada, Ben, Cleo and Dee. Choose two different captains at random by index. Keep the first choice and redraw only the second index while it matches the first."
+        ],
+        "requirements": [
+          "Import random and store the non-empty player list containing at least two players.",
+          "Generate a valid first index and an initial second index.",
+          "While the indexes match, redraw only the second index.",
+          "Keep both generated indexes within the list bounds.",
+          "Display the two selected player names."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Import random and store the non-empty player list containing at least two players.",
+            "Generate a valid first index and an initial second index.",
+            "While the indexes match, redraw only the second index.",
+            "Keep both generated indexes within the list bounds.",
+            "Display the two selected player names."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Make initial choices",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The draws may initially select the same position."
+            },
+            {
+              "type": "code",
+              "text": "import random\nplayers = [\"Ada\", \"Ben\", \"Cleo\", \"Dee\"]\nfirst = random.randint(0, len(players) - 1)\nsecond = random.randint(0, len(players) - 1)"
+            },
+            {
+              "type": "question",
+              "text": "Does independent generation guarantee different players?"
+            }
+          ]
+        },
+        {
+          "title": "Reject only a duplicate second position",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A condition-controlled retry enforces the distinct-player rule."
+            },
+            {
+              "type": "code",
+              "text": "while second == first:\n    second = random.randint(0, len(players) - 1)"
+            },
+            {
+              "type": "question",
+              "text": "Why must the first choice remain fixed?"
+            }
+          ]
+        },
+        {
+          "title": "Display the two players",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use both indexes to retrieve the names."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Captains:\", players[first], players[second])"
+            },
+            {
+              "type": "question",
+              "text": "Why are two or more available players necessary?"
+            }
+          ]
+        }
+      ],
+      "solution": "import random\nplayers = [\"Ada\", \"Ben\", \"Cleo\", \"Dee\"]\nfirst = random.randint(0, len(players) - 1)\nsecond = random.randint(0, len(players) - 1)\nwhile second == first:\n    second = random.randint(0, len(players) - 1)\nprint(\"Captains:\", players[first], players[second])"
+    },
+    {
+      "id": "problem-47",
+      "category": "random-numbers",
+      "title": "Count sixes in repeated random trials",
+      "question": {
+        "context": [
+          "Simulate 100 rolls of one six-sided die and report how many rolls are six. Generate a new value on every trial. A particular run does not have a predetermined count."
+        ],
+        "requirements": [
+          "Import random and initialise a sixes counter to zero.",
+          "Repeat exactly 100 trials.",
+          "Generate a fresh integer from 1 to 6 inclusive during each trial.",
+          "Increase the counter only for a generated six.",
+          "Display the final number of sixes after all trials."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Import random and initialise a sixes counter to zero.",
+            "Repeat exactly 100 trials.",
+            "Generate a fresh integer from 1 to 6 inclusive during each trial.",
+            "Increase the counter only for a generated six.",
+            "Display the final number of sixes after all trials."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Prepare the simulation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Start the result count before generating any trials."
+            },
+            {
+              "type": "code",
+              "text": "import random\nsixes = 0"
+            },
+            {
+              "type": "question",
+              "text": "Why should the count not reset inside the loop?"
+            }
+          ]
+        },
+        {
+          "title": "Generate and classify each roll",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A new random value belongs inside every trial."
+            },
+            {
+              "type": "code",
+              "text": "for trial in range(100):\n    roll = random.randint(1, 6)\n    if roll == 6:\n        sixes = sixes + 1"
+            },
+            {
+              "type": "question",
+              "text": "What would happen if one roll were reused 100 times?"
+            }
+          ]
+        },
+        {
+          "title": "Report the observed count",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Output the count actually observed in this run."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Sixes:\", sixes)"
+            },
+            {
+              "type": "question",
+              "text": "Must exactly one sixth of the rolls be six?"
+            }
+          ]
+        }
+      ],
+      "solution": "import random\nsixes = 0\nfor trial in range(100):\n    roll = random.randint(1, 6)\n    if roll == 6:\n        sixes = sixes + 1\nprint(\"Sixes:\", sixes)"
+    },
+    {
+      "id": "problem-48",
+      "category": "searching-sorting",
+      "title": "Trace a linear search",
+      "question": {
+        "context": [
+          "The supplied program searches an unsorted list. Trace the program; you do not need to memorise an implementation. A comparison means one comparison of a list value with the target."
+        ],
+        "requirements": [
+          "Identify the search algorithm and state whether this input must be sorted.",
+          "Give the indexes visited before the match is found.",
+          "State the first output line, using the zero-based matching index.",
+          "State the final number of target comparisons and explain why later items are not checked."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Identify the search algorithm and state whether this input must be sorted.",
+            "Give the indexes visited before the match is found.",
+            "State the first output line, using the zero-based matching index.",
+            "State the final number of target comparisons and explain why later items are not checked."
+          ]
+        },
+        "givenCode": "values = [8, 3, 6, 2]\ntarget = 6\nchecks = 0\nfor index in range(len(values)):\n    checks = checks + 1\n    if values[index] == target:\n        print(\"Found at\", index)\n        break\nprint(\"Comparisons:\", checks)",
+        "command": "Trace the supplied program and answer these points:"
+      },
+      "steps": [
+        {
+          "title": "Read the search state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Trace the given values rather than rearranging them."
+            },
+            {
+              "type": "code",
+              "text": "values = [8, 3, 6, 2]\ntarget = 6\nchecks = 0"
+            },
+            {
+              "type": "question",
+              "text": "Why can linear search work on an unsorted list?"
+            }
+          ]
+        },
+        {
+          "title": "Visit and count comparisons",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Each visited value is compared with the target once."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(len(values)):\n    checks = checks + 1\n    if values[index] == target:"
+            },
+            {
+              "type": "question",
+              "text": "When should the comparison counter increase?"
+            }
+          ]
+        },
+        {
+          "title": "Stop and report",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A match ends the scan and the final counter reports work done."
+            },
+            {
+              "type": "code",
+              "text": "        print(\"Found at\", index)\n        break\nprint(\"Comparisons:\", checks)"
+            },
+            {
+              "type": "question",
+              "text": "Would a later duplicate be visited after break?"
+            }
+          ]
+        }
+      ],
+      "solution": "values = [8, 3, 6, 2]\ntarget = 6\nchecks = 0\nfor index in range(len(values)):\n    checks = checks + 1\n    if values[index] == target:\n        print(\"Found at\", index)\n        break\nprint(\"Comparisons:\", checks)"
+    },
+    {
+      "id": "problem-49",
+      "category": "searching-sorting",
+      "title": "Complete a binary search",
+      "question": {
+        "context": [
+          "The ascending list [2, 5, 8, 12, 16] is searched using the supplied binary-search outline. Complete the three expressions marked ... and explain the bounds. Display -1 if no match exists. Assume an integer target."
+        ],
+        "requirements": [
+          "State why ascending order is required for the half-discarding decisions.",
+          "Calculate the middle index using integer division of the two bounds.",
+          "Move low past the midpoint when its value is smaller than the target.",
+          "Move high before the midpoint when its value is greater than the target.",
+          "Preserve a matching index or the -1 not-found result and display it."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "State why ascending order is required for the half-discarding decisions.",
+            "Calculate the middle index using integer division of the two bounds.",
+            "Move low past the midpoint when its value is smaller than the target.",
+            "Move high before the midpoint when its value is greater than the target.",
+            "Preserve a matching index or the -1 not-found result and display it."
+          ]
+        },
+        "givenCode": "values = [2, 5, 8, 12, 16]\ntarget = int(input(\"Target: \"))\nlow = 0\nhigh = len(values) - 1\nposition = -1\nwhile low <= high:\n    middle = ...\n    if values[middle] == target:\n        position = middle\n        break\n    elif values[middle] < target:\n        low = ...\n    else:\n        high = ...\nprint(\"Index:\", position)",
+        "command": "Complete the supplied outline and explain these points:"
+      },
+      "steps": [
+        {
+          "title": "Set the sorted search interval",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The first and last indexes define an inclusive candidate interval."
+            },
+            {
+              "type": "code",
+              "text": "values = [2, 5, 8, 12, 16]\ntarget = int(input(\"Target: \"))\nlow = 0\nhigh = len(values) - 1\nposition = -1"
+            },
+            {
+              "type": "question",
+              "text": "What does position -1 represent?"
+            }
+          ]
+        },
+        {
+          "title": "Inspect the midpoint",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Compare the middle value and keep only the possible half."
+            },
+            {
+              "type": "code",
+              "text": "while low <= high:\n    middle = (low + high) // 2\n    if values[middle] == target:\n        position = middle\n        break\n    elif values[middle] < target:\n        low = middle + 1\n    else:\n        high = middle - 1"
+            },
+            {
+              "type": "question",
+              "text": "Why must a rejected midpoint be excluded from the new interval?"
+            }
+          ]
+        },
+        {
+          "title": "Output found or absent",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The result is one matching index or the original sentinel."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Index:\", position)"
+            },
+            {
+              "type": "question",
+              "text": "What ends the loop when no target exists?"
+            }
+          ]
+        }
+      ],
+      "solution": "values = [2, 5, 8, 12, 16]\ntarget = int(input(\"Target: \"))\nlow = 0\nhigh = len(values) - 1\nposition = -1\nwhile low <= high:\n    middle = (low + high) // 2\n    if values[middle] == target:\n        position = middle\n        break\n    elif values[middle] < target:\n        low = middle + 1\n    else:\n        high = middle - 1\nprint(\"Index:\", position)"
+    },
+    {
+      "id": "problem-50",
+      "category": "searching-sorting",
+      "title": "Apply one bubble-sort pass",
+      "question": {
+        "context": [
+          "Apply exactly one left-to-right pass of the supplied bubble-sort segment to [5, 1, 4, 2]. The task is to trace adjacent swaps, not to memorise or write a complete sort."
+        ],
+        "requirements": [
+          "State which adjacent pairs of indexes are compared in this pass.",
+          "Show the list after the first swap.",
+          "Give the list after the whole single pass.",
+          "Identify the value now in its final position and explain why the whole list is not necessarily sorted."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "State which adjacent pairs of indexes are compared in this pass.",
+            "Show the list after the first swap.",
+            "Give the list after the whole single pass.",
+            "Identify the value now in its final position and explain why the whole list is not necessarily sorted."
+          ]
+        },
+        "givenCode": "numbers = [5, 1, 4, 2]\nfor index in range(len(numbers) - 1):\n    if numbers[index] > numbers[index + 1]:\n        temporary = numbers[index]\n        numbers[index] = numbers[index + 1]\n        numbers[index + 1] = temporary\nprint(numbers)",
+        "command": "Trace the supplied single-pass segment:"
+      },
+      "steps": [
+        {
+          "title": "Set up adjacent comparisons",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Stop before a next-item lookup would go past the list."
+            },
+            {
+              "type": "code",
+              "text": "numbers = [5, 1, 4, 2]\nfor index in range(len(numbers) - 1):"
+            },
+            {
+              "type": "question",
+              "text": "Why does the loop stop at length minus one?"
+            }
+          ]
+        },
+        {
+          "title": "Swap an out-of-order pair",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use a temporary variable to preserve a value during the swap."
+            },
+            {
+              "type": "code",
+              "text": "    if numbers[index] > numbers[index + 1]:\n        temporary = numbers[index]\n        numbers[index] = numbers[index + 1]\n        numbers[index + 1] = temporary"
+            },
+            {
+              "type": "question",
+              "text": "Why are three assignments needed for this swap?"
+            }
+          ]
+        },
+        {
+          "title": "Interpret a single pass",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "One pass moves the largest remaining value to the end."
+            },
+            {
+              "type": "code",
+              "text": "print(numbers)"
+            },
+            {
+              "type": "question",
+              "text": "Does one pass guarantee every other value is sorted?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers = [5, 1, 4, 2]\nfor index in range(len(numbers) - 1):\n    if numbers[index] > numbers[index + 1]:\n        temporary = numbers[index]\n        numbers[index] = numbers[index + 1]\n        numbers[index + 1] = temporary\nprint(numbers)"
+    },
+    {
+      "id": "problem-51",
+      "category": "searching-sorting",
+      "title": "Insert into a sorted section",
+      "question": {
+        "context": [
+          "In the supplied insertion-sort segment, [2, 5, 9] is already sorted and the final value 4 must be inserted into it. Trace this one insertion; a full memorised sort is not required."
+        ],
+        "requirements": [
+          "Identify the saved key and the first position compared with it.",
+          "Explain which existing values shift right and why the key must be saved.",
+          "State the position where the key is inserted.",
+          "Give the final list and explain why the boundary test comes before the indexed comparison."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Identify the saved key and the first position compared with it.",
+            "Explain which existing values shift right and why the key must be saved.",
+            "State the position where the key is inserted.",
+            "Give the final list and explain why the boundary test comes before the indexed comparison."
+          ]
+        },
+        "givenCode": "numbers = [2, 5, 9, 4]\nkey = numbers[-1]\nposition = len(numbers) - 2\nwhile position >= 0 and numbers[position] > key:\n    numbers[position + 1] = numbers[position]\n    position = position - 1\nnumbers[position + 1] = key\nprint(numbers)",
+        "command": "Trace and explain this one insertion:"
+      },
+      "steps": [
+        {
+          "title": "Save the item to insert",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The sorted prefix remains in order while space is made for the key."
+            },
+            {
+              "type": "code",
+              "text": "numbers = [2, 5, 9, 4]\nkey = numbers[-1]\nposition = len(numbers) - 2"
+            },
+            {
+              "type": "question",
+              "text": "What would be lost if the key were not saved?"
+            }
+          ]
+        },
+        {
+          "title": "Shift larger prefix values",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Move left while values are greater than the saved key."
+            },
+            {
+              "type": "code",
+              "text": "while position >= 0 and numbers[position] > key:\n    numbers[position + 1] = numbers[position]\n    position = position - 1"
+            },
+            {
+              "type": "question",
+              "text": "Which condition prevents an invalid left-side lookup?"
+            }
+          ]
+        },
+        {
+          "title": "Insert the key into the gap",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The gap lies one position after the stopping comparison."
+            },
+            {
+              "type": "code",
+              "text": "numbers[position + 1] = key\nprint(numbers)"
+            },
+            {
+              "type": "question",
+              "text": "Why is the final position position + 1?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers = [2, 5, 9, 4]\nkey = numbers[-1]\nposition = len(numbers) - 2\nwhile position >= 0 and numbers[position] > key:\n    numbers[position + 1] = numbers[position]\n    position = position - 1\nnumbers[position + 1] = key\nprint(numbers)"
+    },
+    {
+      "id": "problem-52",
+      "category": "searching-sorting",
+      "title": "Merge two sorted lists",
+      "question": {
+        "context": [
+          "Apply the supplied merge phase to ascending lists [2, 6, 9] and [1, 6, 8]. Both lists are already sorted. Trace how the smallest remaining item is selected; no recursive sorting implementation is required."
+        ],
+        "requirements": [
+          "State why both input lists must already be in ascending order.",
+          "Explain how the two indexes identify the next unmerged values.",
+          "Select the smaller next value and advance only its source index.",
+          "Preserve both occurrences when values are equal.",
+          "Append the unused tail after one list is exhausted and give the final merged list."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "State why both input lists must already be in ascending order.",
+            "Explain how the two indexes identify the next unmerged values.",
+            "Select the smaller next value and advance only its source index.",
+            "Preserve both occurrences when values are equal.",
+            "Append the unused tail after one list is exhausted and give the final merged list."
+          ]
+        },
+        "givenCode": "left = [2, 6, 9]\nright = [1, 6, 8]\nmerged = []\ni = 0\nj = 0\nwhile i < len(left) and j < len(right):\n    if left[i] <= right[j]:\n        merged.append(left[i])\n        i = i + 1\n    else:\n        merged.append(right[j])\n        j = j + 1\nmerged = merged + left[i:] + right[j:]\nprint(merged)",
+        "command": "Trace and explain the supplied merge phase:"
+      },
+      "steps": [
+        {
+          "title": "Prepare the two sorted streams",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Separate indexes remember how far each input has been consumed."
+            },
+            {
+              "type": "code",
+              "text": "left = [2, 6, 9]\nright = [1, 6, 8]\nmerged = []\ni = 0\nj = 0"
+            },
+            {
+              "type": "question",
+              "text": "Why can a single shared index not describe both inputs?"
+            }
+          ]
+        },
+        {
+          "title": "Choose the smaller next value",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Only the list supplying the item advances."
+            },
+            {
+              "type": "code",
+              "text": "while i < len(left) and j < len(right):\n    if left[i] <= right[j]:\n        merged.append(left[i])\n        i = i + 1\n    else:\n        merged.append(right[j])\n        j = j + 1"
+            },
+            {
+              "type": "question",
+              "text": "What should happen to the other list's index?"
+            }
+          ]
+        },
+        {
+          "title": "Keep the remaining tail",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Once one input is empty, the other unused tail is already ordered."
+            },
+            {
+              "type": "code",
+              "text": "merged = merged + left[i:] + right[j:]\nprint(merged)"
+            },
+            {
+              "type": "question",
+              "text": "Why must the tail not be discarded?"
+            }
+          ]
+        }
+      ],
+      "solution": "left = [2, 6, 9]\nright = [1, 6, 8]\nmerged = []\ni = 0\nj = 0\nwhile i < len(left) and j < len(right):\n    if left[i] <= right[j]:\n        merged.append(left[i])\n        i = i + 1\n    else:\n        merged.append(right[j])\n        j = j + 1\nmerged = merged + left[i:] + right[j:]\nprint(merged)"
+    },
+    {
+      "id": "problem-53",
+      "category": "tracing-debugging-testing",
+      "title": "Trace a changing accumulator",
+      "question": {
+        "context": [
+          "Complete a trace of the supplied program. Record value and score after the assignment in each loop iteration. Follow the stored state rather than restarting score at 3 each time."
+        ],
+        "requirements": [
+          "Give the first iteration's value and updated score.",
+          "Give the second iteration's value and updated score.",
+          "Give the third iteration's value and updated score.",
+          "State the three output lines in order and explain the order of arithmetic operations."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Give the first iteration's value and updated score.",
+            "Give the second iteration's value and updated score.",
+            "Give the third iteration's value and updated score.",
+            "State the three output lines in order and explain the order of arithmetic operations."
+          ]
+        },
+        "givenCode": "score = 3\nvalues = [2, 5, 1]\nfor value in values:\n    score = score * 2 + value\n    print(score)",
+        "command": "Trace the supplied program:"
+      },
+      "steps": [
+        {
+          "title": "Read the starting state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The accumulator begins at 3 before the first iteration."
+            },
+            {
+              "type": "code",
+              "text": "score = 3\nvalues = [2, 5, 1]"
+            },
+            {
+              "type": "question",
+              "text": "Which variables already have values before the loop?"
+            }
+          ]
+        },
+        {
+          "title": "Follow each state update",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Multiply the previous score by two, then add the current value."
+            },
+            {
+              "type": "code",
+              "text": "for value in values:\n    score = score * 2 + value"
+            },
+            {
+              "type": "question",
+              "text": "Is the previous score reused on the next iteration?"
+            }
+          ]
+        },
+        {
+          "title": "Read the trace output",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The print inside the loop shows every updated score."
+            },
+            {
+              "type": "code",
+              "text": "    print(score)"
+            },
+            {
+              "type": "question",
+              "text": "How many lines appear for three list entries?"
+            }
+          ]
+        }
+      ],
+      "solution": "score = 3\nvalues = [2, 5, 1]\nfor value in values:\n    score = score * 2 + value\n    print(score)"
+    },
+    {
+      "id": "problem-54",
+      "category": "tracing-debugging-testing",
+      "title": "Repair two syntax errors",
+      "question": {
+        "context": [
+          "The supplied Python has two syntax errors: a required punctuation mark is missing and a branch body has incorrect indentation. Fix them, keeping the intended rule that 50 or more means Pass."
+        ],
+        "requirements": [
+          "Add the required punctuation to the conditional line.",
+          "Indent the Retry output so it belongs to the alternative branch.",
+          "State why these errors prevent the original program being parsed.",
+          "State the corrected output for scores 49 and 50."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Add the required punctuation to the conditional line.",
+            "Indent the Retry output so it belongs to the alternative branch.",
+            "State why these errors prevent the original program being parsed.",
+            "State the corrected output for scores 49 and 50."
+          ]
+        },
+        "givenCode": "score = int(input(\"Score: \"))\nif score >= 50\n    print(\"Pass\")\nelse:\nprint(\"Retry\")",
+        "command": "Correct and explain the supplied program:"
+      },
+      "steps": [
+        {
+          "title": "Read the score",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Convert the input before the numeric comparison."
+            },
+            {
+              "type": "code",
+              "text": "score = int(input(\"Score: \"))"
+            },
+            {
+              "type": "question",
+              "text": "What data type is needed for the comparison with 50?"
+            }
+          ]
+        },
+        {
+          "title": "Repair the conditional grammar",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A colon introduces a block, whose body must be indented."
+            },
+            {
+              "type": "code",
+              "text": "if score >= 50:"
+            },
+            {
+              "type": "question",
+              "text": "How does a syntax error differ from a logic error?"
+            }
+          ]
+        },
+        {
+          "title": "Verify both branches",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Check values immediately below and at the intended threshold."
+            },
+            {
+              "type": "code",
+              "text": "    print(\"Pass\")\nelse:\n    print(\"Retry\")"
+            },
+            {
+              "type": "question",
+              "text": "Which branch must contain exactly 50?"
+            }
+          ]
+        }
+      ],
+      "solution": "score = int(input(\"Score: \"))\nif score >= 50:\n    print(\"Pass\")\nelse:\n    print(\"Retry\")"
+    },
+    {
+      "id": "problem-55",
+      "category": "tracing-debugging-testing",
+      "title": "Fix an off-by-one total",
+      "question": {
+        "context": [
+          "The supplied program runs, but its total is wrong because the loop misses a list item. Find the logic error and correct it without changing the data or using a built-in total function."
+        ],
+        "requirements": [
+          "Identify the item missed by the original loop and explain why.",
+          "Correct the loop so every valid index is visited exactly once.",
+          "State the corrected total for the supplied list.",
+          "Give the expected result for a one-item list containing 4, showing how it detects the original error."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Identify the item missed by the original loop and explain why.",
+            "Correct the loop so every valid index is visited exactly once.",
+            "State the corrected total for the supplied list.",
+            "Give the expected result for a one-item list containing 4, showing how it detects the original error."
+          ]
+        },
+        "givenCode": "numbers = [4, 2, 7]\ntotal = 0\nfor index in range(1, len(numbers)):\n    total = total + numbers[index]\nprint(\"Total:\", total)",
+        "command": "Find, correct and test the logic error:"
+      },
+      "steps": [
+        {
+          "title": "Identify the missing position",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A running program can still calculate an incorrect result."
+            },
+            {
+              "type": "code",
+              "text": "numbers = [4, 2, 7]\ntotal = 0"
+            },
+            {
+              "type": "question",
+              "text": "Which zero-based position does range(1, length) omit?"
+            }
+          ]
+        },
+        {
+          "title": "Correct the index range",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use the complete zero-based interval without exceeding the length."
+            },
+            {
+              "type": "code",
+              "text": "for index in range(len(numbers)):\n    total = total + numbers[index]"
+            },
+            {
+              "type": "question",
+              "text": "Why is the range stop still excluded?"
+            }
+          ]
+        },
+        {
+          "title": "Test the repair",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A one-item list makes skipping the first item especially visible."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Total:\", total)"
+            },
+            {
+              "type": "question",
+              "text": "What should an empty list total be?"
+            }
+          ]
+        }
+      ],
+      "solution": "numbers = [4, 2, 7]\ntotal = 0\nfor index in range(len(numbers)):\n    total = total + numbers[index]\nprint(\"Total:\", total)"
+    },
+    {
+      "id": "problem-56",
+      "category": "tracing-debugging-testing",
+      "title": "Choose normal, boundary and invalid tests",
+      "question": {
+        "context": [
+          "A club accepts whole-number ages from 12 to 16 inclusive. A console supplies text to the given validator. Design tests with expected outcomes before running them.",
+          "Use OCR's distinction here: normal data should be accepted; valid boundary data is at an accepted edge; invalid data has the correct numeric type but an out-of-range value; erroneous data has the wrong type, such as a word instead of an age."
+        ],
+        "requirements": [
+          "Give a normal valid age and its expected accepted result.",
+          "Give both valid boundary ages and their expected results.",
+          "Give numeric ages just outside both limits and their expected rejected results.",
+          "Give a word as erroneous input and state the expected rejected result.",
+          "Explain why non-digit input is rejected before integer conversion.",
+          "Use the test results to check the validator rather than assuming one successful example proves it correct."
+        ],
+        "marks": 6,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Give a normal valid age and its expected accepted result.",
+            "Give both valid boundary ages and their expected results.",
+            "Give numeric ages just outside both limits and their expected rejected results.",
+            "Give a word as erroneous input and state the expected rejected result.",
+            "Explain why non-digit input is rejected before integer conversion.",
+            "Use the test results to check the validator rather than assuming one successful example proves it correct."
+          ]
+        },
+        "givenCode": "def valid_age(age_text):\n    if not age_text.isdigit():\n        return False\n    age = int(age_text)\n    return 12 <= age <= 16",
+        "command": "Design and explain a test plan for this validator:"
+      },
+      "steps": [
+        {
+          "title": "Guard the numeric conversion",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The console text must represent digits before int is called."
+            },
+            {
+              "type": "code",
+              "text": "def valid_age(age_text):\n    if not age_text.isdigit():\n        return False"
+            },
+            {
+              "type": "question",
+              "text": "Which test checks the wrong-type path?"
+            }
+          ]
+        },
+        {
+          "title": "Check both inclusive age limits",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The lower and upper accepted values must both pass."
+            },
+            {
+              "type": "code",
+              "text": "    age = int(age_text)\n    return 12 <= age <= 16"
+            },
+            {
+              "type": "question",
+              "text": "How do 11 and 17 differ from 12 and 16?"
+            }
+          ]
+        },
+        {
+          "title": "Run a small explicit test set",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Each test has a predicted Boolean result and a distinct purpose."
+            },
+            {
+              "type": "code",
+              "text": "samples = [\"14\", \"12\", \"16\", \"11\", \"17\", \"twelve\"]\nfor sample in samples:\n    print(sample, valid_age(sample))"
+            },
+            {
+              "type": "question",
+              "text": "When should final testing still follow these focused tests?"
+            }
+          ]
+        }
+      ],
+      "solution": "def valid_age(age_text):\n    if not age_text.isdigit():\n        return False\n    age = int(age_text)\n    return 12 <= age <= 16\nsamples = [\"14\", \"12\", \"16\", \"11\", \"17\", \"twelve\"]\nfor sample in samples:\n    print(sample, valid_age(sample))"
+    },
+    {
+      "id": "problem-57",
+      "category": "tracing-debugging-testing",
+      "title": "Repair a loop that never finishes",
+      "question": {
+        "context": [
+          "The supplied program should add the integers 1 to 4 inclusive, then finish. It runs without a syntax error but does not terminate. Find the missing state update and test the repair."
+        ],
+        "requirements": [
+          "Explain which loop-control value fails to change and why the original expression does not update it.",
+          "Correct that expression to store the incremented value.",
+          "State the corrected total after the loop.",
+          "State the final loop-control value that makes the condition false.",
+          "Describe useful zero-iteration and one-iteration tests by changing the upper limit, and their expected totals."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Explain which loop-control value fails to change and why the original expression does not update it.",
+            "Correct that expression to store the incremented value.",
+            "State the corrected total after the loop.",
+            "State the final loop-control value that makes the condition false.",
+            "Describe useful zero-iteration and one-iteration tests by changing the upper limit, and their expected totals."
+          ]
+        },
+        "givenCode": "number = 1\ntotal = 0\nwhile number <= 4:\n    total = total + number\n    number + 1\nprint(\"Total:\", total)",
+        "command": "Explain, repair and test this program:"
+      },
+      "steps": [
+        {
+          "title": "Read the intended loop state",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A condition-controlled loop needs a change that can make its condition false."
+            },
+            {
+              "type": "code",
+              "text": "number = 1\ntotal = 0"
+            },
+            {
+              "type": "question",
+              "text": "Why does the original expression not change number?"
+            }
+          ]
+        },
+        {
+          "title": "Repair the state update",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Assign the incremented value after adding the current number."
+            },
+            {
+              "type": "code",
+              "text": "while number <= 4:\n    total = total + number\n    number = number + 1"
+            },
+            {
+              "type": "question",
+              "text": "Should the increment happen before or after the addition?"
+            }
+          ]
+        },
+        {
+          "title": "Check completion and boundaries",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Test the loop on small limits during development, then test the whole finished program."
+            },
+            {
+              "type": "code",
+              "text": "print(\"Total:\", total)"
+            },
+            {
+              "type": "question",
+              "text": "What should a zero-iteration loop leave in total?"
+            }
+          ]
+        }
+      ],
+      "solution": "number = 1\ntotal = 0\nwhile number <= 4:\n    total = total + number\n    number = number + 1\nprint(\"Total:\", total)"
+    },
+    {
+      "id": "problem-58",
+      "category": "sql",
+      "title": "Select named database fields",
+      "question": {
+        "context": [
+          "Students is a database table with fields StudentID, Name and YearGroup. Write an SQL query for a text-based database console. Return the name and year group of every student, without the ID."
+        ],
+        "requirements": [
+          "Select the Name field.",
+          "Select the YearGroup field without StudentID.",
+          "Read all matching records from the Students table, without adding a filter."
+        ],
+        "marks": 3,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Select the Name field.",
+            "Select the YearGroup field without StudentID.",
+            "Read all matching records from the Students table, without adding a filter."
+          ]
+        },
+        "givenCode": "Students\nStudentID | Name | YearGroup\n1 | Ada | 10\n2 | Ben | 11\n3 | Cleo | 10",
+        "command": "Write an SQL query that:"
+      },
+      "steps": [
+        {
+          "title": "Choose the output fields",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "SELECT lists fields, separated by commas."
+            },
+            {
+              "type": "code",
+              "text": "SELECT Name,\n       YearGroup"
+            },
+            {
+              "type": "question",
+              "text": "Does choosing fewer fields also remove records?"
+            }
+          ]
+        },
+        {
+          "title": "Choose the source table",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "FROM supplies the table containing those fields."
+            },
+            {
+              "type": "code",
+              "text": "FROM Students;"
+            },
+            {
+              "type": "question",
+              "text": "Is WHERE necessary when every record is required?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT Name,\n       YearGroup\nFROM Students;",
+      "language": "sql",
+      "database": {
+        "table": "Students",
+        "columns": [
+          {
+            "name": "StudentID",
+            "type": "INTEGER"
+          },
+          {
+            "name": "Name",
+            "type": "TEXT"
+          },
+          {
+            "name": "YearGroup",
+            "type": "INTEGER"
+          }
+        ],
+        "rows": [
+          [
+            1,
+            "Ada",
+            10
+          ],
+          [
+            2,
+            "Ben",
+            11
+          ],
+          [
+            3,
+            "Cleo",
+            10
+          ]
+        ]
+      }
+    },
+    {
+      "id": "problem-59",
+      "category": "sql",
+      "title": "Find all available book records",
+      "question": {
+        "context": [
+          "Books has fields BookID, Title and Available. Available is 1 for a book that can be borrowed and 0 otherwise. Return every field of each available book through an SQL console."
+        ],
+        "requirements": [
+          "Use * to select every field.",
+          "Read records from Books.",
+          "Use WHERE to include only records whose Available field equals 1."
+        ],
+        "marks": 3,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Use * to select every field.",
+            "Read records from Books.",
+            "Use WHERE to include only records whose Available field equals 1."
+          ]
+        },
+        "givenCode": "Books\nBookID | Title | Available\n1 | Robots | 1\n2 | Stars | 0\n3 | Rivers | 1",
+        "command": "Write an SQL query that:"
+      },
+      "steps": [
+        {
+          "title": "Select all record fields",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The wildcard represents every column in the table."
+            },
+            {
+              "type": "code",
+              "text": "SELECT *"
+            },
+            {
+              "type": "question",
+              "text": "Does * also mean every record must pass a filter?"
+            }
+          ]
+        },
+        {
+          "title": "Filter the source records",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "WHERE restricts rows after the table is identified."
+            },
+            {
+              "type": "code",
+              "text": "FROM Books\nWHERE Available = 1;"
+            },
+            {
+              "type": "question",
+              "text": "Which supplied books have Available equal to 1?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT *\nFROM Books\nWHERE Available = 1;",
+      "language": "sql",
+      "database": {
+        "table": "Books",
+        "columns": [
+          {
+            "name": "BookID",
+            "type": "INTEGER"
+          },
+          {
+            "name": "Title",
+            "type": "TEXT"
+          },
+          {
+            "name": "Available",
+            "type": "INTEGER"
+          }
+        ],
+        "rows": [
+          [
+            1,
+            "Robots",
+            1
+          ],
+          [
+            2,
+            "Stars",
+            0
+          ],
+          [
+            3,
+            "Rivers",
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "problem-60",
+      "category": "sql",
+      "title": "Filter prices at an inclusive limit",
+      "question": {
+        "context": [
+          "Products stores Name and Price. Return the name and price of each item costing at most 10. An item priced exactly 10 must be included. Use an SQL query in a text console."
+        ],
+        "requirements": [
+          "Select Name and Price.",
+          "Read the Products table.",
+          "Compare Price using an inclusive upper-bound operator.",
+          "Use the upper limit 10 so the exact boundary is included and higher prices are excluded."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Select Name and Price.",
+            "Read the Products table.",
+            "Compare Price using an inclusive upper-bound operator.",
+            "Use the upper limit 10 so the exact boundary is included and higher prices are excluded."
+          ]
+        },
+        "givenCode": "Products\nName | Price\nPen set | 6.5\nNotebook | 10\nFolder | 10.01",
+        "command": "Write an SQL query that:"
+      },
+      "steps": [
+        {
+          "title": "Choose fields and source",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The result needs both a product identity and its price."
+            },
+            {
+              "type": "code",
+              "text": "SELECT Name, Price\nFROM Products"
+            },
+            {
+              "type": "question",
+              "text": "Why are both fields useful in the result?"
+            }
+          ]
+        },
+        {
+          "title": "Apply the inclusive condition",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "At most includes equality as well as smaller values."
+            },
+            {
+              "type": "code",
+              "text": "WHERE Price <= 10;"
+            },
+            {
+              "type": "question",
+              "text": "Which operator includes exactly 10?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT Name, Price\nFROM Products\nWHERE Price <= 10;",
+      "language": "sql",
+      "database": {
+        "table": "Products",
+        "columns": [
+          {
+            "name": "Name",
+            "type": "TEXT"
+          },
+          {
+            "name": "Price",
+            "type": "REAL"
+          }
+        ],
+        "rows": [
+          [
+            "Pen set",
+            6.5
+          ],
+          [
+            "Notebook",
+            10
+          ],
+          [
+            "Folder",
+            10.01
+          ]
+        ]
+      }
+    },
+    {
+      "id": "problem-61",
+      "category": "sql",
+      "title": "Require two database conditions",
+      "question": {
+        "context": [
+          "Clubs stores Name, Day and Places. Return only club names for clubs meeting on Tuesday that also have at least one place remaining. Both requirements must hold in the same record."
+        ],
+        "requirements": [
+          "Select only Name.",
+          "Read records from Clubs.",
+          "Compare Day with the quoted text Tuesday.",
+          "Require Places to be greater than zero.",
+          "Combine the two row conditions with AND."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Select only Name.",
+            "Read records from Clubs.",
+            "Compare Day with the quoted text Tuesday.",
+            "Require Places to be greater than zero.",
+            "Combine the two row conditions with AND."
+          ]
+        },
+        "givenCode": "Clubs\nName | Day | Places\nCode | Tuesday | 2\nArt | Tuesday | 0\nChess | Wednesday | 5\nMusic | Tuesday | 1",
+        "command": "Write an SQL query that:"
+      },
+      "steps": [
+        {
+          "title": "Choose the required result",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The output needs club names rather than every field."
+            },
+            {
+              "type": "code",
+              "text": "SELECT Name\nFROM Clubs"
+            },
+            {
+              "type": "question",
+              "text": "Which clause supplies the table?"
+            }
+          ]
+        },
+        {
+          "title": "Combine both restrictions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "A correct day alone is insufficient when no places remain."
+            },
+            {
+              "type": "code",
+              "text": "WHERE Day = 'Tuesday'\nAND Places > 0;"
+            },
+            {
+              "type": "question",
+              "text": "How does AND differ from OR for these records?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT Name\nFROM Clubs\nWHERE Day = 'Tuesday'\nAND Places > 0;",
+      "language": "sql",
+      "database": {
+        "table": "Clubs",
+        "columns": [
+          {
+            "name": "Name",
+            "type": "TEXT"
+          },
+          {
+            "name": "Day",
+            "type": "TEXT"
+          },
+          {
+            "name": "Places",
+            "type": "INTEGER"
+          }
+        ],
+        "rows": [
+          [
+            "Code",
+            "Tuesday",
+            2
+          ],
+          [
+            "Art",
+            "Tuesday",
+            0
+          ],
+          [
+            "Chess",
+            "Wednesday",
+            5
+          ],
+          [
+            "Music",
+            "Tuesday",
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "problem-62",
+      "category": "sql",
+      "title": "Accept either database category",
+      "question": {
+        "context": [
+          "Games stores Title and Genre. Each game has exactly one genre. Return the titles of games whose genre is Puzzle or Strategy, excluding other genres."
+        ],
+        "requirements": [
+          "Select only Title.",
+          "Read the Games table.",
+          "Compare Genre with the quoted text Puzzle.",
+          "Also test Genre against the quoted text Strategy.",
+          "Combine the complete comparisons with OR so either genre qualifies."
+        ],
+        "marks": 5,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Select only Title.",
+            "Read the Games table.",
+            "Compare Genre with the quoted text Puzzle.",
+            "Also test Genre against the quoted text Strategy.",
+            "Combine the complete comparisons with OR so either genre qualifies."
+          ]
+        },
+        "givenCode": "Games\nTitle | Genre\nLogic | Puzzle\nCastle | Strategy\nRacer | Racing\nBlocks | Puzzle",
+        "command": "Write an SQL query that:"
+      },
+      "steps": [
+        {
+          "title": "Choose titles from the source",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The result identifies matching games."
+            },
+            {
+              "type": "code",
+              "text": "SELECT Title\nFROM Games"
+            },
+            {
+              "type": "question",
+              "text": "Which field determines whether a game qualifies?"
+            }
+          ]
+        },
+        {
+          "title": "Allow either text match",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Repeat the field comparison on both sides of OR."
+            },
+            {
+              "type": "code",
+              "text": "WHERE Genre = 'Puzzle'\nOR Genre = 'Strategy';"
+            },
+            {
+              "type": "question",
+              "text": "Why would AND return no records for these two different single genres?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT Title\nFROM Games\nWHERE Genre = 'Puzzle'\nOR Genre = 'Strategy';",
+      "language": "sql",
+      "database": {
+        "table": "Games",
+        "columns": [
+          {
+            "name": "Title",
+            "type": "TEXT"
+          },
+          {
+            "name": "Genre",
+            "type": "TEXT"
+          }
+        ],
+        "rows": [
+          [
+            "Logic",
+            "Puzzle"
+          ],
+          [
+            "Castle",
+            "Strategy"
+          ],
+          [
+            "Racer",
+            "Racing"
+          ],
+          [
+            "Blocks",
+            "Puzzle"
+          ]
+        ]
+      }
     }
   ],
   "practice_sources": [

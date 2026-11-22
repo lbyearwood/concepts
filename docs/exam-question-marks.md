@@ -1,5 +1,58 @@
 # Exam question marks
 
+## Current forty-question addition — 22 November 2026
+
+The user requested five questions in each of the eight previously empty Exam categories, with varied GCSE techniques and explicit random list selection. The catalogue now contains 62 Exam questions. Original problem-1 through problem-22, their marks and all guide content are unchanged. Easy/Medium/Hard, their interest categories and school resources are outside this content addition.
+
+The new questions are original CSRevision practice in OCR GCSE style, not official OCR questions or official tariffs. Each has 3–6 marks with that exact number of task-specific credit points in question.marking.points. The points cover meaningful outcomes rather than counting source-code lines. The total appears after all requirements, including on the final fitted question page. All original allocations below remain unchanged.
+
+| ID | Question | Marks | Basis |
+| --- | --- | ---: | --- |
+| problem-23 | Read a seat from a 2D array | 4 | Original CSRevision practice |
+| problem-24 | Total each team's scores | 5 | Original CSRevision practice |
+| problem-25 | Find the largest grid reading | 5 | Original CSRevision practice |
+| problem-26 | Update a stock table | 5 | Original CSRevision practice |
+| problem-27 | Count occupied seats by column | 5 | Original CSRevision practice |
+| problem-28 | Apply a percentage discount | 4 | Original CSRevision practice |
+| problem-29 | Convert seconds to minutes and seconds | 4 | Original CSRevision practice |
+| problem-30 | Work out the number of paint tins | 5 | Original CSRevision practice |
+| problem-31 | Calculate a running average | 6 | Original CSRevision practice |
+| problem-32 | Calculate a tiered journey fare | 6 | Original CSRevision practice |
+| problem-33 | Create an event code | 4 | Original CSRevision practice |
+| problem-34 | Reformat a fixed-format date | 4 | Original CSRevision practice |
+| problem-35 | Mask a membership number | 4 | Original CSRevision practice |
+| problem-36 | Build an acronym from words | 5 | Original CSRevision practice |
+| problem-37 | Check a word for symmetry | 5 | Original CSRevision practice |
+| problem-38 | Require a non-empty name | 4 | Original CSRevision practice |
+| problem-39 | Check a password length | 4 | Original CSRevision practice |
+| problem-40 | Validate a reference format | 6 | Original CSRevision practice |
+| problem-41 | Check both login credentials | 5 | Original CSRevision practice |
+| problem-42 | Limit login attempts | 6 | Original CSRevision practice |
+| problem-43 | Roll two dice | 5 | Original CSRevision practice |
+| problem-44 | Choose a random list item | 4 | Original CSRevision practice |
+| problem-45 | Keep one secret across guesses | 6 | Original CSRevision practice |
+| problem-46 | Choose two different captains | 5 | Original CSRevision practice |
+| problem-47 | Count sixes in repeated random trials | 5 | Original CSRevision practice |
+| problem-48 | Trace a linear search | 4 | Original CSRevision practice |
+| problem-49 | Complete a binary search | 5 | Original CSRevision practice |
+| problem-50 | Apply one bubble-sort pass | 4 | Original CSRevision practice |
+| problem-51 | Insert into a sorted section | 4 | Original CSRevision practice |
+| problem-52 | Merge two sorted lists | 5 | Original CSRevision practice |
+| problem-53 | Trace a changing accumulator | 4 | Original CSRevision practice |
+| problem-54 | Repair two syntax errors | 4 | Original CSRevision practice |
+| problem-55 | Fix an off-by-one total | 4 | Original CSRevision practice |
+| problem-56 | Choose normal, boundary and invalid tests | 6 | Original CSRevision practice |
+| problem-57 | Repair a loop that never finishes | 5 | Original CSRevision practice |
+| problem-58 | Select named database fields | 3 | Original CSRevision practice |
+| problem-59 | Find all available book records | 3 | Original CSRevision practice |
+| problem-60 | Filter prices at an inclusive limit | 4 | Original CSRevision practice |
+| problem-61 | Require two database conditions | 5 | Original CSRevision practice |
+| problem-62 | Accept either database category | 5 | Original CSRevision practice |
+
+Scope checked against [OCR J277 specification v3.1, May 2026](https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf), sections 2.1.2, 2.1.3, 2.2.1–2.2.3 and 2.3.1–2.3.2. Search/sort tasks apply, trace or complete supplied algorithms; memorised implementations are not required. SQL is limited to SELECT, FROM, WHERE, comparisons and AND/OR. It is taught as SQL in a text console, without Python database boilerplate, joins or aggregation. Every other new solution uses console Python and GCSE constructs.
+
+## Original 22 allocations and source review
+
 Reviewed 22 November 2026. All 22 questions are console programming practice. Their existing wording, examples, tutorial stages, complete solutions and guided checkpoints are retained.
 
 Display one total after the final question requirement and before Tutorial, for example **(6 marks)**. The total belongs to the question text, including its final fitted page on a compact screen. Do not put it in the disclosure heading or catalogue row.

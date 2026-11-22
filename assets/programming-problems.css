@@ -29,6 +29,7 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .practice-console-note { margin:0; color:#535563; font-size:13px; }
 .practice-console-note:not([hidden]) + .problem-list-scroll .problem-empty { padding:16px 0; }
 .category-count { flex:none; padding:1px 7px; border-radius:12px; background:#ececf1; color:#535563; font-size:11px; }
+.tutorial-question-text .exam-given-code { margin:0; padding:3px 10px; border-left:4px solid #3600ff; background:#f4f4ff; color:#1433ff; white-space:pre-wrap; overflow-wrap:anywhere; font:13px/1.6 Consolas,"Courier New",monospace; }
 .problem-categories button[aria-selected="true"] .category-count { background:#d90058; color:#fff; }
 .problem-list-heading { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin:0 0 8px; }
 .problem-list-heading h2 { margin:0; font:900 23px/1.2 "Arial Black",Arial,sans-serif; letter-spacing:-.4px; }

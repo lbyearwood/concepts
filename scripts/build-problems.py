@@ -1,8 +1,10 @@
 """Build the native Programming Problems page from its public tutorial catalogue."""
 import argparse
 import ast
+from contextlib import closing
 import json
 import re
+import sqlite3
 from html import escape
 from pathlib import Path
 
@@ -23,6 +25,28 @@ def validate_assessment(question):
     if marking['basis'] == 'ebook' and not (marking.get('sourceTab') and marking.get('sourceTitle')):
         raise ValueError('An eBook allocation needs its exact source tab')
 
+def validate_solution(problem):
+    language = problem.get('language', 'python')
+    if language == 'python':
+        ast.parse(problem['solution'])
+        return
+    if language != 'sql':
+        raise ValueError('Unsupported tutorial language')
+    database = problem.get('database', {})
+    table, columns = database.get('table', ''), database.get('columns', [])
+    if (not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', table) or not columns
+            or any(not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', c.get('name', ''))
+                   or c.get('type') not in {'TEXT', 'INTEGER', 'REAL'} for c in columns)
+            or not re.match(r'^SELECT\b', problem['solution'], re.I)
+            or not sqlite3.complete_statement(problem['solution'])):
+        raise ValueError('Invalid GCSE SQL query or example table')
+    with closing(sqlite3.connect(':memory:')) as connection:
+        definitions = ', '.join(c['name'] + ' ' + c['type'] for c in columns)
+        connection.execute(f'CREATE TABLE {table} ({definitions})')
+        placeholders = ','.join('?' for _ in columns)
+        connection.executemany(f'INSERT INTO {table} VALUES ({placeholders})', database['rows'])
+        connection.execute(problem['solution']).fetchall()
+
 def output():
     data = json.loads(CATALOGUE.read_text(encoding='utf-8'))
     guides = json.loads(GUIDES.read_text(encoding='utf-8'))
@@ -40,7 +64,7 @@ def output():
             raise ValueError(f"Invalid tutorial: {problem['id']}")
         ids.add(problem['id'])
         validate_assessment(problem['question'])
-        ast.parse(problem['solution'])
+        validate_solution(problem)
         for step in problem['steps']:
             if not step['title'] or not step['blocks']:
                 raise ValueError(f"Empty tutorial step: {problem['id']}")

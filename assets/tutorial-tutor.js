@@ -16,7 +16,7 @@
       if (text !== undefined) item.textContent = text;
       return item;
     };
-    const { renderTutorText, renderPython, tokenizePython } = window.CSRTutorialCodeStyle;
+    const { renderTutorText, renderCode, tokenizeCode } = window.CSRTutorialCodeStyle;
     function isCorrect(problemId, checkpointId) {
       const question = checkpoints.get(problemId)?.get(checkpointId);
       const selected = answers.get(problemId + ':' + checkpointId);
@@ -25,13 +25,14 @@
     function show(problemId, lineIndex, kind = 'explanation', stageIndex) {
       pager = null;
       const guide = guides.problems[problemId], line = guide?.lines[lineIndex];
+      const problem = problems.find(item => item.id === problemId), language = problem?.language || 'python';
       panel.hidden = !line;
       if (!line) return;
-      const identifiers = guide.stageReviews ? [...new Set(tokenizePython(guide.lines.map(item => item.code).join('\n')).filter(token => token.type === 'identifier').map(token => token.text))] : [];
-      const decorate = (node, text) => renderTutorText(node, text, identifiers);
+      const identifiers = guide.stageReviews ? [...new Set(tokenizeCode(guide.lines.map(item => item.code).join('\n'), language).filter(token => token.type === 'identifier').map(token => token.text))] : [];
+      const decorate = (node, text) => renderTutorText(node, text, identifiers, language);
       panel.replaceChildren();
       const question = kind === 'question' || kind === 'prediction' ? line[kind] : null;
-      const problem = problems.find(item => item.id === problemId), stage = kind === 'review' ? problem?.steps[stageIndex] : null;
+      const stage = kind === 'review' ? problem?.steps[stageIndex] : null;
       panel.classList.toggle('is-question', !!question);
       const heading = node('header', 'tutor-heading');
       const copy = node('div', 'tutor-heading-copy');
@@ -45,7 +46,7 @@
             if (block.text.split('\n').every(text => problem.solution.split('\n').includes(text))) return;
             const label = node('p', '', 'Practice example — these intermediate lines illustrate this stage; the complete program is on the left.');
             label.dataset.fitText = 'true'; viewport.append(label);
-            block.text.split('\n').forEach(text => { const part = node('code', 'tutor-question-code'); renderPython(part, text); viewport.append(part); });
+            block.text.split('\n').forEach(text => { const part = node('code', 'tutor-question-code'); renderCode(part, text, text.length, language); viewport.append(part); });
           } else {
             const part = node('p', block.type === 'question' ? 'tutor-review-question' : block.type === 'error' ? 'tutor-reminder' : '');
             decorate(part, block.text); part.dataset.fitText = 'true'; viewport.append(part);
@@ -55,7 +56,7 @@
         pager = window.CSRTutorialFit.createPager(panel, viewport, () => [...viewport.children], 'stage review', decorate);
       } else if (question) {
         const key = problemId + ':' + question.id;
-        const contextCode = node('code', 'tutor-question-code'); renderPython(contextCode, line.code.trim()); panel.append(contextCode);
+        const contextCode = node('code', 'tutor-question-code'); renderCode(contextCode, line.code.trim(), line.code.trim().length, language); panel.append(contextCode);
         const prompt = node('p', 'tutor-check-prompt', question.prompt);
         decorate(prompt, question.prompt);
         const finalQuestion = !guide.stageReviews && kind === 'question' && lineIndex === guide.lines.length - 1;

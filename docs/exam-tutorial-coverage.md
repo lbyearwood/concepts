@@ -1,4 +1,102 @@
-# Exam tutorial coverage
+# Exam-question tutorial coverage
+
+## Current 62-question catalogue — 22 November 2026
+
+The user requested five questions in each of the eight previously empty Exam categories, with varied GCSE techniques and explicit random list selection. The catalogue now contains 62 Exam questions. Original problem-1 through problem-22, their marks and all guide content are unchanged. Easy/Medium/Hard, their interest categories and school resources are outside this content addition.
+
+Scope checked against [OCR J277 specification v3.1, May 2026](https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf), sections 2.1.2, 2.1.3, 2.2.1–2.2.3 and 2.3.1–2.3.2. Search/sort tasks apply, trace or complete supplied algorithms; memorised implementations are not required. SQL is limited to SELECT, FROM, WHERE, comparisons and AND/OR. It is taught as SQL in a text console, without Python database boilerplate, joins or aggregation. Every other new solution uses console Python and GCSE constructs.
+
+All guides now cover 436 exact physical code lines across 218 stages, with 209 understanding checks and 90 independent prediction checks. The forty additions account for 269 lines, 107 stages, 121 understanding checks and 48 predictions. Each line has its own explanation and Remember guidance. Correct answers are required at every checkpoint, including before future code/explanations are revealed.
+
+Independent deterministic console/SQLite fixtures cover 116 new cases, including numeric/string boundaries, empty data, failed and successful authentication, random endpoints/retries/draw counts, search absence, sorting duplicates/tails, test categories and SQL result rows. The complete source suite passes 252 Node and 80 Python tests. Per-question expected outputs are in tests/fixtures/exam-expansion-cases.json.
+
+| ID | Tutorial | Main techniques | Stages | Lines | Understanding | Predict after line | Cases | Local Edge full flow |
+| --- | --- | --- | ---: | ---: | ---: | --- | ---: | --- |
+| problem-23 | Read a seat from a 2D array | 2D indexing, zero-based row/column order | 2 | 4 | 3 | 2 | 2 | Pass |
+| problem-24 | Total each team's scores | nested iteration, row aggregation, accumulator reset | 3 | 6 | 3 | 3 | 1 | Pass |
+| problem-25 | Find the largest grid reading | 2D traversal, maximum selection, negative-data initialisation | 3 | 7 | 3 | 2 | 3 | Pass |
+| problem-26 | Update a stock table | 2D records, field access, in-place update | 2 | 5 | 3 | 3 | 3 | Pass |
+| problem-27 | Count occupied seats by column | nested column traversal, conditional counting, rectangular dimensions | 3 | 7 | 3 | 3 | 2 | Pass |
+| problem-28 | Apply a percentage discount | real arithmetic, percentage conversion, display precision | 2 | 5 | 3 | 2 | 3 | Pass |
+| problem-29 | Convert seconds to minutes and seconds | DIV, MOD, unit conversion, exact boundary | 2 | 4 | 3 | 2 | 4 | Pass |
+| problem-30 | Work out the number of paint tins | area formula, named constant, integer ceiling via remainder | 3 | 8 | 3 | 5 | 4 | Pass |
+| problem-31 | Calculate a running average | sentinel iteration, sum and count, mean, division-by-zero guard | 3 | 11 | 3 | 7 | 4 | Pass |
+| problem-32 | Calculate a tiered journey fare | named constants, if/elif/else, piecewise calculation, inclusive boundaries | 3 | 11 | 3 | 8 | 5 | Pass |
+| problem-33 | Create an event code | slicing, case conversion, casting, concatenation | 2 | 4 | 3 | 2 | 3 | Pass |
+| problem-34 | Reformat a fixed-format date | fixed-position slicing, field extraction, leading-zero preservation | 2 | 5 | 3 | 4 | 2 | Pass |
+| problem-35 | Mask a membership number | suffix slicing, string length, mask construction | 2 | 4 | 3 | 2 | 3 | Pass |
+| problem-36 | Build an acronym from words | tokenising words, indexing, string accumulator, case conversion | 3 | 6 | 3 | 4 | 3 | Pass |
+| problem-37 | Check a word for symmetry | symmetric indexing, half-length loop, Boolean state, early exit | 3 | 10 | 3 | 2, 5 | 4 | Pass |
+| problem-38 | Require a non-empty name | presence validation, whitespace handling, retry loop | 3 | 5 | 3 | 1 | 3 | Pass |
+| problem-39 | Check a password length | length validation, OR rejection, inclusive limits | 3 | 5 | 3 | 1 | 3 | Pass |
+| problem-40 | Validate a reference format | format validation, safe indexing, allowed characters, persistent failure flag | 3 | 12 | 3 | 4, 8 | 6 | Pass |
+| problem-41 | Check both login credentials | authentication, AND, exact text comparison, leading-zero credential | 3 | 6 | 3 | 2 | 4 | Pass |
+| problem-42 | Limit login attempts | bounded condition-controlled iteration, NOT and AND, attempt counter, success state | 3 | 11 | 3 | 2, 7 | 3 | Pass |
+| problem-43 | Roll two dice | inclusive random bounds, independent draws, saved random values | 2 | 5 | 3 | 2 | 3 | Pass |
+| problem-44 | Choose a random list item | random item from a list, dynamic index bounds, zero-based lookup | 3 | 5 | 3 | 3 | 3 | Pass |
+| problem-45 | Keep one secret across guesses | random-once placement, condition-controlled guessing, directional comparison | 3 | 10 | 3 | 2, 8 | 3 | Pass |
+| problem-46 | Choose two different captains | rejection sampling, distinct random list choices, saved first draw | 3 | 7 | 3 | 4 | 3 | Pass |
+| problem-47 | Count sixes in repeated random trials | random-per-iteration placement, fixed-count trials, frequency counter, non-deterministic outcome | 3 | 7 | 3 | 3 | 3 | Pass |
+| problem-48 | Trace a linear search | linear search recognition, trace indexes, comparison counting, early exit | 3 | 9 | 3 | 3, 7 | 1 | Pass |
+| problem-49 | Complete a binary search | binary search, sorted prerequisite, inclusive bounds, halving, not-found sentinel | 3 | 15 | 4 | 6, 11 | 5 | Pass |
+| problem-50 | Apply one bubble-sort pass | bubble-sort pass, adjacent comparison, temporary swap, partial sorting | 3 | 7 | 3 | 3 | 3 | Pass |
+| problem-51 | Insert into a sorted section | insertion-sort step, saved key, right shifts, short-circuit boundary | 3 | 8 | 3 | 3 | 3 | Pass |
+| problem-52 | Merge two sorted lists | merge phase, two pointers, stable equal-value choice, tail preservation | 3 | 14 | 3 | 6, 12 | 3 | Pass |
+| problem-53 | Trace a changing accumulator | trace table, state across iterations, operator precedence, output placement | 3 | 5 | 3 | 3 | 1 | Pass |
+| problem-54 | Repair two syntax errors | syntax errors, colon, indentation, threshold verification | 3 | 5 | 3 | 2 | 3 | Pass |
+| problem-55 | Fix an off-by-one total | logic error, off-by-one, index coverage, focused regression test | 3 | 5 | 3 | 2 | 3 | Pass |
+| problem-56 | Choose normal, boundary and invalid tests | test planning, normal data, valid boundaries, invalid values, erroneous type, early return | 3 | 8 | 3 | 2, 5 | 1 | Pass |
+| problem-57 | Repair a loop that never finishes | non-termination, discarded expression, assignment repair, zero/one-iteration testing | 3 | 6 | 3 | 4 | 3 | Pass |
+| problem-58 | Select named database fields | SQL SELECT, projection, FROM, all rows | 2 | 3 | 3 | 2 | 2 | Pass |
+| problem-59 | Find all available book records | SQL wildcard, numeric equality, row filtering | 2 | 3 | 3 | 2 | 2 | Pass |
+| problem-60 | Filter prices at an inclusive limit | SQL numeric comparison, inclusive upper bound, selected fields | 2 | 3 | 3 | 2 | 2 | Pass |
+| problem-61 | Require two database conditions | SQL text equality, AND, positive numeric condition, projection independent of filtering | 2 | 4 | 3 | 2 | 2 | Pass |
+| problem-62 | Accept either database category | SQL OR, complete alternative comparisons, single-valued field reasoning | 2 | 4 | 3 | 2 | 2 | Pass |
+
+### New exact code and stage mappings
+
+- **problem-23** (python). Mapping `1,2,2,2`. SHA-256 `d8d456189541ca013b4cfc2807f87f8aab2691cff2ed686403aa94be75042e23`.
+- **problem-24** (python). Mapping `1,2,2,2,2,3`. SHA-256 `cac843b9c19a39d9e646ae11f5eb8234aa1b74977b9eb6bc28f6ade771b02d5f`.
+- **problem-25** (python). Mapping `1,1,2,2,2,2,3`. SHA-256 `4b95cba08cc4cac72a2d4909097b703292452e2b81dacc04ce7c833d3be20346`.
+- **problem-26** (python). Mapping `1,1,1,2,2`. SHA-256 `1b857433d0617994db6ffcf14181a978a01a4e9937c91c97a9e61c7853f7cefb`.
+- **problem-27** (python). Mapping `1,1,2,2,2,2,3`. SHA-256 `82dbf7f930b0485c25b15361d87d24bbde58dee372a857423aed7f49f83ec04a`.
+- **problem-28** (python). Mapping `1,1,2,2,2`. SHA-256 `901d601c137c88264c3f18d0f3ab230dc361229fe5f56bd03062bdc7c615ef84`.
+- **problem-29** (python). Mapping `1,2,2,2`. SHA-256 `fa9a8904e691298d106b5b8f891295f1b51e9fbc845f1f9550de0a41d0c68423`.
+- **problem-30** (python). Mapping `1,1,1,1,2,2,2,3`. SHA-256 `9147cdc4090ba1480e87c1c6b1a15917b7b48e34490ee4f3c613ec830957be98`.
+- **problem-31** (python). Mapping `1,1,1,2,2,2,2,3,3,3,3`. SHA-256 `8902f09eeeffc01ddb783a7bca09864f9b69bc15e60d008c845f97ca59679f27`.
+- **problem-32** (python). Mapping `1,1,1,1,2,2,2,2,2,2,3`. SHA-256 `57cf29e8c5a9a5c0dc2d2a739fc97fd03fbbea729f2d0740cbe8e03953dad2c3`.
+- **problem-33** (python). Mapping `1,1,2,2`. SHA-256 `fee93e898f5191674c18b8b437d7a5fe98f4a45544df6dc0c34eb2d26426000b`.
+- **problem-34** (python). Mapping `1,1,1,1,2`. SHA-256 `659f57d7edd6c3b49d814096414e7be22a8e62b48694ab7f33f0809c56cde953`.
+- **problem-35** (python). Mapping `1,1,2,2`. SHA-256 `2f07baecfc8bf544d862c4ced25be05190ad46b5ecd3e0ed2a23128c3c0a3bb1`.
+- **problem-36** (python). Mapping `1,1,2,2,2,3`. SHA-256 `9d811fa60119b13deb277d358a0b66227318f19f83311620efcc2008bb4af685`.
+- **problem-37** (python). Mapping `1,1,2,2,2,2,3,3,3,3`. SHA-256 `2b92601777fe5ee53749e6a67d7f6b92526dcb93c973c986ccbab06726514221`.
+- **problem-38** (python). Mapping `1,2,2,2,3`. SHA-256 `631212d45d5b60c378215260465f585d3f71d1d7948334b4dac11a95fc581d6e`.
+- **problem-39** (python). Mapping `1,2,2,2,3`. SHA-256 `5f0db9d95c4a3c507b779c6a9bd275f1249218196916a9c7477a1f024e88ac39`.
+- **problem-40** (python). Mapping `1,1,1,1,2,2,2,2,3,3,3,3`. SHA-256 `69e7e3552a91ea1e4c47196973b6e1c9d2d8253b1243652c08bf90b9ca34ec1e`.
+- **problem-41** (python). Mapping `1,1,2,3,3,3`. SHA-256 `8c017bdc8a8ea3263489d7d5557c0705fab413135838aa0fe04d13d6575c8ed5`.
+- **problem-42** (python). Mapping `1,1,2,2,2,2,2,3,3,3,3`. SHA-256 `73c5d29a8ffae5c12594fe63ae22cf7d2f4245f5f0a5515aa99eec01b8e0db00`.
+- **problem-43** (python). Mapping `1,1,1,2,2`. SHA-256 `96c545c8dee5e65c9a724ed99fdf714e786b055ce67569cf8ac989fec5bb6b41`.
+- **problem-44** (python). Mapping `1,1,2,2,3`. SHA-256 `4d189bf25824ba87e5d5c41b10a7482904f99dd697ef7b403c2eba67a28831e5`.
+- **problem-45** (python). Mapping `1,1,1,2,2,2,2,2,2,3`. SHA-256 `34808c5aaaa1aef64b27956d2470f17aaf723d5af48a7f5975be44f3eab38da2`.
+- **problem-46** (python). Mapping `1,1,1,1,2,2,3`. SHA-256 `516fa3b6319812537b5cad6abb5128a66a8a5a9a629a67f3c2d4c51b26d90acc`.
+- **problem-47** (python). Mapping `1,1,2,2,2,2,3`. SHA-256 `d36b9422f0659603903fcd9d450626ad4e32eb8a20b5ec3169897604c82b49d7`.
+- **problem-48** (python). Mapping `1,1,1,2,2,2,3,3,3`. SHA-256 `16209fa5d5f59a35f6b7e54c7b41af46ff8b0ebd7c7e3b18c37cc2575d7699a4`.
+- **problem-49** (python). Mapping `1,1,1,1,1,2,2,2,2,2,2,2,2,2,3`. SHA-256 `d5227d7e7f5ce748e47ca7b0e42a14038bdc9c91c6e7d1ddcb79738e02e85522`.
+- **problem-50** (python). Mapping `1,1,2,2,2,2,3`. SHA-256 `b7bf7f79b2f08bbb9764a4d23362e4afd298b2d241f2f2daa232b555a9405a6b`.
+- **problem-51** (python). Mapping `1,1,1,2,2,2,3,3`. SHA-256 `42b6e4824dbc484169102aa0e5514aef89a618984b18b852cafd88cf6b9d77d0`.
+- **problem-52** (python). Mapping `1,1,1,1,1,2,2,2,2,2,2,2,3,3`. SHA-256 `b7c081242dbbda8a62179353cbad5aa90d99a9066d535701c1420c56df95b291`.
+- **problem-53** (python). Mapping `1,1,2,2,3`. SHA-256 `30ec97758f1b7e599e6b31dda7b2705b9922be77cecadaf3714a529f332b8073`.
+- **problem-54** (python). Mapping `1,2,3,3,3`. SHA-256 `765bdc0f4b39862d991c912f71330676ae2dfd7ea1b77c8cb422a93cc28b9ae2`.
+- **problem-55** (python). Mapping `1,1,2,2,3`. SHA-256 `6544e0023b35474714c3d05e223e4a3d388f6e18476b9602be9f120b9f763b14`.
+- **problem-56** (python). Mapping `1,1,1,2,2,3,3,3`. SHA-256 `8db02ebdd82dba667953518a2365078e0665a6eff3182a3ea71098974a09e9c1`.
+- **problem-57** (python). Mapping `1,1,2,2,2,3`. SHA-256 `c7a9e49835e7b529e1cdc565e8321862c8895b518a68551a5b93b62fd32ca573`.
+- **problem-58** (sql). Mapping `1,1,2`. SHA-256 `30b7c351f8f53ff8bf883ea7bb061bf57c059d8d65168982ff2e1dbb73aa305e`.
+- **problem-59** (sql). Mapping `1,2,2`. SHA-256 `af6a3681a29101ab810a1b7522a4c074e186bc056418e82b8456cd17dabafdac`.
+- **problem-60** (sql). Mapping `1,1,2`. SHA-256 `f0b6781caecafdc1922355abbc25d70ddbc1dca30ec96a3c7035ec3fd848e979`.
+- **problem-61** (sql). Mapping `1,1,2,2`. SHA-256 `b23b95a81a947de5e7368e626da1876e889879b06bbfee90ed3b85b98bb4d22e`.
+- **problem-62** (sql). Mapping `1,1,2,2`. SHA-256 `76722fe48e768b0338c946a71c5783d0aadbe0fc7c0afb4592a79407c2559225`.
+
+## Original 22-question baseline
 
 22 November 2026 navigation refinement: header chevrons move through problems in the current category in catalogue order, with disabled first/last boundaries. All 22 tutorials retain their own current line, stage, learning view, disclosures, selected answers and fitted content position while switching. A never-visited problem starts with its exam question open. Returning restores the previous view silently, with its checkpoint locks intact; changing viewport maps the same logical line/checkpoint/stage to the fitted layout. Collapsing and reopening Tutorial retains that position. Explicit Close clears all visited-problem positions and answers for a fresh attempt. This is memory for the current open dialog; no pupil tracking or permanent storage is added. The original guide/algorithm coverage below remains unchanged.
 

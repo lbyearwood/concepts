@@ -86,7 +86,7 @@
     problems: data.problems,
     onAnswer: correct => { refreshCheckpointControls(); void typingSound.answer(correct); }
   });
-  const { renderPython } = window.CSRTutorialCodeStyle;
+  const { renderPython, renderCode } = window.CSRTutorialCodeStyle;
   let codePager = null, examPager = null;
   new ResizeObserver(fitWorkspace).observe(body);
   const { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep } = window.CSRCodeWalkthrough;
@@ -240,16 +240,17 @@
     document.querySelector('.problem-announcement').textContent = title + '. ' + problems.length + (problems.length === 1 ? ' problem.' : ' problems.');
   }
   function renderTypedCode(lines, animate) {
+    const language = data.problems.find(problem => problem.id === state.problem)?.language || 'python';
     const space = element('div', 'tutorial-code-space');
     const pre = element('pre', 'tutorial-code-editor');
     const code = element('code');
-    pre.setAttribute('aria-label', 'Python code, line ' + (state.line + 1) + ' of ' + lines.length);
+    pre.setAttribute('aria-label', (language === 'sql' ? 'SQL' : 'Python') + ' code, line ' + (state.line + 1) + ' of ' + lines.length);
     let activeText;
     lines.slice(0, state.line + 1).forEach((line, index) => {
       const row = element('span', 'tutorial-code-line' + (index === state.line ? ' is-current' : ''));
       row.dataset.line = String(index + 1);
       const text = element('span', 'tutorial-code-text');
-      renderPython(text, line.text, index === state.line ? 0 : line.text.length);
+      renderCode(text, line.text, index === state.line ? 0 : line.text.length, language);
       row.append(text);
       code.append(row);
       if (index === state.line) activeText = text;
@@ -263,7 +264,7 @@
     typewriter.play(lines[state.line].text, {
       instant,
       write: text => {
-        renderPython(activeText, lines[state.line].text, text.length);
+        renderCode(activeText, lines[state.line].text, text.length, language);
         if (help.open) keepCodeVisible(activeText);
       },
       onCharacter: character => typingSound.tap(character),
@@ -369,7 +370,13 @@
     questionContent.replaceChildren();
     const questionText = isTypedTutorial(problem) ? element('div', 'tutorial-question-text') : questionContent;
     problem.question.context.forEach(text => questionText.append(element('p', '', text)));
-    questionText.append(element('p', '', 'Write an algorithm that:'));
+    if (problem.question.givenCode) {
+      problem.question.givenCode.split('\n').forEach(text => {
+        const line = element('p', 'exam-given-code', text || ' ');
+        line.dataset.fitText = 'true'; questionText.append(line);
+      });
+    }
+    questionText.append(element('p', '', problem.question.command || 'Write an algorithm that:'));
     const requirements = element('ol');
     problem.question.requirements.forEach((text, index) => { const item = element('li', '', text); item.value = index + 1; requirements.append(item); });
     questionText.append(requirements);
