@@ -41,8 +41,8 @@ class ProgrammingCatalogueTests(unittest.TestCase):
     def test_console_categories_and_difficulty_identity(self):
         self.assertEqual(self.data['interface'], 'console')
         self.assertEqual([c['title'] for c in self.data['practiceCategories']], [
-            'Science', 'Maths', 'Finance', 'Computing', 'Gaming', 'Creative & Media',
-            'Social & Community', 'Health & Fitness', 'Environment & Sustainability'])
+            '🧪 Science', '➗ Maths', '💷 Finance', '💻 Computing', '🎮 Gaming', '🎨 Creative & Media',
+            '🤝 Social & Community', '💪 Health & Fitness', '🌱 Environment & Sustainability'])
         parser = Buttons()
         parser.feed(builder.output())
         collections = [b for b in parser.buttons if 'data-collection' in b]

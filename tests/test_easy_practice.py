@@ -77,6 +77,13 @@ class EasyPracticeTests(unittest.TestCase):
                     shown=ast.literal_eval(example['given'][example['given'].index('['):])
                     self.assertEqual(shown,assigned,'The supplied list must be the exact list used by the solution')
 
+    def test_problem_briefs_specify_behaviour_without_solution_methods(self):
+        method=re.compile(r'\b(?:subtract|multiply|divide|minus|plus|remainder|modulo|loop|counter|variable|initialise|initialize|Python|len|range)\b|\b(?:add|set|start)\s+(?:a |the )?(?:running )?(?:total|count)\b|\badd\s+1\b',re.I)
+        for problem in PROBLEMS:
+            with self.subTest(problem=problem['id']):
+                for text in problem['question']['context']+problem['question']['requirements']:
+                    self.assertNotRegex(text,method,'Solution methods belong in the tutorial, not the problem brief')
+
     def test_independent_cases_exercise_both_outcomes_of_every_decision(self):
         for p in PROBLEMS:
             branches={node.lineno:node.test for node in ast.walk(ast.parse(p['solution'])) if isinstance(node,ast.If)}

@@ -122,17 +122,23 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-question-text .tutorial-question-marks { margin:10px 0 0; font-weight:700; }
 .tutorial-modal[data-question-layout="practice"] .tutorial-question-content { max-height:none; }
 .practice-question { flex:none; overflow:visible; }
-.practice-example { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; margin-top:14px; padding:10px 12px; border:1px solid #b5b7c2; background:#f7f7fc; font-size:12px; }
-.practice-example strong { display:block; margin-bottom:4px; }
-.practice-example pre { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font:12px/1.35 Consolas,"Courier New",monospace; }
+.practice-example { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px; margin-top:14px; font-size:13px; }
+.practice-example-panel { min-width:0; border:2px solid #101223; background:#fff; }
+.practice-example strong { display:block; padding:7px 10px; border-bottom:2px solid #101223; color:#101223; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
+.practice-example-inputs strong { background:#00c9b9; }
+.practice-example-result strong { background:#b8ff4c; }
+.practice-example pre { margin:0; padding:9px 10px; white-space:pre-wrap; overflow-wrap:anywhere; font:13px/1.4 Consolas,"Courier New",monospace; color:#101223; }
 @media(max-width:600px), (max-height:500px) {
   .practice-question { font-size:12px; line-height:1.35; }
   .practice-question p { margin-bottom:7px; }
   .practice-question li + li { margin-top:4px; }
-  .practice-example { gap:8px; margin-top:9px; padding:7px 8px; }
-  .practice-example pre { font-size:11px; }
+  .practice-example { gap:8px; margin-top:9px; }
+  .practice-example strong { padding:5px 7px; font-size:12px; }
+  .practice-example pre { padding:6px 7px; font-size:11px; }
 }
-@media(max-width:400px) { .practice-example { grid-template-columns:minmax(0,1fr); } }
+@media(max-width:400px) {
+  .practice-example { grid-template-columns:minmax(0,1fr); }
+}
 .tutorial-modal[data-guided="true"] .tutorial-help { min-height:0; }
 .tutorial-modal[data-guided="true"] .tutorial-walkthrough { display:flex; flex-direction:column; min-height:0; overflow:hidden; }
 .tutorial-modal[data-guided="true"] .tutorial-steps { flex:none; margin-bottom:10px; }
@@ -274,6 +280,12 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 @media(max-width:900px) { .problems-app { padding:20px 16px; }.problem-list-heading > span { display:none; }.problem-categories { gap:7px 16px; } }
 @media(min-width:601px) and (max-width:1100px) { .practice-categories { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media(max-width:600px) { .practice-categories { grid-template-columns:repeat(2,minmax(0,1fr)); gap:3px 10px; padding-top:12px; margin-bottom:12px; }.practice-categories button { min-height:38px; font-size:12px; }.practice-name-full { display:none; }.practice-name-short { display:inline; } }
+@media(max-width:400px) {
+  .practice-categories { column-gap:8px; }
+  .practice-categories button { gap:4px; font-size:11.5px; }
+  .practice-categories .category-count { padding:1px 3px; font-size:10px; }
+  #practice-category-environment-sustainability { grid-column:1 / -1; }
+}
 @media(max-width:700px) {
   .problems-heading h1 { font-size:29px; }
   .problem-collections { grid-template-columns:repeat(2,minmax(0,1fr)); }

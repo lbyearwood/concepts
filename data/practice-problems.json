@@ -8,13 +8,13 @@
       "title": "Make a science label",
       "question": {
         "context": [
-          "A science class needs a program to make labels for its work. Each label must contain the word Science followed by a space and the topic name."
+          "A science class needs a program to print a topic label for its work."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the science topic.",
-          "Join Science and the topic with one space between them.",
-          "Show the finished label."
+          "Display Science followed by the topic name.",
+          "Leave one space between Science and the topic."
         ],
         "example": {
           "inputs": [
@@ -66,14 +66,13 @@
       "title": "Find a temperature rise",
       "question": {
         "context": [
-          "A science class needs a program to record how much the temperature rises during an experiment. The rise is the final temperature minus the starting temperature. Both readings are in degrees Celsius."
+          "A science class needs a program to report the temperature rise during an experiment. Both temperature readings are in degrees Celsius."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the starting temperature.",
           "Ask for the final temperature.",
-          "Subtract the starting reading from the final reading.",
-          "Show the rise in degrees."
+          "Display the temperature rise in degrees."
         ],
         "example": {
           "inputs": [
@@ -127,14 +126,14 @@
       "title": "Share seeds between trays",
       "question": {
         "context": [
-          "A school garden needs a program to share seeds equally between planting trays. A seed cannot be split. The program must show how many whole seeds go in each tray and how many seeds are left."
+          "A school garden needs a program to plan an equal share of seeds for its planting trays. Seeds must stay whole, and some may be left over."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the number of seeds and the number of trays.",
-          "Find the number of whole seeds per tray.",
-          "Find the seeds left after sharing.",
-          "Show both answers."
+          "Ask for the number of seeds.",
+          "Ask for the number of trays.",
+          "Display how many seeds each tray receives.",
+          "Display how many seeds are left over."
         ],
         "example": {
           "inputs": [
@@ -188,14 +187,13 @@
       "title": "Find average rainfall",
       "question": {
         "context": [
-          "A weather display needs a program to find the average rainfall over three days. Add the three amounts, then divide the total by 3. Rainfall is measured in millimetres."
+          "A weather display needs a program to report the average daily rainfall over three days. Rainfall is measured in millimetres."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the rainfall on each of the three days.",
-          "Add the amounts.",
-          "Divide the total by 3.",
-          "Show the average in millimetres."
+          "Ask for each of the three rainfall readings.",
+          "Display the average daily rainfall.",
+          "Show mm after the answer."
         ],
         "example": {
           "inputs": [
@@ -251,13 +249,13 @@
       "title": "Compare two temperature readings",
       "question": {
         "context": [
-          "A classroom display needs a program to compare two temperature readings. Show First is warmer if the first reading is higher. Otherwise show Second is as warm or warmer. Readings are in degrees Celsius."
+          "A classroom display needs a program to report which of two temperature readings is warmer. Both readings are in degrees Celsius."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the first and second readings.",
-          "Check whether the first is greater than the second.",
-          "Show the message that matches this rule."
+          "Display First is warmer when the first reading is higher.",
+          "Display Second is as warm or warmer for a higher or equal second reading."
         ],
         "example": {
           "inputs": [
@@ -311,13 +309,13 @@
       "title": "Label a cool reading",
       "question": {
         "context": [
-          "A temperature display needs a program to label a reading. The display uses Cold for readings below 10 degrees Celsius and Mild for readings of 10 or above. Readings may include a decimal point."
+          "A temperature display uses Cold for readings below 10 degrees Celsius and Mild for readings of 10 or above. A program is needed to show the appropriate label."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the temperature.",
-          "Check whether it is below 10.",
-          "Show Cold or Mild using the display rule."
+          "Allow a reading with a decimal point.",
+          "Display Cold or Mild according to the display rule."
         ],
         "example": {
           "inputs": [
@@ -369,13 +367,13 @@
       "title": "Number the experiment trials",
       "question": {
         "context": [
-          "A science experiment needs a program to number its trials. A trial is one attempt at the experiment. If there are three trials, show Trial 1, Trial 2 and Trial 3 on separate lines."
+          "A science experiment needs a program to display its numbered trials. A trial is one attempt at the experiment."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the number of trials.",
-          "Count from 1 up to and including that number.",
-          "Show Trial followed by the current number each time."
+          "Display every trial number from 1 through the requested count.",
+          "Put Trial and its number on a separate line for each trial."
         ],
         "example": {
           "inputs": [
@@ -427,14 +425,13 @@
       "title": "Total the collected water",
       "question": {
         "context": [
-          "A science class needs a program to add the water collected in four containers. The amounts are 3, 5, 2 and 4 litres. Use these values as a list and show the total."
+          "A science class needs a program to report the total water collected in four containers. The amounts are 3, 5, 2 and 4 litres."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four amounts in a list.",
-          "Start a total at 0.",
-          "Add each amount to the total.",
-          "Show the total number of litres."
+          "Use the four supplied water amounts.",
+          "Display their combined amount.",
+          "Show Water total before the answer and litres after it."
         ],
         "example": {
           "inputs": [],
@@ -483,14 +480,13 @@
       "title": "Count warm temperature readings",
       "question": {
         "context": [
-          "A display needs a program to count warm readings in a short list. Its rule calls a reading warm when it is 20 degrees Celsius or above. Use the readings 18, 22, 25 and 17."
+          "A temperature display calls a reading warm when it is 20 degrees Celsius or above. A program is needed to report how many of the supplied readings are warm."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four readings in a list.",
-          "Start a count at 0.",
-          "Add 1 for each reading of 20 or above.",
-          "Show the number of warm readings."
+          "Use the readings 18, 22, 25 and 17.",
+          "Display the number of warm readings.",
+          "Show Warm readings before the count."
         ],
         "example": {
           "inputs": [],
@@ -539,13 +535,13 @@
       "title": "Choose one experiment result",
       "question": {
         "context": [
-          "An experiment display needs a program to show one result from a list. Use the results 4, 7, 6 and 9. Positions start at 0, so position 0 holds 4 and position 1 holds 7."
+          "An experiment display needs a program to show one result selected from 4, 7, 6 and 9. The results have position numbers 0, 1, 2 and 3 in that order."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four results in a list.",
-          "Ask which position to use.",
-          "Show the value at that position."
+          "Use the supplied experiment results.",
+          "Ask for the position number.",
+          "Display Result followed by the result at that position."
         ],
         "example": {
           "inputs": [
@@ -598,13 +594,13 @@
       "title": "Add three numbers",
       "question": {
         "context": [
-          "A maths practice program needs to add three numbers. The answer must be shown next to the word Total so it is clear which number is the result."
+          "A maths practice program needs to report the total of three entered numbers."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the first, second and third numbers.",
-          "Add all three numbers.",
-          "Show the total."
+          "Display their total.",
+          "Show Total before the answer."
         ],
         "example": {
           "inputs": [
@@ -660,13 +656,13 @@
       "title": "Find a rectangle area",
       "question": {
         "context": [
-          "A maths program needs to find the area of a rectangle. Area is the space inside the shape. Multiply the width by the height. Both measurements are in centimetres, so the answer is in square centimetres."
+          "A maths program needs to report the area of a rectangle. Area means the space inside a shape. The side lengths are measured in centimetres."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the width and height.",
-          "Multiply width by height.",
-          "Show the area in square centimetres."
+          "Ask for the width.",
+          "Ask for the height.",
+          "Display the area in square centimetres."
         ],
         "example": {
           "inputs": [
@@ -720,13 +716,13 @@
       "title": "Find the distance around a rectangle",
       "question": {
         "context": [
-          "A maths program needs to find the distance around a rectangle, called its perimeter. Add the width and height, then multiply the answer by 2 because there are two sides of each length."
+          "A maths program needs to report the distance around a rectangle. This distance is called its perimeter. The side lengths are measured in centimetres."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for width and height in centimetres.",
-          "Add the two lengths and multiply their sum by 2.",
-          "Show the perimeter in centimetres."
+          "Ask for the width.",
+          "Ask for the height.",
+          "Display the perimeter in centimetres."
         ],
         "example": {
           "inputs": [
@@ -780,14 +776,13 @@
       "title": "Show five times-table facts",
       "question": {
         "context": [
-          "A maths practice program needs to show the first five multiplication facts for a chosen number. For a chosen number of 4, the facts start with 4 x 1 = 4 and end with 4 x 5 = 20."
+          "A maths practice display needs the first five times-table facts for an entered number."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the chosen number.",
-          "Use the numbers 1 through 5 in turn.",
-          "Multiply the chosen number by each number.",
-          "Show one complete multiplication fact per line."
+          "Display the chosen number times 1, times 2, times 3, times 4 and times 5.",
+          "Put one complete fact on each line, using the layout shown in the expected result."
         ],
         "example": {
           "inputs": [
@@ -839,13 +834,13 @@
       "title": "Check whether a number is even",
       "question": {
         "context": [
-          "A maths program needs to label a whole number as Even or Odd. An even number divides by 2 with nothing left over. Use the remainder after division by 2 to choose the label."
+          "A maths practice program needs to label an entered whole number as Even or Odd."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for a whole number.",
-          "Find whether division by 2 leaves a remainder of 0.",
-          "Show Even when it does and Odd otherwise."
+          "Ask for the whole number.",
+          "Display Even for an even number.",
+          "Display Odd for an odd number."
         ],
         "example": {
           "inputs": [
@@ -897,13 +892,13 @@
       "title": "Find a number squared",
       "question": {
         "context": [
-          "A maths program needs to find a number squared. Squaring a number means multiplying it by itself. For example, the square of 3 is 3 times 3, which is 9."
+          "A maths practice program needs to report the square of an entered whole number."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for a whole number.",
-          "Multiply the number by itself.",
-          "Show the squared result."
+          "Ask for the whole number.",
+          "Display its squared value.",
+          "Show Square before the answer."
         ],
         "example": {
           "inputs": [
@@ -955,13 +950,13 @@
       "title": "Find the percentage chosen",
       "question": {
         "context": [
-          "A maths program needs to find what percentage of a group has been chosen. Divide the chosen count by the full group count, then multiply by 100."
+          "A maths report needs to show what percentage of a group has been chosen. The full group count and the chosen count are entered separately."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the full group count and the chosen count.",
-          "Divide chosen by the full count and multiply by 100.",
-          "Show the answer followed by percent."
+          "Ask for the full group count.",
+          "Ask for the chosen count.",
+          "Display the chosen percentage followed by percent."
         ],
         "example": {
           "inputs": [
@@ -1015,14 +1010,13 @@
       "title": "Add the numbers from 1 to a limit",
       "question": {
         "context": [
-          "A maths program needs to add every whole number from 1 up to a chosen limit. A limit of 4 means adding 1, 2, 3 and 4. Show the final total once."
+          "A maths practice program needs the total of all whole numbers from 1 up to a chosen limit. The number at the limit is included."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the limit.",
-          "Start a total at 0.",
-          "Add each number from 1 through the limit.",
-          "Show the finished total."
+          "Display the total for the required numbers.",
+          "Show one result line beginning with Total."
         ],
         "example": {
           "inputs": [
@@ -1074,14 +1068,13 @@
       "title": "Find the largest list value",
       "question": {
         "context": [
-          "A maths program needs to find the largest value in the list 14, 7, 19 and 11. Keep the largest value found so far and replace it whenever a higher value is reached."
+          "A maths display needs a program to report the largest number in the supplied list."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the supplied numbers in a list.",
-          "Use the first number as the starting largest value.",
-          "Visit the numbers and keep any larger value.",
-          "Show the final largest value."
+          "Use the numbers 14, 7, 19 and 11.",
+          "Display only the largest value.",
+          "Show Largest before the answer."
         ],
         "example": {
           "inputs": [],
@@ -1130,13 +1123,13 @@
       "title": "Show numbers divisible by 5",
       "question": {
         "context": [
-          "A maths program needs to show the numbers in a list that divide by 5 with no remainder. Use the list 3, 5, 12, 15 and 20. Show matching numbers on separate lines in their original order."
+          "A maths display needs a program to show which supplied numbers are exactly divisible by 5."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the supplied list.",
-          "Check the remainder when each number is divided by 5.",
-          "Show a number only when its remainder is 0."
+          "Use the numbers 3, 5, 12, 15 and 20.",
+          "Display every matching number in its original order.",
+          "Put each matching number on its own line."
         ],
         "example": {
           "inputs": [],
@@ -1185,14 +1178,13 @@
       "title": "Total two snack prices",
       "question": {
         "context": [
-          "The school café needs a program to find the total price of two snacks bought together. Each snack has its own price. Ask for both prices in pounds and show their total."
+          "The school café needs a program to report the total price of two snacks bought together. Each snack has its own price in pounds."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the first snack price.",
           "Ask for the second snack price.",
-          "Add the prices.",
-          "Show the total in pounds with two digits after the decimal point, such as £5.70."
+          "Display the total with a pound sign and two digits after the decimal point, such as £5.70."
         ],
         "example": {
           "inputs": [
@@ -1246,13 +1238,13 @@
       "title": "Work out the change",
       "question": {
         "context": [
-          "The school café needs a program to work out change after a payment. Subtract the cost from the amount paid. Show the change in pounds with two digits after the decimal point."
+          "The school café needs a program to report the change due after a payment. The purchase cost and the amount paid are entered in pounds."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the cost and the amount paid.",
-          "Subtract the cost from the amount paid.",
-          "Show the change."
+          "Ask for the purchase cost.",
+          "Ask for the amount paid.",
+          "Display the change with a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [
@@ -1306,14 +1298,13 @@
       "title": "Calculate a saving total",
       "question": {
         "context": [
-          "A savings tracker needs a program to calculate the amount saved after several weeks. The same amount is added each week. Multiply the weekly amount by the number of weeks."
+          "A savings tracker needs a program to report the amount saved over a chosen number of weeks. The same amount is saved each week."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the amount saved per week in pounds.",
+          "Ask for the amount saved each week in pounds.",
           "Ask for the number of weeks.",
-          "Multiply the weekly amount by the week count.",
-          "Show the saved total in pounds with two digits after the decimal point."
+          "Display the saved total with a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [
@@ -1367,14 +1358,13 @@
       "title": "Work out a reduced price",
       "question": {
         "context": [
-          "A shop display needs a program to calculate a sale price. A discount is the amount taken off the original price. Find the discount by multiplying the original price by the discount percentage and dividing by 100."
+          "A shop display needs a program to report a sale price. A discount is a reduction in the original price, given as a percentage."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the original price and discount percentage.",
-          "Calculate the amount to take off.",
-          "Subtract that amount from the original price.",
-          "Show the sale price in pounds with two digits after the decimal point."
+          "Ask for the original price in pounds.",
+          "Ask for the discount percentage.",
+          "Display the sale price with a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [
@@ -1428,14 +1418,13 @@
       "title": "Calculate a group ticket cost",
       "question": {
         "context": [
-          "A school show needs a program to calculate ticket costs. A child ticket costs £2 and an adult ticket costs £4. Add the cost of all child tickets to the cost of all adult tickets."
+          "A school show needs a program to report the ticket cost for a group. Child tickets cost £2 each and adult tickets cost £4 each."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the child ticket count and adult ticket count.",
-          "Multiply the child count by 2 and the adult count by 4.",
-          "Add those two costs.",
-          "Show the total in pounds with two digits after the decimal point."
+          "Ask for the child ticket count.",
+          "Ask for the adult ticket count.",
+          "Display the full ticket cost with a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [
@@ -1489,14 +1478,13 @@
       "title": "Add a delivery charge",
       "question": {
         "context": [
-          "An online shop needs a program to add delivery to an order. Orders below £15 have a £3 delivery charge. Orders of £15 or more have free delivery. Show the total amount to pay."
+          "An online shop needs a program to report the amount payable for an order. Delivery costs £3 on orders below £15 and is free on orders of £15 or more."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the order cost in pounds.",
-          "Add £3 when the order cost is below £15.",
-          "Otherwise keep the order cost unchanged.",
-          "Show the amount to pay with two digits after the decimal point."
+          "Display the full amount payable, including any delivery charge.",
+          "Use a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [
@@ -1548,13 +1536,13 @@
       "title": "Check whether the money is enough",
       "question": {
         "context": [
-          "A payment display needs a program to check whether the available money covers a cost. Show Enough money when the money is equal to or greater than the cost. Otherwise show More needed."
+          "A payment display needs a program to report whether the available money covers a purchase cost. An exact payment is enough."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the available money and the cost in pounds.",
-          "Check whether money is at least the cost.",
-          "Show the matching message."
+          "Ask for the available money in pounds.",
+          "Ask for the cost in pounds.",
+          "Display Enough money when the cost is covered and More needed otherwise."
         ],
         "example": {
           "inputs": [
@@ -1608,13 +1596,13 @@
       "title": "Split a cost equally",
       "question": {
         "context": [
-          "A program is needed to split a cost equally between a group. Divide the full cost by the number in the group. Show the amount for each share in pounds with two digits after the decimal point."
+          "A program is needed to report the cost of one equal share of a group purchase. The full cost is entered in pounds."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the full cost and the group count.",
-          "Divide the cost by the group count.",
-          "Show the price of one equal share."
+          "Ask for the full cost.",
+          "Ask for the number of equal shares.",
+          "Display the price of one share with a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [
@@ -1668,14 +1656,13 @@
       "title": "Total the donation amounts",
       "question": {
         "context": [
-          "A school collection needs a program to add three donations. Use £2.50, £1.00 and £4.00 as the stored amounts. Visit the list and show how much was collected altogether."
+          "A school collection needs a program to report the money received from three donations of £2.50, £1.00 and £4.00."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three donation amounts in a list.",
-          "Start a total at 0.",
-          "Add each donation to the total.",
-          "Show the collected amount in pounds with two digits after the decimal point."
+          "Use the three supplied donation amounts.",
+          "Display the full amount collected.",
+          "Use a pound sign and two digits after the decimal point."
         ],
         "example": {
           "inputs": [],
@@ -1724,14 +1711,13 @@
       "title": "Count the £2 coins",
       "question": {
         "context": [
-          "A program for counting coins needs to count the £2 coins in a small collection. Use the coin values 1, 2, 1, 2 and 2, where each number is the coin value in pounds."
+          "A school collection needs a program to report how many £2 coins it contains. The supplied numbers are coin values in pounds."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the supplied coin values in a list.",
-          "Start a count at 0.",
-          "Add 1 whenever a coin value equals 2.",
-          "Show the number of £2 coins."
+          "Use the coin values 1, 2, 1, 2 and 2.",
+          "Display the number of £2 coins.",
+          "Show £2 coins before the count."
         ],
         "example": {
           "inputs": [],
@@ -1780,13 +1766,13 @@
       "title": "Make a username lower case",
       "question": {
         "context": [
-          "A school login system needs a program to put usernames into lower-case letters. Lower case means small letters such as a rather than capital letters such as A. The program only needs to show the changed text."
+          "A school login system needs a program to display usernames in lower-case letters. Lower case means small letters such as a rather than capitals such as A."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for a sample username.",
-          "Change its letters to lower case.",
-          "Show the changed username."
+          "Ask for a username.",
+          "Display the username in lower case.",
+          "Keep its other characters in their original positions."
         ],
         "example": {
           "inputs": [
@@ -1838,13 +1824,13 @@
       "title": "Count the characters in a message",
       "question": {
         "context": [
-          "A message editor needs a program to show how many characters a message contains. A character is one letter, digit, space or symbol. Count spaces as well as the visible letters."
+          "A message editor needs a program to report the length of an entered message. A character can be a letter, digit, space or symbol."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the message.",
-          "Count all its characters.",
-          "Show the count after Characters."
+          "Display its full character count, including spaces.",
+          "Show Characters before the count."
         ],
         "example": {
           "inputs": [
@@ -1896,13 +1882,13 @@
       "title": "Build a text-file name",
       "question": {
         "context": [
-          "A program for naming text files needs to add .txt to a chosen name. The ending .txt marks the name as a text-file name. This task shows the finished name in the console and does not create a file."
+          "A program for naming text files needs to display a name ending in .txt. This ending identifies a text file. The program only displays the name."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the starting name.",
-          "Add .txt immediately after it.",
-          "Show the finished file name."
+          "Ask for the starting file name.",
+          "Display that name with the ending .txt.",
+          "Leave no space before the ending."
         ],
         "example": {
           "inputs": [
@@ -1954,14 +1940,13 @@
       "title": "Calculate photo storage",
       "question": {
         "context": [
-          "A school computer needs a program to estimate storage for equal-sized photos. MB is short for megabytes, a unit for file size. If each photo uses 6 MB, five photos use 6 times 5 MB."
+          "A school computer needs a program to report the storage space required by a collection of equally sized photos. MB means megabytes, a unit for file size."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the size of one photo in MB.",
-          "Ask for the photo count.",
-          "Multiply the size by the count.",
-          "Show the required space in MB."
+          "Ask for the number of photos.",
+          "Display the required space in MB."
         ],
         "example": {
           "inputs": [
@@ -2015,13 +2000,13 @@
       "title": "Count the ones in a code",
       "question": {
         "context": [
-          "A computing display needs a program to count the digit 1 in a code made from 0 and 1. Keep the code as text so every digit stays in place. Show how many ones it contains."
+          "A computing display needs a program to report how many ones appear in a code made from the digits 0 and 1."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the code as text.",
-          "Count the occurrences of the character 1.",
-          "Show the count after Ones."
+          "Display the number of characters equal to 1.",
+          "Show Ones before the count."
         ],
         "example": {
           "inputs": [
@@ -2073,13 +2058,13 @@
       "title": "Label download progress",
       "question": {
         "context": [
-          "A download display needs a program to choose a message from a progress value. A value of 100 means the download is complete. Every other test value must show In progress."
+          "A download display needs a program to show a status message. A progress value of 100 means the download is complete."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the progress value.",
-          "Check whether it equals 100.",
-          "Show Complete for 100 and In progress otherwise."
+          "Display Complete for a value of 100.",
+          "Display In progress for any other test value."
         ],
         "example": {
           "inputs": [
@@ -2131,13 +2116,13 @@
       "title": "List the computer equipment",
       "question": {
         "context": [
-          "An IT room needs a program to display its equipment list. Use Keyboard, Mouse and Screen in that order. Show each item on its own line with Device before the name."
+          "An IT room needs a program to display its equipment names. The required order is Keyboard, Mouse, Screen."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three equipment names in a list.",
-          "Visit every item in order.",
-          "Show Device followed by the current item."
+          "Use the supplied equipment names.",
+          "Display every name in the order given.",
+          "Put each name on its own line with Device before it."
         ],
         "example": {
           "inputs": [],
@@ -2186,13 +2171,13 @@
       "title": "Choose a device by position",
       "question": {
         "context": [
-          "An equipment display needs a program to select one item from Keyboard, Mouse and Screen. Use positions 0, 1 and 2 in that order. Position 0 is Keyboard, so position 1 is Mouse."
+          "An equipment display needs a program to show a selected device. The position numbers are 0 for Keyboard, 1 for Mouse and 2 for Screen."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the equipment names in a list.",
-          "Ask for the position.",
-          "Show the equipment at that position."
+          "Use the supplied equipment names.",
+          "Ask for the position number.",
+          "Display Device followed by the selected name."
         ],
         "example": {
           "inputs": [
@@ -2245,13 +2230,13 @@
       "title": "Show the end of a product code",
       "question": {
         "context": [
-          "A product label program needs to show only the last four characters of a code. Use the test code BOX1234. The required ending is 1234, with the earlier letters left out."
+          "A product label program needs to display only the last four characters of an entered product code."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the product code as text.",
-          "Keep its last four characters.",
-          "Show Ending followed by those characters."
+          "Display its last four characters.",
+          "Show Ending before those characters."
         ],
         "example": {
           "inputs": [
@@ -2303,14 +2288,13 @@
       "title": "Group bits into bytes",
       "question": {
         "context": [
-          "A computing display needs to group bits into bytes. A bit is one digit that can be 0 or 1. Eight bits make one byte. Show the number of complete bytes and any bits left over."
+          "A computing display needs a program to report the complete bytes in a bit count and any bits left over. A bit is one 0 or 1, and a byte contains eight bits."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the bit count.",
-          "Find how many full groups of 8 fit.",
-          "Find the bits left after those groups.",
-          "Show both answers."
+          "Ask for the number of bits.",
+          "Display the number of complete bytes.",
+          "Display any bits left over on a separate line."
         ],
         "example": {
           "inputs": [
@@ -2362,13 +2346,13 @@
       "title": "Add bonus points",
       "question": {
         "context": [
-          "A game needs a program to add bonus points to a score. Keep the original score and bonus as separate inputs, then show the new score after the bonus has been added."
+          "A game needs a program to report a score after bonus points have been awarded. The starting score and the bonus are entered separately."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the starting score and the bonus points.",
-          "Add the two values.",
-          "Show the new score after Score."
+          "Ask for the starting score.",
+          "Ask for the bonus points.",
+          "Display Score followed by the new score."
         ],
         "example": {
           "inputs": [
@@ -2422,13 +2406,13 @@
       "title": "Find the lives left",
       "question": {
         "context": [
-          "A game needs a program to show how many lives remain after a round. Take the lost lives away from the starting lives. The test values give a starting count of 5 and a loss of 2."
+          "A game needs a program to report how many lives remain after a round. The starting lives and the lives lost are entered separately."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the starting lives and the lives lost.",
-          "Subtract the lost count from the starting count.",
-          "Show the remaining lives."
+          "Ask for the starting life count.",
+          "Ask for the number of lives lost.",
+          "Display Lives left followed by the remaining count."
         ],
         "example": {
           "inputs": [
@@ -2482,13 +2466,13 @@
       "title": "Check whether a level unlocks",
       "question": {
         "context": [
-          "A game needs a program to decide whether a new level unlocks. The level unlocks at a score of 100 or more. Show Unlocked for those scores and Keep playing for lower scores."
+          "A game needs a program to show whether a new level is available. The level unlocks at a score of 100 or more."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the score.",
-          "Check whether the score is 100 or more.",
-          "Show the message required by the rule."
+          "Display Unlocked when the level is available.",
+          "Display Keep playing for a lower score."
         ],
         "example": {
           "inputs": [
@@ -2540,14 +2524,13 @@
       "title": "Show a game result",
       "question": {
         "context": [
-          "A game display needs a program to compare the scores of Team A and Team B. The higher score wins. If the scores are equal, show Draw. Only one result should be displayed."
+          "A game display needs a program to announce the result for Team A and Team B. The team with the higher score wins. Equal scores give a draw."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the two team scores.",
-          "Show Team A wins when its score is higher.",
-          "Show Team B wins when its score is higher.",
-          "Show Draw when the scores are equal."
+          "Ask for both team scores.",
+          "Display Team A wins, Team B wins or Draw as appropriate.",
+          "Display only one result."
         ],
         "example": {
           "inputs": [
@@ -2601,14 +2584,13 @@
       "title": "Split the game timer",
       "question": {
         "context": [
-          "A game timer needs a program to turn a total number of seconds into minutes and seconds. There are 60 seconds in a minute. For 90 seconds, show 1 complete minute and 30 seconds left."
+          "A game timer needs a program to display a time as complete minutes and seconds left over. The entered time is a total number of seconds. There are 60 seconds in a minute."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the total seconds.",
-          "Find the number of complete groups of 60.",
-          "Find the seconds left after those groups.",
-          "Show the minutes and seconds on separate lines."
+          "Ask for the total number of seconds.",
+          "Display the complete minutes.",
+          "Display the seconds left over on a separate line."
         ],
         "example": {
           "inputs": [
@@ -2660,14 +2642,13 @@
       "title": "Calculate target points",
       "question": {
         "context": [
-          "A game needs a program to calculate points from successful target hits. Each hit is worth the same number of points. Multiply the hit count by the points awarded for one hit."
+          "A game needs a program to report the points earned from successful target hits. Every hit is worth the same number of points."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the hit count.",
-          "Ask for the points per hit.",
-          "Multiply the two values.",
-          "Show the points earned."
+          "Ask for the number of hits.",
+          "Ask for the points awarded per hit.",
+          "Display Points followed by the points earned."
         ],
         "example": {
           "inputs": [
@@ -2721,14 +2702,13 @@
       "title": "Choose a game item",
       "question": {
         "context": [
-          "A game needs a program to select an item from Key, Map and Torch. The menu numbers are 1 for Key, 2 for Map and 3 for Torch. Python list positions begin at 0, so subtract 1 from the menu number."
+          "A game needs a program to display an item chosen from a numbered menu. The choices are 1 for Key, 2 for Map and 3 for Torch."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three item names in a list.",
+          "Use the supplied game items.",
           "Ask for the menu number.",
-          "Use the menu number minus 1 to choose the list item.",
-          "Show the selected item."
+          "Display Item followed by the selected item name."
         ],
         "example": {
           "inputs": [
@@ -2781,13 +2761,13 @@
       "title": "Count down to the start",
       "question": {
         "context": [
-          "A game needs a program to count down before it starts. A starting value of 3 must show 3, 2 and 1 on separate lines, followed by Go. Do not include 0 in the countdown."
+          "A game needs a numbered countdown followed by a start message."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the starting count.",
-          "Count down by 1 until 1 is shown.",
-          "After the countdown finishes, show Go once."
+          "Display the countdown from that number through 1, with one number per line.",
+          "Display Go once at the end, with no 0 in the countdown."
         ],
         "example": {
           "inputs": [
@@ -2839,14 +2819,13 @@
       "title": "Total the round scores",
       "question": {
         "context": [
-          "A game needs a program to add the points from three rounds. Use round scores of 8, 12 and 5. Show the final score once all three round values have been included."
+          "A game needs a program to report the final score across three rounds. The round scores are 8, 12 and 5."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the round scores in a list.",
-          "Start a total at 0.",
-          "Add each score to the total.",
-          "Show the final score."
+          "Use the supplied round scores.",
+          "Display the combined score for all three rounds.",
+          "Show Final score before the answer."
         ],
         "example": {
           "inputs": [],
@@ -2895,14 +2874,13 @@
       "title": "Count winning rounds",
       "question": {
         "context": [
-          "A game needs a program to count winning rounds. Its rule counts a round as a win when the score is 60 or more. Use the round scores 40, 70, 55 and 80."
+          "A game needs a program to report the number of winning rounds. A round is a win at a score of 60 or more."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four round scores in a list.",
-          "Start a win count at 0.",
-          "Add 1 for each score of 60 or more.",
-          "Show the number of winning rounds."
+          "Use the round scores 40, 70, 55 and 80.",
+          "Display how many rounds are wins.",
+          "Show Wins before the count."
         ],
         "example": {
           "inputs": [],
@@ -2951,13 +2929,13 @@
       "title": "Build a video title",
       "question": {
         "context": [
-          "A program for video titles needs to add Video about before a topic. Leave one space between about and the topic name. For a topic of Space, the title should be Video about Space."
+          "A video display needs a program to show a title for an entered topic. The title begins with Video about."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the video topic.",
-          "Join Video about and the topic with a space.",
-          "Show the complete title."
+          "Display Video about followed by that topic.",
+          "Leave a single space before the topic name."
         ],
         "example": {
           "inputs": [
@@ -3009,13 +2987,13 @@
       "title": "Count the pixels in a picture",
       "question": {
         "context": [
-          "A program for picture sizes needs to count the tiny dots in a rectangular picture. These dots are called pixels. Multiply the width in pixels by the height in pixels to find their total number."
+          "A program for picture sizes needs to report the number of pixels in a rectangular picture. Pixels are the tiny dots that make up a picture."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the picture width and height in pixels.",
-          "Multiply width by height.",
-          "Show the total pixel count."
+          "Ask for the width in pixels.",
+          "Ask for the height in pixels.",
+          "Display Pixels followed by the full pixel count."
         ],
         "example": {
           "inputs": [
@@ -3069,13 +3047,13 @@
       "title": "Measure a caption",
       "question": {
         "context": [
-          "A caption editor needs a program to count the characters in a line of text. Count every letter, space and symbol as one character. For example, Hi all has six characters because its space also counts."
+          "A caption editor needs a program to report the length of an entered caption. Each letter, space or symbol is one character."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the caption text.",
-          "Count all its characters, including spaces.",
-          "Show the number after Caption length."
+          "Ask for the caption.",
+          "Display its full character count, including spaces.",
+          "Show Caption length before the count."
         ],
         "example": {
           "inputs": [
@@ -3127,14 +3105,13 @@
       "title": "Count the pictures in a video",
       "question": {
         "context": [
-          "A video is made from pictures shown quickly, called frames. A video program needs to find the frame count. Multiply the video length in seconds by the number of frames shown each second."
+          "A video program needs to report how many frames a video contains. A frame is one picture, and the frame rate is the number of pictures shown each second."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the video length in seconds.",
           "Ask for the frames per second.",
-          "Multiply these two values.",
-          "Show the total frame count."
+          "Display Frames followed by the full frame count."
         ],
         "example": {
           "inputs": [
@@ -3188,14 +3165,13 @@
       "title": "Find the length of an animation",
       "question": {
         "context": [
-          "An animation program needs to find a clip length from its frame count. A frame is one picture. Divide the total frames by the number shown each second to find the length in seconds."
+          "An animation program needs to report a clip length in seconds. A frame is one picture, and the frame rate is the number of pictures shown each second."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the frame count.",
-          "Ask for the frames shown each second.",
-          "Divide the frame count by that rate.",
-          "Show the length in seconds."
+          "Ask for the full frame count.",
+          "Ask for the frames per second.",
+          "Display the clip length in seconds."
         ],
         "example": {
           "inputs": [
@@ -3249,13 +3225,13 @@
       "title": "Display a playlist",
       "question": {
         "context": [
-          "A music display needs a program to list three track titles. Use Start, River and Sky in that order. Show each title on its own line with Track before the title."
+          "A music display needs a program to show the track titles in a playlist. The required order is Start, River, Sky."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three track titles in a list.",
-          "Visit every title in order.",
-          "Show Track followed by the current title."
+          "Use the supplied track titles.",
+          "Display every title in the order given.",
+          "Put each title on its own line with Track before it."
         ],
         "example": {
           "inputs": [],
@@ -3304,13 +3280,13 @@
       "title": "Build a music credit",
       "question": {
         "context": [
-          "A music display needs a program to show a track title and its band name. Put by between them, with one space on each side. For the track Sunrise and band Echo, show Sunrise by Echo."
+          "A music display needs a program to show a track title and the band that made it. This line is called a music credit."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the track title and band name.",
-          "Join the title, by and the band in that order.",
-          "Show the completed credit."
+          "Ask for the track title.",
+          "Ask for the band name.",
+          "Display the track title, the word by and the band name in that order, with spaces between them."
         ],
         "example": {
           "inputs": [
@@ -3364,13 +3340,13 @@
       "title": "Turn a title into capitals",
       "question": {
         "context": [
-          "A school news display needs a program to turn a heading into capital letters. Keep spaces and digits unchanged. For the heading school news, the result must be SCHOOL NEWS."
+          "A school news display needs a program to show headings in capital letters."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the heading text.",
-          "Change its letters to capitals.",
-          "Show the new heading."
+          "Ask for the heading.",
+          "Display its letters as capitals.",
+          "Keep spaces and digits unchanged."
         ],
         "example": {
           "inputs": [
@@ -3422,13 +3398,13 @@
       "title": "Label a short video clip",
       "question": {
         "context": [
-          "A video organiser needs a program to label clips by length. Its rule calls a clip Short when it is 30 seconds or less. A longer clip must be labelled Long."
+          "A video organiser needs a program to label clips by length. A clip of 30 seconds or less is Short, and a longer clip is Long."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the clip length in seconds.",
-          "Check whether the length is 30 or below.",
-          "Show Short or Long using the rule."
+          "Display the required length label.",
+          "Use the exact word Short or Long."
         ],
         "example": {
           "inputs": [
@@ -3480,14 +3456,13 @@
       "title": "Choose a cover colour",
       "question": {
         "context": [
-          "A program for cover labels needs to choose a colour from Blue, Green and Yellow. The menu uses 1 for Blue, 2 for Green and 3 for Yellow. Show the selected colour after Cover."
+          "A program for cover labels needs to display a chosen colour. The menu choices are 1 for Blue, 2 for Green and 3 for Yellow."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the colour names in a list.",
+          "Use the supplied colour names.",
           "Ask for the menu number.",
-          "Subtract 1 to get the matching list position.",
-          "Show the selected colour."
+          "Display Cover followed by the selected colour."
         ],
         "example": {
           "inputs": [
@@ -3540,13 +3515,13 @@
       "title": "Make a club welcome message",
       "question": {
         "context": [
-          "A school club display needs a program to build a welcome message. Put Welcome to before the club name, leaving one space before the name. For Chess, show Welcome to Chess."
+          "A school club display needs a program to show a welcome message for an entered club name. The message begins with Welcome to."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the club name.",
-          "Join Welcome to and the name with a space.",
-          "Show the full message."
+          "Display Welcome to followed by the club name.",
+          "Leave a single space before the club name."
         ],
         "example": {
           "inputs": [
@@ -3598,13 +3573,13 @@
       "title": "Find the free event places",
       "question": {
         "context": [
-          "A school event needs a program to show how many places are still free. Take the booked places away from the total places available. Show the remaining count after Free places."
+          "A school event needs a program to report how many places are still available. The full place count and the booked count are entered separately."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the total places and the booked places.",
-          "Subtract the booked count from the total.",
-          "Show the number of free places."
+          "Ask for the full number of places.",
+          "Ask for the number already booked.",
+          "Display Free places followed by the number still available."
         ],
         "example": {
           "inputs": [
@@ -3658,14 +3633,13 @@
       "title": "Count the planned club meetings",
       "question": {
         "context": [
-          "A school club needs a program to count its planned meetings. The club meets the same number of times each week. Multiply the meetings per week by the number of weeks."
+          "A school club needs a program to report the number of meetings in its plan. The club holds the same number of meetings each week."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the meetings per week.",
           "Ask for the number of weeks.",
-          "Multiply the two counts.",
-          "Show the planned meeting total."
+          "Display Meetings followed by the full meeting count."
         ],
         "example": {
           "inputs": [
@@ -3719,13 +3693,13 @@
       "title": "Work out an attendance percentage",
       "question": {
         "context": [
-          "An event report needs a program to show what percentage of booked places were used. Divide the number attending by the number booked, then multiply by 100. The test has 20 bookings and 18 attending."
+          "An event report needs a program to show attendance as a percentage of the bookings. The number booked and the number attending are entered separately."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the booked count and attending count.",
-          "Divide attending by booked and multiply by 100.",
-          "Show the answer followed by percent."
+          "Ask for the booked count.",
+          "Ask for the attending count.",
+          "Display the attendance percentage followed by percent."
         ],
         "example": {
           "inputs": [
@@ -3779,13 +3753,13 @@
       "title": "Check whether a club session can run",
       "question": {
         "context": [
-          "A school club needs a program to apply its session rule. A session can run with 10 sign-ups or more. Show Can run when the count reaches 10 and More sign-ups needed for a lower count."
+          "A school club needs a program to announce whether a session can run. The session needs at least 10 sign-ups."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the sign-up count.",
-          "Check whether it is 10 or more.",
-          "Show the matching session message."
+          "Ask for the number of sign-ups.",
+          "Display Can run when the session has enough sign-ups.",
+          "Display More sign-ups needed otherwise."
         ],
         "example": {
           "inputs": [
@@ -3837,13 +3811,13 @@
       "title": "Choose an entry label",
       "question": {
         "context": [
-          "A school event needs a program to apply an entry rule. Ages below 13 have free entry. Ages of 13 or above need paid entry. Show Free entry or Paid entry using that rule."
+          "A school event needs a program to display an entry label. Entry is free below age 13 and paid from age 13."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the age in years.",
-          "Check whether it is below 13.",
-          "Show the matching entry label."
+          "Display Free entry for ages below 13.",
+          "Display Paid entry for ages of 13 or above."
         ],
         "example": {
           "inputs": [
@@ -3895,13 +3869,13 @@
       "title": "Show the club days",
       "question": {
         "context": [
-          "A school notice program needs to list the club meeting days. Use Monday, Wednesday and Friday in that order. Show Club before each day and put each result on its own line."
+          "A school notice display needs a program to show the club meeting days. The required order is Monday, Wednesday, Friday."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three days in a list.",
-          "Visit the days in order.",
-          "Show Club followed by the current day."
+          "Use the supplied meeting days.",
+          "Display every day in the order given.",
+          "Put each day on its own line with Club before it."
         ],
         "example": {
           "inputs": [],
@@ -3950,14 +3924,13 @@
       "title": "Total the event votes",
       "question": {
         "context": [
-          "A school event poll needs a program to total the votes for three activities. Use counts of 12, 8 and 5. Add the counts to show how many votes were recorded altogether."
+          "A school event poll needs a program to report the full number of votes recorded for three activities. The activity counts are 12, 8 and 5."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three vote counts in a list.",
-          "Start a total at 0.",
-          "Add each count to the total.",
-          "Show the full vote count."
+          "Use the supplied vote counts.",
+          "Display the combined number of votes.",
+          "Show Votes before the answer."
         ],
         "example": {
           "inputs": [],
@@ -4006,14 +3979,13 @@
       "title": "Count the yes replies",
       "question": {
         "context": [
-          "An event reply program needs to count yes answers in a stored list. Use yes, no, yes and yes in that order. Add one to the count for each yes answer and ignore no answers."
+          "An event reply display needs a program to report how many yes answers were received. The supplied replies are yes, no, yes and yes."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the replies in a list.",
-          "Start a count at 0.",
-          "Add 1 when the current reply equals yes.",
-          "Show the yes count."
+          "Use the supplied replies.",
+          "Display the number of yes replies.",
+          "Show Yes replies before the count."
         ],
         "example": {
           "inputs": [],
@@ -4062,13 +4034,13 @@
       "title": "Show a club initial",
       "question": {
         "context": [
-          "A program for school club labels needs the first letter of a club name. This first letter is called its initial. For the test name Chess, show Initial C."
+          "A school club display needs a program to show a club initial. An initial is the first letter of a name."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the club name.",
-          "Select its first character.",
-          "Show Initial followed by that character."
+          "Display its initial.",
+          "Show Initial before the letter."
         ],
         "example": {
           "inputs": [
@@ -4120,14 +4092,13 @@
       "title": "Calculate a lap distance",
       "question": {
         "context": [
-          "A sports display needs a program to calculate the distance covered in several laps. Each lap has the same length. Multiply the lap count by the metres in one lap."
+          "A sports display needs a program to report the full distance covered in several laps. Every lap has the same length."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the lap count.",
+          "Ask for the number of laps.",
           "Ask for the length of one lap in metres.",
-          "Multiply the two inputs.",
-          "Show the total metres."
+          "Display the full distance in metres."
         ],
         "example": {
           "inputs": [
@@ -4181,14 +4152,13 @@
       "title": "Find the steps still needed",
       "question": {
         "context": [
-          "A step tracker needs a program to show how many steps remain before a chosen target. Subtract the completed steps from the target. Once the target is reached or passed, show 0 steps left."
+          "A step tracker needs a program to report how many steps are still needed for a chosen target. A target already reached or passed needs no more steps."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the target and completed step counts.",
-          "Subtract completed steps from the target.",
-          "Replace a result below 0 with 0.",
-          "Show the steps still needed."
+          "Ask for the target step count.",
+          "Ask for the completed step count.",
+          "Display the number of steps still needed, or 0 if the target has been reached."
         ],
         "example": {
           "inputs": [
@@ -4242,13 +4212,13 @@
       "title": "Number the exercise repetitions",
       "question": {
         "context": [
-          "A training display needs a program to number exercise repetitions. A repetition is one repeat of the same action. With a count of 4, show Rep 1 through Rep 4 on separate lines."
+          "A training display needs a program to number exercise repetitions. A repetition is one repeat of the same action."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the repetition count.",
-          "Count from 1 through that count.",
-          "Show Rep followed by the current number."
+          "Ask for the number of repetitions.",
+          "Display every repetition number from 1 through the requested count.",
+          "Put Rep and its number on a separate line for each repetition."
         ],
         "example": {
           "inputs": [
@@ -4300,13 +4270,13 @@
       "title": "Total an activity and rest time",
       "question": {
         "context": [
-          "An activity timer needs a program to add an activity time and a rest time. Both inputs are in seconds. Show how many seconds the two parts take together."
+          "An activity timer needs a program to report the full time for an activity and its rest period. Both times are entered in seconds."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the activity seconds and rest seconds.",
-          "Add the two times.",
-          "Show the total seconds."
+          "Ask for the activity time.",
+          "Ask for the rest time.",
+          "Display the full time in seconds."
         ],
         "example": {
           "inputs": [
@@ -4360,13 +4330,13 @@
       "title": "Calculate minutes per kilometre",
       "question": {
         "context": [
-          "A sports report needs a program to find the minutes taken per kilometre. This measurement is called pace. Divide the total minutes by the distance in kilometres. For 28 minutes over 4 kilometres, the result is 7 minutes per kilometre."
+          "A sports report needs a program to display the average minutes taken per kilometre. This is called pace."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the total minutes and distance in kilometres.",
-          "Divide minutes by distance.",
-          "Show the result in minutes per kilometre."
+          "Ask for the full time in minutes.",
+          "Ask for the distance in kilometres.",
+          "Display the pace in minutes per kilometre."
         ],
         "example": {
           "inputs": [
@@ -4420,13 +4390,13 @@
       "title": "Check whether a time improved",
       "question": {
         "context": [
-          "A sports display needs a program to compare a new time with an earlier time for the same distance. A smaller time is faster. Show Faster when the new time is lower and No improvement otherwise."
+          "A sports display needs a program to report whether a new time is faster than an earlier time for the same distance. Both times are in seconds."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the earlier and new times in seconds.",
-          "Check whether the new time is less than the earlier time.",
-          "Show the message matching the result."
+          "Ask for the earlier time.",
+          "Ask for the new time.",
+          "Display Faster for an improvement and No improvement for an equal or slower time."
         ],
         "example": {
           "inputs": [
@@ -4480,14 +4450,13 @@
       "title": "Fill complete water bottles",
       "question": {
         "context": [
-          "A refill display needs a program to count full 500 ml bottles from a measured amount of water. ml is short for millilitres. There are 1000 millilitres in one litre. Show the complete bottle count and the water left."
+          "A refill display needs a program to report how many full 500 ml bottles can be filled from the available water. ml means millilitres."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the water amount in ml.",
-          "Find how many full groups of 500 fit.",
-          "Find the ml left after filling those bottles.",
-          "Show both answers."
+          "Display the number of full bottles.",
+          "Display the water left over in ml on a separate line."
         ],
         "example": {
           "inputs": [
@@ -4539,13 +4508,13 @@
       "title": "Display an exercise list",
       "question": {
         "context": [
-          "A training display needs a program to show three stored exercise names. Use Jump, Stretch and Walk in that order. Put each name on a separate line after Exercise."
+          "A training display needs a program to show three exercise names. The required order is Jump, Stretch, Walk."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three names in a list.",
-          "Visit every name in order.",
-          "Show Exercise followed by the current name."
+          "Use the supplied exercise names.",
+          "Display every name in the order given.",
+          "Put each name on its own line with Exercise before it."
         ],
         "example": {
           "inputs": [],
@@ -4594,14 +4563,13 @@
       "title": "Total the lap times",
       "question": {
         "context": [
-          "A sports report needs a program to add three lap times. Use times of 4, 5 and 3 minutes. Visit the stored list and show how many minutes the laps took altogether."
+          "A sports report needs a program to show the full time for three laps. The lap times are 4, 5 and 3 minutes."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the lap times in a list.",
-          "Start a total at 0.",
-          "Add each lap time.",
-          "Show the full time in minutes."
+          "Use the supplied lap times.",
+          "Display the full time for all three laps.",
+          "Show minutes after the answer."
         ],
         "example": {
           "inputs": [],
@@ -4650,14 +4618,13 @@
       "title": "Count days reaching a step target",
       "question": {
         "context": [
-          "A school step challenge needs a program to count days that reached its 6000-step target. Use daily counts of 5000, 6500, 7000 and 4500. A day counts when its value is 6000 or more."
+          "A school step challenge needs a program to report how many days reached its target of 6000 steps."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four daily counts in a list.",
-          "Start a matching-day count at 0.",
-          "Add 1 for each value of 6000 or more.",
-          "Show how many days met the target."
+          "Use the daily step counts 5000, 6500, 7000 and 4500.",
+          "Display how many days met or passed the target.",
+          "Show Days meeting target before the count."
         ],
         "example": {
           "inputs": [],
@@ -4706,14 +4673,13 @@
       "title": "Count lights still on",
       "question": {
         "context": [
-          "A school energy display needs a program to show how many lights remain on after some are switched off. Take the switched-off count away from the starting count."
+          "A school energy display needs a program to report how many lights remain on. The starting count and the number switched off are entered separately."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask how many lights were on at the start.",
           "Ask how many were switched off.",
-          "Subtract the switched-off count.",
-          "Show how many lights are still on."
+          "Display Lights still on followed by the remaining count."
         ],
         "example": {
           "inputs": [
@@ -4767,14 +4733,13 @@
       "title": "Count refills over several days",
       "question": {
         "context": [
-          "A school water-refill tracker needs a program to total refills over several days. The same number of refills is recorded each day in this task. Multiply refills per day by the number of days."
+          "A school water refill tracker needs a program to report the full refill count over several days. The same number of refills is recorded each day."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the refills per day.",
-          "Ask for the day count.",
-          "Multiply the two values.",
-          "Show the total refills."
+          "Ask for the number of days.",
+          "Display Refills followed by the full count."
         ],
         "example": {
           "inputs": [
@@ -4828,13 +4793,13 @@
       "title": "Total three paper collections",
       "question": {
         "context": [
-          "A school recycling report needs a program to total paper collected over three days. Each amount is measured in kilograms, written as kg. Add the three amounts and show the combined weight."
+          "A school recycling report needs a program to show the full paper collection over three days. Each daily amount is measured in kilograms, written as kg."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the paper weight from each of the three days.",
-          "Add all three weights.",
-          "Show the total followed by kg."
+          "Ask for the paper weight from each day.",
+          "Display the full weight collected.",
+          "Show kg after the answer."
         ],
         "example": {
           "inputs": [
@@ -4890,14 +4855,13 @@
       "title": "Fill rainwater buckets",
       "question": {
         "context": [
-          "A rainwater display needs a program to find how many full 5-litre buckets can be filled. Show the complete bucket count and the litres left after those buckets are full."
+          "A rainwater display needs a program to report how many full 5-litre buckets can be filled from the collected water."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the collected water in litres.",
-          "Find the number of complete groups of 5.",
-          "Find the litres left after those groups.",
-          "Show both answers."
+          "Ask for the water amount in litres.",
+          "Display the number of full buckets.",
+          "Display the water left over in litres on a separate line."
         ],
         "example": {
           "inputs": [
@@ -4949,13 +4913,13 @@
       "title": "Choose the recycling label",
       "question": {
         "context": [
-          "A school recycling display needs a program to apply a sorting rule. The words paper and card must show Paper bin. Any other test word must show Other bin."
+          "A school recycling display needs a program to label a material. The labels are Paper bin for paper or card, and Other bin for other materials."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the material word.",
-          "Check whether it equals paper or card.",
-          "Show Paper bin for either match and Other bin otherwise."
+          "Display the required bin label.",
+          "Use the exact label Paper bin or Other bin."
         ],
         "example": {
           "inputs": [
@@ -5007,13 +4971,13 @@
       "title": "Apply a classroom light rule",
       "question": {
         "context": [
-          "A program for classroom lights uses a number to represent brightness. Smaller numbers mean darker conditions. Its rule shows Turn on for a reading below 40 and Stay off for 40 or above."
+          "A classroom light display needs a program to label a brightness reading. Its labels are Turn on below 40 and Stay off at 40 or above."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
           "Ask for the brightness reading.",
-          "Check whether it is below 40.",
-          "Show the message required by the rule."
+          "Display the required light label.",
+          "Use the exact label Turn on or Stay off."
         ],
         "example": {
           "inputs": [
@@ -5065,13 +5029,13 @@
       "title": "Find a garden plot area",
       "question": {
         "context": [
-          "A school garden needs a program to find the area of a rectangular plot. Area means the space inside its edges. Multiply the length by the width, both in metres, to get square metres."
+          "A school garden needs a program to report the area of a rectangular plot. Area means the space inside its edges. Both side lengths are measured in metres."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Ask for the plot length and width in metres.",
-          "Multiply the two measurements.",
-          "Show the area in square metres."
+          "Ask for the plot length.",
+          "Ask for the plot width.",
+          "Display the area in square metres."
         ],
         "example": {
           "inputs": [
@@ -5125,13 +5089,13 @@
       "title": "Show recycling collection days",
       "question": {
         "context": [
-          "A school notice display needs a program to list recycling collection days. Use Tuesday, Thursday and Saturday in that order. Show Collection before each day and put each result on a separate line."
+          "A school notice display needs a program to show the recycling collection days. The required order is Tuesday, Thursday, Saturday."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the three days in a list.",
-          "Visit every day in order.",
-          "Show Collection followed by the current day."
+          "Use the supplied collection days.",
+          "Display every day in the order given.",
+          "Put each day on its own line with Collection before it."
         ],
         "example": {
           "inputs": [],
@@ -5180,14 +5144,13 @@
       "title": "Total the collection-bag weights",
       "question": {
         "context": [
-          "A school recycling report needs a program to add the weights of four collection bags. Use 3, 4, 2 and 5 kilograms. Store them in a list and show the total weight."
+          "A school recycling report needs a program to show the full weight of four collection bags. Their weights are 3, 4, 2 and 5 kilograms."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four weights in a list.",
-          "Start a total at 0.",
-          "Add every bag weight to it.",
-          "Show the total in kg."
+          "Use the supplied bag weights.",
+          "Display their combined weight.",
+          "Show kg after the answer."
         ],
         "example": {
           "inputs": [],
@@ -5236,14 +5199,13 @@
       "title": "Count bins ready to empty",
       "question": {
         "context": [
-          "A school bin display needs a program to count bins that are 80 percent full or more. A reading of 80 means 80 percent full. Use the readings 80, 30, 95 and 60."
+          "A school bin display needs a program to report how many bins are ready to empty. A bin is ready when it is at least 80 percent full."
         ],
         "command": "Write a program that does the following.",
         "requirements": [
-          "Store the four readings in a list.",
-          "Start a bin count at 0.",
-          "Add 1 for each reading of 80 or more.",
-          "Show the count of bins ready to empty."
+          "Use the fill readings 80, 30, 95 and 60.",
+          "Display how many bins are ready to empty.",
+          "Show Bins to empty before the count."
         ],
         "example": {
           "inputs": [],

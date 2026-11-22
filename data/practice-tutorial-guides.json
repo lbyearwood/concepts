@@ -1515,7 +1515,7 @@
               {
                 "text": "Multiply the width by the height.",
                 "correct": true,
-                "feedback": "That applies the area rule given in the brief."
+                "feedback": "That finds the area inside the rectangle."
               }
             ]
           }
@@ -2010,7 +2010,7 @@
               {
                 "text": "Multiply that number by itself.",
                 "correct": true,
-                "feedback": "This follows the square rule given in the brief."
+                "feedback": "A number squared is that number multiplied by itself."
               },
               {
                 "text": "Add 2 to it.",
@@ -2130,7 +2130,7 @@
               {
                 "text": "Divide chosen by group and multiply the result by 100.",
                 "correct": true,
-                "feedback": "This is the supplied rule for the percentage."
+                "feedback": "This expresses the chosen share as a value out of 100."
               },
               {
                 "text": "Divide group by chosen instead.",
@@ -2937,7 +2937,7 @@
               {
                 "text": "The difference between money and weeks.",
                 "correct": false,
-                "feedback": "Money and a week count are not subtracted in the supplied rule."
+                "feedback": "Subtracting a week count from pounds would mix different measurements."
               },
               {
                 "text": "The weekly amount once for every week.",
@@ -3037,7 +3037,7 @@
               {
                 "text": "The percentage minus the original price.",
                 "correct": false,
-                "feedback": "That does not follow the discount rule in the brief."
+                "feedback": "The price is an amount of money, while the percentage describes the share to remove."
               },
               {
                 "text": "The money amount to take off the price.",
@@ -6645,7 +6645,7 @@
               {
                 "text": "Multiply the width by the height.",
                 "correct": true,
-                "feedback": "The supplied rule counts the whole grid."
+                "feedback": "Multiplication counts all the rows of pixels in the picture."
               },
               {
                 "text": "Add the two sizes.",
@@ -8118,7 +8118,7 @@
               {
                 "text": "Apply attending divided by booked, multiplied by 100.",
                 "correct": true,
-                "feedback": "This is the percentage rule supplied in the brief."
+                "feedback": "This expresses attendance as a share of the bookings out of 100."
               },
               {
                 "text": "Subtract the two counts and call it a percentage.",
@@ -11115,7 +11115,7 @@
               {
                 "text": "Multiply the length by the width.",
                 "correct": true,
-                "feedback": "The program needs to apply the given area rule."
+                "feedback": "This finds the space inside the rectangular plot."
               }
             ]
           }
@@ -11133,7 +11133,7 @@
             "prompt": "Why are length and width multiplied?",
             "choices": [
               {
-                "text": "That is the supplied area rule for a rectangle.",
+                "text": "The area covers both the full length and the full width.",
                 "correct": true,
                 "feedback": "Both measurements contribute to the inside space."
               },
