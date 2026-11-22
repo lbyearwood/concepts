@@ -103,7 +103,8 @@
     }
     function hide() { panel.hidden = true; pager = null; }
     function reset() { answers.clear(); hide(); }
-    return { show, hide, reset, isCorrect, layout: () => pager?.layout() };
+    return { show, hide, reset, isCorrect, layout: () => pager?.layout(),
+      getPosition: () => pager?.getPosition(), restorePosition: position => pager?.restorePosition(position) };
   }
   const api = { checkAnswer, createTutor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

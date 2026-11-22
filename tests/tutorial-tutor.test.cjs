@@ -148,3 +148,27 @@ test('misconception choices give their own feedback and exactly one correct answ
   }
   assert.match(checkAnswer(lines[1].question, 0).text, /not been searched/);
 });
+
+test('switching among all problem tutors keeps independent selected answers and restores them silently until Close reset', () => {
+  const h = harness(), selected = [];
+  try {
+    for (const [index, problem] of catalogue.problems.entries()) {
+      const line = guides.problems[problem.id].lines.findIndex(line => line.question);
+      const question = guides.problems[problem.id].lines[line].question;
+      const choice = question.choices.findIndex(choice => choice.correct === (index % 2 === 0));
+      h.tutor.show(problem.id, line, 'question');
+      h.nodes().filter(node => node.tagName === 'input')[choice].events.change();
+      h.tutor.hide();
+      selected.push({problem, line, question, choice});
+    }
+    const sounds = h.sounds.length;
+    for (const {problem, line, question, choice} of selected.reverse()) {
+      h.tutor.show(problem.id, line, 'question');
+      assert.equal(h.nodes().filter(node => node.tagName === 'input')[choice].checked, true);
+      assert.equal(h.tutor.isCorrect(problem.id, question.id), question.choices[choice].correct);
+    }
+    assert.equal(h.sounds.length, sounds, 'returning to a selected answer must not play audio');
+    h.tutor.reset();
+    for (const {problem, question} of selected) assert.equal(h.tutor.isCorrect(problem.id, question.id), false);
+  } finally { h.cleanup(); }
+});

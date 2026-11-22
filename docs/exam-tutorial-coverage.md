@@ -1,5 +1,7 @@
 # Exam tutorial coverage
 
+22 November 2026 navigation refinement: header chevrons move through problems in the current category in catalogue order, with disabled first/last boundaries. All 22 tutorials retain their own current line, stage, learning view, disclosures, selected answers and fitted content position while switching. A never-visited problem starts with its exam question open. Returning restores the previous view silently, with its checkpoint locks intact; changing viewport maps the same logical line/checkpoint/stage to the fitted layout. Collapsing and reopening Tutorial retains that position. Explicit Close clears all visited-problem positions and answers for a fresh attempt. This is memory for the current open dialog; no pupil tracking or permanent storage is added. The original guide/algorithm coverage below remains unchanged.
+
 Verified 21 November 2026. This is the current coverage register for the 22 existing Exam questions. Level 1/2/3, course resources and concept models are outside this rollout.
 
 All 111 original stages, question requirements, examples and complete solutions are retained. Guides cover 167 physical Python lines, including four blank separators, with 88 current-line understanding questions and 42 selected prediction checkpoints. Every guide has its own line-specific explanation and Remember guidance.

@@ -16,7 +16,7 @@
     return parts;
   }
   function createPager(host, viewport, getItems, name, decorate = (node, text) => { node.textContent = text; }) {
-    const nav = document.createElement('div'); nav.className = 'fit-pager';
+    const nav = document.createElement('div'); nav.className = 'fit-pager'; nav.hidden = true;
     const previous = document.createElement('button'), next = document.createElement('button'), label = document.createElement('span');
     previous.type = next.type = 'button'; previous.textContent = '‹'; next.textContent = '›';
     previous.setAttribute('aria-label', 'Previous ' + name + ' page'); next.setAttribute('aria-label', 'Next ' + name + ' page');
@@ -29,6 +29,7 @@
       nav.hidden = pages.length < 2;
     }
     function layout(followLast = false, reveal) {
+      const anchor = pages[index]?.[0] ?? 0;
       items = getItems(); items.forEach(item => { item.hidden = false; }); nav.hidden = true;
       if (viewport.clientHeight < 2) return;
       const available = () => {
@@ -55,13 +56,20 @@
       }
       pages = packPages(heights(), available());
       if (pages.length > 1) { nav.hidden = false; pages = packPages(heights(), available()); }
-      index = followLast ? pages.length - 1 : Math.min(index, pages.length - 1);
+      index = followLast ? pages.length - 1 : Math.max(0, pages.findIndex(page => page.includes(anchor)));
       if (reveal) { const target = pages.findIndex(page => page.includes(items.indexOf(reveal))); if (target >= 0) index = target; }
       display();
     }
     previous.addEventListener('click', () => { if (index > 0) { index--; display(); } });
     next.addEventListener('click', () => { if (index < pages.length - 1) { index++; display(); } });
-    return { layout };
+    return { layout, getPosition: () => pages[index]?.[0] ?? 0,
+      restorePosition(position) {
+        if (!Number.isInteger(position) || !items.length) return;
+        const anchor = Math.max(0, Math.min(position, items.length - 1));
+        const target = pages.findIndex(page => page.includes(anchor));
+        if (target >= 0) { index = target; display(); }
+      }
+    };
   }
   const api = { packPages, textParts, createPager };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

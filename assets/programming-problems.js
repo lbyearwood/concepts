@@ -12,7 +12,27 @@
     });
     return requestClose;
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { createDismissalGuard }; return; }
+  function createProblemSession(problems) {
+    const positions = new Map();
+    return {
+      save(id, position) { positions.set(id, { ...position }); },
+      get(id) { const position = positions.get(id); return position ? { ...position } : null; },
+      clear() { positions.clear(); },
+      neighbour(id, direction) {
+        if (direction !== -1 && direction !== 1) return null;
+        const problem = problems.find(item => item.id === id);
+        if (!problem) return null;
+        const group = problems.filter(item => item.category === problem.category);
+        return group[group.findIndex(item => item.id === id) + direction] || null;
+      }
+    };
+  }
+  function findPositionFrame(frames, lines, position, stepForFrame) {
+    const find = kind => frames.findIndex(frame => frame.line === position.line && frame.kind === kind && stepForFrame(frame, lines) === position.step);
+    const exact = find(position.kind);
+    return exact >= 0 ? exact : Math.max(0, find('explanation'));
+  }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { createDismissalGuard, createProblemSession, findPositionFrame }; return; }
   const dataNode = document.getElementById('problem-data');
   const dialog = document.getElementById('tutorial-modal');
   if (!dataNode || !dialog) return;
@@ -20,7 +40,10 @@
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const practiceNames = new Map(data.practiceCategories.map(category => [category.id, category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Easy', level2: 'Medium', level3: 'Hard'};
-  const state = {collection: 'exam', category: 'traversal', practiceCategory: data.practiceCategories[0].id, problem: null, step: 0, line: 0, frame: 0};
+  const state = {collection: 'exam', category: 'traversal', practiceCategory: data.practiceCategories[0].id, problem: null, step: 0, line: 0, frame: 0, started: false};
+  const session = createProblemSession(data.problems);
+  const viewPages = new Map(), disclosureSync = new Map();
+  let renderedView = null;
   const requestClose = createDismissalGuard(dialog, () => !!guides.problems[state.problem]);
   const list = document.querySelector('.problem-list');
   const categoryTabs = document.querySelector('.problem-categories');
@@ -100,6 +123,44 @@
     node.setAttribute('aria-hidden', 'true');
     return node;
   };
+  const viewKey = () => state.problem + ':' + state.line + ':' + state.step + ':' + dialog.dataset.tutorialView;
+  function rememberViewPages() {
+    if (!renderedView) return;
+    const previous = viewPages.get(renderedView) || {};
+    viewPages.set(renderedView, { code: codePager?.getPosition() ?? previous.code, tutor: tutor.getPosition() ?? previous.tutor });
+  }
+  function restoreViewPages() {
+    const pages = viewPages.get(renderedView);
+    if (!pages) return;
+    codePager?.restorePosition(pages.code);
+    tutor.restorePosition(pages.tutor);
+  }
+  function rememberProblem() {
+    if (!state.problem) return;
+    rememberViewPages();
+    session.save(state.problem, { line: state.line, step: state.step, kind: dialog.dataset.tutorialView,
+      questionOpen: question.open, helpOpen: help.open, started: state.started, examPage: examPager?.getPosition() });
+  }
+  function setDisclosure(details, open) {
+    if (details.open === open) return;
+    disclosureSync.set(details, open);
+    details.open = open;
+  }
+  function isSyncedToggle(details) {
+    const expected = disclosureSync.get(details);
+    disclosureSync.delete(details);
+    return expected === details.open;
+  }
+  function updateProblemNavigation(problem) {
+    const nav = dialog.querySelector('.tutorial-problem-nav');
+    nav.setAttribute('aria-label', 'Problems in ' + categoryNames.get(problem.category));
+    for (const [selector, direction, label] of [['.tutorial-problem-previous', -1, 'Previous'], ['.tutorial-problem-next', 1, 'Next']]) {
+      const button = nav.querySelector(selector), target = session.neighbour(problem.id, direction);
+      button.disabled = !target;
+      button.setAttribute('aria-label', label + ' problem in ' + categoryNames.get(problem.category));
+      button.title = target ? label + ' problem: ' + target.title : label === 'Previous' ? 'First problem in this category' : 'Last problem in this category';
+    }
+  }
   function keepCodeVisible(node) {
     if (!!guides.problems[state.problem]) { codePager?.layout(true); return; }
     const overflow = node.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom;
@@ -117,7 +178,7 @@
     if (!help.open) return;
     const top = help.querySelector('summary').getBoundingClientRect().bottom;
     dialog.style.setProperty('--tutorial-workspace-height', Math.max(0, Math.floor(bottom - top)) + 'px');
-    codePager?.layout(true); tutor.layout();
+    codePager?.layout(); tutor.layout();
   }
   function renderList() {
     const exam = state.collection === 'exam';
@@ -204,6 +265,7 @@
     return activeText;
   }
   function renderStep(animate = true) {
+    rememberViewPages();
     typewriter.cancel();
     typingSound.stop();
     codePager = null;
@@ -220,10 +282,12 @@
       state.step = frameStep(frames[state.frame], lines);
     }
     dialog.dataset.tutorialView = kind;
+    renderedView = viewKey();
     state.step = Math.max(0, Math.min(state.step, problem.steps.length - 1));
     const step = problem.steps[state.step];
     dialog.querySelector('.tutorial-path').textContent = 'Exam questions / ' + categoryNames.get(problem.category);
     document.getElementById('tutorial-title').textContent = problem.title;
+    updateProblemNavigation(problem);
     dialog.querySelector('.tutorial-step-title').textContent = 'Step ' + (state.step + 1) + '. ' + step.title;
     const steps = dialog.querySelector('.tutorial-steps');
     steps.replaceChildren();
@@ -266,7 +330,7 @@
     dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
     refreshCheckpointControls();
     dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length + (kind === 'prediction' ? '. Predict the next step.' : '') : '') : problem.title + '. Exam question. Tutorial collapsed.';
-    if (typed && help.open) fitWorkspace();
+    if (typed && help.open) { fitWorkspace(); codePager?.layout(true); restoreViewPages(); }
     else if (help.open) {
       body.scrollTop += help.getBoundingClientRect().top - body.getBoundingClientRect().top - parseFloat(getComputedStyle(body).paddingTop);
       if (activeText) keepCodeVisible(activeText);
@@ -275,18 +339,22 @@
   function openTutorial(id, button) {
     const problem = data.problems.find(item => item.id === id);
     if (!problem) return;
-    launcher = button;
-    tutor.reset();
+    rememberProblem();
+    typewriter.cancel(); typingSound.stop(); tutor.hide();
+    codePager = null; renderedView = null;
+    const saved = session.get(id);
+    launcher = button || list.querySelector('[data-problem="' + id + '"]') || launcher;
     dialog.dataset.problem = problem.id;
     dialog.dataset.guided = String(isTypedTutorial(problem));
     dialog.setAttribute('closedby', isTypedTutorial(problem) ? 'none' : 'closerequest');
     state.problem = id;
-    state.step = 0;
-    state.line = 0;
-    state.frame = 0;
-    question.open = true;
-    help.open = false;
-    footer.hidden = true;
+    state.step = saved?.step || 0;
+    state.line = saved?.line || 0;
+    state.started = saved?.started || false;
+    state.frame = saved && isTypedTutorial(problem) ? Math.min(findPositionFrame(framesFor(problem), tutorialCodeLines(problem, guides.problems[id]), saved, frameStep), limitFor(problem, framesFor(problem))) : 0;
+    setDisclosure(question, saved?.questionOpen ?? true);
+    setDisclosure(help, saved?.helpOpen ?? false);
+    footer.hidden = !help.open;
     const questionContent = dialog.querySelector('.tutorial-question-content');
     questionContent.replaceChildren();
     const questionText = isTypedTutorial(problem) ? element('div', 'tutorial-question-text') : questionContent;
@@ -301,30 +369,32 @@
       questionContent.append(questionText);
       examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > ol > li')], 'exam question');
     }
-    renderStep();
-    dialog.showModal();
+    renderStep(false);
+    if (!dialog.open) dialog.showModal();
     if (isTypedTutorial(problem)) void typingSound.unlock();
     fitWorkspace();
+    examPager?.restorePosition(saved?.examPage);
+    restoreViewPages();
   }
   help.addEventListener('toggle', () => {
+    if (isSyncedToggle(help)) return;
     if (!!guides.problems[state.problem] && help.open) question.open = false;
     footer.hidden = !help.open;
-    if (state.problem && help.open) renderStep();
-    else { typewriter.cancel(); typingSound.stop(); tutor.hide(); fitWorkspace(); }
+    if (state.problem && help.open) { const animate = !state.started; state.started = true; renderStep(animate); }
+    else { rememberViewPages(); typewriter.cancel(); typingSound.stop(); tutor.hide(); fitWorkspace(); }
   });
   help.querySelector('summary').addEventListener('click', () => { if (!!guides.problems[state.problem] && !help.open) void typingSound.unlock(); });
   soundToggle.addEventListener('click', () => typingSound.setEnabled(!typingSound.enabled));
   document.addEventListener('visibilitychange', () => { if (document.hidden) typingSound.stop(); });
   window.addEventListener('pagehide', typingSound.dispose);
-  question.addEventListener('toggle', () => { if (!!guides.problems[state.problem] && question.open && help.open) help.open = false; fitWorkspace(); });
+  question.addEventListener('toggle', () => { if (isSyncedToggle(question)) return; if (!!guides.problems[state.problem] && question.open && help.open) help.open = false; fitWorkspace(); });
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) typewriter.finish(); });
   compactView.addEventListener('change', () => {
     if (!guides.problems[state.problem]) return;
     const problem = data.problems.find(item => item.id === state.problem), frames = framesFor(problem);
     const kind = dialog.dataset.tutorialView;
     const lines = tutorialCodeLines(problem, guides.problems[problem.id]);
-    state.frame = frames.findIndex(frame => frame.line === state.line && frame.kind === kind && frameStep(frame, lines) === state.step);
-    if (state.frame < 0) state.frame = frames.findIndex(frame => frame.line === state.line && frame.kind === 'explanation');
+    state.frame = Math.min(findPositionFrame(frames, lines, {line: state.line, step: state.step, kind}, frameStep), limitFor(problem, frames));
     renderStep(false);
   });
   list.addEventListener('click', event => {
@@ -397,11 +467,21 @@
     if (state.step === problem.steps.length - 1) requestClose('done');
     else { state.step++; renderStep(); }
   });
+  dialog.querySelector('.tutorial-problem-nav').addEventListener('click', event => {
+    const button = event.target.closest('[data-problem-direction]');
+    if (!button || button.disabled) return;
+    const target = session.neighbour(state.problem, Number(button.dataset.problemDirection));
+    if (!target) return;
+    openTutorial(target.id);
+    (button.disabled ? dialog.querySelector('[data-problem-direction="' + (-Number(button.dataset.problemDirection)) + '"]') : button).focus();
+  });
   dialog.querySelector('.tutorial-close').addEventListener('click', () => requestClose('close-button'));
   dialog.addEventListener('close', () => {
     typewriter.cancel();
     typingSound.stop();
     tutor.reset();
+    session.clear(); viewPages.clear(); disclosureSync.clear(); renderedView = null;
+    codePager = null; examPager = null;
     state.problem = null;
     if (launcher?.isConnected) launcher.focus();
   });

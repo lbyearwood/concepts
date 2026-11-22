@@ -52,6 +52,7 @@ jobs:
           node --test tests/tutorial-code-style.test.cjs
           node --test tests/tutorial-typing-sound.test.cjs
           node --test tests/tutorial-dismissal.test.cjs
+          node --test tests/tutorial-session.test.cjs
           python -m unittest discover -s tests -p 'test_tutorial_guides.py'
           python -m unittest discover -s tests -p 'test_programming_algorithms.py'
           python -m unittest discover -s tests -p 'test_programming_catalogue.py'
