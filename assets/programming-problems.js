@@ -49,7 +49,7 @@
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const practiceNames = new Map(data.practiceCategories.map(category => [category.id, category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Easy', level2: 'Medium', level3: 'Hard'};
-  const categoryLabel = problem => problemCollection(problem) === 'exam' ? categoryNames.get(problem.category) : collectionNames[problem.collection] + ' · ' + practiceNames.get(problem.category);
+  const categoryLabel = problem => problemCollection(problem) === 'exam' ? categoryNames.get(problem.category) : collectionNames[problem.collection] + ' | ' + practiceNames.get(problem.category);
   const state = {collection: 'exam', category: 'traversal', practiceCategory: data.practiceCategories[0].id, problem: null, step: 0, line: 0, frame: 0, started: false};
   const session = createProblemSession(allProblems);
   const viewPages = new Map(), disclosureSync = new Map();
@@ -225,7 +225,7 @@
     categoryPicker.hidden = !exam;
     categorySelect.value = state.category;
     practiceTabs.hidden = exam;
-    document.querySelector('.practice-console-note').hidden = exam;
+    document.querySelector('.problem-list-instruction').hidden = !exam;
     document.querySelectorAll('[data-category]').forEach(button => {
       const selected = button.dataset.category === state.category;
       button.setAttribute('aria-selected', String(selected));
@@ -240,7 +240,7 @@
       if (!badge) { badge = element('span', 'category-count'); badge.setAttribute('aria-hidden', 'true'); button.append(badge); }
       badge.hidden = count === 0; badge.textContent = String(count);
     });
-    const title = exam ? categoryNames.get(state.category) : collectionNames[state.collection] + ' · ' + practiceNames.get(state.practiceCategory);
+    const title = exam ? categoryNames.get(state.category) : collectionNames[state.collection] + ' | ' + practiceNames.get(state.practiceCategory);
     syncCategoryPanel();
     document.getElementById('problem-category-title').textContent = title;
     const problems = collectionProblems(data, state.collection, exam ? state.category : state.practiceCategory);
@@ -262,7 +262,6 @@
     const empty = document.querySelector('.problem-empty');
     empty.hidden = problems.length > 0;
     empty.textContent = exam ? 'No problems in this section yet.' : 'No problems in this category yet.';
-    document.querySelector('.problem-list-instruction').textContent = exam ? 'Choose a problem to open its exam question' : 'Choose a console problem';
     document.querySelector('.problem-list-scroll').scrollTop = 0;
     document.querySelector('.problem-announcement').textContent = title + '. ' + problems.length + (problems.length === 1 ? ' problem.' : ' problems.');
   }
