@@ -101,11 +101,30 @@ test('DOM rendering keeps copying exact, treats markup as text and emphasizes la
     assert.equal(target.textContent, source);
     assert.ok(target.children.every(node => node.tagName === 'span'));
     assert.equal(target.children.find(node => node.className === 'syntax-string').textContent, '"<img src=x onerror=alert(1)>"');
-    for (const label of ['Remember: ', '✅ Correct. ', '❌ Incorrect. ']) {
+    for (const label of ['Remember: ', 'Remember ', '✅ Correct. ', '❌ Incorrect. ']) {
       const text = label + 'input() returns text; found = False until a match.';
       renderTutorText(target, text); assert.equal(target.textContent, text);
       assert.equal(target.firstChild.tagName, 'strong');
       assert.ok(target.children.some(node => node.className === 'tutor-inline-code'));
     }
   } finally { delete global.document; }
+});
+
+test('every rebuilt Easy explanation and checkpoint keeps its full teaching text during styling',()=>{
+  global.document=dom();
+  try{
+    const target=document.createElement('p');
+    for(const guide of Object.values(require('../data/practice-tutorial-guides.json').problems)){
+      const identifiers=[...new Set(guide.lines.flatMap(line=>tokenizePython(line.code).filter(t=>t.type==='identifier').map(t=>t.text)))];
+      for(const line of guide.lines){
+        const texts=[line.title,...line.paragraphs,'Remember '+line.watchOut];
+        for(const q of [line.question,line.prediction].filter(Boolean))texts.push(q.prompt,...q.choices.flatMap(c=>[c.text,c.feedback]));
+        for(const text of texts){
+          renderTutorText(target,text,identifiers);
+          assert.equal(target.textContent,text);
+          if(text.startsWith('Remember '))assert.equal(target.firstChild.tagName,'strong');
+        }
+      }
+    }
+  }finally{delete global.document;}
 });

@@ -416,7 +416,10 @@
       questionText.append(requirements);
       if (problem.question.example) {
         const example = element('div', 'practice-example');
-        for (const [label, value] of [['Example input', problem.question.example.inputs.join('\n')], ['Expected output', problem.question.example.output.trimEnd()]]) {
+        const sample = problem.question.example;
+        const entered = sample.inputs.map((value, index) => sample.inputLabels?.[index] ? sample.inputLabels[index] + ' ' + value : value).join('\n');
+        const values = [sample.given, entered].filter(Boolean).join('\n');
+        for (const [label, value] of [['Test values', values], ['Expected result', sample.output.trimEnd()]]) {
           const column = element('div'); column.append(element('strong', '', label), element('pre', '', value)); example.append(column);
         }
         questionText.append(example);

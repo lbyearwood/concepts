@@ -1,8 +1,13 @@
 """Independently execute every Easy solution against authored console results."""
 import ast
+import builtins
 from collections import Counter
+import contextlib
+import io
 import json
 from pathlib import Path
+import re
+import sys
 import unittest
 from test_exam_expansion import run_console
 
@@ -21,7 +26,7 @@ class EasyPracticeTests(unittest.TestCase):
         self.assertEqual(len(ids),90)
         self.assertEqual(ids,set(GUIDES))
         self.assertEqual(ids,set(CASES))
-        self.assertEqual(sum(len(c) for c in CASES.values()),191)
+        self.assertEqual(sum(len(c) for c in CASES.values()),252)
         for p in PROBLEMS:
             with self.subTest(problem=p['id']):
                 tree=ast.parse(p['solution'])
@@ -35,11 +40,80 @@ class EasyPracticeTests(unittest.TestCase):
                 self.assertEqual(sum('question' in l for l in guide['lines']),3)
                 self.assertEqual(sum('prediction' in l for l in guide['lines']),1)
                 for line in guide['lines']:
-                    self.assertGreaterEqual(len(' '.join(line['paragraphs']).split()),20)
+                    self.assertGreaterEqual(len(' '.join(line['paragraphs']).split()),17)
                     for q in [line.get('question'),line.get('prediction')]:
                         if q:
                             self.assertEqual(sum(c['correct'] for c in q['choices']),1)
                             self.assertEqual(len(set(c['text'] for c in q['choices'])),3)
+
+    def test_complete_plain_language_briefs_and_labelled_reproducible_values(self):
+        def prose(value):
+            if isinstance(value,str):
+                yield value
+            elif isinstance(value,list):
+                for item in value:
+                    yield from prose(item)
+            elif isinstance(value,dict):
+                for key,item in value.items():
+                    if key not in {'code','id','type','example'}:
+                        yield from prose(item)
+        for p in PROBLEMS:
+            with self.subTest(problem=p['id']):
+                self.assertEqual(p['writingStandard'],'developer-13-plain')
+                self.assertTrue(p['question']['context'])
+                self.assertGreaterEqual(len(p['question']['requirements']),3)
+                for text in [*prose(p['question']),*prose(GUIDES[p['id']]),*[b['text'] for s in p['steps'] for b in s['blocks'] if b['type']!='code']]:
+                    self.assertNotIn(':',text)
+                    self.assertNotRegex(text,re.compile(r'\b(?:you|your|assume|non-negative|kelvin)\b',re.I))
+                example=p['question']['example']
+                self.assertEqual(example['inputs'],CASES[p['id']][0]['inputs'])
+                self.assertEqual(len(example['inputLabels']),len(example['inputs']))
+                self.assertEqual(len(set(example['inputLabels'])),len(example['inputLabels']))
+                self.assertTrue(all(label and ':' not in label for label in example['inputLabels']))
+                self.assertTrue(example['inputs'] or example.get('given'))
+                self.assertNotIn(':',example['output'])
+                if example.get('given'):
+                    assigned=ast.literal_eval(ast.parse(p['solution']).body[0].value)
+                    shown=ast.literal_eval(example['given'][example['given'].index('['):])
+                    self.assertEqual(shown,assigned,'The supplied list must be the exact list used by the solution')
+
+    def test_independent_cases_exercise_both_outcomes_of_every_decision(self):
+        for p in PROBLEMS:
+            branches={node.lineno:node.test for node in ast.walk(ast.parse(p['solution'])) if isinstance(node,ast.If)}
+            if not branches:
+                continue
+            seen={line:set() for line in branches}
+            for case in CASES[p['id']]:
+                code=p['solution']
+                if 'patch' in case:
+                    old,new=case['patch']
+                    self.assertEqual(code.count(old),1)
+                    code=code.replace(old,new)
+                inputs=iter(case['inputs'])
+                ticks=0
+                def trace(frame,event,arg):
+                    nonlocal ticks
+                    if frame.f_code.co_filename==p['id'] and event=='line':
+                        ticks+=1
+                        if ticks>1000:
+                            raise AssertionError('Easy solution did not terminate')
+                        if frame.f_lineno in branches:
+                            expression=compile(ast.Expression(branches[frame.f_lineno]),p['id']+'-condition','eval')
+                            seen[frame.f_lineno].add(bool(eval(expression,frame.f_globals,frame.f_locals)))
+                    return trace
+                previous=sys.gettrace()
+                scope={'__builtins__':dict(vars(builtins),input=lambda prompt='':next(inputs))}
+                output=io.StringIO()
+                try:
+                    sys.settrace(trace)
+                    with contextlib.redirect_stdout(output):
+                        exec(compile(code,p['id'],'exec'),scope)
+                finally:
+                    sys.settrace(previous)
+                self.assertEqual(output.getvalue(),case['output'])
+            for line,outcomes in seen.items():
+                with self.subTest(problem=p['id'],line=line):
+                    self.assertEqual(outcomes,{True,False})
 
 def execution_case(problem):
     def verify(self):

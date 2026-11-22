@@ -2,153 +2,71 @@
   "easy-science-01": [
     {
       "inputs": [
-        "Leaf",
-        "Garden"
+        "Plants"
       ],
-      "output": "Leaf-Garden\n"
+      "output": "Science Plants\n"
     },
     {
       "inputs": [
-        "Rock",
-        "Beach"
+        "Light"
       ],
-      "output": "Rock-Beach\n"
+      "output": "Science Light\n"
     }
   ],
   "easy-science-02": [
     {
       "inputs": [
-        "0"
+        "18",
+        "23"
       ],
-      "output": "Kelvin: 273.15\n"
+      "output": "Rise 5 degrees\n"
     },
     {
       "inputs": [
-        "-10"
+        "10",
+        "10"
       ],
-      "output": "Kelvin: 263.15\n"
+      "output": "Rise 0 degrees\n"
+    },
+    {
+      "inputs": [
+        "7",
+        "19"
+      ],
+      "output": "Rise 12 degrees\n"
     }
   ],
   "easy-science-03": [
     {
       "inputs": [
-        "100",
-        "20"
+        "17",
+        "4"
       ],
-      "output": "Speed: 5.00 m/s\n"
+      "output": "Seeds per tray 4\nSeeds left 1\n"
     },
     {
       "inputs": [
-        "7.5",
+        "12",
         "3"
       ],
-      "output": "Speed: 2.50 m/s\n"
+      "output": "Seeds per tray 4\nSeeds left 0\n"
+    },
+    {
+      "inputs": [
+        "3",
+        "5"
+      ],
+      "output": "Seeds per tray 0\nSeeds left 3\n"
     }
   ],
   "easy-science-04": [
     {
       "inputs": [
-        "50",
-        "10"
-      ],
-      "output": "Density: 5.00 g/cm3\n"
-    },
-    {
-      "inputs": [
-        "7.5",
-        "3"
-      ],
-      "output": "Density: 2.50 g/cm3\n"
-    }
-  ],
-  "easy-science-05": [
-    {
-      "inputs": [
-        "100"
-      ],
-      "output": "Boiling\n"
-    },
-    {
-      "inputs": [
-        "99.9"
-      ],
-      "output": "Below boiling\n"
-    },
-    {
-      "inputs": [
-        "105"
-      ],
-      "output": "Boiling\n"
-    }
-  ],
-  "easy-science-06": [
-    {
-      "inputs": [
-        "37"
-      ],
-      "output": "Whole cm: 3\nRemaining mm: 7\n"
-    },
-    {
-      "inputs": [
-        "20"
-      ],
-      "output": "Whole cm: 2\nRemaining mm: 0\n"
-    }
-  ],
-  "easy-science-07": [
-    {
-      "inputs": [
-        "4",
-        "5",
-        "6"
-      ],
-      "output": "Mean: 5.0\n"
-    },
-    {
-      "inputs": [
-        "1",
         "2",
-        "2"
+        "6",
+        "4"
       ],
-      "output": "Mean: 1.7\n"
-    }
-  ],
-  "easy-science-08": [
-    {
-      "inputs": [
-        "3"
-      ],
-      "output": "3\n2\n1\nStart\n"
-    },
-    {
-      "inputs": [
-        "1"
-      ],
-      "output": "1\nStart\n"
-    }
-  ],
-  "easy-science-09": [
-    {
-      "inputs": [
-        "ON"
-      ],
-      "output": "Light detected\n"
-    },
-    {
-      "inputs": [
-        "off"
-      ],
-      "output": "No light detected\n"
-    }
-  ],
-  "easy-science-10": [
-    {
-      "inputs": [
-        "2",
-        "0",
-        "3.5"
-      ],
-      "output": "Total rain: 5.5 mm\n"
+      "output": "Average 4.0 mm\n"
     },
     {
       "inputs": [
@@ -156,55 +74,200 @@
         "0",
         "0"
       ],
-      "output": "Total rain: 0.0 mm\n"
+      "output": "Average 0.0 mm\n"
+    },
+    {
+      "inputs": [
+        "1",
+        "2",
+        "3"
+      ],
+      "output": "Average 2.0 mm\n"
+    }
+  ],
+  "easy-science-05": [
+    {
+      "inputs": [
+        "17",
+        "22"
+      ],
+      "output": "Second is as warm or warmer\n"
+    },
+    {
+      "inputs": [
+        "25",
+        "20"
+      ],
+      "output": "First is warmer\n"
+    },
+    {
+      "inputs": [
+        "18",
+        "18"
+      ],
+      "output": "Second is as warm or warmer\n"
+    }
+  ],
+  "easy-science-06": [
+    {
+      "inputs": [
+        "7.5"
+      ],
+      "output": "Cold\n"
+    },
+    {
+      "inputs": [
+        "10"
+      ],
+      "output": "Mild\n"
+    },
+    {
+      "inputs": [
+        "15.5"
+      ],
+      "output": "Mild\n"
+    }
+  ],
+  "easy-science-07": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Trial 1\nTrial 2\nTrial 3\n"
+    },
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "Trial 1\n"
+    }
+  ],
+  "easy-science-08": [
+    {
+      "inputs": [],
+      "output": "Water total 14 litres\n"
+    },
+    {
+      "inputs": [],
+      "output": "Water total 6 litres\n",
+      "patch": [
+        "[3, 5, 2, 4]",
+        "[1, 1, 2, 2]"
+      ]
+    }
+  ],
+  "easy-science-09": [
+    {
+      "inputs": [],
+      "output": "Warm readings 2\n"
+    },
+    {
+      "inputs": [],
+      "output": "Warm readings 1\n",
+      "patch": [
+        "[18, 22, 25, 17]",
+        "[19, 20, 5, 10]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "Warm readings 0\n",
+      "patch": [
+        "[18, 22, 25, 17]",
+        "[1, 2, 3, 4]"
+      ]
+    }
+  ],
+  "easy-science-10": [
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "Result 7\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Result 4\n"
+    },
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Result 9\n"
     }
   ],
   "easy-maths-01": [
     {
       "inputs": [
-        "5",
-        "3"
+        "10",
+        "15",
+        "8"
       ],
-      "output": "Area: 15.0 cm2\n"
+      "output": "Total 33\n"
     },
     {
       "inputs": [
-        "2.5",
-        "4"
+        "0",
+        "4",
+        "6"
       ],
-      "output": "Area: 10.0 cm2\n"
+      "output": "Total 10\n"
+    },
+    {
+      "inputs": [
+        "-2",
+        "7",
+        "3"
+      ],
+      "output": "Total 8\n"
     }
   ],
   "easy-maths-02": [
     {
       "inputs": [
-        "5",
-        "3"
+        "6",
+        "4"
       ],
-      "output": "Perimeter: 16.0 cm\n"
+      "output": "Area 24 square cm\n"
     },
     {
       "inputs": [
-        "2.5",
-        "4"
+        "3",
+        "5"
       ],
-      "output": "Perimeter: 13.0 cm\n"
+      "output": "Area 15 square cm\n"
+    },
+    {
+      "inputs": [
+        "1",
+        "7"
+      ],
+      "output": "Area 7 square cm\n"
     }
   ],
   "easy-maths-03": [
     {
       "inputs": [
-        "17",
-        "5"
+        "6",
+        "4"
       ],
-      "output": "Groups: 3\nLeft over: 2\n"
+      "output": "Perimeter 20 cm\n"
     },
     {
       "inputs": [
-        "12",
-        "4"
+        "3",
+        "3"
       ],
-      "output": "Groups: 3\nLeft over: 0\n"
+      "output": "Perimeter 12 cm\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "5"
+      ],
+      "output": "Perimeter 14 cm\n"
     }
   ],
   "easy-maths-04": [
@@ -212,42 +275,19 @@
       "inputs": [
         "4"
       ],
-      "output": "Square: 16\n"
+      "output": "4 x 1 = 4\n4 x 2 = 8\n4 x 3 = 12\n4 x 4 = 16\n4 x 5 = 20\n"
     },
     {
       "inputs": [
-        "-3"
+        "2"
       ],
-      "output": "Square: 9\n"
+      "output": "2 x 1 = 2\n2 x 2 = 4\n2 x 3 = 6\n2 x 4 = 8\n2 x 5 = 10\n"
     }
   ],
   "easy-maths-05": [
     {
       "inputs": [
-        "8",
-        "3"
-      ],
-      "output": "8\n"
-    },
-    {
-      "inputs": [
-        "2",
-        "9"
-      ],
-      "output": "9\n"
-    },
-    {
-      "inputs": [
-        "5",
-        "5"
-      ],
-      "output": "5\n"
-    }
-  ],
-  "easy-maths-06": [
-    {
-      "inputs": [
-        "8"
+        "6"
       ],
       "output": "Even\n"
     },
@@ -264,378 +304,542 @@
       "output": "Even\n"
     }
   ],
-  "easy-maths-07": [
+  "easy-maths-06": [
     {
       "inputs": [
-        "3"
+        "5"
       ],
-      "output": "1\n2\n3\n"
+      "output": "Square 25\n"
     },
     {
       "inputs": [
-        "1"
+        "8"
       ],
-      "output": "1\n"
+      "output": "Square 64\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Square 0\n"
+    }
+  ],
+  "easy-maths-07": [
+    {
+      "inputs": [
+        "20",
+        "5"
+      ],
+      "output": "Chosen 25.0 percent\n"
+    },
+    {
+      "inputs": [
+        "10",
+        "10"
+      ],
+      "output": "Chosen 100.0 percent\n"
+    },
+    {
+      "inputs": [
+        "8",
+        "0"
+      ],
+      "output": "Chosen 0.0 percent\n"
     }
   ],
   "easy-maths-08": [
     {
       "inputs": [
-        "3"
-      ],
-      "output": "3\n6\n9\n12\n15\n"
-    },
-    {
-      "inputs": [
-        "2"
-      ],
-      "output": "2\n4\n6\n8\n10\n"
-    }
-  ],
-  "easy-maths-09": [
-    {
-      "inputs": [
-        "6",
         "4"
       ],
-      "output": "Area: 12.0 cm2\n"
-    },
-    {
-      "inputs": [
-        "3",
-        "5"
-      ],
-      "output": "Area: 7.5 cm2\n"
-    }
-  ],
-  "easy-maths-10": [
-    {
-      "inputs": [
-        "4"
-      ],
-      "output": "Total: 10\n"
+      "output": "Total 10\n"
     },
     {
       "inputs": [
         "1"
       ],
-      "output": "Total: 1\n"
+      "output": "Total 1\n"
+    },
+    {
+      "inputs": [
+        "5"
+      ],
+      "output": "Total 15\n"
+    }
+  ],
+  "easy-maths-09": [
+    {
+      "inputs": [],
+      "output": "Largest 19\n"
+    },
+    {
+      "inputs": [],
+      "output": "Largest -1\n",
+      "patch": [
+        "[14, 7, 19, 11]",
+        "[-3, -1, -8]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "Largest 5\n",
+      "patch": [
+        "[14, 7, 19, 11]",
+        "[5, 5, 5]"
+      ]
+    }
+  ],
+  "easy-maths-10": [
+    {
+      "inputs": [],
+      "output": "5\n15\n20\n"
+    },
+    {
+      "inputs": [],
+      "output": "",
+      "patch": [
+        "[3, 5, 12, 15, 20]",
+        "[1, 2, 3]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "0\n10\n",
+      "patch": [
+        "[3, 5, 12, 15, 20]",
+        "[0, 10, 11]"
+      ]
     }
   ],
   "easy-finance-01": [
     {
       "inputs": [
-        "2.5",
-        "3.2"
+        "2.50",
+        "3.20"
       ],
-      "output": "Total: 5.70\n"
+      "output": "Total £5.70\n"
     },
     {
       "inputs": [
-        "0",
-        "4"
+        "1.00",
+        "1.50"
       ],
-      "output": "Total: 4.00\n"
+      "output": "Total £2.50\n"
+    },
+    {
+      "inputs": [
+        "0.00",
+        "2.25"
+      ],
+      "output": "Total £2.25\n"
     }
   ],
   "easy-finance-02": [
     {
       "inputs": [
-        "6.5",
-        "10"
+        "6.00",
+        "10.00"
       ],
-      "output": "Change: 3.50\n"
+      "output": "Change £4.00\n"
     },
     {
       "inputs": [
-        "5",
-        "5"
+        "4.50",
+        "5.00"
       ],
-      "output": "Change: 0.00\n"
+      "output": "Change £0.50\n"
+    },
+    {
+      "inputs": [
+        "3.00",
+        "3.00"
+      ],
+      "output": "Change £0.00\n"
     }
   ],
   "easy-finance-03": [
     {
       "inputs": [
-        "5"
+        "3.00",
+        "4"
       ],
-      "output": "Four-week saving: 20.00\n"
+      "output": "Saved £12.00\n"
     },
     {
       "inputs": [
-        "2.75"
+        "2.50",
+        "3"
       ],
-      "output": "Four-week saving: 11.00\n"
+      "output": "Saved £7.50\n"
+    },
+    {
+      "inputs": [
+        "5.00",
+        "0"
+      ],
+      "output": "Saved £0.00\n"
     }
   ],
   "easy-finance-04": [
     {
       "inputs": [
-        "50"
+        "20.00",
+        "25"
       ],
-      "output": "Sale price: 40.00\n"
+      "output": "Sale price £15.00\n"
     },
     {
       "inputs": [
-        "12.5"
+        "10.00",
+        "10"
       ],
-      "output": "Sale price: 10.00\n"
+      "output": "Sale price £9.00\n"
+    },
+    {
+      "inputs": [
+        "8.00",
+        "0"
+      ],
+      "output": "Sale price £8.00\n"
     }
   ],
   "easy-finance-05": [
     {
       "inputs": [
-        "24",
-        "3"
+        "3",
+        "2"
       ],
-      "output": "Each pays: 8.00\n"
+      "output": "Tickets £14.00\n"
     },
     {
       "inputs": [
-        "10",
-        "4"
+        "0",
+        "2"
       ],
-      "output": "Each pays: 2.50\n"
+      "output": "Tickets £8.00\n"
+    },
+    {
+      "inputs": [
+        "4",
+        "0"
+      ],
+      "output": "Tickets £8.00\n"
     }
   ],
   "easy-finance-06": [
     {
       "inputs": [
-        "4.5",
-        "3"
+        "12.00"
       ],
-      "output": "Ticket total: 13.50\n"
+      "output": "Pay £15.00\n"
     },
     {
       "inputs": [
-        "5",
-        "0"
+        "15.00"
       ],
-      "output": "Ticket total: 0.00\n"
+      "output": "Pay £15.00\n"
+    },
+    {
+      "inputs": [
+        "20.00"
+      ],
+      "output": "Pay £20.00\n"
     }
   ],
   "easy-finance-07": [
     {
       "inputs": [
-        "25"
+        "8.00",
+        "10.00"
       ],
-      "output": "To pay: 25.00\n"
+      "output": "More needed\n"
     },
     {
       "inputs": [
-        "24"
+        "10.00",
+        "10.00"
       ],
-      "output": "To pay: 27.00\n"
+      "output": "Enough money\n"
     },
     {
       "inputs": [
-        "30"
+        "12.00",
+        "10.00"
       ],
-      "output": "To pay: 30.00\n"
+      "output": "Enough money\n"
     }
   ],
   "easy-finance-08": [
     {
       "inputs": [
-        "20",
-        "20"
+        "24.00",
+        "4"
       ],
-      "output": "Goal reached\n"
+      "output": "Each share £6.00\n"
     },
     {
       "inputs": [
-        "12.5",
-        "20"
+        "20.00",
+        "4"
       ],
-      "output": "Still needed: 7.50\n"
+      "output": "Each share £5.00\n"
+    },
+    {
+      "inputs": [
+        "7.50",
+        "1"
+      ],
+      "output": "Each share £7.50\n"
     }
   ],
   "easy-finance-09": [
     {
-      "inputs": [
-        "10"
-      ],
-      "output": "Euros: 12.00\n"
+      "inputs": [],
+      "output": "Collected £7.50\n"
     },
     {
-      "inputs": [
-        "2.5"
-      ],
-      "output": "Euros: 3.00\n"
+      "inputs": [],
+      "output": "Collected £6.00\n",
+      "patch": [
+        "[2.5, 1.0, 4.0]",
+        "[1.0, 2.0, 3.0]"
+      ]
     }
   ],
   "easy-finance-10": [
     {
       "inputs": [],
-      "output": "Shopping total: 6.70\n"
+      "output": "£2 coins 3\n"
     },
     {
       "inputs": [],
-      "output": "Shopping total: 4.00\n",
+      "output": "£2 coins 0\n",
       "patch": [
-        "[2.50, 1.20, 3.00]",
-        "[1.00, 1.00, 2.00]"
+        "[1, 2, 1, 2, 2]",
+        "[1, 1, 1]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "£2 coins 2\n",
+      "patch": [
+        "[1, 2, 1, 2, 2]",
+        "[2, 2]"
       ]
     }
   ],
   "easy-computing-01": [
     {
       "inputs": [
-        "PNG"
+        "SchoolClub"
       ],
-      "output": "Type: png\n"
+      "output": "schoolclub\n"
     },
     {
       "inputs": [
-        "JpG"
+        "ICTROOM"
       ],
-      "output": "Type: jpg\n"
+      "output": "ictroom\n"
+    },
+    {
+      "inputs": [
+        "robot7"
+      ],
+      "output": "robot7\n"
     }
   ],
   "easy-computing-02": [
     {
       "inputs": [
-        "2"
+        "Hello team"
       ],
-      "output": "MB: 2000\n"
+      "output": "Characters 10\n"
     },
     {
       "inputs": [
-        "0"
+        "Code"
       ],
-      "output": "MB: 0\n"
+      "output": "Characters 4\n"
+    },
+    {
+      "inputs": [
+        "A B"
+      ],
+      "output": "Characters 3\n"
     }
   ],
   "easy-computing-03": [
     {
       "inputs": [
-        "abc 12"
+        "notes"
       ],
-      "output": "Characters: 6\n"
+      "output": "notes.txt\n"
     },
     {
       "inputs": [
-        ""
+        "homework"
       ],
-      "output": "Characters: 0\n"
+      "output": "homework.txt\n"
     }
   ],
   "easy-computing-04": [
     {
       "inputs": [
-        "photo",
-        "png"
+        "6",
+        "5"
       ],
-      "output": "photo.png\n"
+      "output": "Space 30 MB\n"
     },
     {
       "inputs": [
-        "notes",
-        "txt"
+        "4",
+        "3"
       ],
-      "output": "notes.txt\n"
+      "output": "Space 12 MB\n"
+    },
+    {
+      "inputs": [
+        "8",
+        "0"
+      ],
+      "output": "Space 0 MB\n"
     }
   ],
   "easy-computing-05": [
     {
       "inputs": [
-        "2050"
+        "101101"
       ],
-      "output": "Whole KB: 2\nRemaining bytes: 2\n"
-    },
-    {
-      "inputs": [
-        "1024"
-      ],
-      "output": "Whole KB: 1\nRemaining bytes: 0\n"
-    }
-  ],
-  "easy-computing-06": [
-    {
-      "inputs": [
-        "Ada Lovelace"
-      ],
-      "output": "Username: adalovelace\n"
-    },
-    {
-      "inputs": [
-        "BEN"
-      ],
-      "output": "Username: ben\n"
-    }
-  ],
-  "easy-computing-07": [
-    {
-      "inputs": [
-        "ERROR"
-      ],
-      "output": "Needs attention\n"
-    },
-    {
-      "inputs": [
-        "info"
-      ],
-      "output": "Normal message\n"
-    }
-  ],
-  "easy-computing-08": [
-    {
-      "inputs": [
-        "10110"
-      ],
-      "output": "Ones: 3\n"
+      "output": "Ones 4\n"
     },
     {
       "inputs": [
         "0000"
       ],
-      "output": "Ones: 0\n"
-    }
-  ],
-  "easy-computing-09": [
-    {
-      "inputs": [
-        "50",
-        "10"
-      ],
-      "output": "Seconds: 5.0\n"
+      "output": "Ones 0\n"
     },
     {
       "inputs": [
-        "7.5",
-        "2"
+        "111"
       ],
-      "output": "Seconds: 3.8\n"
+      "output": "Ones 3\n"
     }
   ],
-  "easy-computing-10": [
+  "easy-computing-06": [
     {
       "inputs": [
-        "2"
+        "75"
       ],
-      "output": "Device: monitor\n"
+      "output": "In progress\n"
+    },
+    {
+      "inputs": [
+        "100"
+      ],
+      "output": "Complete\n"
     },
     {
       "inputs": [
         "0"
       ],
-      "output": "Device: mouse\n"
+      "output": "In progress\n"
+    }
+  ],
+  "easy-computing-07": [
+    {
+      "inputs": [],
+      "output": "Device Keyboard\nDevice Mouse\nDevice Screen\n"
+    },
+    {
+      "inputs": [],
+      "output": "Device Printer\nDevice Speaker\n",
+      "patch": [
+        "[\"Keyboard\", \"Mouse\", \"Screen\"]",
+        "[\"Printer\", \"Speaker\"]"
+      ]
+    }
+  ],
+  "easy-computing-08": [
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "Device Mouse\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Device Keyboard\n"
+    },
+    {
+      "inputs": [
+        "2"
+      ],
+      "output": "Device Screen\n"
+    }
+  ],
+  "easy-computing-09": [
+    {
+      "inputs": [
+        "BOX1234"
+      ],
+      "output": "Ending 1234\n"
+    },
+    {
+      "inputs": [
+        "GAME5678"
+      ],
+      "output": "Ending 5678\n"
+    },
+    {
+      "inputs": [
+        "AB89"
+      ],
+      "output": "Ending AB89\n"
+    }
+  ],
+  "easy-computing-10": [
+    {
+      "inputs": [
+        "26"
+      ],
+      "output": "Bytes 3\nBits left 2\n"
+    },
+    {
+      "inputs": [
+        "16"
+      ],
+      "output": "Bytes 2\nBits left 0\n"
+    },
+    {
+      "inputs": [
+        "5"
+      ],
+      "output": "Bytes 0\nBits left 5\n"
     }
   ],
   "easy-gaming-01": [
     {
       "inputs": [
-        "100",
-        "3"
+        "40",
+        "15"
       ],
-      "output": "New score: 130\n"
+      "output": "Score 55\n"
     },
     {
       "inputs": [
         "20",
         "0"
       ],
-      "output": "New score: 20\n"
+      "output": "Score 20\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "7"
+      ],
+      "output": "Score 7\n"
     }
   ],
   "easy-gaming-02": [
@@ -644,776 +848,978 @@
         "5",
         "2"
       ],
-      "output": "Lives: 3\n"
+      "output": "Lives left 3\n"
     },
     {
       "inputs": [
-        "2",
-        "4"
+        "3",
+        "3"
       ],
-      "output": "Lives: 0\n"
+      "output": "Lives left 0\n"
+    },
+    {
+      "inputs": [
+        "4",
+        "0"
+      ],
+      "output": "Lives left 4\n"
     }
   ],
   "easy-gaming-03": [
     {
       "inputs": [
-        "5"
+        "100"
       ],
       "output": "Unlocked\n"
     },
     {
       "inputs": [
-        "4"
+        "99"
       ],
-      "output": "Locked\n"
+      "output": "Keep playing\n"
     },
     {
       "inputs": [
-        "8"
+        "120"
       ],
       "output": "Unlocked\n"
     }
   ],
   "easy-gaming-04": [
     {
-      "inputs": [],
-      "output": "Roll: 1\n",
-      "random": [
-        1
-      ]
+      "inputs": [
+        "12",
+        "8"
+      ],
+      "output": "Team A wins\n"
     },
     {
-      "inputs": [],
-      "output": "Roll: 6\n",
-      "random": [
-        6
-      ]
+      "inputs": [
+        "8",
+        "12"
+      ],
+      "output": "Team B wins\n"
+    },
+    {
+      "inputs": [
+        "10",
+        "10"
+      ],
+      "output": "Draw\n"
     }
   ],
   "easy-gaming-05": [
     {
       "inputs": [
-        "2",
-        "3"
+        "90"
       ],
-      "output": "Tile: 2,3\n"
+      "output": "Minutes 1\nSeconds 30\n"
     },
     {
       "inputs": [
-        "0",
-        "0"
+        "120"
       ],
-      "output": "Tile: 0,0\n"
+      "output": "Minutes 2\nSeconds 0\n"
+    },
+    {
+      "inputs": [
+        "45"
+      ],
+      "output": "Minutes 0\nSeconds 45\n"
     }
   ],
   "easy-gaming-06": [
     {
       "inputs": [
-        "Amira"
+        "3",
+        "7"
       ],
-      "output": "Tag: AMI\n"
+      "output": "Points 21\n"
     },
     {
       "inputs": [
-        "ben"
+        "0",
+        "5"
       ],
-      "output": "Tag: BEN\n"
+      "output": "Points 0\n"
+    },
+    {
+      "inputs": [
+        "4",
+        "2"
+      ],
+      "output": "Points 8\n"
     }
   ],
   "easy-gaming-07": [
     {
       "inputs": [
-        "25",
-        "100"
+        "2"
       ],
-      "output": "Health: 25%\n"
+      "output": "Item Map\n"
     },
     {
       "inputs": [
-        "30",
-        "60"
+        "1"
       ],
-      "output": "Health: 50%\n"
+      "output": "Item Key\n"
+    },
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Item Torch\n"
     }
   ],
   "easy-gaming-08": [
     {
       "inputs": [
-        "1",
-        "0",
-        "1"
+        "3"
       ],
-      "output": "Hits: 2\n"
+      "output": "3\n2\n1\nGo\n"
     },
     {
       "inputs": [
-        "0",
-        "0",
+        "1"
+      ],
+      "output": "1\nGo\n"
+    },
+    {
+      "inputs": [
         "0"
       ],
-      "output": "Hits: 0\n"
+      "output": "Go\n"
     }
   ],
   "easy-gaming-09": [
     {
-      "inputs": [
-        "3"
-      ],
-      "output": "Item: rope\n"
+      "inputs": [],
+      "output": "Final score 25\n"
     },
     {
-      "inputs": [
-        "1"
-      ],
-      "output": "Item: torch\n"
+      "inputs": [],
+      "output": "Final score 10\n",
+      "patch": [
+        "[8, 12, 5]",
+        "[2, 3, 5]"
+      ]
     }
   ],
   "easy-gaming-10": [
     {
-      "inputs": [
-        "8",
-        "3"
-      ],
-      "output": "Player wins\n"
+      "inputs": [],
+      "output": "Wins 2\n"
     },
     {
-      "inputs": [
-        "4",
-        "4"
-      ],
-      "output": "Draw\n"
+      "inputs": [],
+      "output": "Wins 1\n",
+      "patch": [
+        "[40, 70, 55, 80]",
+        "[59, 60, 10]"
+      ]
     },
     {
-      "inputs": [
-        "2",
-        "7"
-      ],
-      "output": "Rival wins\n"
+      "inputs": [],
+      "output": "Wins 0\n",
+      "patch": [
+        "[40, 70, 55, 80]",
+        "[1, 2, 3]"
+      ]
     }
   ],
   "easy-creative-media-01": [
     {
       "inputs": [
-        "Leah",
-        "Editor"
+        "Space"
       ],
-      "output": "Leah - Editor\n"
+      "output": "Video about Space\n"
     },
     {
       "inputs": [
-        "Sam",
-        "Artist"
+        "Music"
       ],
-      "output": "Sam - Artist\n"
+      "output": "Video about Music\n"
     }
   ],
   "easy-creative-media-02": [
     {
       "inputs": [
-        "20",
-        "30"
+        "120",
+        "80"
       ],
-      "output": "Poster area: 600.0 cm2\n"
+      "output": "Pixels 9600\n"
     },
     {
       "inputs": [
-        "2.5",
-        "4"
+        "10",
+        "10"
       ],
-      "output": "Poster area: 10.0 cm2\n"
+      "output": "Pixels 100\n"
+    },
+    {
+      "inputs": [
+        "20",
+        "5"
+      ],
+      "output": "Pixels 100\n"
     }
   ],
   "easy-creative-media-03": [
     {
       "inputs": [
-        "125"
+        "School play"
       ],
-      "output": "Minutes: 2\nSeconds: 5\n"
-    },
-    {
-      "inputs": [
-        "60"
-      ],
-      "output": "Minutes: 1\nSeconds: 0\n"
-    }
-  ],
-  "easy-creative-media-04": [
-    {
-      "inputs": [
-        "Hi there!"
-      ],
-      "output": "Caption length: 9\n"
+      "output": "Caption length 11\n"
     },
     {
       "inputs": [
         "Art"
       ],
-      "output": "Caption length: 3\n"
+      "output": "Caption length 3\n"
+    },
+    {
+      "inputs": [
+        "Go!"
+      ],
+      "output": "Caption length 3\n"
+    }
+  ],
+  "easy-creative-media-04": [
+    {
+      "inputs": [
+        "4",
+        "25"
+      ],
+      "output": "Frames 100\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "30"
+      ],
+      "output": "Frames 60\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "25"
+      ],
+      "output": "Frames 0\n"
     }
   ],
   "easy-creative-media-05": [
     {
       "inputs": [
-        "Digital Art"
+        "90",
+        "30"
       ],
-      "output": "#digitalart\n"
+      "output": "Length 3.0 seconds\n"
     },
     {
       "inputs": [
-        "MUSIC"
+        "100",
+        "25"
       ],
-      "output": "#music\n"
+      "output": "Length 4.0 seconds\n"
+    },
+    {
+      "inputs": [
+        "45",
+        "30"
+      ],
+      "output": "Length 1.5 seconds\n"
     }
   ],
   "easy-creative-media-06": [
     {
-      "inputs": [
-        "25",
-        "4"
-      ],
-      "output": "Frames: 100\n"
+      "inputs": [],
+      "output": "Track Start\nTrack River\nTrack Sky\n"
     },
     {
-      "inputs": [
-        "30",
-        "2"
-      ],
-      "output": "Frames: 60\n"
+      "inputs": [],
+      "output": "Track One\nTrack Two\n",
+      "patch": [
+        "[\"Start\", \"River\", \"Sky\"]",
+        "[\"One\", \"Two\"]"
+      ]
     }
   ],
   "easy-creative-media-07": [
     {
       "inputs": [
-        "5",
-        "2.5"
+        "Sunrise",
+        "Echo"
       ],
-      "output": "Upload MB: 12.5\n"
+      "output": "Sunrise by Echo\n"
     },
     {
       "inputs": [
-        "0",
-        "3"
+        "Home",
+        "Pulse"
       ],
-      "output": "Upload MB: 0.0\n"
+      "output": "Home by Pulse\n"
     }
   ],
   "easy-creative-media-08": [
     {
       "inputs": [
-        "4"
+        "school news"
       ],
-      "output": "Featured\n"
+      "output": "SCHOOL NEWS\n"
     },
     {
       "inputs": [
-        "3"
+        "Art 7"
       ],
-      "output": "Review\n"
+      "output": "ART 7\n"
     },
     {
       "inputs": [
-        "5"
+        "ICT"
       ],
-      "output": "Featured\n"
+      "output": "ICT\n"
     }
   ],
   "easy-creative-media-09": [
     {
-      "inputs": [],
-      "output": "Intro\nSketch\nFinale\n"
+      "inputs": [
+        "45"
+      ],
+      "output": "Long\n"
     },
     {
-      "inputs": [],
-      "output": "Opening\nScene\nCredits\n",
-      "patch": [
-        "[\"Intro\", \"Sketch\", \"Finale\"]",
-        "[\"Opening\", \"Scene\", \"Credits\"]"
-      ]
+      "inputs": [
+        "30"
+      ],
+      "output": "Short\n"
+    },
+    {
+      "inputs": [
+        "29"
+      ],
+      "output": "Short\n"
     }
   ],
   "easy-creative-media-10": [
     {
       "inputs": [
-        "BLUE"
+        "2"
       ],
-      "output": "In palette\n"
+      "output": "Cover Green\n"
     },
     {
       "inputs": [
-        "green"
+        "1"
       ],
-      "output": "Not in palette\n"
+      "output": "Cover Blue\n"
+    },
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Cover Yellow\n"
     }
   ],
   "easy-social-community-01": [
     {
       "inputs": [
-        "Aisha",
-        "Code Club"
+        "Chess"
       ],
-      "output": "Aisha at Code Club\n"
+      "output": "Welcome to Chess\n"
     },
     {
       "inputs": [
-        "Ben",
-        "Fair"
+        "Art"
       ],
-      "output": "Ben at Fair\n"
+      "output": "Welcome to Art\n"
     }
   ],
   "easy-social-community-02": [
     {
       "inputs": [
         "30",
-        "18"
+        "23"
       ],
-      "output": "Places left: 12\n"
+      "output": "Free places 7\n"
     },
     {
       "inputs": [
         "20",
         "20"
       ],
-      "output": "Places left: 0\n"
+      "output": "Free places 0\n"
+    },
+    {
+      "inputs": [
+        "10",
+        "0"
+      ],
+      "output": "Free places 10\n"
     }
   ],
   "easy-social-community-03": [
     {
       "inputs": [
-        "90"
+        "4",
+        "6"
       ],
-      "output": "Hours: 1.5\n"
+      "output": "Meetings 24\n"
     },
     {
       "inputs": [
-        "30"
+        "2",
+        "3"
       ],
-      "output": "Hours: 0.5\n"
+      "output": "Meetings 6\n"
+    },
+    {
+      "inputs": [
+        "3",
+        "0"
+      ],
+      "output": "Meetings 0\n"
     }
   ],
   "easy-social-community-04": [
     {
       "inputs": [
-        "Hello"
+        "20",
+        "18"
       ],
-      "output": "Fits\n"
+      "output": "Attendance 90.0 percent\n"
     },
     {
       "inputs": [
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "10",
+        "10"
       ],
-      "output": "Fits\n"
+      "output": "Attendance 100.0 percent\n"
     },
     {
       "inputs": [
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "8",
+        "0"
       ],
-      "output": "Too long\n"
+      "output": "Attendance 0.0 percent\n"
     }
   ],
   "easy-social-community-05": [
     {
       "inputs": [
-        "YES"
+        "12"
       ],
-      "output": "Place reserved\n"
+      "output": "Can run\n"
     },
     {
       "inputs": [
-        "no"
+        "10"
       ],
-      "output": "No place reserved\n"
+      "output": "Can run\n"
+    },
+    {
+      "inputs": [
+        "9"
+      ],
+      "output": "More sign-ups needed\n"
     }
   ],
   "easy-social-community-06": [
     {
       "inputs": [
-        "14",
-        "4"
+        "12"
       ],
-      "output": "Each: 3\nLeft over: 2\n"
+      "output": "Free entry\n"
     },
     {
       "inputs": [
-        "12",
-        "3"
+        "13"
       ],
-      "output": "Each: 4\nLeft over: 0\n"
+      "output": "Paid entry\n"
+    },
+    {
+      "inputs": [
+        "16"
+      ],
+      "output": "Paid entry\n"
     }
   ],
   "easy-social-community-07": [
     {
-      "inputs": [
-        "1",
-        "2.5",
-        "3"
-      ],
-      "output": "Donations: 6.50\n"
+      "inputs": [],
+      "output": "Club Monday\nClub Wednesday\nClub Friday\n"
     },
     {
-      "inputs": [
-        "0",
-        "5",
-        "5"
-      ],
-      "output": "Donations: 10.00\n"
+      "inputs": [],
+      "output": "Club Tuesday\nClub Thursday\n",
+      "patch": [
+        "[\"Monday\", \"Wednesday\", \"Friday\"]",
+        "[\"Tuesday\", \"Thursday\"]"
+      ]
     }
   ],
   "easy-social-community-08": [
     {
       "inputs": [],
-      "output": "Yes votes: 3\n"
+      "output": "Votes 25\n"
     },
     {
       "inputs": [],
-      "output": "Yes votes: 0\n",
+      "output": "Votes 10\n",
       "patch": [
-        "[\"yes\", \"no\", \"yes\", \"yes\"]",
-        "[\"no\", \"no\"]"
+        "[12, 8, 5]",
+        "[1, 4, 5]"
       ]
     }
   ],
   "easy-social-community-09": [
     {
-      "inputs": [
-        "Club meeting"
-      ],
-      "output": "Notice: CLUB MEETING\n"
+      "inputs": [],
+      "output": "Yes replies 3\n"
     },
     {
-      "inputs": [
-        "Fair"
-      ],
-      "output": "Notice: FAIR\n"
+      "inputs": [],
+      "output": "Yes replies 0\n",
+      "patch": [
+        "[\"yes\", \"no\", \"yes\", \"yes\"]",
+        "[\"no\", \"no\"]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "Yes replies 1\n",
+      "patch": [
+        "[\"yes\", \"no\", \"yes\", \"yes\"]",
+        "[\"yes\"]"
+      ]
     }
   ],
   "easy-social-community-10": [
     {
       "inputs": [
-        "Ada,Ben,Cleo"
+        "Chess"
       ],
-      "output": "Members: 3\n"
+      "output": "Initial C\n"
     },
     {
       "inputs": [
-        "Amir"
+        "Drama"
       ],
-      "output": "Members: 1\n"
+      "output": "Initial D\n"
+    },
+    {
+      "inputs": [
+        "A"
+      ],
+      "output": "Initial A\n"
     }
   ],
   "easy-health-fitness-01": [
     {
       "inputs": [
-        "3200"
+        "3",
+        "400"
       ],
-      "output": "Steps left: 1800\n"
+      "output": "Distance 1200 metres\n"
     },
     {
       "inputs": [
-        "5500"
+        "2",
+        "100"
       ],
-      "output": "Steps left: 0\n"
+      "output": "Distance 200 metres\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "400"
+      ],
+      "output": "Distance 0 metres\n"
     }
   ],
   "easy-health-fitness-02": [
     {
       "inputs": [
-        "3"
+        "6000",
+        "4500"
       ],
-      "output": "Distance: 1200 m\n"
+      "output": "Steps left 1500\n"
     },
     {
       "inputs": [
-        "0"
+        "6000",
+        "6000"
       ],
-      "output": "Distance: 0 m\n"
+      "output": "Steps left 0\n"
+    },
+    {
+      "inputs": [
+        "6000",
+        "7000"
+      ],
+      "output": "Steps left 0\n"
     }
   ],
   "easy-health-fitness-03": [
     {
       "inputs": [
-        "1200",
-        "5"
+        "4"
       ],
-      "output": "Seconds per km: 240.0\n"
+      "output": "Rep 1\nRep 2\nRep 3\nRep 4\n"
     },
     {
       "inputs": [
-        "900",
-        "3"
+        "1"
       ],
-      "output": "Seconds per km: 300.0\n"
+      "output": "Rep 1\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": ""
     }
   ],
   "easy-health-fitness-04": [
     {
       "inputs": [
-        "20",
-        "35"
+        "240",
+        "60"
       ],
-      "output": "Total minutes: 55\n"
+      "output": "Total 300 seconds\n"
     },
     {
       "inputs": [
-        "0",
-        "15"
+        "90",
+        "30"
       ],
-      "output": "Total minutes: 15\n"
+      "output": "Total 120 seconds\n"
+    },
+    {
+      "inputs": [
+        "60",
+        "0"
+      ],
+      "output": "Total 60 seconds\n"
     }
   ],
   "easy-health-fitness-05": [
     {
       "inputs": [
-        "60",
-        "58.5"
+        "28",
+        "4"
       ],
-      "output": "New best\n"
+      "output": "Pace 7.0 minutes per km\n"
+    },
+    {
+      "inputs": [
+        "21",
+        "3"
+      ],
+      "output": "Pace 7.0 minutes per km\n"
+    },
+    {
+      "inputs": [
+        "10",
+        "2"
+      ],
+      "output": "Pace 5.0 minutes per km\n"
+    }
+  ],
+  "easy-health-fitness-06": [
+    {
+      "inputs": [
+        "60",
+        "55"
+      ],
+      "output": "Faster\n"
     },
     {
       "inputs": [
         "60",
         "60"
       ],
-      "output": "No new best\n"
+      "output": "No improvement\n"
     },
     {
       "inputs": [
         "60",
-        "62"
+        "65"
       ],
-      "output": "No new best\n"
-    }
-  ],
-  "easy-health-fitness-06": [
-    {
-      "inputs": [
-        "4"
-      ],
-      "output": "Capacity litres: 3.00\n"
-    },
-    {
-      "inputs": [
-        "2"
-      ],
-      "output": "Capacity litres: 1.50\n"
+      "output": "No improvement\n"
     }
   ],
   "easy-health-fitness-07": [
     {
       "inputs": [
-        "3"
+        "1250"
       ],
-      "output": "Round 1\nRound 2\nRound 3\n"
+      "output": "Full bottles 2\nWater left 250 ml\n"
     },
     {
       "inputs": [
-        "1"
+        "1000"
       ],
-      "output": "Round 1\n"
+      "output": "Full bottles 2\nWater left 0 ml\n"
+    },
+    {
+      "inputs": [
+        "300"
+      ],
+      "output": "Full bottles 0\nWater left 300 ml\n"
     }
   ],
   "easy-health-fitness-08": [
     {
       "inputs": [],
-      "output": "Total steps: 10000\n"
+      "output": "Exercise Jump\nExercise Stretch\nExercise Walk\n"
     },
     {
       "inputs": [],
-      "output": "Total steps: 6000\n",
+      "output": "Exercise Run\nExercise Rest\n",
       "patch": [
-        "[2000, 3500, 4500]",
-        "[1000, 2000, 3000]"
+        "[\"Jump\", \"Stretch\", \"Walk\"]",
+        "[\"Run\", \"Rest\"]"
       ]
     }
   ],
   "easy-health-fitness-09": [
     {
-      "inputs": [
-        "40"
-      ],
-      "output": "Beats per minute: 80\n"
+      "inputs": [],
+      "output": "Time 12 minutes\n"
     },
     {
-      "inputs": [
-        "32"
-      ],
-      "output": "Beats per minute: 64\n"
+      "inputs": [],
+      "output": "Time 6 minutes\n",
+      "patch": [
+        "[4, 5, 3]",
+        "[1, 2, 3]"
+      ]
     }
   ],
   "easy-health-fitness-10": [
     {
       "inputs": [],
-      "output": "Badge days: 2\n"
+      "output": "Days meeting target 2\n"
     },
     {
       "inputs": [],
-      "output": "Badge days: 1\n",
+      "output": "Days meeting target 1\n",
       "patch": [
-        "[20, 30, 45, 10]",
-        "[29, 30, 0, 10]"
+        "[5000, 6500, 7000, 4500]",
+        "[6000, 5999, 0]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "Days meeting target 0\n",
+      "patch": [
+        "[5000, 6500, 7000, 4500]",
+        "[1, 2, 3]"
       ]
     }
   ],
   "easy-environment-sustainability-01": [
     {
       "inputs": [
-        "7"
+        "8",
+        "3"
       ],
-      "output": "Points: 35\n"
+      "output": "Lights still on 5\n"
     },
     {
       "inputs": [
+        "4",
+        "4"
+      ],
+      "output": "Lights still on 0\n"
+    },
+    {
+      "inputs": [
+        "6",
         "0"
       ],
-      "output": "Points: 0\n"
+      "output": "Lights still on 6\n"
     }
   ],
   "easy-environment-sustainability-02": [
     {
       "inputs": [
-        "100",
+        "2",
         "5"
       ],
-      "output": "Energy kWh: 0.50\n"
+      "output": "Refills 10\n"
     },
     {
       "inputs": [
-        "1000",
-        "2"
+        "3",
+        "4"
       ],
-      "output": "Energy kWh: 2.00\n"
+      "output": "Refills 12\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "0"
+      ],
+      "output": "Refills 0\n"
     }
   ],
   "easy-environment-sustainability-03": [
     {
       "inputs": [
-        "50",
-        "35"
+        "7",
+        "4",
+        "6"
       ],
-      "output": "Litres saved: 15.0\n"
+      "output": "Paper 17 kg\n"
     },
     {
       "inputs": [
-        "20",
-        "20"
+        "0",
+        "2",
+        "3"
       ],
-      "output": "Litres saved: 0.0\n"
+      "output": "Paper 5 kg\n"
+    },
+    {
+      "inputs": [
+        "1",
+        "1",
+        "1"
+      ],
+      "output": "Paper 3 kg\n"
     }
   ],
   "easy-environment-sustainability-04": [
     {
       "inputs": [
-        "6",
-        "20"
+        "23"
       ],
-      "output": "Walking: 30.0%\n"
+      "output": "Full buckets 4\nWater left 3 litres\n"
     },
     {
       "inputs": [
-        "1",
-        "4"
+        "10"
       ],
-      "output": "Walking: 25.0%\n"
+      "output": "Full buckets 2\nWater left 0 litres\n"
+    },
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Full buckets 0\nWater left 3 litres\n"
     }
   ],
   "easy-environment-sustainability-05": [
     {
       "inputs": [
-        "PAPER"
+        "paper"
       ],
-      "output": "Blue\n"
+      "output": "Paper bin\n"
     },
     {
       "inputs": [
         "card"
       ],
-      "output": "Blue\n"
+      "output": "Paper bin\n"
     },
     {
       "inputs": [
         "glass"
       ],
-      "output": "Other\n"
+      "output": "Other bin\n"
     }
   ],
   "easy-environment-sustainability-06": [
     {
       "inputs": [
-        "50"
+        "35"
       ],
-      "output": "Spaces: 5\n"
+      "output": "Turn on\n"
     },
     {
       "inputs": [
-        "18"
+        "40"
       ],
-      "output": "Spaces: 2\n"
+      "output": "Stay off\n"
+    },
+    {
+      "inputs": [
+        "80"
+      ],
+      "output": "Stay off\n"
     }
   ],
   "easy-environment-sustainability-07": [
     {
-      "inputs": [],
-      "output": "Collected kg: 4.0\n"
-    },
-    {
-      "inputs": [],
-      "output": "Collected kg: 6.0\n",
-      "patch": [
-        "[1.5, 2.0, 0.5]",
-        "[1.0, 2.0, 3.0]"
-      ]
-    }
-  ],
-  "easy-environment-sustainability-08": [
-    {
       "inputs": [
-        "30",
-        "20"
+        "5",
+        "4"
       ],
-      "output": "Reduced\n"
+      "output": "Garden area 20 square metres\n"
     },
     {
       "inputs": [
-        "20",
-        "20"
+        "3",
+        "3"
       ],
-      "output": "Not reduced\n"
-    },
-    {
-      "inputs": [
-        "10",
-        "15"
-      ],
-      "output": "Not reduced\n"
-    }
-  ],
-  "easy-environment-sustainability-09": [
-    {
-      "inputs": [
-        "4",
-        "5"
-      ],
-      "output": "Units: 60\n"
+      "output": "Garden area 9 square metres\n"
     },
     {
       "inputs": [
         "2",
-        "1"
+        "7"
       ],
-      "output": "Units: 6\n"
+      "output": "Garden area 14 square metres\n"
+    }
+  ],
+  "easy-environment-sustainability-08": [
+    {
+      "inputs": [],
+      "output": "Collection Tuesday\nCollection Thursday\nCollection Saturday\n"
+    },
+    {
+      "inputs": [],
+      "output": "Collection Monday\nCollection Friday\n",
+      "patch": [
+        "[\"Tuesday\", \"Thursday\", \"Saturday\"]",
+        "[\"Monday\", \"Friday\"]"
+      ]
+    }
+  ],
+  "easy-environment-sustainability-09": [
+    {
+      "inputs": [],
+      "output": "Weight 14 kg\n"
+    },
+    {
+      "inputs": [],
+      "output": "Weight 7 kg\n",
+      "patch": [
+        "[3, 4, 2, 5]",
+        "[1, 1, 2, 3]"
+      ]
     }
   ],
   "easy-environment-sustainability-10": [
     {
       "inputs": [],
-      "output": "Plastic items: 2\n"
+      "output": "Bins to empty 2\n"
     },
     {
       "inputs": [],
-      "output": "Plastic items: 0\n",
+      "output": "Bins to empty 1\n",
       "patch": [
-        "[\"paper\", \"plastic\", \"glass\", \"plastic\"]",
-        "[\"paper\", \"glass\"]"
+        "[80, 30, 95, 60]",
+        "[79, 80, 10]"
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "Bins to empty 0\n",
+      "patch": [
+        "[80, 30, 95, 60]",
+        "[10, 20]"
       ]
     }
   ]

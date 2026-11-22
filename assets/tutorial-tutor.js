@@ -94,7 +94,8 @@
         if (answers.has(key)) answer(answers.get(key));
       } else {
         const viewport = node('div', 'tutor-content tutor-explanation');
-        [...line.paragraphs, 'Remember: ' + line.watchOut].forEach((text, index) => {
+        const remember = problem?.collection ? 'Remember ' : 'Remember: ';
+        [...line.paragraphs, remember + line.watchOut].forEach((text, index) => {
           const part = node('p', index === line.paragraphs.length ? 'tutor-reminder' : '');
           decorate(part, text);
           part.dataset.fitText = 'true'; viewport.append(part);

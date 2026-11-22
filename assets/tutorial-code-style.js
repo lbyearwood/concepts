@@ -66,10 +66,10 @@
   }
   function renderTutorText(target, text, identifiers = [], language = 'python') {
     const fragment = document.createDocumentFragment();
-    const label = text.match(/^(Remember:|✅ Correct\.|❌ Incorrect\.)\s*/);
+    const label = text.match(/^(Remember(?::|\b)|✅ Correct\.|❌ Incorrect\.)\s*/);
     if (label) {
       const strong = document.createElement('strong');
-      strong.className = label[1] === 'Remember:' ? 'tutor-remember-title' : 'tutor-feedback-title';
+      strong.className = label[1].startsWith('Remember') ? 'tutor-remember-title' : 'tutor-feedback-title';
       strong.textContent = label[0]; fragment.append(strong); text = text.slice(label[0].length);
     }
     tutorSegments(text, identifiers, language).forEach(segment => {
