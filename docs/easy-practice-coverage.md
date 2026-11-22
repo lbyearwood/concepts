@@ -2,7 +2,9 @@
 
 90 original Easy problems, ten in each of the nine existing practice categories. This bank is separate from the 64 preserved Exam questions. Medium and Hard remain empty.
 
-Every problem includes a complete console Python solution, concrete numbered instructions, input assumptions and an exact worked example. There are 396 explained code lines, 180 stages, 270 current-line understanding questions and 90 prediction checkpoints. All four checkpoints per problem have independent IDs and must be answered correctly before advancing.
+Every problem includes a complete console Python solution, concrete numbered instructions and an exact worked example. There are 396 explained code lines, 180 stages, 270 current-line understanding questions and 90 prediction checkpoints. All four checkpoints per problem have independent IDs and must be answered correctly before advancing.
+
+Write problem briefs from the developer's viewpoint, describing what a program is needed to do for its end users. Use sufficient concrete detail for a 13-year-old to identify the purpose, inputs and units, processing and output. Avoid you/your, fictional protagonists, unexplained shorthand and generic assumptions filler. The blanket assumptions paragraph has been removed from all 90 briefs; the two-price cafe example now uses the requested program-centred setting and explains its money format. This targeted correction does not certify a complete language rewrite of the other scenarios. Existing solution digests and execution cases remain unchanged.
 
 Easy tasks use valid stated inputs and short programs covering input/output, conversions, arithmetic, text operations, selection, simple repetition and supplied lists. They do not introduce functions, classes, validation loops, GUIs, files or SQL. The one random die problem has explicit inclusive integer bounds. Contexts are practice scenarios, not financial or health advice. No invented OCR tariffs are attached.
 

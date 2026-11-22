@@ -8,8 +8,7 @@
       "title": "Make a specimen label",
       "question": {
         "context": [
-          "A class labels each sample with its sample name and collection site.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A class labels each sample with its sample name and collection site."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -72,8 +71,7 @@
       "title": "Convert Celsius to kelvin",
       "question": {
         "context": [
-          "For this exercise, kelvin = degrees Celsius + 273.15.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise, kelvin = degrees Celsius + 273.15."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -135,8 +133,7 @@
       "title": "Calculate average speed",
       "question": {
         "context": [
-          "Average speed in metres per second is distance in metres divided by time in seconds.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Average speed in metres per second is distance in metres divided by time in seconds."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -199,8 +196,7 @@
       "title": "Calculate density",
       "question": {
         "context": [
-          "Density in grams per cubic centimetre is mass divided by volume.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Density in grams per cubic centimetre is mass divided by volume."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -263,8 +259,7 @@
       "title": "Check a boiling-point rule",
       "question": {
         "context": [
-          "A classroom model labels a temperature of 100 degrees Celsius or more as Boiling.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A classroom model labels a temperature of 100 degrees Celsius or more as Boiling."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -326,8 +321,7 @@
       "title": "Split millimetres into centimetres",
       "question": {
         "context": [
-          "There are 10 millimetres in one whole centimetre.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "There are 10 millimetres in one whole centimetre."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -389,8 +383,7 @@
       "title": "Average three measurements",
       "question": {
         "context": [
-          "A class takes three readings and needs their mean, found by adding them and dividing by three.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A class takes three readings and needs their mean, found by adding them and dividing by three."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -454,8 +447,7 @@
       "title": "Run an experiment countdown",
       "question": {
         "context": [
-          "A console countdown helps a class start an experiment together.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A console countdown helps a class start an experiment together."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -517,8 +509,7 @@
       "title": "Read a light-sensor message",
       "question": {
         "context": [
-          "A classroom sensor reports on or off as text. The user may type capital letters.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A classroom sensor reports on or off as text. The user may type capital letters."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -580,8 +571,7 @@
       "title": "Total three rainfall readings",
       "question": {
         "context": [
-          "Add three daily rainfall readings entered in millimetres.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Add three daily rainfall readings entered in millimetres."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -645,8 +635,7 @@
       "title": "Find the area of a rectangle",
       "question": {
         "context": [
-          "The area of a rectangle is its length multiplied by its width.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "The area of a rectangle is its length multiplied by its width."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -709,8 +698,7 @@
       "title": "Find a rectangle perimeter",
       "question": {
         "context": [
-          "The perimeter is twice the sum of a rectangle's length and width.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "The perimeter is twice the sum of a rectangle's length and width."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -773,8 +761,7 @@
       "title": "Pack whole groups",
       "question": {
         "context": [
-          "Divide a number of counters into equal-sized groups and report any counters left over.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Divide a number of counters into equal-sized groups and report any counters left over."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -837,8 +824,7 @@
       "title": "Square a number",
       "question": {
         "context": [
-          "Squaring means multiplying a number by itself.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Squaring means multiplying a number by itself."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -900,8 +886,7 @@
       "title": "Find the larger of two numbers",
       "question": {
         "context": [
-          "Display the larger of two whole numbers. If they are equal, display that shared value.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Display the larger of two whole numbers. If they are equal, display that shared value."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -964,8 +949,7 @@
       "title": "Recognise an even number",
       "question": {
         "context": [
-          "An even whole number has a remainder of zero when divided by two.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "An even whole number has a remainder of zero when divided by two."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1027,8 +1011,7 @@
       "title": "Print a number sequence",
       "question": {
         "context": [
-          "Print the whole numbers from one up to a chosen limit.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Print the whole numbers from one up to a chosen limit."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1090,8 +1073,7 @@
       "title": "Print five multiplication facts",
       "question": {
         "context": [
-          "Make the first five multiplication facts for a number.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Make the first five multiplication facts for a number."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1153,8 +1135,7 @@
       "title": "Find the area of a triangle",
       "question": {
         "context": [
-          "Triangle area is half of base multiplied by perpendicular height.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Triangle area is half of base multiplied by perpendicular height."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1217,8 +1198,7 @@
       "title": "Add the numbers from one to a limit",
       "question": {
         "context": [
-          "Find the total of 1 + 2 + ... up to a chosen whole-number limit.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Find the total of 1 + 2 + ... up to a chosen whole-number limit."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1280,14 +1260,14 @@
       "title": "Total two prices",
       "question": {
         "context": [
-          "A till needs the combined price of two items.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A program is needed to calculate the total cost when students buy two snacks from the school café. Each snack can have a different price. All prices are in pounds."
         ],
         "command": "Write a console program to:",
         "requirements": [
-          "Read two prices in pounds.",
-          "Add them together.",
-          "Display Total: followed by the total with two decimal places."
+          "Ask for the price of the first snack.",
+          "Ask for the price of the second snack.",
+          "Add the two prices together.",
+          "Display Total: followed by the total with two digits after the decimal point. For example, show 5.70 rather than 5.7."
         ],
         "example": {
           "inputs": [
@@ -1344,8 +1324,7 @@
       "title": "Work out change",
       "question": {
         "context": [
-          "A customer pays at least the cost of an item. Find the change to give back.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A customer pays at least the cost of an item. Find the change to give back."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1408,8 +1387,7 @@
       "title": "Plan four weeks of saving",
       "question": {
         "context": [
-          "For this exercise a month is exactly four weeks, with the same saving each week.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise a month is exactly four weeks, with the same saving each week."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1471,8 +1449,7 @@
       "title": "Apply a twenty-percent discount",
       "question": {
         "context": [
-          "A fictional shop takes 20 percent off the original price.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional shop takes 20 percent off the original price."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1534,8 +1511,7 @@
       "title": "Share a bill equally",
       "question": {
         "context": [
-          "Friends share one bill equally. There is at least one person.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Friends share one bill equally. There is at least one person."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1598,8 +1574,7 @@
       "title": "Price a batch of tickets",
       "question": {
         "context": [
-          "All tickets in this exercise have the same price.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "All tickets in this exercise have the same price."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1662,8 +1637,7 @@
       "title": "Add a delivery charge",
       "question": {
         "context": [
-          "A fictional shop charges 3 for delivery below 25. Delivery is free for orders of 25 or more.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional shop charges 3 for delivery below 25. Delivery is free for orders of 25 or more."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1725,8 +1699,7 @@
       "title": "Check a saving goal",
       "question": {
         "context": [
-          "A saver has a target amount and wants to know whether it has been reached.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A saver has a target amount and wants to know whether it has been reached."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1789,8 +1762,7 @@
       "title": "Use a supplied exchange rate",
       "question": {
         "context": [
-          "Use the fictional fixed exercise rate of 1 pound = 1.20 euros. This is not a live exchange rate.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Use the fictional fixed exercise rate of 1 pound = 1.20 euros. This is not a live exchange rate."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1852,8 +1824,7 @@
       "title": "Total a short price list",
       "question": {
         "context": [
-          "A shopping list already contains three prices. Add every price in the list.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A shopping list already contains three prices. Add every price in the list."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1915,8 +1886,7 @@
       "title": "Normalise a file type",
       "question": {
         "context": [
-          "A file-type label should be displayed in lower case.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A file-type label should be displayed in lower case."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -1978,8 +1948,7 @@
       "title": "Convert gigabytes to megabytes",
       "question": {
         "context": [
-          "For this exercise use the decimal convention: 1 GB = 1000 MB.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise use the decimal convention: 1 GB = 1000 MB."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2041,8 +2010,7 @@
       "title": "Count password characters",
       "question": {
         "context": [
-          "Count the characters typed, without judging whether a password is secure.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Count the characters typed, without judging whether a password is secure."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2104,8 +2072,7 @@
       "title": "Build a filename",
       "question": {
         "context": [
-          "Join a base name and an extension using exactly one full stop.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Join a base name and an extension using exactly one full stop."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2168,8 +2135,7 @@
       "title": "Split bytes into whole kilobytes",
       "question": {
         "context": [
-          "For this exercise 1 KB = 1024 bytes. Report complete kilobytes and bytes left over.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise 1 KB = 1024 bytes. Report complete kilobytes and bytes left over."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2231,8 +2197,7 @@
       "title": "Make a simple username",
       "question": {
         "context": [
-          "Create a username by removing spaces and changing letters to lower case.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Create a username by removing spaces and changing letters to lower case."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2294,8 +2259,7 @@
       "title": "Check a log message",
       "question": {
         "context": [
-          "A small log viewer highlights the word error. Letter case should not matter.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A small log viewer highlights the word error. Letter case should not matter."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2357,8 +2321,7 @@
       "title": "Count the one bits",
       "question": {
         "context": [
-          "A valid binary string contains only 0 and 1. Count how many characters are 1.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A valid binary string contains only 0 and 1. Count how many characters are 1."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2420,8 +2383,7 @@
       "title": "Estimate a download time",
       "question": {
         "context": [
-          "Assume a constant speed, with file size in MB and download rate in MB per second.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Assume a constant speed, with file size in MB and download rate in MB per second."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2484,8 +2446,7 @@
       "title": "Choose a device by index",
       "question": {
         "context": [
-          "A supplied list contains mouse, keyboard, monitor and printer in that order.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A supplied list contains mouse, keyboard, monitor and printer in that order."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2547,8 +2508,7 @@
       "title": "Add a coin bonus",
       "question": {
         "context": [
-          "A game gives 10 points for each collected coin.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A game gives 10 points for each collected coin."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2611,8 +2571,7 @@
       "title": "Keep lives above zero",
       "question": {
         "context": [
-          "Subtract lost lives, but never display a negative number of lives.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Subtract lost lives, but never display a negative number of lives."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2675,8 +2634,7 @@
       "title": "Unlock level five",
       "question": {
         "context": [
-          "In this fictional game, a level of 5 or more unlocks the next area.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "In this fictional game, a level of 5 or more unlocks the next area."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2738,8 +2696,7 @@
       "title": "Roll a six-sided die",
       "question": {
         "context": [
-          "Choose one random whole number from 1 through 6. The example is one possible result; a real run may differ.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Choose one random whole number from 1 through 6. The example is one possible result; a real run may differ."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2801,8 +2758,7 @@
       "title": "Display a tile position",
       "question": {
         "context": [
-          "Represent a board position as row,column, with a comma and no space inside the position.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Represent a board position as row,column, with a comma and no space inside the position."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2865,8 +2821,7 @@
       "title": "Make a three-letter player tag",
       "question": {
         "context": [
-          "A player tag uses the first three letters of a name, in upper case.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A player tag uses the first three letters of a name, in upper case."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2928,8 +2883,7 @@
       "title": "Show a health percentage",
       "question": {
         "context": [
-          "Use the game values supplied, with maximum health greater than 0.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Use the game values supplied, with maximum health greater than 0."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -2992,8 +2946,7 @@
       "title": "Count three target hits",
       "question": {
         "context": [
-          "Each of three target attempts is entered as 1 for a hit or 0 for a miss.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Each of three target attempts is entered as 1 for a hit or 0 for a miss."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3057,8 +3010,7 @@
       "title": "Choose an inventory item",
       "question": {
         "context": [
-          "An inventory list contains key, torch, map and rope in that order.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "An inventory list contains key, torch, map and rope in that order."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3120,8 +3072,7 @@
       "title": "Decide a round winner",
       "question": {
         "context": [
-          "A round can be won by Player, won by Rival or end in a Draw.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A round can be won by Player, won by Rival or end in a Draw."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3184,8 +3135,7 @@
       "title": "Write a credit line",
       "question": {
         "context": [
-          "A credit line identifies a creator and their role.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A credit line identifies a creator and their role."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3248,8 +3198,7 @@
       "title": "Find a poster area",
       "question": {
         "context": [
-          "Work out the area of a rectangular poster in square centimetres.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Work out the area of a rectangular poster in square centimetres."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3312,8 +3261,7 @@
       "title": "Split a video duration",
       "question": {
         "context": [
-          "Convert a whole-number duration in seconds into whole minutes and remaining seconds.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Convert a whole-number duration in seconds into whole minutes and remaining seconds."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3375,8 +3323,7 @@
       "title": "Count caption characters",
       "question": {
         "context": [
-          "Count all characters in a caption, including spaces and punctuation.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Count all characters in a caption, including spaces and punctuation."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3438,8 +3385,7 @@
       "title": "Build a hashtag",
       "question": {
         "context": [
-          "Turn a topic into a lower-case hashtag with no spaces.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Turn a topic into a lower-case hashtag with no spaces."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3501,8 +3447,7 @@
       "title": "Count video frames",
       "question": {
         "context": [
-          "Assume a constant whole-number frame rate for the full clip.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Assume a constant whole-number frame rate for the full clip."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3565,8 +3510,7 @@
       "title": "Estimate a photo upload size",
       "question": {
         "context": [
-          "For this exercise every photo has the same file size in MB.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise every photo has the same file size in MB."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3629,8 +3573,7 @@
       "title": "Apply a showcase rule",
       "question": {
         "context": [
-          "A fictional gallery shows Featured for a rating of 4 or 5 out of 5.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional gallery shows Featured for a rating of 4 or 5 out of 5."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3692,8 +3635,7 @@
       "title": "Print a playlist",
       "question": {
         "context": [
-          "A supplied playlist contains three titles. Display each title in its stored order.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A supplied playlist contains three titles. Display each title in its stored order."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3755,8 +3697,7 @@
       "title": "Check a colour palette",
       "question": {
         "context": [
-          "A fictional palette allows red, blue and yellow. Letter case should not matter.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional palette allows red, blue and yellow. Letter case should not matter."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3818,8 +3759,7 @@
       "title": "Make an event badge",
       "question": {
         "context": [
-          "An event badge shows a person's name and the event they are attending.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "An event badge shows a person's name and the event they are attending."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3882,8 +3822,7 @@
       "title": "Find remaining event places",
       "question": {
         "context": [
-          "The number already booked does not exceed the event capacity.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "The number already booked does not exceed the event capacity."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -3946,8 +3885,7 @@
       "title": "Convert volunteering minutes",
       "question": {
         "context": [
-          "A community organiser records time in minutes and needs hours.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A community organiser records time in minutes and needs hours."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4009,8 +3947,7 @@
       "title": "Check a notice length",
       "question": {
         "context": [
-          "A fictional notice board allows messages containing up to 80 characters, including spaces.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional notice board allows messages containing up to 80 characters, including spaces."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4072,8 +4009,7 @@
       "title": "Read an RSVP reply",
       "question": {
         "context": [
-          "In this exercise only the reply yes reserves a place. Letter case should not matter.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "In this exercise only the reply yes reserves a place. Letter case should not matter."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4135,8 +4071,7 @@
       "title": "Share snack portions",
       "question": {
         "context": [
-          "Share a whole number of snacks equally, leaving any indivisible snacks unallocated.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Share a whole number of snacks equally, leaving any indivisible snacks unallocated."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4199,8 +4134,7 @@
       "title": "Total three donations",
       "question": {
         "context": [
-          "A small fundraiser receives exactly three donations entered in pounds.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A small fundraiser receives exactly three donations entered in pounds."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4264,8 +4198,7 @@
       "title": "Count yes votes",
       "question": {
         "context": [
-          "A supplied poll list contains lower-case yes and no replies.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A supplied poll list contains lower-case yes and no replies."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4327,8 +4260,7 @@
       "title": "Prepare a notice heading",
       "question": {
         "context": [
-          "A notice heading should be displayed in upper case.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A notice heading should be displayed in upper case."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4390,8 +4322,7 @@
       "title": "Count names in a group",
       "question": {
         "context": [
-          "The input contains at least one name, with names separated by commas and no empty entries.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "The input contains at least one name, with names separated by commas and no empty entries."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4453,8 +4384,7 @@
       "title": "Find steps left in a challenge",
       "question": {
         "context": [
-          "A fictional school challenge uses a target of 5000 steps.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional school challenge uses a target of 5000 steps."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4516,8 +4446,7 @@
       "title": "Total a track distance",
       "question": {
         "context": [
-          "For this exercise one complete lap is exactly 400 metres.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise one complete lap is exactly 400 metres."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4579,8 +4508,7 @@
       "title": "Calculate seconds per kilometre",
       "question": {
         "context": [
-          "Find an average pace using elapsed seconds and a distance greater than zero in kilometres.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Find an average pace using elapsed seconds and a distance greater than zero in kilometres."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4643,8 +4571,7 @@
       "title": "Add two activity sessions",
       "question": {
         "context": [
-          "Add the durations of two sessions, both measured in minutes.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Add the durations of two sessions, both measured in minutes."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4707,8 +4634,7 @@
       "title": "Check for a faster time",
       "question": {
         "context": [
-          "For this timed event, a smaller number of seconds is faster. Equal times do not set a new best.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this timed event, a smaller number of seconds is faster. Equal times do not set a new best."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4771,8 +4697,7 @@
       "title": "Total bottle capacity",
       "question": {
         "context": [
-          "Each bottle in this stock-counting exercise holds 750 millilitres. Find their combined capacity.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Each bottle in this stock-counting exercise holds 750 millilitres. Find their combined capacity."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4834,8 +4759,7 @@
       "title": "Print training round labels",
       "question": {
         "context": [
-          "A session needs numbered console labels from Round 1 up to the chosen round count.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A session needs numbered console labels from Round 1 up to the chosen round count."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4897,8 +4821,7 @@
       "title": "Total a step-count list",
       "question": {
         "context": [
-          "A supplied list records three daily step counts.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A supplied list records three daily step counts."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -4960,8 +4883,7 @@
       "title": "Scale a rhythm count",
       "question": {
         "context": [
-          "A rhythm exercise counts beats over exactly 30 seconds. Use that count to estimate beats over 60 seconds.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A rhythm exercise counts beats over exactly 30 seconds. Use that count to estimate beats over 60 seconds."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5023,8 +4945,7 @@
       "title": "Count challenge days",
       "question": {
         "context": [
-          "In this fictional challenge a day earns a badge when its recorded activity is at least 30 minutes.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "In this fictional challenge a day earns a badge when its recorded activity is at least 30 minutes."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5086,8 +5007,7 @@
       "title": "Calculate bottle-return points",
       "question": {
         "context": [
-          "A fictional recycling game awards 5 points for each returned bottle.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A fictional recycling game awards 5 points for each returned bottle."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5149,8 +5069,7 @@
       "title": "Calculate energy in kilowatt-hours",
       "question": {
         "context": [
-          "Use energy in kWh = power in watts multiplied by hours, divided by 1000.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "Use energy in kWh = power in watts multiplied by hours, divided by 1000."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5213,8 +5132,7 @@
       "title": "Find water saved",
       "question": {
         "context": [
-          "The new water reading is no greater than the old reading. Both values are litres used for the same task.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "The new water reading is no greater than the old reading. Both values are litres used for the same task."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5277,8 +5195,7 @@
       "title": "Find a walking percentage",
       "question": {
         "context": [
-          "A class survey records how many pupils walked. The total number of pupils is greater than zero.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A class survey records how many pupils walked. The total number of pupils is greater than zero."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5341,8 +5258,7 @@
       "title": "Apply a fictional sorting rule",
       "question": {
         "context": [
-          "In this classroom sorting model, paper and card go to Blue; every other word goes to Other.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "In this classroom sorting model, paper and card go to Blue; every other word goes to Other."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5404,8 +5320,7 @@
       "title": "Find whole planting spaces",
       "question": {
         "context": [
-          "For this exercise each planting space uses exactly 9 square metres. Only complete spaces count.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "For this exercise each planting space uses exactly 9 square metres. Only complete spaces count."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5467,8 +5382,7 @@
       "title": "Total collection-bag weights",
       "question": {
         "context": [
-          "A supplied list contains three bag weights in kilograms.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A supplied list contains three bag weights in kilograms."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5530,8 +5444,7 @@
       "title": "Check whether a count fell",
       "question": {
         "context": [
-          "A school compares its plastic-item counts from two weeks.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A school compares its plastic-item counts from two weeks."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5594,8 +5507,7 @@
       "title": "Total model panel output",
       "question": {
         "context": [
-          "In this exercise each model panel supplies 3 units per day. Find the combined output for the supplied numbers of panels and days.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "In this exercise each model panel supplies 3 units per day. Find the combined output for the supplied numbers of panels and days."
         ],
         "command": "Write a console program to:",
         "requirements": [
@@ -5658,8 +5570,7 @@
       "title": "Count plastic items in a survey",
       "question": {
         "context": [
-          "A supplied list stores one lower-case material word for each item counted.",
-          "Assume all inputs have the stated types and ranges. No validation is needed."
+          "A supplied list stores one lower-case material word for each item counted."
         ],
         "command": "Write a console program to:",
         "requirements": [
