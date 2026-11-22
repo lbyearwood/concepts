@@ -90,8 +90,8 @@ def output():
                 if not isinstance(step, int) or not 0 <= step < len(problem['steps']):
                     raise ValueError(f'Invalid line/stage mapping: {problem_id}')
                 mapped_steps.append(step)
-            for kind in ('question', 'prediction'):
-                question = line.get(kind)
+            checks = [('question', line.get('question')), *[('question', q) for q in line.get('additionalQuestions', [])], ('prediction', line.get('prediction'))]
+            for kind, question in checks:
                 if not question:
                     continue
                 identity = question.get('id', '')

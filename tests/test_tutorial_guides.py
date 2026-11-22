@@ -19,7 +19,7 @@ class TutorialGuideTests(unittest.TestCase):
                 self.assertTrue(line['title'] and line['watchOut'])
                 self.assertGreaterEqual(len(' '.join(line['paragraphs']).split()), 20)
             if guide.get('stageReviews'):
-                self.assertGreaterEqual(sum('question' in line for line in guide['lines']), 3)
+                self.assertGreaterEqual(sum(('question' in line) + len(line.get('additionalQuestions', [])) for line in guide['lines']), 3)
                 self.assertIn(sum('prediction' in line for line in guide['lines']), (1, 2))
                 mapped = [line['step'] for line in guide['lines']]
                 self.assertEqual(mapped, sorted(mapped))

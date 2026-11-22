@@ -30,6 +30,23 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .practice-console-note:not([hidden]) + .problem-list-scroll .problem-empty { padding:16px 0; }
 .category-count { flex:none; padding:1px 7px; border-radius:12px; background:#ececf1; color:#535563; font-size:11px; }
 .tutorial-question-text .exam-given-code { margin:0; padding:3px 10px; border-left:4px solid #3600ff; background:#f4f4ff; color:#1433ff; white-space:pre-wrap; overflow-wrap:anywhere; font:13px/1.6 Consolas,"Courier New",monospace; }
+.exam-db-table { width:100%; table-layout:fixed; border-collapse:collapse; margin:8px 0 14px; font:14px/1.35 Arial,Helvetica,sans-serif; }
+.exam-db-table caption { text-align:left; font-weight:800; padding:0 0 6px; color:#101223; }
+.exam-db-table th, .exam-db-table td { border:2px solid #737687; padding:7px 9px; text-align:left; overflow-wrap:anywhere; }
+.exam-db-table th { background:#3600ff; color:#fff; }
+.exam-db-table tbody tr:nth-child(even) { background:#f4f4ff; }
+.tutorial-complete-status { display:table; margin:8px 0 0; padding:4px 9px; border:2px solid #101223; background:#b8ff4c; color:#101223; font:800 13px/1.3 Arial,Helvetica,sans-serif; }
+.tutorial-next:disabled.is-complete { background:#00856b; color:#fff; border-color:#005744; opacity:1; }
+.tutorial-confetti { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:5; }
+.tutorial-confetti span { position:absolute; top:-16px; width:7px; height:12px; background:var(--confetti-colour); animation:tutorial-confetti-drop 2200ms cubic-bezier(.15,.4,.4,1) both; }
+@keyframes tutorial-confetti-drop { from { transform:translate3d(0,-20px,0) rotate(0); opacity:1; } to { transform:translate3d(var(--confetti-drift),var(--confetti-distance),0) rotate(540deg); opacity:0; } }
+@media(max-width:600px), (max-height:500px) {
+  .exam-db-table { margin:4px 0 8px; font-size:11px; line-height:1.25; }
+  .exam-db-table caption { padding-bottom:4px; font-size:12px; }
+  .exam-db-table th, .exam-db-table td { border-width:1px; padding:3px 4px; }
+  .tutorial-complete-status { margin-top:5px; padding:3px 6px; font-size:11px; }
+}
+@media(prefers-reduced-motion:reduce) { .tutorial-confetti { display:none; } }
 .problem-categories button[aria-selected="true"] .category-count { background:#d90058; color:#fff; }
 .problem-list-heading { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin:0 0 8px; }
 .problem-list-heading h2 { margin:0; font:900 23px/1.2 "Arial Black",Arial,sans-serif; letter-spacing:-.4px; }

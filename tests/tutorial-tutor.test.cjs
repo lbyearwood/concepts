@@ -22,7 +22,7 @@ function harness() {
   function walk(node) { return node.children.flatMap(child => [child, ...walk(child)]); }
   global.document = { createElement: tag => { assert.notEqual(tag, 'audio', 'written tutor must never construct spoken audio'); return new Node(tag); },
     createTextNode: text => { const node = new Node('#text'); node.textContent = text; return node; }, createDocumentFragment: () => new Node('#fragment') };
-  global.window = { CSRTutorialCodeStyle: codeStyle, CSRTutorialFit: { createPager: () => ({ layout() {} }) } };
+  global.window = { CSRCodeWalkthrough: require('../assets/tutorial-typewriter.js'), CSRTutorialCodeStyle: codeStyle, CSRTutorialFit: { createPager: () => ({ layout() {} }) } };
   const panel = new Node('aside'), sounds = [];
   const tutor = createTutor(panel, guides, { onAnswer: correct => sounds.push(correct), problems: catalogue.problems });
   return { panel, tutor, sounds, nodes: () => walk(panel), cleanup() { delete global.document; delete global.window; } };
@@ -43,16 +43,16 @@ test('written explanations and Remember are intact without any playback button o
 for (const problem of catalogue.problems) test(problem.id + ' preserves every checkpoint independently, restores silently and clears the attempt', () => {
   const h = harness(), guide = guides.problems[problem.id];
   try {
-    const checks = guide.lines.flatMap((line, index) => ['question','prediction'].filter(kind => line[kind]).map(kind => ({line:index,kind,q:line[kind]})));
+    const checks = guide.lines.flatMap((line, index) => require('../assets/tutorial-typewriter.js').lineCheckpoints(line).map(check => ({line:index,kind:check.kind,q:check.question})));
     for (const {line,kind,q} of checks) {
-      h.tutor.show(problem.id,line,kind);
+      h.tutor.show(problem.id,line,kind,guide.lines[line].step,q.id);
       assert.equal(h.tutor.isCorrect(problem.id,q.id),false);
       let inputs=h.nodes().filter(n=>n.tagName==='input');
       const right=q.choices.findIndex(c=>c.correct), wrong=q.choices.findIndex(c=>!c.correct);
       inputs[wrong].events.change(); assert.equal(h.tutor.isCorrect(problem.id,q.id),false);
       inputs[right].events.change(); assert.equal(h.tutor.isCorrect(problem.id,q.id),true);
       const played=h.sounds.length;
-      h.tutor.show(problem.id,line,kind);
+      h.tutor.show(problem.id,line,kind,guide.lines[line].step,q.id);
       assert.equal(h.sounds.length,played);
       inputs=h.nodes().filter(n=>n.tagName==='input'); assert.equal(inputs[right].checked,true);
       inputs[wrong].events.change(); assert.equal(h.tutor.isCorrect(problem.id,q.id),false);

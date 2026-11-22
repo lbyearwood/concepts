@@ -2,13 +2,19 @@
 
 ## Current 62-question catalogue — 22 November 2026
 
+The SQL presentation refinement uses semantic bordered HTML tables with captions, column headers and every original database value. SELECT field lists and combined WHERE conditions stay on one physical clause line. Problems 58, 61 and 62 now have 2, 3 and 3 lines respectively. Their original understanding/prediction identities and feedback remain intact: multiple questions on one clause keep separate answers, gates and saved positions. All 299 checkpoints are preserved.
+
+Every tutorial now marks its fully passed final view with a green Tutorial complete badge and Completed footer. A brief local confetti drop celebrates once per problem per open attempt. The final code/tutor/question or stage-review content remains in place; no completion screen or extra frame replaces it. Back remains available, Close clears the attempt, interruption removes the confetti, and reduced motion retains only the completion status.
+
+This refinement was checked in Edge for all five SQL tables at desktop 1054×619, phone 320×740 and landscape 844×390, including every table cell and fitted exam page. Full SQL flows preserve the solutions and independent checkpoints; the extra SELECT question survives header leave/return, collapse and resizing without inheriting a pass. Completion was checked on the pilot final question and a Python stage review, with retained content, wrong-answer relocking, no replay on Back/return, Close reset and compact/short final views. The exact live release and saved screenshots are recorded in project QA. Earlier per-question flow coverage below remains the baseline for unaffected teaching content.
+
 The user requested five questions in each of the eight previously empty Exam categories, with varied GCSE techniques and explicit random list selection. The catalogue now contains 62 Exam questions. Original problem-1 through problem-22, their marks and all guide content are unchanged. Easy/Medium/Hard, their interest categories and school resources are outside this content addition.
 
 Scope checked against [OCR J277 specification v3.1, May 2026](https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf), sections 2.1.2, 2.1.3, 2.2.1–2.2.3 and 2.3.1–2.3.2. Search/sort tasks apply, trace or complete supplied algorithms; memorised implementations are not required. SQL is limited to SELECT, FROM, WHERE, comparisons and AND/OR. It is taught as SQL in a text console, without Python database boilerplate, joins or aggregation. Every other new solution uses console Python and GCSE constructs.
 
-All guides now cover 436 exact physical code lines across 218 stages, with 209 understanding checks and 90 independent prediction checks. The forty additions account for 269 lines, 107 stages, 121 understanding checks and 48 predictions. Each line has its own explanation and Remember guidance. Correct answers are required at every checkpoint, including before future code/explanations are revealed.
+All guides now cover 433 exact physical code lines across 218 stages, with 209 understanding checks and 90 independent prediction checks. The forty additions account for 266 lines, 107 stages, 121 understanding checks and 48 predictions. Each line has its own explanation and Remember guidance. Correct answers are required at every checkpoint, including before future code/explanations are revealed.
 
-Independent deterministic console/SQLite fixtures cover 116 new cases, including numeric/string boundaries, empty data, failed and successful authentication, random endpoints/retries/draw counts, search absence, sorting duplicates/tails, test categories and SQL result rows. The complete source suite passes 252 Node and 80 Python tests. Per-question expected outputs are in tests/fixtures/exam-expansion-cases.json.
+Independent deterministic console/SQLite fixtures cover 116 new cases, including numeric/string boundaries, empty data, failed and successful authentication, random endpoints/retries/draw counts, search absence, sorting duplicates/tails, test categories and SQL result rows. The complete source suite passes 256 Node and 80 Python tests. Per-question expected outputs are in tests/fixtures/exam-expansion-cases.json.
 
 | ID | Tutorial | Main techniques | Stages | Lines | Understanding | Predict after line | Cases | Local Edge full flow |
 | --- | --- | --- | ---: | ---: | ---: | --- | ---: | --- |
@@ -47,11 +53,11 @@ Independent deterministic console/SQLite fixtures cover 116 new cases, including
 | problem-55 | Fix an off-by-one total | logic error, off-by-one, index coverage, focused regression test | 3 | 5 | 3 | 2 | 3 | Pass |
 | problem-56 | Choose normal, boundary and invalid tests | test planning, normal data, valid boundaries, invalid values, erroneous type, early return | 3 | 8 | 3 | 2, 5 | 1 | Pass |
 | problem-57 | Repair a loop that never finishes | non-termination, discarded expression, assignment repair, zero/one-iteration testing | 3 | 6 | 3 | 4 | 3 | Pass |
-| problem-58 | Select named database fields | SQL SELECT, projection, FROM, all rows | 2 | 3 | 3 | 2 | 2 | Pass |
+| problem-58 | Select named database fields | SQL SELECT, projection, FROM, all rows | 2 | 2 | 3 | 1 | 2 | Pass |
 | problem-59 | Find all available book records | SQL wildcard, numeric equality, row filtering | 2 | 3 | 3 | 2 | 2 | Pass |
 | problem-60 | Filter prices at an inclusive limit | SQL numeric comparison, inclusive upper bound, selected fields | 2 | 3 | 3 | 2 | 2 | Pass |
-| problem-61 | Require two database conditions | SQL text equality, AND, positive numeric condition, projection independent of filtering | 2 | 4 | 3 | 2 | 2 | Pass |
-| problem-62 | Accept either database category | SQL OR, complete alternative comparisons, single-valued field reasoning | 2 | 4 | 3 | 2 | 2 | Pass |
+| problem-61 | Require two database conditions | SQL text equality, AND, positive numeric condition, projection independent of filtering | 2 | 3 | 3 | 2 | 2 | Pass |
+| problem-62 | Accept either database category | SQL OR, complete alternative comparisons, single-valued field reasoning | 2 | 3 | 3 | 2 | 2 | Pass |
 
 ### New exact code and stage mappings
 
@@ -90,11 +96,11 @@ Independent deterministic console/SQLite fixtures cover 116 new cases, including
 - **problem-55** (python). Mapping `1,1,2,2,3`. SHA-256 `6544e0023b35474714c3d05e223e4a3d388f6e18476b9602be9f120b9f763b14`.
 - **problem-56** (python). Mapping `1,1,1,2,2,3,3,3`. SHA-256 `8db02ebdd82dba667953518a2365078e0665a6eff3182a3ea71098974a09e9c1`.
 - **problem-57** (python). Mapping `1,1,2,2,2,3`. SHA-256 `c7a9e49835e7b529e1cdc565e8321862c8895b518a68551a5b93b62fd32ca573`.
-- **problem-58** (sql). Mapping `1,1,2`. SHA-256 `30b7c351f8f53ff8bf883ea7bb061bf57c059d8d65168982ff2e1dbb73aa305e`.
+- **problem-58** (sql). Mapping `1,2`. SHA-256 `6f1e022e83a72f59bf643378a634504eb375bc56cfde1e0755b9b93e110887eb`.
 - **problem-59** (sql). Mapping `1,2,2`. SHA-256 `af6a3681a29101ab810a1b7522a4c074e186bc056418e82b8456cd17dabafdac`.
 - **problem-60** (sql). Mapping `1,1,2`. SHA-256 `f0b6781caecafdc1922355abbc25d70ddbc1dca30ec96a3c7035ec3fd848e979`.
-- **problem-61** (sql). Mapping `1,1,2,2`. SHA-256 `b23b95a81a947de5e7368e626da1876e889879b06bbfee90ed3b85b98bb4d22e`.
-- **problem-62** (sql). Mapping `1,1,2,2`. SHA-256 `76722fe48e768b0338c946a71c5783d0aadbe0fc7c0afb4592a79407c2559225`.
+- **problem-61** (sql). Mapping `1,1,2`. SHA-256 `4a60fdd619e4fc34718c1fd066df2aa97b638fc2179892b5ab1b034d9821d339`.
+- **problem-62** (sql). Mapping `1,1,2`. SHA-256 `17a85433c916808712bcd5dcb285ed53c82206c5510006f582de5abc88cbf833`.
 
 ## Original 22-question baseline
 

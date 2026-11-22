@@ -45,7 +45,7 @@ for (const problem of catalogue.problems) test(problem.id + ' restores the same 
     const original = walkthroughFrames(problem, guides[problem.id], compact);
     const other = walkthroughFrames(problem, guides[problem.id], !compact);
     original.forEach((frame, index) => {
-      const position = {line: frame.line, kind: frame.kind, step: frameStep(frame, lines)};
+      const position = {line: frame.line, kind: frame.kind, step: frameStep(frame, lines), checkpoint: frame.checkpoint};
       assert.equal(findPositionFrame(original, lines, position, frameStep), index);
       const mapped = other[findPositionFrame(other, lines, position, frameStep)];
       assert.equal(mapped.line, frame.line);

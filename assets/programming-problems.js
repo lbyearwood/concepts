@@ -28,6 +28,10 @@
     };
   }
   function findPositionFrame(frames, lines, position, stepForFrame) {
+    if (position.checkpoint) {
+      const checkpoint = frames.findIndex(frame => frame.checkpoint === position.checkpoint);
+      if (checkpoint >= 0) return checkpoint;
+    }
     const find = kind => frames.findIndex(frame => frame.line === position.line && frame.kind === kind && stepForFrame(frame, lines) === position.step);
     const exact = find(position.kind);
     return exact >= 0 ? exact : Math.max(0, find('explanation'));
@@ -89,9 +93,13 @@
   const { renderPython, renderCode } = window.CSRTutorialCodeStyle;
   let codePager = null, examPager = null;
   new ResizeObserver(fitWorkspace).observe(body);
-  const { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep } = window.CSRCodeWalkthrough;
+  const { lineCheckpoints, tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep } = window.CSRCodeWalkthrough;
   const typewriter = createTypewriter();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const {renderDatabaseTable, createCompletion} = window.CSRTutorialPresentation;
+  const completion = createCompletion({badge: dialog.querySelector('.tutorial-complete-status'),
+    overlay: dialog.querySelector('.tutorial-confetti'), next: dialog.querySelector('.tutorial-next'),
+    label: dialog.querySelector('[data-next-label]'), reducedMotion: () => reducedMotion.matches});
   const compactView = window.matchMedia('(max-width:600px), (max-height:500px)');
   const framesFor = problem => walkthroughFrames(problem, guides.problems[problem.id], compactView.matches);
   const isTypedTutorial = problem => !!guides.problems[problem.id];
@@ -113,6 +121,15 @@
       button.disabled = target > limit;
       button.title = button.disabled ? 'Answer the earlier question correctly first.' : '';
     });
+    refreshCompletion();
+  }
+  function refreshCompletion() {
+    const problem = data.problems.find(item => item.id === state.problem);
+    if (!problem || !guides.problems[problem.id]) return;
+    const checks = guides.problems[problem.id].lines.flatMap(line => lineCheckpoints(line).map(item => item.question));
+    completion.update({problemId: problem.id, atEnd: state.frame === framesFor(problem).length - 1,
+      allCorrect: checks.every(question => tutor.isCorrect(problem.id, question.id)),
+      visible: help.open && dialog.open && !document.hidden, count: checks.length});
   }
   let launcher = null;
   const element = (tag, className, text) => {
@@ -126,7 +143,7 @@
     node.setAttribute('aria-hidden', 'true');
     return node;
   };
-  const viewKey = () => state.problem + ':' + state.line + ':' + state.step + ':' + dialog.dataset.tutorialView;
+  const viewKey = () => state.problem + ':' + state.line + ':' + state.step + ':' + dialog.dataset.tutorialView + ':' + dialog.dataset.checkpoint;
   function rememberViewPages() {
     if (!renderedView) return;
     const previous = viewPages.get(renderedView) || {};
@@ -142,7 +159,7 @@
     if (!state.problem) return;
     rememberViewPages();
     session.save(state.problem, { line: state.line, step: state.step, kind: dialog.dataset.tutorialView,
-      questionOpen: question.open, helpOpen: help.open, started: state.started, examPage: examPager?.getPosition() });
+      checkpoint: dialog.dataset.checkpoint || null, questionOpen: question.open, helpOpen: help.open, started: state.started, examPage: examPager?.getPosition() });
   }
   function setDisclosure(details, open) {
     if (details.open === open) return;
@@ -279,6 +296,7 @@
     rememberViewPages();
     typewriter.cancel();
     typingSound.stop();
+    completion.stop();
     codePager = null;
     const problem = data.problems.find(item => item.id === state.problem);
     if (!problem) return;
@@ -293,6 +311,7 @@
       state.step = frameStep(frames[state.frame], lines);
     }
     dialog.dataset.tutorialView = kind;
+    dialog.dataset.checkpoint = typed ? frames[state.frame].checkpoint || '' : '';
     renderedView = viewKey();
     state.step = Math.max(0, Math.min(state.step, problem.steps.length - 1));
     const step = problem.steps[state.step];
@@ -329,7 +348,7 @@
       }
     });
     }
-    if (typed && help.open && kind !== 'code') tutor.show(problem.id, state.line, kind, state.step);
+    if (typed && help.open && kind !== 'code') tutor.show(problem.id, state.line, kind, state.step, frames[state.frame].checkpoint);
     else tutor.hide();
     const last = typed ? state.frame === frames.length - 1 : state.step === problem.steps.length - 1;
     const progress = 'Step ' + (state.step + 1) + ' of ' + problem.steps.length;
@@ -351,7 +370,7 @@
     const problem = data.problems.find(item => item.id === id);
     if (!problem) return;
     rememberProblem();
-    typewriter.cancel(); typingSound.stop(); tutor.hide();
+    typewriter.cancel(); typingSound.stop(); completion.stop(); tutor.hide();
     codePager = null; renderedView = null;
     const saved = session.get(id);
     launcher = button || list.querySelector('[data-problem="' + id + '"]') || launcher;
@@ -370,7 +389,8 @@
     questionContent.replaceChildren();
     const questionText = isTypedTutorial(problem) ? element('div', 'tutorial-question-text') : questionContent;
     problem.question.context.forEach(text => questionText.append(element('p', '', text)));
-    if (problem.question.givenCode) {
+    if (problem.database && problem.language === 'sql') questionText.append(renderDatabaseTable(problem.database));
+    else if (problem.question.givenCode) {
       problem.question.givenCode.split('\n').forEach(text => {
         const line = element('p', 'exam-given-code', text || ' ');
         line.dataset.fitText = 'true'; questionText.append(line);
@@ -384,10 +404,11 @@
     examPager = null;
     if (isTypedTutorial(problem)) {
       questionContent.append(questionText);
-      examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > ol > li')], 'exam question');
+      examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > table, :scope > ol > li')], 'exam question');
     }
     renderStep(false);
     if (!dialog.open) dialog.showModal();
+    refreshCompletion();
     if (isTypedTutorial(problem)) void typingSound.unlock();
     fitWorkspace();
     examPager?.restorePosition(saved?.examPage);
@@ -398,20 +419,21 @@
     if (!!guides.problems[state.problem] && help.open) question.open = false;
     footer.hidden = !help.open;
     if (state.problem && help.open) { const animate = !state.started; state.started = true; renderStep(animate); }
-    else { rememberViewPages(); typewriter.cancel(); typingSound.stop(); tutor.hide(); fitWorkspace(); }
+    else { rememberViewPages(); typewriter.cancel(); typingSound.stop(); completion.stop(); tutor.hide(); refreshCompletion(); fitWorkspace(); }
   });
   help.querySelector('summary').addEventListener('click', () => { if (!!guides.problems[state.problem] && !help.open) void typingSound.unlock(); });
   soundToggle.addEventListener('click', () => typingSound.setEnabled(!typingSound.enabled));
-  document.addEventListener('visibilitychange', () => { if (document.hidden) typingSound.stop(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { typingSound.stop(); completion.stop(); } });
   window.addEventListener('pagehide', typingSound.dispose);
+  window.addEventListener('pagehide', completion.stop);
   question.addEventListener('toggle', () => { if (isSyncedToggle(question)) return; if (!!guides.problems[state.problem] && question.open && help.open) help.open = false; fitWorkspace(); });
-  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) typewriter.finish(); });
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) { typewriter.finish(); completion.stop(); } });
   compactView.addEventListener('change', () => {
     if (!guides.problems[state.problem]) return;
     const problem = data.problems.find(item => item.id === state.problem), frames = framesFor(problem);
     const kind = dialog.dataset.tutorialView;
     const lines = tutorialCodeLines(problem, guides.problems[problem.id]);
-    state.frame = Math.min(findPositionFrame(frames, lines, {line: state.line, step: state.step, kind}, frameStep), limitFor(problem, frames));
+    state.frame = Math.min(findPositionFrame(frames, lines, {line: state.line, step: state.step, kind, checkpoint: dialog.dataset.checkpoint}, frameStep), limitFor(problem, frames));
     renderStep(false);
   });
   list.addEventListener('click', event => {
@@ -500,6 +522,7 @@
   dialog.addEventListener('close', () => {
     typewriter.cancel();
     typingSound.stop();
+    completion.reset();
     tutor.reset();
     session.clear(); viewPages.clear(); disclosureSync.clear(); renderedView = null;
     codePager = null; examPager = null;

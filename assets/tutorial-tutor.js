@@ -5,9 +5,10 @@
     return { correct: choice.correct, text: choice.feedback };
   }
   function createTutor(panel, guides, { onAnswer = () => {}, problems = [] } = {}) {
+    const {lineCheckpoints} = window.CSRCodeWalkthrough;
     const answers = new Map();
     const checkpoints = new Map(Object.entries(guides.problems).map(([id, guide]) => [id,
-      new Map(guide.lines.flatMap(line => [line.question, line.prediction].filter(Boolean).map(question => [question.id, question])))
+      new Map(guide.lines.flatMap(line => lineCheckpoints(line).map(({question}) => [question.id, question])))
     ]));
     let pager = null;
     const node = (tag, className, text) => {
@@ -22,7 +23,7 @@
       const selected = answers.get(problemId + ':' + checkpointId);
       return !!question && selected !== undefined && question.choices[selected]?.correct === true;
     }
-    function show(problemId, lineIndex, kind = 'explanation', stageIndex) {
+    function show(problemId, lineIndex, kind = 'explanation', stageIndex, checkpointId) {
       pager = null;
       const guide = guides.problems[problemId], line = guide?.lines[lineIndex];
       const problem = problems.find(item => item.id === problemId), language = problem?.language || 'python';
@@ -31,7 +32,7 @@
       const identifiers = guide.stageReviews ? [...new Set(tokenizeCode(guide.lines.map(item => item.code).join('\n'), language).filter(token => token.type === 'identifier').map(token => token.text))] : [];
       const decorate = (node, text) => renderTutorText(node, text, identifiers, language);
       panel.replaceChildren();
-      const question = kind === 'question' || kind === 'prediction' ? line[kind] : null;
+      const question = kind === 'question' || kind === 'prediction' ? lineCheckpoints(line).find(item => checkpointId ? item.question.id === checkpointId : item.kind === kind)?.question : null;
       const stage = kind === 'review' ? problem?.steps[stageIndex] : null;
       panel.classList.toggle('is-question', !!question);
       const heading = node('header', 'tutor-heading');

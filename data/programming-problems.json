@@ -5766,7 +5766,6 @@
             "Read all matching records from the Students table, without adding a filter."
           ]
         },
-        "givenCode": "Students\nStudentID | Name | YearGroup\n1 | Ada | 10\n2 | Ben | 11\n3 | Cleo | 10",
         "command": "Write an SQL query that:"
       },
       "steps": [
@@ -5779,7 +5778,7 @@
             },
             {
               "type": "code",
-              "text": "SELECT Name,\n       YearGroup"
+              "text": "SELECT Name, YearGroup"
             },
             {
               "type": "question",
@@ -5805,7 +5804,7 @@
           ]
         }
       ],
-      "solution": "SELECT Name,\n       YearGroup\nFROM Students;",
+      "solution": "SELECT Name, YearGroup\nFROM Students;",
       "language": "sql",
       "database": {
         "table": "Students",
@@ -5864,7 +5863,6 @@
             "Use WHERE to include only records whose Available field equals 1."
           ]
         },
-        "givenCode": "Books\nBookID | Title | Available\n1 | Robots | 1\n2 | Stars | 0\n3 | Rivers | 1",
         "command": "Write an SQL query that:"
       },
       "steps": [
@@ -5964,7 +5962,6 @@
             "Use the upper limit 10 so the exact boundary is included and higher prices are excluded."
           ]
         },
-        "givenCode": "Products\nName | Price\nPen set | 6.5\nNotebook | 10\nFolder | 10.01",
         "command": "Write an SQL query that:"
       },
       "steps": [
@@ -6059,7 +6056,6 @@
             "Combine the two row conditions with AND."
           ]
         },
-        "givenCode": "Clubs\nName | Day | Places\nCode | Tuesday | 2\nArt | Tuesday | 0\nChess | Wednesday | 5\nMusic | Tuesday | 1",
         "command": "Write an SQL query that:"
       },
       "steps": [
@@ -6089,7 +6085,7 @@
             },
             {
               "type": "code",
-              "text": "WHERE Day = 'Tuesday'\nAND Places > 0;"
+              "text": "WHERE Day = 'Tuesday' AND Places > 0;"
             },
             {
               "type": "question",
@@ -6098,7 +6094,7 @@
           ]
         }
       ],
-      "solution": "SELECT Name\nFROM Clubs\nWHERE Day = 'Tuesday'\nAND Places > 0;",
+      "solution": "SELECT Name\nFROM Clubs\nWHERE Day = 'Tuesday' AND Places > 0;",
       "language": "sql",
       "database": {
         "table": "Clubs",
@@ -6166,7 +6162,6 @@
             "Combine the complete comparisons with OR so either genre qualifies."
           ]
         },
-        "givenCode": "Games\nTitle | Genre\nLogic | Puzzle\nCastle | Strategy\nRacer | Racing\nBlocks | Puzzle",
         "command": "Write an SQL query that:"
       },
       "steps": [
@@ -6196,7 +6191,7 @@
             },
             {
               "type": "code",
-              "text": "WHERE Genre = 'Puzzle'\nOR Genre = 'Strategy';"
+              "text": "WHERE Genre = 'Puzzle' OR Genre = 'Strategy';"
             },
             {
               "type": "question",
@@ -6205,7 +6200,7 @@
           ]
         }
       ],
-      "solution": "SELECT Title\nFROM Games\nWHERE Genre = 'Puzzle'\nOR Genre = 'Strategy';",
+      "solution": "SELECT Title\nFROM Games\nWHERE Genre = 'Puzzle' OR Genre = 'Strategy';",
       "language": "sql",
       "database": {
         "table": "Games",

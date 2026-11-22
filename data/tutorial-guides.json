@@ -10106,12 +10106,13 @@
       "lines": [
         {
           "step": 0,
-          "code": "SELECT Name,",
-          "title": "Choose the first output field",
+          "code": "SELECT Name, YearGroup",
+          "title": "Choose the two output fields",
           "paragraphs": [
-            "SELECT introduces the fields the query will return. Name is the first requested field, and the comma signals that another field follows before the source table is specified."
+            "SELECT introduces the fields the query will return. Name is the first requested field, and the comma signals that another field follows before the source table is specified.",
+            "YearGroup completes the requested field list after the comma. StudentID is deliberately absent, so each result record contains only the name and year group in that order."
           ],
-          "watchOut": "Selecting fields chooses columns; it does not itself filter out rows.",
+          "watchOut": "SELECT lists columns on the same clause line. Choosing fewer columns does not filter records.",
           "question": {
             "prompt": "What does SELECT choose here?",
             "choices": [
@@ -10132,37 +10133,30 @@
               }
             ],
             "id": "p58-question-1"
-          }
-        },
-        {
-          "step": 0,
-          "code": "       YearGroup",
-          "title": "Choose the second output field",
-          "paragraphs": [
-            "YearGroup completes the requested field list after the comma. StudentID is deliberately absent, so each result record contains only the name and year group in that order."
-          ],
-          "watchOut": "Do not use * when the question requires only these two fields.",
-          "question": {
-            "prompt": "Will StudentID appear in the result?",
-            "choices": [
-              {
-                "text": "No, it is not selected.",
-                "feedback": "Correct. Only Name and YearGroup are listed.",
-                "correct": true
-              },
-              {
-                "text": "Yes, every query must return every field.",
-                "feedback": "A SELECT list can choose specific fields.",
-                "correct": false
-              },
-              {
-                "text": "Only for YearGroup 10.",
-                "feedback": "There is no row filter in this query.",
-                "correct": false
-              }
-            ],
-            "id": "p58-question-2"
           },
+          "additionalQuestions": [
+            {
+              "prompt": "Will StudentID appear in the result?",
+              "choices": [
+                {
+                  "text": "No, it is not selected.",
+                  "feedback": "Correct. Only Name and YearGroup are listed.",
+                  "correct": true
+                },
+                {
+                  "text": "Yes, every query must return every field.",
+                  "feedback": "A SELECT list can choose specific fields.",
+                  "correct": false
+                },
+                {
+                  "text": "Only for YearGroup 10.",
+                  "feedback": "There is no row filter in this query.",
+                  "correct": false
+                }
+              ],
+              "id": "p58-question-2"
+            }
+          ],
           "prediction": {
             "prompt": "The required fields have been listed. What information must the query give next?",
             "choices": [
@@ -10514,12 +10508,13 @@
         },
         {
           "step": 1,
-          "code": "WHERE Day = 'Tuesday'",
-          "title": "Require the specified day",
+          "code": "WHERE Day = 'Tuesday' AND Places > 0;",
+          "title": "Require both conditions in the WHERE clause",
           "paragraphs": [
-            "The quoted value Tuesday is text to compare with the Day field. This first condition alone would include every Tuesday club, including any with no remaining places."
+            "The quoted value Tuesday is text to compare with the Day field. This first condition alone would include every Tuesday club, including any with no remaining places.",
+            "AND keeps a club only when its day condition and positive-places condition both pass. Tuesday clubs with zero places and other-day clubs with spare places are therefore excluded."
           ],
-          "watchOut": "Text comparison values are quoted; Day is the unquoted field name.",
+          "watchOut": "AND joins conditions within WHERE: the same club must satisfy both. Text values such as Tuesday are quoted.",
           "question": {
             "prompt": "Why is Tuesday in quotes?",
             "choices": [
@@ -10540,37 +10535,30 @@
               }
             ],
             "id": "p61-question-3"
-          }
-        },
-        {
-          "step": 1,
-          "code": "AND Places > 0;",
-          "title": "Require an available place as well",
-          "paragraphs": [
-            "AND keeps a club only when its day condition and positive-places condition both pass. Tuesday clubs with zero places and other-day clubs with spare places are therefore excluded."
-          ],
-          "watchOut": "OR would accept records satisfying just one requirement and would be too broad.",
-          "question": {
-            "prompt": "Should Chess on Wednesday with five places appear?",
-            "choices": [
-              {
-                "text": "Only if Places is selected.",
-                "feedback": "Changing output fields would not fix the failed day condition.",
-                "correct": false
-              },
-              {
-                "text": "No, its day condition fails.",
-                "feedback": "Correct. AND requires Tuesday as well as spare places.",
-                "correct": true
-              },
-              {
-                "text": "Yes, spare places alone are enough.",
-                "feedback": "That would ignore the requested day.",
-                "correct": false
-              }
-            ],
-            "id": "p61-question-4"
-          }
+          },
+          "additionalQuestions": [
+            {
+              "prompt": "Should Chess on Wednesday with five places appear?",
+              "choices": [
+                {
+                  "text": "Only if Places is selected.",
+                  "feedback": "Changing output fields would not fix the failed day condition.",
+                  "correct": false
+                },
+                {
+                  "text": "No, its day condition fails.",
+                  "feedback": "Correct. AND requires Tuesday as well as spare places.",
+                  "correct": true
+                },
+                {
+                  "text": "Yes, spare places alone are enough.",
+                  "feedback": "That would ignore the requested day.",
+                  "correct": false
+                }
+              ],
+              "id": "p61-question-4"
+            }
+          ]
         }
       ]
     },
@@ -10639,12 +10627,13 @@
         },
         {
           "step": 1,
-          "code": "WHERE Genre = 'Puzzle'",
-          "title": "Write the first complete comparison",
+          "code": "WHERE Genre = 'Puzzle' OR Genre = 'Strategy';",
+          "title": "Allow either genre in the WHERE clause",
           "paragraphs": [
-            "The first condition accepts the text value Puzzle in the Genre field. Strategy games need a second complete comparison because a different genre value is stored in their records."
+            "The first condition accepts the text value Puzzle in the Genre field. Strategy games need a second complete comparison because a different genre value is stored in their records.",
+            "OR accepts a record when either complete comparison is true. Since a game has one genre, requiring both Puzzle and Strategy with AND would incorrectly exclude every supplied record."
           ],
-          "watchOut": "Writing just a second quoted word would not express the required field comparison.",
+          "watchOut": "OR joins two complete comparisons inside WHERE. One single-genre record cannot equal both different genres at once.",
           "question": {
             "prompt": "What does the first WHERE comparison test?",
             "choices": [
@@ -10665,37 +10654,30 @@
               }
             ],
             "id": "p62-question-3"
-          }
-        },
-        {
-          "step": 1,
-          "code": "OR Genre = 'Strategy';",
-          "title": "Allow the other specified genre",
-          "paragraphs": [
-            "OR accepts a record when either complete comparison is true. Since a game has one genre, requiring both Puzzle and Strategy with AND would incorrectly exclude every supplied record."
-          ],
-          "watchOut": "Both sides of OR state a comparison using Genre; the result still excludes unrelated genres.",
-          "question": {
-            "prompt": "Why use OR rather than AND?",
-            "choices": [
-              {
-                "text": "Either one of the two genres is acceptable.",
-                "feedback": "Correct. A game cannot have both different single genre values at once.",
-                "correct": true
-              },
-              {
-                "text": "Every game of every genre should be included.",
-                "feedback": "Other genres fail both comparisons and are excluded.",
-                "correct": false
-              },
-              {
-                "text": "OR requires both comparisons to be true.",
-                "feedback": "That is the meaning of AND, not OR.",
-                "correct": false
-              }
-            ],
-            "id": "p62-question-4"
-          }
+          },
+          "additionalQuestions": [
+            {
+              "prompt": "Why use OR rather than AND?",
+              "choices": [
+                {
+                  "text": "Either one of the two genres is acceptable.",
+                  "feedback": "Correct. A game cannot have both different single genre values at once.",
+                  "correct": true
+                },
+                {
+                  "text": "Every game of every genre should be included.",
+                  "feedback": "Other genres fail both comparisons and are excluded.",
+                  "correct": false
+                },
+                {
+                  "text": "OR requires both comparisons to be true.",
+                  "feedback": "That is the meaning of AND, not OR.",
+                  "correct": false
+                }
+              ],
+              "id": "p62-question-4"
+            }
+          ]
         }
       ]
     }

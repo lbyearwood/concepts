@@ -1,6 +1,13 @@
 /* Line playback is separate from the page so cancellation can be tested without a browser. */
 (() => {
   'use strict';
+  function lineCheckpoints(line) {
+    return [
+      ...(line.question ? [{kind: 'question', question: line.question}] : []),
+      ...(line.additionalQuestions || []).map(question => ({kind: 'question', question})),
+      ...(line.prediction ? [{kind: 'prediction', question: line.prediction}] : [])
+    ];
+  }
   function tutorialCodeLines(problem, guide) {
     if (guide?.stageReviews) return guide.lines.map(line => ({ step: line.step, text: line.code }));
     return problem.steps.flatMap((step, stepIndex) => step.blocks
@@ -12,8 +19,7 @@
     const forLine = line => [
       ...(compact ? [{ line, kind: 'code' }] : []),
       { line, kind: 'explanation' },
-      ...['question', 'prediction'].filter(kind => guide.lines[line][kind])
-        .map(kind => ({ line, kind, checkpoint: guide.lines[line][kind].id }))
+      ...lineCheckpoints(guide.lines[line]).map(({kind, question}) => ({line, kind, checkpoint: question.id}))
     ];
     if (!guide.stageReviews) return lines.flatMap((_, line) => forLine(line));
     let lastLine = 0;
@@ -64,7 +70,7 @@
     }
     return { play, cancel, finish, get playing() { return active !== null; } };
   }
-  const api = { tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep };
+  const api = { lineCheckpoints, tutorialCodeLines, createTypewriter, walkthroughFrames, checkpointLimit, frameStep };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.CSRCodeWalkthrough = api;
 })();
