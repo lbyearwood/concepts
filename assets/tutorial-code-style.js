@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const keywords = new Set(['if', 'elif', 'else', 'for', 'in', 'break', 'while', 'return', 'def', 'and', 'or', 'not', 'pass', 'import', 'from']);
-  const sqlKeywords = new Set(['SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'NOT']);
+  const sqlKeywords = new Set(['SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'NOT', 'ORDER', 'BY', 'ASC', 'DESC', 'LIKE']);
   const builtins = new Set(['input', 'print', 'range', 'len', 'int', 'str', 'bool', 'float', 'open']);
   const methods = new Set(['append', 'lower', 'upper', 'isdigit', 'randint', 'strip', 'replace', 'readline', 'rstrip', 'split', 'write', 'close']);
   function tokenizeCode(source, language = 'python') {
@@ -52,7 +52,7 @@
   function tutorSegments(text, identifiers = [], language = 'python') {
     const segments = []; let end = 0;
     const terms = identifiers.filter(name => /^[A-Za-z_]\w*$/.test(name));
-    const sql = language === 'sql' ? '|\\b(?:SELECT|FROM|WHERE|AND|OR|NOT)\\b' : '';
+    const sql = language === 'sql' ? '|\\b(?:SELECT|FROM|WHERE|AND|OR|NOT|ORDER|BY|ASC|DESC|LIKE)\\b' : '';
     const pattern = new RegExp(reference.source + sql + (terms.length ? '|\\b(?:' + terms.join('|') + ')\\b' : ''), 'g');
     for (const match of text.matchAll(pattern)) {
       // The verb in "has been found" is prose, not the Boolean identifier.

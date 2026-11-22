@@ -10107,28 +10107,28 @@
         {
           "step": 0,
           "code": "SELECT Name, YearGroup",
-          "title": "Choose the two output fields",
+          "title": "Display Name and YearGroup",
           "paragraphs": [
-            "SELECT introduces the fields the query will return. Name is the first requested field, and the comma signals that another field follows before the source table is specified.",
-            "YearGroup completes the requested field list after the comma. StudentID is deliberately absent, so each result record contains only the name and year group in that order."
+            "A field is a column in a database table. SELECT Name, YearGroup asks for these two columns, in this order. The comma separates their names.",
+            "StudentID is not listed, so the ID will not appear in the result. We still want every student: choosing columns does not remove rows."
           ],
-          "watchOut": "SELECT lists columns on the same clause line. Choosing fewer columns does not filter records.",
+          "watchOut": "A record is one row. SELECT chooses columns; WHERE can choose which rows to keep.",
           "question": {
-            "prompt": "What does SELECT choose here?",
+            "prompt": "What will SELECT Name, YearGroup display?",
             "choices": [
               {
-                "text": "The table by itself.",
-                "feedback": "FROM supplies the table name.",
+                "text": "The table name Students.",
+                "feedback": "FROM names the table. SELECT lists the columns to display.",
                 "correct": false
               },
               {
-                "text": "The output fields.",
-                "feedback": "Correct. It specifies the columns to return.",
+                "text": "The Name and YearGroup columns.",
+                "feedback": "Correct. These are the two column names after SELECT.",
                 "correct": true
               },
               {
-                "text": "The password for the database.",
-                "feedback": "No authentication instruction appears in this query.",
+                "text": "A password for the database.",
+                "feedback": "This query asks for student details; it does not ask for a password.",
                 "correct": false
               }
             ],
@@ -10136,21 +10136,21 @@
           },
           "additionalQuestions": [
             {
-              "prompt": "Will StudentID appear in the result?",
+              "prompt": "Will StudentID be displayed?",
               "choices": [
                 {
-                  "text": "No, it is not selected.",
-                  "feedback": "Correct. Only Name and YearGroup are listed.",
+                  "text": "No. Only Name and YearGroup are listed.",
+                  "feedback": "Correct. StudentID is not in the list after SELECT.",
                   "correct": true
                 },
                 {
-                  "text": "Yes, every query must return every field.",
-                  "feedback": "A SELECT list can choose specific fields.",
+                  "text": "Yes. SQL must always display every column.",
+                  "feedback": "SELECT can display just the columns named in the query.",
                   "correct": false
                 },
                 {
-                  "text": "Only for YearGroup 10.",
-                  "feedback": "There is no row filter in this query.",
+                  "text": "Only for students in YearGroup 10.",
+                  "feedback": "There is no rule about YearGroup 10 in this query.",
                   "correct": false
                 }
               ],
@@ -10158,21 +10158,21 @@
             }
           ],
           "prediction": {
-            "prompt": "The required fields have been listed. What information must the query give next?",
+            "prompt": "We have chosen the columns. What must SQL be told next?",
             "choices": [
               {
-                "text": "A loop for every student.",
-                "feedback": "SQL retrieves the records without a Python loop.",
+                "text": "How to write a Python loop.",
+                "feedback": "SQL can read the table without us writing a Python loop.",
                 "correct": false
               },
               {
-                "text": "An instruction to delete the other fields.",
-                "feedback": "A query can omit fields from results without deleting them.",
+                "text": "Which columns to delete.",
+                "feedback": "Leaving StudentID out of the result does not delete it from the table.",
                 "correct": false
               },
               {
-                "text": "The source table using FROM.",
-                "feedback": "Correct. The fields must be read from Students.",
+                "text": "Which table to read, using FROM.",
+                "feedback": "Correct. Name and YearGroup must be read from the Students table.",
                 "correct": true
               }
             ],
@@ -10182,27 +10182,27 @@
         {
           "step": 1,
           "code": "FROM Students;",
-          "title": "Identify the table to read",
+          "title": "Read the Students table",
           "paragraphs": [
-            "FROM names the existing Students table. With no WHERE condition, every record contributes the selected fields, and the semicolon marks the end of this SQL statement."
+            "FROM Students tells SQL to read the Students table. No WHERE rule is needed because the question asks for every student, so all six students appear. The semicolon ends the query."
           ],
-          "watchOut": "This query reads data; it does not create a table or change any records.",
+          "watchOut": "The result shows Name and YearGroup. It does not change or delete the stored student details.",
           "question": {
-            "prompt": "Why is there no WHERE clause?",
+            "prompt": "Why do we not need WHERE here?",
             "choices": [
               {
-                "text": "WHERE is never used in SQL.",
-                "feedback": "It is used when records must be filtered.",
+                "text": "SQL never uses WHERE.",
+                "feedback": "WHERE is used when we need to keep only some rows.",
                 "correct": false
               },
               {
-                "text": "FROM already means YearGroup 10.",
-                "feedback": "FROM selects the source table, not a year condition.",
+                "text": "FROM Students already means YearGroup 10.",
+                "feedback": "FROM names the table. It says nothing about a particular year group.",
                 "correct": false
               },
               {
-                "text": "Every student record is required.",
-                "feedback": "Correct. No filtering condition is needed.",
+                "text": "We want every student.",
+                "feedback": "Correct. No students need to be left out.",
                 "correct": true
               }
             ],
@@ -10217,27 +10217,27 @@
         {
           "step": 0,
           "code": "SELECT *",
-          "title": "Request every field in each result record",
+          "title": "Display all three columns",
           "paragraphs": [
-            "The * wildcard selects all fields from the chosen table. It controls which columns appear in each returned record, while the later WHERE clause determines which records qualify."
+          "SELECT * asks SQL to display every column. Here that means BookID, Title, Available and Author. The star is a shortcut for listing all four column names; it is not multiplication."
           ],
-          "watchOut": "All fields and all records are different requests.",
+          "watchOut": "The star chooses columns. The WHERE line will decide which books appear.",
           "question": {
-            "prompt": "What does * mean in this SELECT?",
+            "prompt": "What does SELECT * display?",
             "choices": [
               {
-                "text": "Return every field of a matching record.",
-                "feedback": "Correct. It expands the selected columns.",
+                "text": "Every column for each book that is included.",
+                "feedback": "Correct. The result includes BookID, Title, Available and Author.",
                 "correct": true
               },
               {
-                "text": "Return every record regardless of WHERE.",
-                "feedback": "WHERE still filters the rows.",
+                "text": "Every book, even if Available is 0.",
+                "feedback": "WHERE still leaves out books that have Available equal to 0.",
                 "correct": false
               },
               {
-                "text": "Multiply the book IDs together.",
-                "feedback": "The wildcard is not arithmetic in this position.",
+                "text": "The answer after multiplying the book IDs.",
+                "feedback": "The star means all columns in SELECT *. It is not multiplying numbers here.",
                 "correct": false
               }
             ],
@@ -10247,48 +10247,48 @@
         {
           "step": 1,
           "code": "FROM Books",
-          "title": "Read the book table",
+          "title": "Read the Books table",
           "paragraphs": [
-            "FROM identifies Books as the table to query. The selected fields and the upcoming availability condition are interpreted using the fields stored in those book records."
+            "FROM Books tells SQL where the book details are stored. Each row describes one book, including its title and the number showing whether it can be borrowed."
           ],
-          "watchOut": "The source is Books, not the field named Available.",
+          "watchOut": "Books is the table name. Available is a column inside that table.",
           "question": {
-            "prompt": "Which part supplies the source table?",
+            "prompt": "Which line tells SQL to read the Books table?",
             "choices": [
               {
                 "text": "SELECT *",
-                "feedback": "That chooses fields.",
+                "feedback": "That chooses all the columns to display.",
                 "correct": false
               },
               {
                 "text": "Available = 1",
-                "feedback": "That is a record-filtering condition.",
+                "feedback": "That checks whether a book can be borrowed.",
                 "correct": false
               },
               {
                 "text": "FROM Books",
-                "feedback": "Correct. Books holds the records being searched.",
+                "feedback": "Correct. FROM is followed by the table name.",
                 "correct": true
               }
             ],
             "id": "p59-question-2"
           },
           "prediction": {
-            "prompt": "The table and output fields are set. How should unavailable books be excluded?",
+            "prompt": "How can we leave out books that cannot be borrowed?",
             "choices": [
               {
-                "text": "Use * as a condition by itself.",
-                "feedback": "The wildcard does not express the availability rule.",
+                "text": "Use the star as the whole rule.",
+                "feedback": "The star chooses columns. It does not check whether a book is available.",
                 "correct": false
               },
               {
-                "text": "Add a WHERE condition requiring Available to equal 1.",
-                "feedback": "Correct. The condition selects records by their availability value.",
+                "text": "Add WHERE to keep rows where Available is equal to 1.",
+                "feedback": "Correct. Books with Available equal to 0 will be left out.",
                 "correct": true
               },
               {
-                "text": "Remove Available from the SELECT list only.",
-                "feedback": "Hiding a field does not filter any rows.",
+                "text": "Stop displaying the Available column.",
+                "feedback": "Hiding that column would not remove unavailable books from the result.",
                 "correct": false
               }
             ],
@@ -10298,27 +10298,27 @@
         {
           "step": 1,
           "code": "WHERE Available = 1;",
-          "title": "Keep only available records",
+          "title": "Check whether Available is equal to 1",
           "paragraphs": [
-            "WHERE tests each record's Available field against the numeric value one. Only qualifying records are returned, but each qualifying record still contains every field requested by the wildcard."
+            "WHERE Available = 1 checks whether each book has 1 in its Available column. Robots and Rivers do, so their rows appear. Stars has 0, so its row is left out."
           ],
-          "watchOut": "SQL uses = for equality here; Python's == is not needed in the taught SQL form.",
+          "watchOut": "Here = means equal to. It checks a value; it does not change Available to 1.",
           "question": {
-            "prompt": "Which titles satisfy the supplied availability condition?",
+            "prompt": "Which books have Available equal to 1?",
             "choices": [
               {
-                "text": "Every title.",
-                "feedback": "The WHERE clause excludes unavailable records.",
+                "text": "All three books.",
+                "feedback": "Stars has 0, so it cannot be borrowed.",
                 "correct": false
               },
               {
                 "text": "Robots and Rivers.",
-                "feedback": "Correct. Their Available field is 1.",
+                "feedback": "Correct. Both have 1 in the Available column.",
                 "correct": true
               },
               {
                 "text": "Stars only.",
-                "feedback": "Stars has Available equal to 0.",
+                "feedback": "Stars has 0. Look for the books with 1 instead.",
                 "correct": false
               }
             ],
@@ -10333,27 +10333,27 @@
         {
           "step": 0,
           "code": "SELECT Name, Price",
-          "title": "Choose the product details to return",
+          "title": "Choose Name and Price",
           "paragraphs": [
-            "The SELECT list requests two fields, in order, from each qualifying product record. Name identifies the item and Price shows the value that was checked against the requested spending limit."
+            "SELECT Name, Price displays the product name followed by its price. We need both columns so we can see which product was found and how much it costs."
           ],
-          "watchOut": "A comma separates fields; it does not combine their values into one field.",
+          "watchOut": "Use a comma to separate the two column names.",
           "question": {
-            "prompt": "Why list both Name and Price?",
+            "prompt": "Why display both Name and Price?",
             "choices": [
               {
-                "text": "It requires two source tables.",
-                "feedback": "Both fields are in the same Products table.",
+                "text": "To add the name to the price.",
+                "feedback": "The comma separates columns. It does not add their values.",
                 "correct": false
               },
               {
-                "text": "It automatically adds the prices.",
-                "feedback": "No arithmetic aggregation appears in this query.",
+                "text": "To automatically remove products costing more than 10.",
+                "feedback": "Choosing columns does not check prices. That is the job of WHERE.",
                 "correct": false
               },
               {
-                "text": "Both fields are required in each result.",
-                "feedback": "Correct. One identifies the item and the other shows its price.",
+                "text": "To show the product and how much it costs.",
+                "feedback": "Correct. Name identifies the product and Price shows its cost.",
                 "correct": true
               }
             ],
@@ -10363,48 +10363,48 @@
         {
           "step": 0,
           "code": "FROM Products",
-          "title": "Identify the product source",
+          "title": "Read the Products table",
           "paragraphs": [
-            "FROM names the Products table that contains the requested fields. The query reads these existing records without modifying product names, prices or the structure of the table."
+            "FROM Products names the table containing the product names and prices. SQL reads those rows so the next line can decide which products cost 10 or less."
           ],
-          "watchOut": "The SELECT list contains field names, while FROM contains the table name.",
+          "watchOut": "Products is the table name; Price is the column we will check.",
           "question": {
-            "prompt": "Does this query change the stored prices?",
+            "prompt": "What is Products in FROM Products?",
             "choices": [
               {
-                "text": "Only the Name field is deleted.",
-                "feedback": "No deletion is requested.",
+                "text": "The price limit.",
+                "feedback": "The price limit is the number 10 in the WHERE rule.",
                 "correct": false
               },
               {
-                "text": "No, it reads matching data.",
-                "feedback": "Correct. SELECT retrieves results rather than updating records.",
+                "text": "The table containing the product details.",
+                "feedback": "Correct. Name and Price are columns in this table.",
                 "correct": true
               },
               {
-                "text": "Yes, every price becomes 10.",
-                "feedback": "The comparison is a filter, not an assignment.",
+                "text": "The column containing the price.",
+                "feedback": "The column is Price. Products is the table name.",
                 "correct": false
               }
             ],
             "id": "p60-question-2"
           },
           "prediction": {
-            "prompt": "Which condition will correctly implement at most 10?",
+            "prompt": "Which rule keeps prices below 10 and prices exactly equal to 10?",
             "choices": [
               {
                 "text": "Price <= 10",
-                "feedback": "Correct. It includes the upper boundary.",
+                "feedback": "Correct. <= means less than or equal to, so exactly 10 is included.",
                 "correct": true
               },
               {
                 "text": "Price < 10",
-                "feedback": "That excludes exactly 10.",
+                "feedback": "< means less than. It would leave out a price of exactly 10.",
                 "correct": false
               },
               {
                 "text": "Price >= 10",
-                "feedback": "That selects prices on the wrong side of the limit.",
+                "feedback": ">= means greater than or equal to. It would keep prices above the limit.",
                 "correct": false
               }
             ],
@@ -10414,27 +10414,28 @@
         {
           "step": 1,
           "code": "WHERE Price <= 10;",
-          "title": "Include the price boundary",
+          "title": "Check whether Price is less than or equal to 10",
           "paragraphs": [
-            "The <= comparison matches prices below ten and prices exactly equal to ten. This implements at most correctly, while excluding a price such as 10.01 that exceeds the limit."
+            "Compare means check whether one value is less than, greater than or equal to another. Here Price <= 10 checks whether a product's price is less than or equal to 10.",
+            "The pen set costs 6.50 and the notebook costs exactly 10, so both appear. The folder costs 10.01, which is greater than 10, so it is left out."
           ],
-          "watchOut": "Using < would incorrectly reject an item priced exactly 10.",
+          "watchOut": "<= means less than or equal to. Using < alone would leave out the notebook costing exactly 10.",
           "question": {
-            "prompt": "Should the Notebook priced 10 appear?",
+            "prompt": "Should the notebook costing exactly 10 appear?",
             "choices": [
               {
-                "text": "Yes, <= includes equality.",
-                "feedback": "Correct. Exactly ten satisfies at most ten.",
+                "text": "Yes. <= includes a price equal to 10.",
+                "feedback": "Correct. The question asks for 10 or less.",
                 "correct": true
               },
               {
-                "text": "No, only prices below 10 appear.",
-                "feedback": "That would describe < rather than <=.",
+                "text": "No. Only prices less than 10 appear.",
+                "feedback": "That would be true for <, but <= also includes exactly 10.",
                 "correct": false
               },
               {
                 "text": "Only if its name is Ten.",
-                "feedback": "The filter tests Price, not the product name.",
+                "feedback": "The rule checks the number in Price, not the text in Name.",
                 "correct": false
               }
             ],
@@ -10449,27 +10450,27 @@
         {
           "step": 0,
           "code": "SELECT Name",
-          "title": "Request only club names",
+          "title": "Display only the club name",
           "paragraphs": [
-            "SELECT Name limits each returned record to the club name field. The other fields can still be used in filtering conditions without being included in the final output."
+            "SELECT Name asks for just the club names in the result. We will still check Day and Places, even though we do not need to display those two columns."
           ],
-          "watchOut": "A field can be tested by WHERE even when it is not selected for display.",
+          "watchOut": "A column can be checked in WHERE without being displayed by SELECT.",
           "question": {
-            "prompt": "Must Places be selected to use it in WHERE?",
+            "prompt": "Must Places be displayed just so we can check whether it is greater than 0?",
             "choices": [
               {
-                "text": "Places must replace the table name.",
-                "feedback": "FROM still needs Clubs.",
+                "text": "Places must be the table name.",
+                "feedback": "The table is Clubs. Places is one of its columns.",
                 "correct": false
               },
               {
-                "text": "No, it may be used only as a filter field.",
-                "feedback": "Correct. Output fields and filter fields have separate roles.",
+                "text": "No. We can check Places without displaying it.",
+                "feedback": "Correct. SELECT chooses what is displayed. WHERE can check another column.",
                 "correct": true
               },
               {
-                "text": "Yes, every tested field must be printed.",
-                "feedback": "SQL can filter on fields not included in the SELECT list.",
+                "text": "Yes. Every column we check must be displayed.",
+                "feedback": "We can use Places in WHERE while displaying only Name.",
                 "correct": false
               }
             ],
@@ -10479,27 +10480,27 @@
         {
           "step": 0,
           "code": "FROM Clubs",
-          "title": "Identify the clubs table",
+          "title": "Read the Clubs table",
           "paragraphs": [
-            "FROM supplies the source records containing Name, Day and Places. Each record will be checked against the two conditions so they apply to the same particular club."
+            "FROM Clubs tells SQL which table contains the club details. Each row is one club, so the day and the number of places must be checked on that same row."
           ],
-          "watchOut": "The two conditions must not be satisfied by two different records.",
+          "watchOut": "We need a Tuesday club with places left, not a Tuesday club and a different club with places left.",
           "prediction": {
-            "prompt": "Which logical connection is required between Tuesday and spare places?",
+            "prompt": "A club must be on Tuesday and have places left. Which keyword joins those rules?",
             "choices": [
               {
-                "text": "OR, because either rule is sufficient.",
-                "feedback": "That would include full Tuesday clubs or clubs on other days.",
+                "text": "OR, because meeting either rule is enough.",
+                "feedback": "OR would wrongly include full Tuesday clubs or clubs meeting on other days.",
                 "correct": false
               },
               {
-                "text": "No condition at all.",
-                "feedback": "That would return unrelated clubs.",
+                "text": "Neither keyword, because every club should appear.",
+                "feedback": "The question asks for Tuesday clubs with places left, not every club.",
                 "correct": false
               },
               {
-                "text": "AND, because both rules must hold.",
-                "feedback": "Correct. A club passing just one rule is unsuitable.",
+                "text": "AND, because both rules must be true.",
+                "feedback": "Correct. We must leave out a club if either rule is false.",
                 "correct": true
               }
             ],
@@ -10509,28 +10510,28 @@
         {
           "step": 1,
           "code": "WHERE Day = 'Tuesday' AND Places > 0;",
-          "title": "Require both conditions in the WHERE clause",
+          "title": "Keep Tuesday clubs with at least one place",
           "paragraphs": [
-            "The quoted value Tuesday is text to compare with the Day field. This first condition alone would include every Tuesday club, including any with no remaining places.",
-            "AND keeps a club only when its day condition and positive-places condition both pass. Tuesday clubs with zero places and other-day clubs with spare places are therefore excluded."
+            "Day = 'Tuesday' checks whether the Day column is equal to Tuesday. The quotation marks show that Tuesday is text. Places > 0 checks whether the number of places left is greater than zero.",
+            "AND means both checks must be true for the same club. Code and Music appear. Art is on Tuesday but has 0 places, so it is left out. Chess has places left but meets on Wednesday, so it is left out too."
           ],
-          "watchOut": "AND joins conditions within WHERE: the same club must satisfy both. Text values such as Tuesday are quoted.",
+          "watchOut": "AND means both rules must be true. Having the correct day alone, or places left alone, is not enough.",
           "question": {
-            "prompt": "Why is Tuesday in quotes?",
+            "prompt": "Why is Tuesday written as 'Tuesday'?",
             "choices": [
               {
-                "text": "Quotes make it a numeric value.",
-                "feedback": "Tuesday remains text.",
+                "text": "The quotation marks turn Tuesday into a number.",
+                "feedback": "Tuesday is a word, so it remains text.",
                 "correct": false
               },
               {
-                "text": "The whole query must be one quoted string.",
-                "feedback": "The SQL statement itself is not wrapped in quotes here.",
+                "text": "Every word in the SQL query must be in quotation marks.",
+                "feedback": "Only the text value Tuesday needs quotes here. The SQL keywords and column names do not.",
                 "correct": false
               },
               {
-                "text": "It is a text value, not a field name.",
-                "feedback": "Correct. The comparison needs the literal day text.",
+                "text": "Tuesday is text, so it needs quotation marks.",
+                "feedback": "Correct. Day is the column name and 'Tuesday' is the text we want it to equal.",
                 "correct": true
               }
             ],
@@ -10538,21 +10539,21 @@
           },
           "additionalQuestions": [
             {
-              "prompt": "Should Chess on Wednesday with five places appear?",
+              "prompt": "Should Chess appear if it has 5 places left but meets on Wednesday?",
               "choices": [
                 {
-                  "text": "Only if Places is selected.",
-                  "feedback": "Changing output fields would not fix the failed day condition.",
+                  "text": "Only if Places is displayed as well.",
+                  "feedback": "Displaying Places does not change the fact that Chess meets on Wednesday.",
                   "correct": false
                 },
                 {
-                  "text": "No, its day condition fails.",
-                  "feedback": "Correct. AND requires Tuesday as well as spare places.",
+                  "text": "No. It must also meet on Tuesday.",
+                  "feedback": "Correct. AND requires both Tuesday and more than 0 places.",
                   "correct": true
                 },
                 {
-                  "text": "Yes, spare places alone are enough.",
-                  "feedback": "That would ignore the requested day.",
+                  "text": "Yes. Having places left is enough.",
+                  "feedback": "The question also requires the club to meet on Tuesday.",
                   "correct": false
                 }
               ],
@@ -10568,27 +10569,27 @@
         {
           "step": 0,
           "code": "SELECT Title",
-          "title": "Choose the title output field",
+          "title": "Choose the titles to display",
           "paragraphs": [
-            "Title identifies each game in the result. The Genre field will decide which records qualify, but it does not have to appear in the selected output fields."
+            "SELECT Title displays the title of each game we keep. Genre will help us choose the games, but the question asks us to display their titles rather than their genres."
           ],
-          "watchOut": "Selecting Title does not filter records by itself.",
+          "watchOut": "Title is the column we display. Genre is the column we check.",
           "question": {
-            "prompt": "Which field is returned to the console?",
+            "prompt": "Which column will be displayed?",
             "choices": [
               {
-                "text": "Title",
-                "feedback": "Correct. Genre is used to filter rather than being selected.",
+                "text": "Title.",
+                "feedback": "Correct. Genre is checked, but only Title is displayed.",
                 "correct": true
               },
               {
                 "text": "Genre only.",
-                "feedback": "That would omit the requested game title.",
+                "feedback": "SELECT Title asks for the game title, not its genre.",
                 "correct": false
               },
               {
-                "text": "The whole Games table name.",
-                "feedback": "FROM identifies a table, not an output value.",
+                "text": "The table name Games.",
+                "feedback": "FROM Games names the table to read; Games is not a value to display.",
                 "correct": false
               }
             ],
@@ -10598,27 +10599,27 @@
         {
           "step": 0,
           "code": "FROM Games",
-          "title": "Identify the game records",
+          "title": "Read the Games table",
           "paragraphs": [
-            "FROM names the table containing the Title and Genre fields. The query will inspect each game's single stored genre when applying the two alternative text comparisons."
+            "FROM Games names the table that contains the game details. The next line will check the Genre column on each row to decide whether that game should appear."
           ],
-          "watchOut": "The table name is Games, while Genre is one field within it.",
+          "watchOut": "Games is the table name. Genre is a column, such as Name or Price in other tables.",
           "prediction": {
-            "prompt": "How should the two acceptable genres be connected?",
+            "prompt": "How can we keep Puzzle games and also keep Strategy games?",
             "choices": [
               {
-                "text": "Only the word Strategy after OR, without a comparison.",
-                "feedback": "The second alternative needs its field and equality test too.",
+                "text": "Write just OR 'Strategy', without Genre =.",
+                "feedback": "We need to say which column must be equal to Strategy: Genre = 'Strategy'.",
                 "correct": false
               },
               {
-                "text": "Two complete Genre comparisons joined with OR.",
-                "feedback": "Correct. Either value can qualify a record.",
+                "text": "Join Genre = 'Puzzle' and Genre = 'Strategy' with OR.",
+                "feedback": "Correct. Either of those two genres is allowed.",
                 "correct": true
               },
               {
-                "text": "Two comparisons joined with AND.",
-                "feedback": "One single genre cannot equal both different strings.",
+                "text": "Join the two rules with AND.",
+                "feedback": "Each game has one genre. It cannot be Puzzle and Strategy at the same time.",
                 "correct": false
               }
             ],
@@ -10628,28 +10629,28 @@
         {
           "step": 1,
           "code": "WHERE Genre = 'Puzzle' OR Genre = 'Strategy';",
-          "title": "Allow either genre in the WHERE clause",
+          "title": "Check whether Genre is Puzzle or Strategy",
           "paragraphs": [
-            "The first condition accepts the text value Puzzle in the Genre field. Strategy games need a second complete comparison because a different genre value is stored in their records.",
-            "OR accepts a record when either complete comparison is true. Since a game has one genre, requiring both Puzzle and Strategy with AND would incorrectly exclude every supplied record."
+            "Genre = 'Puzzle' checks whether the value in the Genre column is exactly Puzzle. Genre = 'Strategy' checks whether that value is exactly Strategy. Both words use quotation marks because they are text.",
+            "OR means either check can be true. Logic and Blocks are Puzzle games, so they appear. Castle is a Strategy game, so it appears too. Racer is Racing, so it is left out."
           ],
-          "watchOut": "OR joins two complete comparisons inside WHERE. One single-genre record cannot equal both different genres at once.",
+          "watchOut": "Write Genre = on both sides of OR. The rule is Genre = 'Puzzle' OR Genre = 'Strategy', not just OR 'Strategy'.",
           "question": {
-            "prompt": "What does the first WHERE comparison test?",
+            "prompt": "What does Genre = 'Puzzle' check?",
             "choices": [
               {
-                "text": "Whether both genres occur in one field.",
-                "feedback": "That is not the given single-genre model.",
+                "text": "Whether Genre contains both Puzzle and Strategy.",
+                "feedback": "This part checks for Puzzle only. OR adds the separate check for Strategy.",
                 "correct": false
               },
               {
-                "text": "Whether this record's Genre equals Puzzle.",
-                "feedback": "Correct. It compares a field with a quoted text value.",
+                "text": "Whether the value in Genre is exactly Puzzle.",
+                "feedback": "Correct. It checks for the word Puzzle in the Genre column.",
                 "correct": true
               },
               {
                 "text": "Whether the game title contains the word Puzzle.",
-                "feedback": "The comparison uses Genre, not Title or a substring search.",
+                "feedback": "The column being checked is Genre, not Title.",
                 "correct": false
               }
             ],
@@ -10657,27 +10658,261 @@
           },
           "additionalQuestions": [
             {
-              "prompt": "Why use OR rather than AND?",
+              "prompt": "Why do we use OR here?",
               "choices": [
                 {
-                  "text": "Either one of the two genres is acceptable.",
-                  "feedback": "Correct. A game cannot have both different single genre values at once.",
+                  "text": "A game can be Puzzle or Strategy; either is allowed.",
+                  "feedback": "Correct. Castle is Strategy, so it appears even though it is not Puzzle.",
                   "correct": true
                 },
                 {
-                  "text": "Every game of every genre should be included.",
-                  "feedback": "Other genres fail both comparisons and are excluded.",
+                  "text": "Every genre should be included.",
+                  "feedback": "Racing and other genres are still left out.",
                   "correct": false
                 },
                 {
-                  "text": "OR requires both comparisons to be true.",
-                  "feedback": "That is the meaning of AND, not OR.",
+                  "text": "The game must have both genres at the same time.",
+                  "feedback": "That would be AND. Each game has only one genre in this table.",
                   "correct": false
                 }
               ],
               "id": "p62-question-4"
             }
           ]
+        }
+      ]
+    },
+    "problem-63": {
+      "stageReviews": true,
+      "lines": [
+        {
+          "step": 0,
+          "code": "SELECT Name, Price",
+          "title": "Display product names and prices",
+          "paragraphs": [
+            "SELECT Name, Price chooses the two columns to display. We need the product name as well as its price so we can identify each item in the sorted result."
+          ],
+          "watchOut": "The comma separates Name and Price. It does not sort the products.",
+          "question": {
+            "id": "p63-question-1",
+            "prompt": "What will SELECT Name, Price display?",
+            "choices": [
+              {
+                "text": "The product names and their prices.",
+                "feedback": "Correct. Both columns are listed after SELECT.",
+                "correct": true
+              },
+              {
+                "text": "Only the cheapest price.",
+                "feedback": "SELECT lists columns. It does not choose the cheapest row.",
+                "correct": false
+              },
+              {
+                "text": "The table name Products.",
+                "feedback": "Products is the table name that comes after FROM.",
+                "correct": false
+              }
+            ]
+          }
+        },
+        {
+          "step": 0,
+          "code": "FROM Products",
+          "title": "Read every product",
+          "paragraphs": [
+            "FROM Products tells SQL where to read the names and prices. We want every product, so we do not need a WHERE rule to leave any products out."
+          ],
+          "watchOut": "Choosing which rows to include and sorting those rows are different jobs.",
+          "question": {
+            "id": "p63-question-2",
+            "prompt": "Why is there no WHERE rule in this query?",
+            "choices": [
+              {
+                "text": "WHERE would delete the table.",
+                "feedback": "WHERE checks which rows to keep in a result; it does not delete the table.",
+                "correct": false
+              },
+              {
+                "text": "We want to include every product.",
+                "feedback": "Correct. We are changing their display order, not leaving any products out.",
+                "correct": true
+              },
+              {
+                "text": "FROM already sorts the prices.",
+                "feedback": "FROM names the table. ORDER BY is needed to choose the order.",
+                "correct": false
+              }
+            ]
+          },
+          "prediction": {
+            "id": "p63-prediction-2",
+            "prompt": "All products are included. How can we make the cheapest appear first?",
+            "choices": [
+              {
+                "text": "Choose the Name column again.",
+                "feedback": "Choosing columns does not sort prices.",
+                "correct": false
+              },
+              {
+                "text": "Keep only products costing more than 10.",
+                "feedback": "That would leave out some products rather than sort them.",
+                "correct": false
+              },
+              {
+                "text": "Sort by Price from the smallest value to the largest.",
+                "feedback": "Correct. Ascending order means smallest first and largest last.",
+                "correct": true
+              }
+            ]
+          }
+        },
+        {
+          "step": 1,
+          "code": "ORDER BY Price ASC;",
+          "title": "Sort from the lowest price to the highest",
+          "paragraphs": [
+            "ORDER BY Price sorts the result using the numbers in the Price column. ASC means ascending: smaller numbers come before larger numbers.",
+            "The prices are shown as 3, 8, 12.50, 15, 18 and 24. Cable therefore appears first and Keyboard appears last. Sorting the result does not change the prices stored in the table."
+          ],
+          "watchOut": "ASC means smallest to largest. DESC means largest to smallest, so it would answer a different question.",
+          "question": {
+            "id": "p63-question-3",
+            "prompt": "Which product should appear first after ORDER BY Price ASC?",
+            "choices": [
+              {
+                "text": "Keyboard, because it costs 24.",
+                "feedback": "24 is the highest price, so Keyboard goes last in ascending order.",
+                "correct": false
+              },
+              {
+                "text": "Mouse, because it was stored first.",
+                "feedback": "ORDER BY chooses a new display order using Price, not the original row position.",
+                "correct": false
+              },
+              {
+                "text": "Cable, because it costs 3.",
+                "feedback": "Correct. 3 is the lowest price in the table.",
+                "correct": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "problem-64": {
+      "stageReviews": true,
+      "lines": [
+        {
+          "step": 0,
+          "code": "SELECT Name",
+          "title": "Display the Name column",
+          "paragraphs": [
+            "SELECT Name asks for student names in the result. StudentID is not listed, so the result will show the names without their numbers. A later line will check the first letter."
+          ],
+          "watchOut": "SELECT chooses the column to display. It does not yet choose which names to keep.",
+          "question": {
+            "id": "p64-question-1",
+            "prompt": "Does SELECT Name by itself keep only names starting with A?",
+            "choices": [
+              {
+                "text": "No. It only chooses the column to display.",
+                "feedback": "Correct. The WHERE line will decide which names to keep.",
+                "correct": true
+              },
+              {
+                "text": "Yes. SELECT Name always means names starting with A.",
+                "feedback": "No letter rule has been written yet.",
+                "correct": false
+              },
+              {
+                "text": "It changes every name to A.",
+                "feedback": "SELECT reads data. It does not change the stored names.",
+                "correct": false
+              }
+            ]
+          }
+        },
+        {
+          "step": 0,
+          "code": "FROM Students",
+          "title": "Read the Students table",
+          "paragraphs": [
+            "FROM Students tells SQL which table contains the names. Each row holds one student, so the next line will check each student's Name to decide whether it starts with A."
+          ],
+          "watchOut": "Students is the table name. Name is the column containing the text we need to check.",
+          "question": {
+            "id": "p64-question-2",
+            "prompt": "Which table contains the names being searched?",
+            "choices": [
+              {
+                "text": "Name.",
+                "feedback": "Name is a column. The table is Students.",
+                "correct": false
+              },
+              {
+                "text": "Students.",
+                "feedback": "Correct. FROM Students names the table.",
+                "correct": true
+              },
+              {
+                "text": "A%.",
+                "feedback": "A% is a text pattern, not a table name.",
+                "correct": false
+              }
+            ]
+          },
+          "prediction": {
+            "id": "p64-prediction-2",
+            "prompt": "How can we keep Ada and Amir, without including Hana?",
+            "choices": [
+              {
+                "text": "Keep names that contain A anywhere.",
+                "feedback": "Hana contains a later a but does not start with A.",
+                "correct": false
+              },
+              {
+                "text": "Keep only the name that is exactly A.",
+                "feedback": "That would leave out Ada and Amir.",
+                "correct": false
+              },
+              {
+                "text": "Keep names whose first letter is A, allowing more letters after it.",
+                "feedback": "Correct. We need a starts-with rule, not an exact-name rule.",
+                "correct": true
+              }
+            ]
+          }
+        },
+        {
+          "step": 1,
+          "code": "WHERE Name LIKE 'A%';",
+          "title": "Check whether each name starts with A",
+          "paragraphs": [
+            "LIKE checks text against a pattern. In 'A%', A must be at the start, and % allows zero or more characters after it. The whole pattern uses quotation marks because it is text.",
+            "Ada, Amir and Aisha appear. Ben starts with B, Hana starts with H and Cleo starts with C, so they are left out. A name that was just A would also match because % does not require any extra characters."
+          ],
+          "watchOut": "Name = 'A' would keep only the exact name A. LIKE 'A%' also allows Ada and Amir. '%A' would look for an A at the end instead.",
+          "question": {
+            "id": "p64-question-3",
+            "prompt": "Why does Hana not match LIKE 'A%'?",
+            "choices": [
+              {
+                "text": "Hana is too short.",
+                "feedback": "The pattern does not set a minimum name length.",
+                "correct": false
+              },
+              {
+                "text": "LIKE only works with numbers.",
+                "feedback": "LIKE checks text patterns such as names.",
+                "correct": false
+              },
+              {
+                "text": "Hana starts with H, not A.",
+                "feedback": "Correct. A must be at the beginning for this pattern.",
+                "correct": true
+              }
+            ]
+          }
         }
       ]
     }

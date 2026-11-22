@@ -57,7 +57,7 @@ class ProgrammingCatalogueTests(unittest.TestCase):
             self.assertEqual(button['id'], 'practice-category-' + button['data-practice-category'])
 
     def test_original_tariffs_and_all_point_totals(self):
-        self.assertEqual([p['id'] for p in self.data['problems']], ['problem-' + str(i) for i in range(1, 63)])
+        self.assertEqual([p['id'] for p in self.data['problems']], ['problem-' + str(i) for i in range(1, 65)])
         self.assertEqual([p['question']['marks'] for p in self.data['problems'][:22]],
                          [6, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 5, 4, 6, 6, 6])
         for problem in self.data['problems']:

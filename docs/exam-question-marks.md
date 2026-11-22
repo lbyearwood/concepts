@@ -1,5 +1,14 @@
 # Exam question marks
 
+## Requested SQL refinements and extra practice — 22 November 2026
+
+The five existing SQL allocations remain 3, 3, 4, 5 and 5 marks. Instructions and credit-point descriptions are reworded into concrete checks without changing the five complete solutions. All seven SQL tables now have four fields and six sample records. The two extra questions were explicitly requested by the teacher and are original CSRevision SQL extensions, not official OCR questions or required J277 keywords. Each has four meaningful credit points.
+
+| ID | Question | Marks | Credit points |
+| --- | --- | ---: | --- |
+| problem-63 | Sort prices from lowest to highest (ASC) | 4 | SELECT Name/Price; FROM Products; ORDER BY Price; ASC |
+| problem-64 | Find names starting with A (LIKE) | 4 | SELECT Name; FROM Students; WHERE with LIKE; starts-with pattern A% |
+
 ## Current forty-question addition — 22 November 2026
 
 The user requested five questions in each of the eight previously empty Exam categories, with varied GCSE techniques and explicit random list selection. The catalogue now contains 62 Exam questions. Original problem-1 through problem-22, their marks and all guide content are unchanged. Easy/Medium/Hard, their interest categories and school resources are outside this content addition.
@@ -43,11 +52,11 @@ The new questions are original CSRevision practice in OCR GCSE style, not offici
 | problem-55 | Fix an off-by-one total | 4 | Original CSRevision practice |
 | problem-56 | Choose normal, boundary and invalid tests | 6 | Original CSRevision practice |
 | problem-57 | Repair a loop that never finishes | 5 | Original CSRevision practice |
-| problem-58 | Select named database fields | 3 | Original CSRevision practice |
-| problem-59 | Find all available book records | 3 | Original CSRevision practice |
-| problem-60 | Filter prices at an inclusive limit | 4 | Original CSRevision practice |
-| problem-61 | Require two database conditions | 5 | Original CSRevision practice |
-| problem-62 | Accept either database category | 5 | Original CSRevision practice |
+| problem-58 | Display student names and year groups | 3 | Original CSRevision practice |
+| problem-59 | Find books that can be borrowed | 3 | Original CSRevision practice |
+| problem-60 | Find products costing 10 or less | 4 | Original CSRevision practice |
+| problem-61 | Find Tuesday clubs with places (AND) | 5 | Original CSRevision practice |
+| problem-62 | Find Puzzle or Strategy games (OR) | 5 | Original CSRevision practice |
 
 Scope checked against [OCR J277 specification v3.1, May 2026](https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf), sections 2.1.2, 2.1.3, 2.2.1–2.2.3 and 2.3.1–2.3.2. Search/sort tasks apply, trace or complete supplied algorithms; memorised implementations are not required. SQL is limited to SELECT, FROM, WHERE, comparisons and AND/OR. It is taught as SQL in a text console, without Python database boilerplate, joins or aggregation. Every other new solution uses console Python and GCSE constructs.
 

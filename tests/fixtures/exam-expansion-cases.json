@@ -1090,6 +1090,18 @@
         [
           "Cleo",
           10
+        ],
+        [
+          "Amir",
+          11
+        ],
+        [
+          "Beth",
+          10
+        ],
+        [
+          "Dan",
+          11
         ]
       ]
     },
@@ -1104,12 +1116,14 @@
         [
           1,
           "Robots",
-          1
+          1,
+          "Patel"
         ],
         [
           3,
           "Rivers",
-          1
+          1,
+          "Chen"
         ]
       ]
     },
@@ -1118,7 +1132,8 @@
         [
           4,
           "Clouds",
-          0
+          0,
+          "Test author"
         ]
       ],
       "rows": []
@@ -1141,11 +1156,15 @@
       "databaseRows": [
         [
           "Free item",
-          0
+          0,
+          1,
+          5
         ],
         [
           "Over limit",
-          10.01
+          10.01,
+          2,
+          5
         ]
       ],
       "rows": [
@@ -1172,12 +1191,14 @@
         [
           "Full",
           "Tuesday",
-          0
+          0,
+          "R1"
         ],
         [
           "Wrong day",
           "Friday",
-          2
+          2,
+          "R1"
         ]
       ],
       "rows": []
@@ -1201,7 +1222,156 @@
       "databaseRows": [
         [
           "Only racing",
-          "Racing"
+          "Racing",
+          3,
+          1
+        ]
+      ],
+      "rows": []
+    }
+  ],
+  "problem-63": [
+    {
+      "rows": [
+        [
+          "Cable",
+          3
+        ],
+        [
+          "USB hub",
+          8
+        ],
+        [
+          "Mouse",
+          12.5
+        ],
+        [
+          "Headphones",
+          15
+        ],
+        [
+          "Webcam",
+          18
+        ],
+        [
+          "Keyboard",
+          24
+        ]
+      ]
+    },
+    {
+      "databaseRows": [
+        [
+          "Bag",
+          20,
+          1,
+          5
+        ],
+        [
+          "Notebook",
+          9,
+          2,
+          5
+        ],
+        [
+          "Pen",
+          2,
+          3,
+          5
+        ]
+      ],
+      "rows": [
+        [
+          "Pen",
+          2
+        ],
+        [
+          "Notebook",
+          9
+        ],
+        [
+          "Bag",
+          20
+        ]
+      ]
+    },
+    {
+      "databaseRows": [],
+      "rows": []
+    }
+  ],
+  "problem-64": [
+    {
+      "rows": [
+        [
+          "Ada"
+        ],
+        [
+          "Amir"
+        ],
+        [
+          "Aisha"
+        ]
+      ]
+    },
+    {
+      "databaseRows": [
+        [
+          1,
+          "Al",
+          10,
+          "10A"
+        ],
+        [
+          2,
+          "A",
+          10,
+          "10A"
+        ],
+        [
+          3,
+          "Amber",
+          10,
+          "10A"
+        ],
+        [
+          4,
+          "Ben",
+          10,
+          "10A"
+        ],
+        [
+          5,
+          "Zara",
+          10,
+          "10A"
+        ]
+      ],
+      "rows": [
+        [
+          "Al"
+        ],
+        [
+          "A"
+        ],
+        [
+          "Amber"
+        ]
+      ]
+    },
+    {
+      "databaseRows": [
+        [
+          1,
+          "Hana",
+          10,
+          "10A"
+        ],
+        [
+          2,
+          "Ben",
+          10,
+          "10A"
         ]
       ],
       "rows": []

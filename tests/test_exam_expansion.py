@@ -68,8 +68,10 @@ def run_sql(problem, case):
 
 class ExamExpansionTests(unittest.TestCase):
     def test_five_per_new_category_and_no_practice_additions(self):
-        added = [p for p in DATA['problems'] if int(p['id'].split('-')[1]) >= 23]
-        self.assertEqual(set(CASES), {p['id'] for p in added})
+        added = [p for p in DATA['problems'] if 23 <= int(p['id'].split('-')[1]) <= 62]
+        extensions = [p for p in DATA['problems'] if p.get('practiceScope') == 'sql-extension']
+        self.assertEqual({p['id'] for p in extensions}, {'problem-63', 'problem-64'})
+        self.assertEqual(set(CASES), {p['id'] for p in added + extensions})
         self.assertEqual(len(added),40)
         self.assertEqual(Counter(p['category'] for p in added), {c['id']:5 for c in DATA['categories'][4:]})
         self.assertTrue(all(p['question']['marking']['basis']=='csrevision' for p in added))
@@ -83,6 +85,12 @@ class ExamExpansionTests(unittest.TestCase):
                 else:
                     self.assertEqual(problem['language'],'sql')
                     self.assertNotRegex(problem['solution'].upper(),r'\b(JOIN|GROUP|ORDER|COUNT|INSERT|UPDATE|DELETE)\b')
+        for problem in [p for p in DATA['problems'] if p.get('language') == 'sql']:
+            with self.subTest(table=problem['id']):
+                self.assertGreaterEqual(len(problem['database']['columns']), 4)
+                self.assertGreaterEqual(len(problem['database']['rows']), 6)
+                self.assertTrue(all(len(row) == len(problem['database']['columns']) for row in problem['database']['rows']))
+                builder.validate_solution(problem)
 
     def test_random_draw_placement_and_real_list_selection(self):
         output,scope,draws = run_console(PROBLEMS['problem-44'],CASES['problem-44'][1])
@@ -109,7 +117,11 @@ def cases_for(identity):
         for index,case in enumerate(CASES[identity]):
             with self.subTest(case=index):
                 if problem.get('language') == 'sql':
-                    self.assertEqual(Counter(run_sql(problem,case)),Counter(tuple(row) for row in case['rows']))
+                    actual, expected = run_sql(problem,case), [tuple(row) for row in case['rows']]
+                    if 'ORDER BY' in problem['solution'].upper():
+                        self.assertEqual(actual, expected, 'The result must be in the requested order')
+                    else:
+                        self.assertEqual(Counter(actual),Counter(expected))
                 else:
                     actual,_,_ = run_console(problem,case)
                     self.assertEqual(actual,case['output'])

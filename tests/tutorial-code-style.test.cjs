@@ -71,10 +71,12 @@ test('SQL query prefixes keep their exact text and SQL keyword colours', () => {
   for (const problem of require('../data/programming-problems.json').problems.filter(p=>p.language==='sql')) {
     for (const line of problem.solution.split('\n')) {
       for(let count=0;count<=line.length;count++) assert.equal(visibleTokens(line,count,'sql').map(t=>t.text).join(''),line.slice(0,count));
-      for(const token of tokenizeCode(line,'sql').filter(t=>['SELECT','FROM','WHERE','AND','OR'].includes(t.text))) assert.equal(token.type,'keyword');
+      for(const token of tokenizeCode(line,'sql').filter(t=>['SELECT','FROM','WHERE','AND','OR','ORDER','BY','ASC','LIKE'].includes(t.text))) assert.equal(token.type,'keyword');
     }
   }
   assert.equal(visibleTokens('SELECT Name',1,'sql')[0].type,'keyword');
+  assert.equal(visibleTokens('ORDER BY Price ASC;',1,'sql')[0].type,'keyword');
+  for (const word of ['ORDER', 'BY', 'ASC', 'LIKE']) assert.ok(tutorSegments(word, [], 'sql').some(segment => segment.type === 'code' && segment.text === word));
   assert.equal(tokenizeCode("WHERE Genre = 'Puzzle';",'sql').find(t=>t.text==="'Puzzle'").type,'string');
   global.document=dom();
   try {

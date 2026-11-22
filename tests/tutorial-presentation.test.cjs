@@ -65,7 +65,7 @@ test('reduced motion retains the completion message without falling pieces or a 
 test('SQL clauses stay on single physical lines without losing the original checkpoints',()=>{
   assert.equal(data.problems.find(p=>p.id==='problem-58').solution.split('\n')[0],'SELECT Name, YearGroup');
   for(const problem of data.problems.filter(p=>p.language==='sql')){
-    assert.ok(problem.solution.split('\n').every(line=>/^(SELECT|FROM|WHERE)\b/.test(line)));
+    assert.ok(problem.solution.split('\n').every(line=>/^(SELECT|FROM|WHERE|ORDER BY)\b/.test(line)));
     const guide=guides[problem.id],checks=guide.lines.flatMap(lineCheckpoints);
     assert.equal(checks.filter(q=>q.kind==='question').length,3);
     const frames=walkthroughFrames(problem,guide);

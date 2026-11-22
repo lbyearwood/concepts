@@ -5747,34 +5747,34 @@
     {
       "id": "problem-58",
       "category": "sql",
-      "title": "Select named database fields",
+      "title": "Display student names and year groups",
       "question": {
         "context": [
-          "Students is a database table with fields StudentID, Name and YearGroup. Write an SQL query for a text-based database console. Return the name and year group of every student, without the ID."
+          "The Students table stores one student on each row. Its columns are StudentID, Name, YearGroup and TutorGroup. Display every student's name and year group, without displaying their ID or tutor group."
         ],
         "requirements": [
-          "Select the Name field.",
-          "Select the YearGroup field without StudentID.",
-          "Read all matching records from the Students table, without adding a filter."
+          "Display the Name and YearGroup columns.",
+          "Include every student in the Students table.",
+          "Do not display StudentID."
         ],
         "marks": 3,
         "marking": {
           "basis": "csrevision",
           "points": [
-            "Select the Name field.",
-            "Select the YearGroup field without StudentID.",
-            "Read all matching records from the Students table, without adding a filter."
+            "Select Name.",
+            "Select YearGroup without StudentID or TutorGroup.",
+            "Read the Students table using FROM."
           ]
         },
-        "command": "Write an SQL query that:"
+        "command": "Write SQL to:"
       },
       "steps": [
         {
-          "title": "Choose the output fields",
+          "title": "Choose the columns to display",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "SELECT lists fields, separated by commas."
+              "text": "SELECT chooses the columns to display. Put a comma between Name and YearGroup."
             },
             {
               "type": "code",
@@ -5782,16 +5782,16 @@
             },
             {
               "type": "question",
-              "text": "Does choosing fewer fields also remove records?"
+              "text": "Will choosing two columns remove any students?"
             }
           ]
         },
         {
-          "title": "Choose the source table",
+          "title": "Name the table",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "FROM supplies the table containing those fields."
+              "text": "FROM Students tells SQL which table contains the student details."
             },
             {
               "type": "code",
@@ -5799,7 +5799,7 @@
             },
             {
               "type": "question",
-              "text": "Is WHERE necessary when every record is required?"
+              "text": "Do we need to leave out any students in this question?"
             }
           ]
         }
@@ -5820,23 +5820,48 @@
           {
             "name": "YearGroup",
             "type": "INTEGER"
+          },
+          {
+            "name": "TutorGroup",
+            "type": "TEXT"
           }
         ],
         "rows": [
           [
             1,
             "Ada",
-            10
+            10,
+            "10A"
           ],
           [
             2,
             "Ben",
-            11
+            11,
+            "11B"
           ],
           [
             3,
             "Cleo",
-            10
+            10,
+            "10C"
+          ],
+          [
+            4,
+            "Amir",
+            11,
+            "11A"
+          ],
+          [
+            5,
+            "Beth",
+            10,
+            "10B"
+          ],
+          [
+            6,
+            "Dan",
+            11,
+            "11C"
           ]
         ]
       }
@@ -5844,34 +5869,34 @@
     {
       "id": "problem-59",
       "category": "sql",
-      "title": "Find all available book records",
+      "title": "Find books that can be borrowed",
       "question": {
         "context": [
-          "Books has fields BookID, Title and Available. Available is 1 for a book that can be borrowed and 0 otherwise. Return every field of each available book through an SQL console."
+          "The Books table stores one book on each row. Available is 1 when a book can be borrowed and 0 when it cannot. Display the details of books that can be borrowed."
         ],
         "requirements": [
-          "Use * to select every field.",
-          "Read records from Books.",
-          "Use WHERE to include only records whose Available field equals 1."
+          "Display all four columns: BookID, Title, Available and Author.",
+          "Use the Books table.",
+          "Only include books where Available is equal to 1."
         ],
         "marks": 3,
         "marking": {
           "basis": "csrevision",
           "points": [
-            "Use * to select every field.",
-            "Read records from Books.",
-            "Use WHERE to include only records whose Available field equals 1."
+            "Select all four columns using * or the full column list.",
+            "Read the Books table using FROM.",
+            "Keep only rows where Available is equal to 1."
           ]
         },
-        "command": "Write an SQL query that:"
+        "command": "Write SQL to:"
       },
       "steps": [
         {
-          "title": "Select all record fields",
+          "title": "Display every column",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "The wildcard represents every column in the table."
+              "text": "SELECT * displays all four columns: BookID, Title, Available and Author."
             },
             {
               "type": "code",
@@ -5879,16 +5904,16 @@
             },
             {
               "type": "question",
-              "text": "Does * also mean every record must pass a filter?"
+              "text": "Does * mean every column or every row?"
             }
           ]
         },
         {
-          "title": "Filter the source records",
+          "title": "Keep books that can be borrowed",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "WHERE restricts rows after the table is identified."
+              "text": "Read Books, then use WHERE to keep only rows where Available is equal to 1."
             },
             {
               "type": "code",
@@ -5896,7 +5921,7 @@
             },
             {
               "type": "question",
-              "text": "Which supplied books have Available equal to 1?"
+              "text": "Which two books have 1 in the Available column?"
             }
           ]
         }
@@ -5917,23 +5942,48 @@
           {
             "name": "Available",
             "type": "INTEGER"
+          },
+          {
+            "name": "Author",
+            "type": "TEXT"
           }
         ],
         "rows": [
           [
             1,
             "Robots",
-            1
+            1,
+            "Patel"
           ],
           [
             2,
             "Stars",
-            0
+            0,
+            "Reed"
           ],
           [
             3,
             "Rivers",
-            1
+            1,
+            "Chen"
+          ],
+          [
+            4,
+            "Forests",
+            0,
+            "Ali"
+          ],
+          [
+            5,
+            "Space",
+            0,
+            "Young"
+          ],
+          [
+            6,
+            "Oceans",
+            0,
+            "Brown"
           ]
         ]
       }
@@ -5941,36 +5991,35 @@
     {
       "id": "problem-60",
       "category": "sql",
-      "title": "Filter prices at an inclusive limit",
+      "title": "Find products costing 10 or less",
       "question": {
         "context": [
-          "Products stores Name and Price. Return the name and price of each item costing at most 10. An item priced exactly 10 must be included. Use an SQL query in a text console."
+          "The Products table lists product names and prices in pounds. Display the name and price of products costing £10 or less. Include a product that costs exactly £10."
         ],
         "requirements": [
-          "Select Name and Price.",
-          "Read the Products table.",
-          "Compare Price using an inclusive upper-bound operator.",
-          "Use the upper limit 10 so the exact boundary is included and higher prices are excluded."
+          "Display Name and Price from the Products table.",
+          "Keep products whose Price is less than or equal to 10.",
+          "Leave out products whose Price is greater than 10."
         ],
         "marks": 4,
         "marking": {
           "basis": "csrevision",
           "points": [
             "Select Name and Price.",
-            "Read the Products table.",
-            "Compare Price using an inclusive upper-bound operator.",
-            "Use the upper limit 10 so the exact boundary is included and higher prices are excluded."
+            "Read the Products table using FROM.",
+            "Use WHERE with <=, meaning less than or equal to.",
+            "Check Price against 10 so exactly 10 is included."
           ]
         },
-        "command": "Write an SQL query that:"
+        "command": "Write SQL to:"
       },
       "steps": [
         {
-          "title": "Choose fields and source",
+          "title": "Display names and prices",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "The result needs both a product identity and its price."
+              "text": "Choose Name and Price, then read the Products table."
             },
             {
               "type": "code",
@@ -5978,16 +6027,16 @@
             },
             {
               "type": "question",
-              "text": "Why are both fields useful in the result?"
+              "text": "Which two columns should appear in the result?"
             }
           ]
         },
         {
-          "title": "Apply the inclusive condition",
+          "title": "Keep prices of 10 or less",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "At most includes equality as well as smaller values."
+              "text": "Check whether each Price is less than or equal to 10. This keeps 6.50 and 10, but leaves out 10.01."
             },
             {
               "type": "code",
@@ -5995,7 +6044,7 @@
             },
             {
               "type": "question",
-              "text": "Which operator includes exactly 10?"
+              "text": "Should a product costing exactly 10 be included?"
             }
           ]
         }
@@ -6012,20 +6061,52 @@
           {
             "name": "Price",
             "type": "REAL"
+          },
+          {
+            "name": "ProductID",
+            "type": "INTEGER"
+          },
+          {
+            "name": "Stock",
+            "type": "INTEGER"
           }
         ],
         "rows": [
           [
             "Pen set",
-            6.5
+            6.5,
+            1,
+            12
           ],
           [
             "Notebook",
-            10
+            10,
+            2,
+            8
           ],
           [
             "Folder",
-            10.01
+            10.01,
+            3,
+            15
+          ],
+          [
+            "Bag",
+            18,
+            4,
+            6
+          ],
+          [
+            "Bottle",
+            12,
+            5,
+            10
+          ],
+          [
+            "Calculator",
+            15,
+            6,
+            4
           ]
         ]
       }
@@ -6033,38 +6114,37 @@
     {
       "id": "problem-61",
       "category": "sql",
-      "title": "Require two database conditions",
+      "title": "Find Tuesday clubs with places (AND)",
       "question": {
         "context": [
-          "Clubs stores Name, Day and Places. Return only club names for clubs meeting on Tuesday that also have at least one place remaining. Both requirements must hold in the same record."
+          "The Clubs table lists each club's name, meeting day and number of places left. Display club names only when the club meets on Tuesday and has at least one place left."
         ],
         "requirements": [
-          "Select only Name.",
-          "Read records from Clubs.",
-          "Compare Day with the quoted text Tuesday.",
-          "Require Places to be greater than zero.",
-          "Combine the two row conditions with AND."
+          "Display only the Name column from Clubs.",
+          "The Day must be equal to Tuesday.",
+          "Places must be greater than 0.",
+          "Both rules must be true for the same club: leave out full clubs and clubs on other days."
         ],
         "marks": 5,
         "marking": {
           "basis": "csrevision",
           "points": [
             "Select only Name.",
-            "Read records from Clubs.",
-            "Compare Day with the quoted text Tuesday.",
-            "Require Places to be greater than zero.",
-            "Combine the two row conditions with AND."
+            "Read the Clubs table using FROM.",
+            "Check whether Day is equal to 'Tuesday'.",
+            "Check whether Places is greater than 0.",
+            "Use AND so both checks must be true for the same club."
           ]
         },
-        "command": "Write an SQL query that:"
+        "command": "Write SQL to:"
       },
       "steps": [
         {
-          "title": "Choose the required result",
+          "title": "Display club names",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "The output needs club names rather than every field."
+              "text": "Choose the Name column and read the Clubs table."
             },
             {
               "type": "code",
@@ -6072,16 +6152,16 @@
             },
             {
               "type": "question",
-              "text": "Which clause supplies the table?"
+              "text": "Do we need to display Places just to check whether it is greater than 0?"
             }
           ]
         },
         {
-          "title": "Combine both restrictions",
+          "title": "Check the day and the places left",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "A correct day alone is insufficient when no places remain."
+              "text": "Keep a club only when Day is equal to Tuesday AND Places is greater than 0."
             },
             {
               "type": "code",
@@ -6089,7 +6169,7 @@
             },
             {
               "type": "question",
-              "text": "How does AND differ from OR for these records?"
+              "text": "Why should Chess on Wednesday be left out even though it has places left?"
             }
           ]
         }
@@ -6110,28 +6190,48 @@
           {
             "name": "Places",
             "type": "INTEGER"
+          },
+          {
+            "name": "Room",
+            "type": "TEXT"
           }
         ],
         "rows": [
           [
             "Code",
             "Tuesday",
-            2
+            2,
+            "G1"
           ],
           [
             "Art",
             "Tuesday",
-            0
+            0,
+            "A2"
           ],
           [
             "Chess",
             "Wednesday",
-            5
+            5,
+            "C1"
           ],
           [
             "Music",
             "Tuesday",
-            1
+            1,
+            "M1"
+          ],
+          [
+            "Drama",
+            "Tuesday",
+            0,
+            "D1"
+          ],
+          [
+            "Sport",
+            "Friday",
+            3,
+            "H1"
           ]
         ]
       }
@@ -6139,38 +6239,36 @@
     {
       "id": "problem-62",
       "category": "sql",
-      "title": "Accept either database category",
+      "title": "Find Puzzle or Strategy games (OR)",
       "question": {
         "context": [
-          "Games stores Title and Genre. Each game has exactly one genre. Return the titles of games whose genre is Puzzle or Strategy, excluding other genres."
+          "The Games table lists game titles and genres. Each game has one genre. Display the titles of games whose genre is Puzzle or Strategy."
         ],
         "requirements": [
-          "Select only Title.",
-          "Read the Games table.",
-          "Compare Genre with the quoted text Puzzle.",
-          "Also test Genre against the quoted text Strategy.",
-          "Combine the complete comparisons with OR so either genre qualifies."
+          "Display only the Title column from Games.",
+          "Include a game if its Genre is equal to Puzzle or equal to Strategy.",
+          "Leave out games with any other genre."
         ],
         "marks": 5,
         "marking": {
           "basis": "csrevision",
           "points": [
             "Select only Title.",
-            "Read the Games table.",
-            "Compare Genre with the quoted text Puzzle.",
-            "Also test Genre against the quoted text Strategy.",
-            "Combine the complete comparisons with OR so either genre qualifies."
+            "Read the Games table using FROM.",
+            "Check whether Genre is equal to 'Puzzle'.",
+            "Check whether Genre is equal to 'Strategy'.",
+            "Use OR so either of those genres is included."
           ]
         },
-        "command": "Write an SQL query that:"
+        "command": "Write SQL to:"
       },
       "steps": [
         {
-          "title": "Choose titles from the source",
+          "title": "Display the game titles",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "The result identifies matching games."
+              "text": "Choose the Title column and read the Games table."
             },
             {
               "type": "code",
@@ -6178,16 +6276,16 @@
             },
             {
               "type": "question",
-              "text": "Which field determines whether a game qualifies?"
+              "text": "Which column contains the genre we need to check?"
             }
           ]
         },
         {
-          "title": "Allow either text match",
+          "title": "Keep either of the two genres",
           "blocks": [
             {
               "type": "paragraph",
-              "text": "Repeat the field comparison on both sides of OR."
+              "text": "Check whether Genre is equal to 'Puzzle' OR Genre is equal to 'Strategy'."
             },
             {
               "type": "code",
@@ -6195,7 +6293,7 @@
             },
             {
               "type": "question",
-              "text": "Why would AND return no records for these two different single genres?"
+              "text": "Should Castle, whose genre is Strategy, be included?"
             }
           ]
         }
@@ -6212,27 +6310,304 @@
           {
             "name": "Genre",
             "type": "TEXT"
+          },
+          {
+            "name": "AgeRating",
+            "type": "INTEGER"
+          },
+          {
+            "name": "Players",
+            "type": "INTEGER"
           }
         ],
         "rows": [
           [
             "Logic",
-            "Puzzle"
+            "Puzzle",
+            3,
+            1
           ],
           [
             "Castle",
-            "Strategy"
+            "Strategy",
+            7,
+            2
           ],
           [
             "Racer",
-            "Racing"
+            "Racing",
+            3,
+            4
           ],
           [
             "Blocks",
-            "Puzzle"
+            "Puzzle",
+            3,
+            1
+          ],
+          [
+            "Dash",
+            "Action",
+            7,
+            2
+          ],
+          [
+            "Tennis",
+            "Sport",
+            3,
+            2
           ]
         ]
       }
+    },
+    {
+      "id": "problem-63",
+      "category": "sql",
+      "title": "Sort prices from lowest to highest (ASC)",
+      "question": {
+        "context": [
+          "Extra SQL practice: sorting with ORDER BY and ASC. A shop stores product names and prices in the Products table. Display all products, starting with the cheapest and finishing with the most expensive."
+        ],
+        "command": "Write SQL to:",
+        "requirements": [
+          "Display the Name and Price columns from Products.",
+          "Include every product.",
+          "Put the prices in ascending order: lowest price first, highest price last.",
+          "Use ASC to choose ascending order."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Select Name and Price.",
+            "Read Products using FROM.",
+            "Sort the result using ORDER BY Price.",
+            "Specify ascending order with ASC."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Choose the columns and table",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Display product names and prices from Products."
+            },
+            {
+              "type": "code",
+              "text": "SELECT Name, Price\nFROM Products"
+            },
+            {
+              "type": "question",
+              "text": "Do we need to leave out any products?"
+            }
+          ]
+        },
+        {
+          "title": "Put the lowest price first",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "ORDER BY Price sorts by price. ASC puts smaller prices before larger prices."
+            },
+            {
+              "type": "code",
+              "text": "ORDER BY Price ASC;"
+            },
+            {
+              "type": "question",
+              "text": "Which product should appear first, and which should appear last?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT Name, Price\nFROM Products\nORDER BY Price ASC;",
+      "language": "sql",
+      "database": {
+        "table": "Products",
+        "columns": [
+          {
+            "name": "Name",
+            "type": "TEXT"
+          },
+          {
+            "name": "Price",
+            "type": "REAL"
+          },
+          {
+            "name": "ProductID",
+            "type": "INTEGER"
+          },
+          {
+            "name": "Stock",
+            "type": "INTEGER"
+          }
+        ],
+        "rows": [
+          [
+            "Mouse",
+            12.5,
+            1,
+            12
+          ],
+          [
+            "Cable",
+            3,
+            2,
+            30
+          ],
+          [
+            "Keyboard",
+            24,
+            3,
+            6
+          ],
+          [
+            "Webcam",
+            18,
+            4,
+            5
+          ],
+          [
+            "Headphones",
+            15,
+            5,
+            8
+          ],
+          [
+            "USB hub",
+            8,
+            6,
+            12
+          ]
+        ]
+      },
+      "practiceScope": "sql-extension"
+    },
+    {
+      "id": "problem-64",
+      "category": "sql",
+      "title": "Find names starting with A (LIKE)",
+      "question": {
+        "context": [
+          "Extra SQL practice: finding text with LIKE. The Students table stores student names. Display the names that begin with the letter A, such as Ada or Amir. Do not include a name just because it contains A later on."
+        ],
+        "command": "Write SQL to:",
+        "requirements": [
+          "Display the Name column from Students.",
+          "Only include names whose first letter is A.",
+          "Use LIKE with the pattern 'A%'. The % allows any letters after the A, including no extra letters."
+        ],
+        "marks": 4,
+        "marking": {
+          "basis": "csrevision",
+          "points": [
+            "Select Name.",
+            "Read Students using FROM.",
+            "Check Name using WHERE and LIKE.",
+            "Use the starts-with pattern 'A%'."
+          ]
+        }
+      },
+      "steps": [
+        {
+          "title": "Choose the names to display",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Display Name from the Students table."
+            },
+            {
+              "type": "code",
+              "text": "SELECT Name\nFROM Students"
+            },
+            {
+              "type": "question",
+              "text": "Does SELECT Name decide which names start with A?"
+            }
+          ]
+        },
+        {
+          "title": "Keep names beginning with A",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "LIKE 'A%' keeps names starting with A. The % allows the rest of the name."
+            },
+            {
+              "type": "code",
+              "text": "WHERE Name LIKE 'A%';"
+            },
+            {
+              "type": "question",
+              "text": "Why does Ada appear but Hana does not?"
+            }
+          ]
+        }
+      ],
+      "solution": "SELECT Name\nFROM Students\nWHERE Name LIKE 'A%';",
+      "language": "sql",
+      "database": {
+        "table": "Students",
+        "columns": [
+          {
+            "name": "StudentID",
+            "type": "INTEGER"
+          },
+          {
+            "name": "Name",
+            "type": "TEXT"
+          },
+          {
+            "name": "YearGroup",
+            "type": "INTEGER"
+          },
+          {
+            "name": "TutorGroup",
+            "type": "TEXT"
+          }
+        ],
+        "rows": [
+          [
+            1,
+            "Ada",
+            10,
+            "10A"
+          ],
+          [
+            2,
+            "Ben",
+            11,
+            "11B"
+          ],
+          [
+            3,
+            "Amir",
+            11,
+            "11A"
+          ],
+          [
+            4,
+            "Hana",
+            10,
+            "10C"
+          ],
+          [
+            5,
+            "Aisha",
+            10,
+            "10B"
+          ],
+          [
+            6,
+            "Cleo",
+            11,
+            "11C"
+          ]
+        ]
+      },
+      "practiceScope": "sql-extension"
     }
   ],
   "practice_sources": [
