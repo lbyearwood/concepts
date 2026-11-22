@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / 'courses/gcse-computer-science/tutorials/programming-problems.html'
 CATALOGUE = ROOT / 'data/programming-problems.json'
 GUIDES = ROOT / 'data/tutorial-guides.json'
+PRACTICE = ROOT / 'data/practice-problems.json'
+PRACTICE_GUIDES = ROOT / 'data/practice-tutorial-guides.json'
 TEMPLATE = ROOT / 'scripts/templates/programming-problems.html'
 
 def validate_assessment(question):
@@ -50,6 +52,11 @@ def validate_solution(problem):
 def output():
     data = json.loads(CATALOGUE.read_text(encoding='utf-8'))
     guides = json.loads(GUIDES.read_text(encoding='utf-8'))
+    data['practiceProblems'] = json.loads(PRACTICE.read_text(encoding='utf-8'))['problems']
+    practice_guides = json.loads(PRACTICE_GUIDES.read_text(encoding='utf-8'))['problems']
+    if set(guides['problems']) & set(practice_guides):
+        raise ValueError('Practice and exam guide IDs must be separate')
+    guides['problems'].update(practice_guides)
     if data.get('interface') != 'console':
         raise ValueError('Programming problems must use console input and output')
     practice_ids = [category['id'] for category in data['practiceCategories']]
@@ -59,11 +66,16 @@ def output():
         raise ValueError('Invalid practice categories')
     category_ids = {category['id'] for category in data['categories']}
     ids = set()
-    for problem in data['problems']:
-        if problem['id'] in ids or problem['category'] not in category_ids or not problem['steps']:
+    all_problems = data['problems'] + data['practiceProblems']
+    for problem in all_problems:
+        practice = problem.get('collection') in {'level1', 'level2', 'level3'}
+        valid_categories = set(practice_ids) if practice else category_ids
+        if (problem['id'] in ids or problem['category'] not in valid_categories or not problem['steps']
+                or (problem in data['practiceProblems'] and not practice)):
             raise ValueError(f"Invalid tutorial: {problem['id']}")
         ids.add(problem['id'])
-        validate_assessment(problem['question'])
+        if not practice:
+            validate_assessment(problem['question'])
         validate_solution(problem)
         for step in problem['steps']:
             if not step['title'] or not step['blocks']:
@@ -71,7 +83,7 @@ def output():
             if any(block['type'] not in {'paragraph', 'code', 'question', 'error'} for block in step['blocks']):
                 raise ValueError(f"Unknown tutorial block: {problem['id']}")
     for problem_id, guide in guides['problems'].items():
-        problem = next((item for item in data['problems'] if item['id'] == problem_id), None)
+        problem = next((item for item in all_problems if item['id'] == problem_id), None)
         if not problem:
             raise ValueError(f'Unknown guided problem: {problem_id}')
         code_lines = problem['solution'].split('\n')
@@ -109,7 +121,7 @@ def output():
             if not coding_steps.issubset(set(mapped_steps)):
                 raise ValueError(f'Missing coding stage: {problem_id}')
     if set(guides['problems']) != ids:
-        raise ValueError('Every existing Exam question requires a complete guide')
+        raise ValueError('Every exam and practice problem requires a complete guide')
     previous = PAGE.read_text(encoding='utf-8')
     sidebar = re.search(r'  <aside class="site-sidebar".*?</aside>', previous, re.S)
     if not sidebar:

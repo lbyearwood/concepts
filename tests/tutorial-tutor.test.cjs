@@ -1,9 +1,9 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { checkAnswer, createTutor } = require('../assets/tutorial-tutor.js');
-const guides = require('../data/tutorial-guides.json');
+const guides = {problems:{...require('../data/tutorial-guides.json').problems,...require('../data/practice-tutorial-guides.json').problems}};
 const codeStyle = require('../assets/tutorial-code-style.js');
-const catalogue = require('../data/programming-problems.json');
+const catalogue = {problems:[...require('../data/programming-problems.json').problems,...require('../data/practice-problems.json').problems]};
 
 function harness() {
   class Node {

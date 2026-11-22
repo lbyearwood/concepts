@@ -1,5 +1,9 @@
 (() => {
   'use strict';
+  const problemCollection = problem => problem.collection || 'exam';
+  function collectionProblems(data, collection, category) {
+    return [...data.problems, ...(data.practiceProblems || [])].filter(problem => problemCollection(problem) === collection && problem.category === category);
+  }
   function createDismissalGuard(dialog, isProtected) {
     function requestClose(reason) {
       if (isProtected() && reason !== 'close-button') return false;
@@ -22,7 +26,7 @@
         if (direction !== -1 && direction !== 1) return null;
         const problem = problems.find(item => item.id === id);
         if (!problem) return null;
-        const group = problems.filter(item => item.category === problem.category);
+        const group = problems.filter(item => item.category === problem.category && problemCollection(item) === problemCollection(problem));
         return group[group.findIndex(item => item.id === id) + direction] || null;
       }
     };
@@ -36,16 +40,18 @@
     const exact = find(position.kind);
     return exact >= 0 ? exact : Math.max(0, find('explanation'));
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { createDismissalGuard, createProblemSession, findPositionFrame }; return; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { createDismissalGuard, createProblemSession, findPositionFrame, collectionProblems }; return; }
   const dataNode = document.getElementById('problem-data');
   const dialog = document.getElementById('tutorial-modal');
   if (!dataNode || !dialog) return;
   const data = JSON.parse(dataNode.textContent);
+  const allProblems = [...data.problems, ...(data.practiceProblems || [])];
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const practiceNames = new Map(data.practiceCategories.map(category => [category.id, category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Easy', level2: 'Medium', level3: 'Hard'};
+  const categoryLabel = problem => problemCollection(problem) === 'exam' ? categoryNames.get(problem.category) : collectionNames[problem.collection] + ' · ' + practiceNames.get(problem.category);
   const state = {collection: 'exam', category: 'traversal', practiceCategory: data.practiceCategories[0].id, problem: null, step: 0, line: 0, frame: 0, started: false};
-  const session = createProblemSession(data.problems);
+  const session = createProblemSession(allProblems);
   const viewPages = new Map(), disclosureSync = new Map();
   let renderedView = null;
   const requestClose = createDismissalGuard(dialog, () => !!guides.problems[state.problem]);
@@ -87,7 +93,7 @@
     }
   });
   const tutor = window.CSRTutorialTutor.createTutor(dialog.querySelector('.tutorial-tutor'), guides, {
-    problems: data.problems,
+    problems: allProblems,
     onAnswer: correct => { refreshCheckpointControls(); void typingSound.answer(correct); }
   });
   const { renderPython, renderCode } = window.CSRTutorialCodeStyle;
@@ -105,13 +111,13 @@
   const isTypedTutorial = problem => !!guides.problems[problem.id];
   const limitFor = (problem, frames) => checkpointLimit(frames, id => tutor.isCorrect(problem.id, id));
   function canVisitFrame(target) {
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     return target >= 0 && target <= limitFor(problem, framesFor(problem));
   }
   function refreshCheckpointControls() {
     const next = dialog.querySelector('.tutorial-next');
     next.removeAttribute('aria-describedby');
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     if (!problem || !isTypedTutorial(problem)) return;
     const frames = framesFor(problem), lines = tutorialCodeLines(problem, guides.problems[problem.id]), limit = limitFor(problem, frames);
     next.disabled = state.frame >= limit;
@@ -124,7 +130,7 @@
     refreshCompletion();
   }
   function refreshCompletion() {
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     if (!problem || !guides.problems[problem.id]) return;
     const checks = guides.problems[problem.id].lines.flatMap(line => lineCheckpoints(line).map(item => item.question));
     completion.update({problemId: problem.id, atEnd: state.frame === framesFor(problem).length - 1,
@@ -173,11 +179,11 @@
   }
   function updateProblemNavigation(problem) {
     const nav = dialog.querySelector('.tutorial-problem-nav');
-    nav.setAttribute('aria-label', 'Problems in ' + categoryNames.get(problem.category));
+    nav.setAttribute('aria-label', 'Problems in ' + categoryLabel(problem));
     for (const [selector, direction, label] of [['.tutorial-problem-previous', -1, 'Previous'], ['.tutorial-problem-next', 1, 'Next']]) {
       const button = nav.querySelector(selector), target = session.neighbour(problem.id, direction);
       button.disabled = !target;
-      button.setAttribute('aria-label', label + ' problem in ' + categoryNames.get(problem.category));
+      button.setAttribute('aria-label', label + ' problem in ' + categoryLabel(problem));
       button.title = target ? label + ' problem: ' + target.title : label === 'Previous' ? 'First problem in this category' : 'Last problem in this category';
     }
   }
@@ -190,7 +196,7 @@
     if (!guides.problems[state.problem]) return;
     const bottom = body.getBoundingClientRect().bottom - parseFloat(getComputedStyle(body).paddingBottom);
     if (question.open && !help.open) {
-      if (dialog.dataset.questionLayout === 'sql') { dialog.style.removeProperty('--exam-content-height'); return; }
+      if (dialog.dataset.questionLayout !== 'standard') { dialog.style.removeProperty('--exam-content-height'); return; }
       const gap = parseFloat(getComputedStyle(body).gap) || 0;
       const height = bottom - question.querySelector('summary').getBoundingClientRect().bottom - help.querySelector('summary').getBoundingClientRect().height - gap;
       dialog.style.setProperty('--exam-content-height', Math.max(0, Math.floor(height)) + 'px');
@@ -229,12 +235,15 @@
       const selected = button.dataset.practiceCategory === state.practiceCategory;
       button.setAttribute('aria-selected', String(selected));
       button.tabIndex = selected ? 0 : -1;
+      const count = collectionProblems(data, state.collection, button.dataset.practiceCategory).length;
+      let badge = button.querySelector('.category-count');
+      if (!badge) { badge = element('span', 'category-count'); badge.setAttribute('aria-hidden', 'true'); button.append(badge); }
+      badge.hidden = count === 0; badge.textContent = String(count);
     });
-    // Practice categories are ready for the user's later console problems.
     const title = exam ? categoryNames.get(state.category) : collectionNames[state.collection] + ' · ' + practiceNames.get(state.practiceCategory);
     syncCategoryPanel();
     document.getElementById('problem-category-title').textContent = title;
-    const problems = exam ? data.problems.filter(problem => problem.category === state.category) : [];
+    const problems = collectionProblems(data, state.collection, exam ? state.category : state.practiceCategory);
     list.setAttribute('aria-label', title + (title.endsWith('problems') ? '' : ' problems'));
     list.replaceChildren();
     problems.forEach((problem, index) => {
@@ -245,7 +254,7 @@
       button.setAttribute('aria-haspopup', 'dialog');
       button.setAttribute('aria-controls', 'tutorial-modal');
       const open = element('span', 'problem-open');
-      open.append(element('span', '', 'Open question'), icon('right'));
+      open.append(element('span', '', exam ? 'Open question' : 'Open problem'), icon('right'));
       button.append(element('span', 'problem-number', String(index + 1).padStart(2, '0')), element('span', 'problem-title', problem.title), open);
       item.append(button);
       list.append(item);
@@ -258,7 +267,7 @@
     document.querySelector('.problem-announcement').textContent = title + '. ' + problems.length + (problems.length === 1 ? ' problem.' : ' problems.');
   }
   function renderTypedCode(lines, animate) {
-    const language = data.problems.find(problem => problem.id === state.problem)?.language || 'python';
+    const language = allProblems.find(problem => problem.id === state.problem)?.language || 'python';
     const space = element('div', 'tutorial-code-space');
     const pre = element('pre', 'tutorial-code-editor');
     const code = element('code');
@@ -299,7 +308,7 @@
     typingSound.stop();
     completion.stop();
     codePager = null;
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     if (!problem) return;
     const typed = isTypedTutorial(problem);
     soundToggle.hidden = !typed;
@@ -316,7 +325,7 @@
     renderedView = viewKey();
     state.step = Math.max(0, Math.min(state.step, problem.steps.length - 1));
     const step = problem.steps[state.step];
-    dialog.querySelector('.tutorial-path').textContent = 'Exam questions / ' + categoryNames.get(problem.category);
+    dialog.querySelector('.tutorial-path').textContent = problemCollection(problem) === 'exam' ? 'Exam questions / ' + categoryLabel(problem) : categoryLabel(problem);
     document.getElementById('tutorial-title').textContent = problem.title;
     updateProblemNavigation(problem);
     dialog.querySelector('.tutorial-step-title').textContent = 'Step ' + (state.step + 1) + '. ' + step.title;
@@ -360,7 +369,7 @@
     dialog.querySelector('[data-next-label]').textContent = last ? typed ? 'End' : 'Done' : typed ? frames[state.frame + 1].kind === 'review' ? 'Review' : frames[state.frame + 1].line === state.line ? frames[state.frame + 1].kind === 'prediction' ? 'Predict' : frames[state.frame + 1].kind === 'question' ? 'Question' : 'Explain line' : 'Next line' : 'Next';
     dialog.querySelector('.tutorial-next .problem-icon').hidden = last;
     refreshCheckpointControls();
-    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length + (kind === 'prediction' ? '. Predict the next step.' : '') : '') : problem.title + '. Exam question. Tutorial collapsed.';
+    dialog.querySelector('.tutorial-announcement').textContent = help.open ? problem.title + '. Step ' + (state.step + 1) + '. ' + step.title + (typed ? '. Line ' + (state.line + 1) + ' of ' + lines.length + (kind === 'prediction' ? '. Predict the next step.' : '') : '') : problem.title + (problemCollection(problem) === 'exam' ? '. Exam question.' : '. Problem.') + ' Tutorial collapsed.';
     if (typed && help.open) { fitWorkspace(); codePager?.layout(true); restoreViewPages(); }
     else if (help.open) {
       body.scrollTop += help.getBoundingClientRect().top - body.getBoundingClientRect().top - parseFloat(getComputedStyle(body).paddingTop);
@@ -368,7 +377,7 @@
     } else body.scrollTop = 0;
   }
   function openTutorial(id, button) {
-    const problem = data.problems.find(item => item.id === id);
+    const problem = allProblems.find(item => item.id === id);
     if (!problem) return;
     rememberProblem();
     typewriter.cancel(); typingSound.stop(); completion.stop(); tutor.hide();
@@ -378,7 +387,9 @@
     dialog.dataset.problem = problem.id;
     dialog.dataset.guided = String(isTypedTutorial(problem));
     const sqlQuestion = problem.database && problem.language === 'sql';
-    dialog.dataset.questionLayout = sqlQuestion ? 'sql' : 'standard';
+    const practiceQuestion = problemCollection(problem) !== 'exam';
+    dialog.dataset.questionLayout = sqlQuestion ? 'sql' : practiceQuestion ? 'practice' : 'standard';
+    question.querySelector('summary').textContent = practiceQuestion ? 'Problem' : 'Exam question';
     dialog.setAttribute('closedby', isTypedTutorial(problem) ? 'none' : 'closerequest');
     state.problem = id;
     state.step = saved?.step || 0;
@@ -391,6 +402,7 @@
     const questionContent = dialog.querySelector('.tutorial-question-content');
     questionContent.replaceChildren();
     const questionText = sqlQuestion ? renderDatabaseQuestion(problem) : isTypedTutorial(problem) ? element('div', 'tutorial-question-text') : questionContent;
+    if (practiceQuestion) questionText.classList.add('practice-question');
     if (!sqlQuestion) {
       problem.question.context.forEach(text => questionText.append(element('p', '', text)));
       if (problem.question.givenCode) {
@@ -403,12 +415,19 @@
       const requirements = element('ol');
       problem.question.requirements.forEach((text, index) => { const item = element('li', '', text); item.value = index + 1; requirements.append(item); });
       questionText.append(requirements);
-      questionText.append(element('p', 'tutorial-question-marks', '(' + problem.question.marks + ' marks)'));
+      if (problem.question.example) {
+        const example = element('div', 'practice-example');
+        for (const [label, value] of [['Example input', problem.question.example.inputs.join('\n')], ['Expected output', problem.question.example.output.trimEnd()]]) {
+          const column = element('div'); column.append(element('strong', '', label), element('pre', '', value)); example.append(column);
+        }
+        questionText.append(example);
+      }
+      if (problem.question.marks) questionText.append(element('p', 'tutorial-question-marks', '(' + problem.question.marks + ' marks)'));
     }
     examPager = null;
     if (isTypedTutorial(problem)) {
       questionContent.append(questionText);
-      if (!sqlQuestion) examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > ol > li')], 'exam question');
+      if (dialog.dataset.questionLayout === 'standard') examPager = window.CSRTutorialFit.createPager(questionContent, questionText, () => [...questionText.querySelectorAll(':scope > p, :scope > ol > li')], 'exam question');
     }
     renderStep(false);
     if (!dialog.open) dialog.showModal();
@@ -434,7 +453,7 @@
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) { typewriter.finish(); completion.stop(); } });
   compactView.addEventListener('change', () => {
     if (!guides.problems[state.problem]) return;
-    const problem = data.problems.find(item => item.id === state.problem), frames = framesFor(problem);
+    const problem = allProblems.find(item => item.id === state.problem), frames = framesFor(problem);
     const kind = dialog.dataset.tutorialView;
     const lines = tutorialCodeLines(problem, guides.problems[problem.id]);
     state.frame = Math.min(findPositionFrame(frames, lines, {line: state.line, step: state.step, kind, checkpoint: dialog.dataset.checkpoint}, frameStep), limitFor(problem, frames));
@@ -482,7 +501,7 @@
     const button = event.target.closest('[data-step]');
     if (!button) return;
     const targetStep = Number(button.dataset.step);
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
       void typingSound.unlock();
       const lines = tutorialCodeLines(problem, guides.problems[problem.id]);
@@ -494,14 +513,14 @@
     dialog.querySelector('[data-step="' + state.step + '"]').focus();
   });
   dialog.querySelector('.tutorial-back').addEventListener('click', () => {
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) state.frame--;
     else state.step--;
     renderStep(false);
     if (state.step === 0) dialog.querySelector('[data-step="0"]').focus();
   });
   dialog.querySelector('.tutorial-next').addEventListener('click', () => {
-    const problem = data.problems.find(item => item.id === state.problem);
+    const problem = allProblems.find(item => item.id === state.problem);
     if (isTypedTutorial(problem)) {
       if (!canVisitFrame(state.frame + 1)) return;
       void typingSound.unlock();

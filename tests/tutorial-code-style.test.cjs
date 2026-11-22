@@ -2,7 +2,7 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { tokenizeCode, tokenizePython, visibleTokens, tutorSegments, renderCode, renderPython, renderTutorText } = require('../assets/tutorial-code-style.js');
 const guide = require('../data/tutorial-guides.json').problems['problem-1'];
-const allGuides = Object.values(require('../data/tutorial-guides.json').problems);
+const allGuides = Object.values({...require('../data/tutorial-guides.json').problems,...require('../data/practice-tutorial-guides.json').problems});
 
 test('every typed prefix and completed line preserves the exact approved Python', () => {
   for (const { code } of allGuides.flatMap(guide => guide.lines)) {

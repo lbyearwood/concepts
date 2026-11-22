@@ -1,0 +1,1420 @@
+{
+  "easy-science-01": [
+    {
+      "inputs": [
+        "Leaf",
+        "Garden"
+      ],
+      "output": "Leaf-Garden\n"
+    },
+    {
+      "inputs": [
+        "Rock",
+        "Beach"
+      ],
+      "output": "Rock-Beach\n"
+    }
+  ],
+  "easy-science-02": [
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Kelvin: 273.15\n"
+    },
+    {
+      "inputs": [
+        "-10"
+      ],
+      "output": "Kelvin: 263.15\n"
+    }
+  ],
+  "easy-science-03": [
+    {
+      "inputs": [
+        "100",
+        "20"
+      ],
+      "output": "Speed: 5.00 m/s\n"
+    },
+    {
+      "inputs": [
+        "7.5",
+        "3"
+      ],
+      "output": "Speed: 2.50 m/s\n"
+    }
+  ],
+  "easy-science-04": [
+    {
+      "inputs": [
+        "50",
+        "10"
+      ],
+      "output": "Density: 5.00 g/cm3\n"
+    },
+    {
+      "inputs": [
+        "7.5",
+        "3"
+      ],
+      "output": "Density: 2.50 g/cm3\n"
+    }
+  ],
+  "easy-science-05": [
+    {
+      "inputs": [
+        "100"
+      ],
+      "output": "Boiling\n"
+    },
+    {
+      "inputs": [
+        "99.9"
+      ],
+      "output": "Below boiling\n"
+    },
+    {
+      "inputs": [
+        "105"
+      ],
+      "output": "Boiling\n"
+    }
+  ],
+  "easy-science-06": [
+    {
+      "inputs": [
+        "37"
+      ],
+      "output": "Whole cm: 3\nRemaining mm: 7\n"
+    },
+    {
+      "inputs": [
+        "20"
+      ],
+      "output": "Whole cm: 2\nRemaining mm: 0\n"
+    }
+  ],
+  "easy-science-07": [
+    {
+      "inputs": [
+        "4",
+        "5",
+        "6"
+      ],
+      "output": "Mean: 5.0\n"
+    },
+    {
+      "inputs": [
+        "1",
+        "2",
+        "2"
+      ],
+      "output": "Mean: 1.7\n"
+    }
+  ],
+  "easy-science-08": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "3\n2\n1\nStart\n"
+    },
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "1\nStart\n"
+    }
+  ],
+  "easy-science-09": [
+    {
+      "inputs": [
+        "ON"
+      ],
+      "output": "Light detected\n"
+    },
+    {
+      "inputs": [
+        "off"
+      ],
+      "output": "No light detected\n"
+    }
+  ],
+  "easy-science-10": [
+    {
+      "inputs": [
+        "2",
+        "0",
+        "3.5"
+      ],
+      "output": "Total rain: 5.5 mm\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "0",
+        "0"
+      ],
+      "output": "Total rain: 0.0 mm\n"
+    }
+  ],
+  "easy-maths-01": [
+    {
+      "inputs": [
+        "5",
+        "3"
+      ],
+      "output": "Area: 15.0 cm2\n"
+    },
+    {
+      "inputs": [
+        "2.5",
+        "4"
+      ],
+      "output": "Area: 10.0 cm2\n"
+    }
+  ],
+  "easy-maths-02": [
+    {
+      "inputs": [
+        "5",
+        "3"
+      ],
+      "output": "Perimeter: 16.0 cm\n"
+    },
+    {
+      "inputs": [
+        "2.5",
+        "4"
+      ],
+      "output": "Perimeter: 13.0 cm\n"
+    }
+  ],
+  "easy-maths-03": [
+    {
+      "inputs": [
+        "17",
+        "5"
+      ],
+      "output": "Groups: 3\nLeft over: 2\n"
+    },
+    {
+      "inputs": [
+        "12",
+        "4"
+      ],
+      "output": "Groups: 3\nLeft over: 0\n"
+    }
+  ],
+  "easy-maths-04": [
+    {
+      "inputs": [
+        "4"
+      ],
+      "output": "Square: 16\n"
+    },
+    {
+      "inputs": [
+        "-3"
+      ],
+      "output": "Square: 9\n"
+    }
+  ],
+  "easy-maths-05": [
+    {
+      "inputs": [
+        "8",
+        "3"
+      ],
+      "output": "8\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "9"
+      ],
+      "output": "9\n"
+    },
+    {
+      "inputs": [
+        "5",
+        "5"
+      ],
+      "output": "5\n"
+    }
+  ],
+  "easy-maths-06": [
+    {
+      "inputs": [
+        "8"
+      ],
+      "output": "Even\n"
+    },
+    {
+      "inputs": [
+        "7"
+      ],
+      "output": "Odd\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Even\n"
+    }
+  ],
+  "easy-maths-07": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "1\n2\n3\n"
+    },
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "1\n"
+    }
+  ],
+  "easy-maths-08": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "3\n6\n9\n12\n15\n"
+    },
+    {
+      "inputs": [
+        "2"
+      ],
+      "output": "2\n4\n6\n8\n10\n"
+    }
+  ],
+  "easy-maths-09": [
+    {
+      "inputs": [
+        "6",
+        "4"
+      ],
+      "output": "Area: 12.0 cm2\n"
+    },
+    {
+      "inputs": [
+        "3",
+        "5"
+      ],
+      "output": "Area: 7.5 cm2\n"
+    }
+  ],
+  "easy-maths-10": [
+    {
+      "inputs": [
+        "4"
+      ],
+      "output": "Total: 10\n"
+    },
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "Total: 1\n"
+    }
+  ],
+  "easy-finance-01": [
+    {
+      "inputs": [
+        "2.5",
+        "3.2"
+      ],
+      "output": "Total: 5.70\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "4"
+      ],
+      "output": "Total: 4.00\n"
+    }
+  ],
+  "easy-finance-02": [
+    {
+      "inputs": [
+        "6.5",
+        "10"
+      ],
+      "output": "Change: 3.50\n"
+    },
+    {
+      "inputs": [
+        "5",
+        "5"
+      ],
+      "output": "Change: 0.00\n"
+    }
+  ],
+  "easy-finance-03": [
+    {
+      "inputs": [
+        "5"
+      ],
+      "output": "Four-week saving: 20.00\n"
+    },
+    {
+      "inputs": [
+        "2.75"
+      ],
+      "output": "Four-week saving: 11.00\n"
+    }
+  ],
+  "easy-finance-04": [
+    {
+      "inputs": [
+        "50"
+      ],
+      "output": "Sale price: 40.00\n"
+    },
+    {
+      "inputs": [
+        "12.5"
+      ],
+      "output": "Sale price: 10.00\n"
+    }
+  ],
+  "easy-finance-05": [
+    {
+      "inputs": [
+        "24",
+        "3"
+      ],
+      "output": "Each pays: 8.00\n"
+    },
+    {
+      "inputs": [
+        "10",
+        "4"
+      ],
+      "output": "Each pays: 2.50\n"
+    }
+  ],
+  "easy-finance-06": [
+    {
+      "inputs": [
+        "4.5",
+        "3"
+      ],
+      "output": "Ticket total: 13.50\n"
+    },
+    {
+      "inputs": [
+        "5",
+        "0"
+      ],
+      "output": "Ticket total: 0.00\n"
+    }
+  ],
+  "easy-finance-07": [
+    {
+      "inputs": [
+        "25"
+      ],
+      "output": "To pay: 25.00\n"
+    },
+    {
+      "inputs": [
+        "24"
+      ],
+      "output": "To pay: 27.00\n"
+    },
+    {
+      "inputs": [
+        "30"
+      ],
+      "output": "To pay: 30.00\n"
+    }
+  ],
+  "easy-finance-08": [
+    {
+      "inputs": [
+        "20",
+        "20"
+      ],
+      "output": "Goal reached\n"
+    },
+    {
+      "inputs": [
+        "12.5",
+        "20"
+      ],
+      "output": "Still needed: 7.50\n"
+    }
+  ],
+  "easy-finance-09": [
+    {
+      "inputs": [
+        "10"
+      ],
+      "output": "Euros: 12.00\n"
+    },
+    {
+      "inputs": [
+        "2.5"
+      ],
+      "output": "Euros: 3.00\n"
+    }
+  ],
+  "easy-finance-10": [
+    {
+      "inputs": [],
+      "output": "Shopping total: 6.70\n"
+    },
+    {
+      "inputs": [],
+      "output": "Shopping total: 4.00\n",
+      "patch": [
+        "[2.50, 1.20, 3.00]",
+        "[1.00, 1.00, 2.00]"
+      ]
+    }
+  ],
+  "easy-computing-01": [
+    {
+      "inputs": [
+        "PNG"
+      ],
+      "output": "Type: png\n"
+    },
+    {
+      "inputs": [
+        "JpG"
+      ],
+      "output": "Type: jpg\n"
+    }
+  ],
+  "easy-computing-02": [
+    {
+      "inputs": [
+        "2"
+      ],
+      "output": "MB: 2000\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "MB: 0\n"
+    }
+  ],
+  "easy-computing-03": [
+    {
+      "inputs": [
+        "abc 12"
+      ],
+      "output": "Characters: 6\n"
+    },
+    {
+      "inputs": [
+        ""
+      ],
+      "output": "Characters: 0\n"
+    }
+  ],
+  "easy-computing-04": [
+    {
+      "inputs": [
+        "photo",
+        "png"
+      ],
+      "output": "photo.png\n"
+    },
+    {
+      "inputs": [
+        "notes",
+        "txt"
+      ],
+      "output": "notes.txt\n"
+    }
+  ],
+  "easy-computing-05": [
+    {
+      "inputs": [
+        "2050"
+      ],
+      "output": "Whole KB: 2\nRemaining bytes: 2\n"
+    },
+    {
+      "inputs": [
+        "1024"
+      ],
+      "output": "Whole KB: 1\nRemaining bytes: 0\n"
+    }
+  ],
+  "easy-computing-06": [
+    {
+      "inputs": [
+        "Ada Lovelace"
+      ],
+      "output": "Username: adalovelace\n"
+    },
+    {
+      "inputs": [
+        "BEN"
+      ],
+      "output": "Username: ben\n"
+    }
+  ],
+  "easy-computing-07": [
+    {
+      "inputs": [
+        "ERROR"
+      ],
+      "output": "Needs attention\n"
+    },
+    {
+      "inputs": [
+        "info"
+      ],
+      "output": "Normal message\n"
+    }
+  ],
+  "easy-computing-08": [
+    {
+      "inputs": [
+        "10110"
+      ],
+      "output": "Ones: 3\n"
+    },
+    {
+      "inputs": [
+        "0000"
+      ],
+      "output": "Ones: 0\n"
+    }
+  ],
+  "easy-computing-09": [
+    {
+      "inputs": [
+        "50",
+        "10"
+      ],
+      "output": "Seconds: 5.0\n"
+    },
+    {
+      "inputs": [
+        "7.5",
+        "2"
+      ],
+      "output": "Seconds: 3.8\n"
+    }
+  ],
+  "easy-computing-10": [
+    {
+      "inputs": [
+        "2"
+      ],
+      "output": "Device: monitor\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Device: mouse\n"
+    }
+  ],
+  "easy-gaming-01": [
+    {
+      "inputs": [
+        "100",
+        "3"
+      ],
+      "output": "New score: 130\n"
+    },
+    {
+      "inputs": [
+        "20",
+        "0"
+      ],
+      "output": "New score: 20\n"
+    }
+  ],
+  "easy-gaming-02": [
+    {
+      "inputs": [
+        "5",
+        "2"
+      ],
+      "output": "Lives: 3\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "4"
+      ],
+      "output": "Lives: 0\n"
+    }
+  ],
+  "easy-gaming-03": [
+    {
+      "inputs": [
+        "5"
+      ],
+      "output": "Unlocked\n"
+    },
+    {
+      "inputs": [
+        "4"
+      ],
+      "output": "Locked\n"
+    },
+    {
+      "inputs": [
+        "8"
+      ],
+      "output": "Unlocked\n"
+    }
+  ],
+  "easy-gaming-04": [
+    {
+      "inputs": [],
+      "output": "Roll: 1\n",
+      "random": [
+        1
+      ]
+    },
+    {
+      "inputs": [],
+      "output": "Roll: 6\n",
+      "random": [
+        6
+      ]
+    }
+  ],
+  "easy-gaming-05": [
+    {
+      "inputs": [
+        "2",
+        "3"
+      ],
+      "output": "Tile: 2,3\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "0"
+      ],
+      "output": "Tile: 0,0\n"
+    }
+  ],
+  "easy-gaming-06": [
+    {
+      "inputs": [
+        "Amira"
+      ],
+      "output": "Tag: AMI\n"
+    },
+    {
+      "inputs": [
+        "ben"
+      ],
+      "output": "Tag: BEN\n"
+    }
+  ],
+  "easy-gaming-07": [
+    {
+      "inputs": [
+        "25",
+        "100"
+      ],
+      "output": "Health: 25%\n"
+    },
+    {
+      "inputs": [
+        "30",
+        "60"
+      ],
+      "output": "Health: 50%\n"
+    }
+  ],
+  "easy-gaming-08": [
+    {
+      "inputs": [
+        "1",
+        "0",
+        "1"
+      ],
+      "output": "Hits: 2\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "0",
+        "0"
+      ],
+      "output": "Hits: 0\n"
+    }
+  ],
+  "easy-gaming-09": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Item: rope\n"
+    },
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "Item: torch\n"
+    }
+  ],
+  "easy-gaming-10": [
+    {
+      "inputs": [
+        "8",
+        "3"
+      ],
+      "output": "Player wins\n"
+    },
+    {
+      "inputs": [
+        "4",
+        "4"
+      ],
+      "output": "Draw\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "7"
+      ],
+      "output": "Rival wins\n"
+    }
+  ],
+  "easy-creative-media-01": [
+    {
+      "inputs": [
+        "Leah",
+        "Editor"
+      ],
+      "output": "Leah - Editor\n"
+    },
+    {
+      "inputs": [
+        "Sam",
+        "Artist"
+      ],
+      "output": "Sam - Artist\n"
+    }
+  ],
+  "easy-creative-media-02": [
+    {
+      "inputs": [
+        "20",
+        "30"
+      ],
+      "output": "Poster area: 600.0 cm2\n"
+    },
+    {
+      "inputs": [
+        "2.5",
+        "4"
+      ],
+      "output": "Poster area: 10.0 cm2\n"
+    }
+  ],
+  "easy-creative-media-03": [
+    {
+      "inputs": [
+        "125"
+      ],
+      "output": "Minutes: 2\nSeconds: 5\n"
+    },
+    {
+      "inputs": [
+        "60"
+      ],
+      "output": "Minutes: 1\nSeconds: 0\n"
+    }
+  ],
+  "easy-creative-media-04": [
+    {
+      "inputs": [
+        "Hi there!"
+      ],
+      "output": "Caption length: 9\n"
+    },
+    {
+      "inputs": [
+        "Art"
+      ],
+      "output": "Caption length: 3\n"
+    }
+  ],
+  "easy-creative-media-05": [
+    {
+      "inputs": [
+        "Digital Art"
+      ],
+      "output": "#digitalart\n"
+    },
+    {
+      "inputs": [
+        "MUSIC"
+      ],
+      "output": "#music\n"
+    }
+  ],
+  "easy-creative-media-06": [
+    {
+      "inputs": [
+        "25",
+        "4"
+      ],
+      "output": "Frames: 100\n"
+    },
+    {
+      "inputs": [
+        "30",
+        "2"
+      ],
+      "output": "Frames: 60\n"
+    }
+  ],
+  "easy-creative-media-07": [
+    {
+      "inputs": [
+        "5",
+        "2.5"
+      ],
+      "output": "Upload MB: 12.5\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "3"
+      ],
+      "output": "Upload MB: 0.0\n"
+    }
+  ],
+  "easy-creative-media-08": [
+    {
+      "inputs": [
+        "4"
+      ],
+      "output": "Featured\n"
+    },
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Review\n"
+    },
+    {
+      "inputs": [
+        "5"
+      ],
+      "output": "Featured\n"
+    }
+  ],
+  "easy-creative-media-09": [
+    {
+      "inputs": [],
+      "output": "Intro\nSketch\nFinale\n"
+    },
+    {
+      "inputs": [],
+      "output": "Opening\nScene\nCredits\n",
+      "patch": [
+        "[\"Intro\", \"Sketch\", \"Finale\"]",
+        "[\"Opening\", \"Scene\", \"Credits\"]"
+      ]
+    }
+  ],
+  "easy-creative-media-10": [
+    {
+      "inputs": [
+        "BLUE"
+      ],
+      "output": "In palette\n"
+    },
+    {
+      "inputs": [
+        "green"
+      ],
+      "output": "Not in palette\n"
+    }
+  ],
+  "easy-social-community-01": [
+    {
+      "inputs": [
+        "Aisha",
+        "Code Club"
+      ],
+      "output": "Aisha at Code Club\n"
+    },
+    {
+      "inputs": [
+        "Ben",
+        "Fair"
+      ],
+      "output": "Ben at Fair\n"
+    }
+  ],
+  "easy-social-community-02": [
+    {
+      "inputs": [
+        "30",
+        "18"
+      ],
+      "output": "Places left: 12\n"
+    },
+    {
+      "inputs": [
+        "20",
+        "20"
+      ],
+      "output": "Places left: 0\n"
+    }
+  ],
+  "easy-social-community-03": [
+    {
+      "inputs": [
+        "90"
+      ],
+      "output": "Hours: 1.5\n"
+    },
+    {
+      "inputs": [
+        "30"
+      ],
+      "output": "Hours: 0.5\n"
+    }
+  ],
+  "easy-social-community-04": [
+    {
+      "inputs": [
+        "Hello"
+      ],
+      "output": "Fits\n"
+    },
+    {
+      "inputs": [
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ],
+      "output": "Fits\n"
+    },
+    {
+      "inputs": [
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ],
+      "output": "Too long\n"
+    }
+  ],
+  "easy-social-community-05": [
+    {
+      "inputs": [
+        "YES"
+      ],
+      "output": "Place reserved\n"
+    },
+    {
+      "inputs": [
+        "no"
+      ],
+      "output": "No place reserved\n"
+    }
+  ],
+  "easy-social-community-06": [
+    {
+      "inputs": [
+        "14",
+        "4"
+      ],
+      "output": "Each: 3\nLeft over: 2\n"
+    },
+    {
+      "inputs": [
+        "12",
+        "3"
+      ],
+      "output": "Each: 4\nLeft over: 0\n"
+    }
+  ],
+  "easy-social-community-07": [
+    {
+      "inputs": [
+        "1",
+        "2.5",
+        "3"
+      ],
+      "output": "Donations: 6.50\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "5",
+        "5"
+      ],
+      "output": "Donations: 10.00\n"
+    }
+  ],
+  "easy-social-community-08": [
+    {
+      "inputs": [],
+      "output": "Yes votes: 3\n"
+    },
+    {
+      "inputs": [],
+      "output": "Yes votes: 0\n",
+      "patch": [
+        "[\"yes\", \"no\", \"yes\", \"yes\"]",
+        "[\"no\", \"no\"]"
+      ]
+    }
+  ],
+  "easy-social-community-09": [
+    {
+      "inputs": [
+        "Club meeting"
+      ],
+      "output": "Notice: CLUB MEETING\n"
+    },
+    {
+      "inputs": [
+        "Fair"
+      ],
+      "output": "Notice: FAIR\n"
+    }
+  ],
+  "easy-social-community-10": [
+    {
+      "inputs": [
+        "Ada,Ben,Cleo"
+      ],
+      "output": "Members: 3\n"
+    },
+    {
+      "inputs": [
+        "Amir"
+      ],
+      "output": "Members: 1\n"
+    }
+  ],
+  "easy-health-fitness-01": [
+    {
+      "inputs": [
+        "3200"
+      ],
+      "output": "Steps left: 1800\n"
+    },
+    {
+      "inputs": [
+        "5500"
+      ],
+      "output": "Steps left: 0\n"
+    }
+  ],
+  "easy-health-fitness-02": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Distance: 1200 m\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Distance: 0 m\n"
+    }
+  ],
+  "easy-health-fitness-03": [
+    {
+      "inputs": [
+        "1200",
+        "5"
+      ],
+      "output": "Seconds per km: 240.0\n"
+    },
+    {
+      "inputs": [
+        "900",
+        "3"
+      ],
+      "output": "Seconds per km: 300.0\n"
+    }
+  ],
+  "easy-health-fitness-04": [
+    {
+      "inputs": [
+        "20",
+        "35"
+      ],
+      "output": "Total minutes: 55\n"
+    },
+    {
+      "inputs": [
+        "0",
+        "15"
+      ],
+      "output": "Total minutes: 15\n"
+    }
+  ],
+  "easy-health-fitness-05": [
+    {
+      "inputs": [
+        "60",
+        "58.5"
+      ],
+      "output": "New best\n"
+    },
+    {
+      "inputs": [
+        "60",
+        "60"
+      ],
+      "output": "No new best\n"
+    },
+    {
+      "inputs": [
+        "60",
+        "62"
+      ],
+      "output": "No new best\n"
+    }
+  ],
+  "easy-health-fitness-06": [
+    {
+      "inputs": [
+        "4"
+      ],
+      "output": "Capacity litres: 3.00\n"
+    },
+    {
+      "inputs": [
+        "2"
+      ],
+      "output": "Capacity litres: 1.50\n"
+    }
+  ],
+  "easy-health-fitness-07": [
+    {
+      "inputs": [
+        "3"
+      ],
+      "output": "Round 1\nRound 2\nRound 3\n"
+    },
+    {
+      "inputs": [
+        "1"
+      ],
+      "output": "Round 1\n"
+    }
+  ],
+  "easy-health-fitness-08": [
+    {
+      "inputs": [],
+      "output": "Total steps: 10000\n"
+    },
+    {
+      "inputs": [],
+      "output": "Total steps: 6000\n",
+      "patch": [
+        "[2000, 3500, 4500]",
+        "[1000, 2000, 3000]"
+      ]
+    }
+  ],
+  "easy-health-fitness-09": [
+    {
+      "inputs": [
+        "40"
+      ],
+      "output": "Beats per minute: 80\n"
+    },
+    {
+      "inputs": [
+        "32"
+      ],
+      "output": "Beats per minute: 64\n"
+    }
+  ],
+  "easy-health-fitness-10": [
+    {
+      "inputs": [],
+      "output": "Badge days: 2\n"
+    },
+    {
+      "inputs": [],
+      "output": "Badge days: 1\n",
+      "patch": [
+        "[20, 30, 45, 10]",
+        "[29, 30, 0, 10]"
+      ]
+    }
+  ],
+  "easy-environment-sustainability-01": [
+    {
+      "inputs": [
+        "7"
+      ],
+      "output": "Points: 35\n"
+    },
+    {
+      "inputs": [
+        "0"
+      ],
+      "output": "Points: 0\n"
+    }
+  ],
+  "easy-environment-sustainability-02": [
+    {
+      "inputs": [
+        "100",
+        "5"
+      ],
+      "output": "Energy kWh: 0.50\n"
+    },
+    {
+      "inputs": [
+        "1000",
+        "2"
+      ],
+      "output": "Energy kWh: 2.00\n"
+    }
+  ],
+  "easy-environment-sustainability-03": [
+    {
+      "inputs": [
+        "50",
+        "35"
+      ],
+      "output": "Litres saved: 15.0\n"
+    },
+    {
+      "inputs": [
+        "20",
+        "20"
+      ],
+      "output": "Litres saved: 0.0\n"
+    }
+  ],
+  "easy-environment-sustainability-04": [
+    {
+      "inputs": [
+        "6",
+        "20"
+      ],
+      "output": "Walking: 30.0%\n"
+    },
+    {
+      "inputs": [
+        "1",
+        "4"
+      ],
+      "output": "Walking: 25.0%\n"
+    }
+  ],
+  "easy-environment-sustainability-05": [
+    {
+      "inputs": [
+        "PAPER"
+      ],
+      "output": "Blue\n"
+    },
+    {
+      "inputs": [
+        "card"
+      ],
+      "output": "Blue\n"
+    },
+    {
+      "inputs": [
+        "glass"
+      ],
+      "output": "Other\n"
+    }
+  ],
+  "easy-environment-sustainability-06": [
+    {
+      "inputs": [
+        "50"
+      ],
+      "output": "Spaces: 5\n"
+    },
+    {
+      "inputs": [
+        "18"
+      ],
+      "output": "Spaces: 2\n"
+    }
+  ],
+  "easy-environment-sustainability-07": [
+    {
+      "inputs": [],
+      "output": "Collected kg: 4.0\n"
+    },
+    {
+      "inputs": [],
+      "output": "Collected kg: 6.0\n",
+      "patch": [
+        "[1.5, 2.0, 0.5]",
+        "[1.0, 2.0, 3.0]"
+      ]
+    }
+  ],
+  "easy-environment-sustainability-08": [
+    {
+      "inputs": [
+        "30",
+        "20"
+      ],
+      "output": "Reduced\n"
+    },
+    {
+      "inputs": [
+        "20",
+        "20"
+      ],
+      "output": "Not reduced\n"
+    },
+    {
+      "inputs": [
+        "10",
+        "15"
+      ],
+      "output": "Not reduced\n"
+    }
+  ],
+  "easy-environment-sustainability-09": [
+    {
+      "inputs": [
+        "4",
+        "5"
+      ],
+      "output": "Units: 60\n"
+    },
+    {
+      "inputs": [
+        "2",
+        "1"
+      ],
+      "output": "Units: 6\n"
+    }
+  ],
+  "easy-environment-sustainability-10": [
+    {
+      "inputs": [],
+      "output": "Plastic items: 2\n"
+    },
+    {
+      "inputs": [],
+      "output": "Plastic items: 0\n",
+      "patch": [
+        "[\"paper\", \"plastic\", \"glass\", \"plastic\"]",
+        "[\"paper\", \"glass\"]"
+      ]
+    }
+  ]
+}

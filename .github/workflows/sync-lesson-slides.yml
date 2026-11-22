@@ -54,10 +54,12 @@ jobs:
           node --test tests/tutorial-dismissal.test.cjs
           node --test tests/tutorial-session.test.cjs
           node --test tests/tutorial-presentation.test.cjs
+          node --test tests/practice-walkthrough.test.cjs
           python -m unittest discover -s tests -p 'test_tutorial_guides.py'
           python -m unittest discover -s tests -p 'test_programming_algorithms.py'
           python -m unittest discover -s tests -p 'test_programming_catalogue.py'
           python -m unittest discover -s tests -p 'test_exam_expansion.py'
+          python -m unittest discover -s tests -p 'test_easy_practice.py'
           python scripts/build-course.py --check
           python scripts/build-problems.py --check
 

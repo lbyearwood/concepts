@@ -25,6 +25,8 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .practice-categories button { display:flex; align-items:center; min-width:0; min-height:42px; padding:5px 0 9px; border:0; border-bottom:4px solid #b5b7c2; background:transparent; color:#535563; text-align:left; font:700 13px/1.35 Arial,Helvetica,sans-serif; }
 .practice-categories button[aria-selected="true"] { border-bottom-color:#d90058; color:#101223; }
 .practice-categories button:hover { color:#1433ff; }
+.practice-categories button { gap:7px; }
+.practice-categories button[aria-selected="true"] .category-count { background:#d90058; color:#fff; }
 .practice-name-short { display:none; }
 .practice-console-note { margin:0; color:#535563; font-size:13px; }
 .practice-console-note:not([hidden]) + .problem-list-scroll .problem-empty { padding:16px 0; }
@@ -120,6 +122,19 @@ body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
 .tutorial-question-text { flex:0 1 auto; min-height:0; overflow:hidden; padding-bottom:8px; }
 .tutorial-question-text ol { margin-bottom:0; }
 .tutorial-question-text .tutorial-question-marks { margin:10px 0 0; font-weight:700; }
+.tutorial-modal[data-question-layout="practice"] .tutorial-question-content { max-height:none; }
+.practice-question { flex:none; overflow:visible; }
+.practice-example { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; margin-top:14px; padding:10px 12px; border:1px solid #b5b7c2; background:#f7f7fc; font-size:12px; }
+.practice-example strong { display:block; margin-bottom:4px; }
+.practice-example pre { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font:12px/1.35 Consolas,"Courier New",monospace; }
+@media(max-width:600px), (max-height:500px) {
+  .practice-question { font-size:12px; line-height:1.35; }
+  .practice-question p { margin-bottom:7px; }
+  .practice-question li + li { margin-top:4px; }
+  .practice-example { gap:8px; margin-top:9px; padding:7px 8px; }
+  .practice-example pre { font-size:11px; }
+}
+@media(max-width:400px) { .practice-example { grid-template-columns:minmax(0,1fr); } }
 .tutorial-modal[data-guided="true"] .tutorial-help { min-height:0; }
 .tutorial-modal[data-guided="true"] .tutorial-walkthrough { display:flex; flex-direction:column; min-height:0; overflow:hidden; }
 .tutorial-modal[data-guided="true"] .tutorial-steps { flex:none; margin-bottom:10px; }
