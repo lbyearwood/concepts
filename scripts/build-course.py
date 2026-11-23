@@ -12,6 +12,7 @@ COURSE = "courses/gcse-computer-science"
 EXISTING_TOPIC = f"{COURSE}/1-1-variables-constants-data-types-casting.html"
 PROGRAMMING_PROBLEMS = f"{COURSE}/tutorials/programming-problems.html"
 COURSE_OVERVIEW = f"{COURSE}/index.html"
+ACTIVITY_PILOT = f"{COURSE}/1-16-translators-and-programming-languages.html"
 HOME_TEMPLATE = ROOT / 'scripts/templates/homepage.html'
 CONCEPTS = [
     ("memory", "Memory Management", "concepts/memory-management/virtual-memory.html", "Virtual Memory"),
@@ -168,6 +169,53 @@ def new_topic(unit, topic, deck=None):
 '''
 
 
+def activity_pilot_page(html):
+    """The approved-for-review menu lives on 1.16 only until wider adoption."""
+    icons = {
+        "slides": '<path d="M3 4h26v18H3zM16 22v6M9 29l7-3 7 3"/><path d="m13 9 8 4-8 4z" fill="currentColor" stroke="none"/>',
+        "crossword": '<path d="M4 4h24v24H4zM4 12h24M4 20h24M12 4v24M20 4v24"/><path d="M4 4h8v8H4zM20 12h8v8h-8zM12 20h8v8h-8z" fill="currentColor"/>',
+        "blanks": '<path d="M4 7h24M4 15h8m8 0h8M4 25h24M13 18h6"/><path d="m14 11 2-3 2 3m-2-3v8"/>',
+        "match": '<path d="M4 9h14v20H4zM14 3h14v20h-6"/><path d="M8 16h6m-3-3v6M19 9h5m-5 4h5m-5 4h5"/>',
+        "quiz": '<circle cx="6" cy="7" r="3"/><circle cx="6" cy="16" r="3"/><circle cx="6" cy="25" r="3"/><path d="M14 7h14M14 16h14M14 25h14m-9-14 3 3 6-6"/>',
+        "target": '<circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="6"/><path d="M16 1v6m0 18v6M1 16h6m18 0h6"/><circle cx="16" cy="16" r="1" fill="currentColor"/>',
+    }
+    source = re.search(r' data-lesson-src="[^"]+"', html)
+    source_attr = source.group(0) if source else ""
+    cards = []
+    activities = [
+        ("slides", "Slides", "Explore the lesson.", "yellow"),
+        ("crossword", "Crossword", "Solve clues to find the keywords.", "blue"),
+        ("blanks", "Fill in the blanks", "Complete the missing words.", "teal"),
+        ("match", "Mix and match", "Flip cards to pair keywords and definitions.", "orange"),
+        ("quiz", "Multiple choice quiz", "Choose the correct answer.", "lime"),
+        ("target", "Shoot the answer", "Tap the correct answer target.", "pink"),
+    ]
+    for icon, title, description, colour in activities:
+        live = icon == "slides"
+        attributes = (f' class="activity-card activity-{colour} lesson-launch"{source_attr}'
+                      ' aria-label="Open lesson slides" aria-haspopup="dialog" aria-controls="lesson-modal"'
+                      if live else f' class="activity-card activity-{colour}"')
+        badge = '<span class="activity-ready" aria-hidden="true">Open <span>↗</span></span>' if live else '<span class="activity-soon">Coming soon</span>'
+        cards.append(f'''        <button{attributes} type="button" disabled>
+          <span class="activity-card-top"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">{icons[icon]}</svg>{badge}</span>
+          <span class="activity-card-title">{title}</span>
+          <span class="activity-card-description">{description}</span>
+        </button>''')
+    main = '''    <main id="main-content" class="topic-overview" tabindex="-1">
+      <h2 class="activity-section-title">Lesson &amp; activities</h2>
+      <div class="activity-grid" role="group" aria-label="Lesson and comprehension activities">
+''' + '\n'.join(cards) + '''
+      </div>
+    </main>'''
+    html, count = re.subn(r'    <main id="main-content".*?</main>', lambda _: main, html, count=1, flags=re.S)
+    if count != 1:
+        raise ValueError("Expected one main area in the 1.16 activity pilot.")
+    html = html.replace('course-topic-page">', 'course-topic-page topic-activity-pilot">', 1)
+    html = html.replace('  <script src="../../assets/concept-viewport.js?v=1" defer></script>\n', '', 1)
+    html = html.replace('</head>', '  <link rel="stylesheet" href="../../assets/topic-activities.css?v=1">\n</head>', 1)
+    return html
+
+
 def course_overview(units):
     groups = []
     for index, unit in enumerate(units, 1):
@@ -238,6 +286,8 @@ def outputs():
             if path != EXISTING_TOPIC:
                 deck = decks.get("gcse-" + topic["title"].split(" ", 1)[0].replace(".", "-"))
                 pages[path] = new_topic(unit, topic, deck)
+                if path == ACTIVITY_PILOT:
+                    pages[path] = activity_pilot_page(pages[path])
     # Existing teaching content stays intact; only its shared navigation is regenerated.
     for path in [EXISTING_TOPIC, PROGRAMMING_PROBLEMS] + [item[2] for item in CONCEPTS]:
         pages[path] = (ROOT / path).read_text(encoding="utf-8")

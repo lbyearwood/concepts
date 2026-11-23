@@ -1,0 +1,77 @@
+/* Compact resource-menu pilot: scoped to topic 1.16 until design approval. */
+.topic-activity-pilot .concept-viewport .app {
+  position: static;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 24px 28px;
+}
+.topic-activity-pilot .title-row { padding-right: 0; margin-bottom: 24px; }
+.topic-activity-pilot h1 { max-width: 1040px; font-size: clamp(28px, 3.3vw, 44px); line-height: 1.1; }
+.topic-activity-pilot .eyebrow { margin-bottom: 8px; }
+.topic-activity-pilot .topic-overview { margin: 0; }
+.activity-section-title { margin: 0 0 14px; font-size: 20px; line-height: 1.2; }
+.activity-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+  min-height: 164px;
+  padding: 16px;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+}
+.activity-card:disabled { opacity: 1; cursor: default; }
+.activity-yellow { background: var(--yellow); }
+.activity-blue { background: var(--blue); color: white; }
+.activity-teal { background: var(--teal); }
+.activity-orange { background: var(--orange); }
+.activity-lime { background: var(--lime); }
+.activity-pink { background: var(--pink); color: white; }
+.activity-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.activity-card-top svg { flex: none; width: 34px; height: 34px; }
+.activity-card-title { margin-top: 5px; font-family: "Arial Black", Arial, sans-serif; font-size: 21px; font-weight: 900; line-height: 1.15; }
+.activity-card-description { max-width: 30ch; font-size: 14px; line-height: 1.4; }
+.activity-soon { padding: 3px 6px; border: 1px solid currentColor; font-size: 11px; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+.activity-ready { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; }
+.activity-ready > span { font-size: 20px; }
+.topic-activity-pilot .activity-card.lesson-launch:not(:disabled):is(:hover, :focus-visible) { background: var(--blue); color: white; }
+@media (max-width: 1100px) and (min-width: 1025px) {
+  .topic-activity-pilot .concept-viewport .app { padding: 20px; }
+  .activity-grid { gap: 12px; }
+  .activity-card { padding: 12px; }
+  .activity-card-title { font-size: 19px; }
+}
+@media (max-width: 600px) {
+  .topic-activity-pilot .concept-viewport .app { padding: 16px; }
+  .topic-activity-pilot .title-row { margin-bottom: 18px; }
+  .topic-activity-pilot h1 { font-size: 24px; }
+  .topic-activity-pilot .eyebrow { font-size: 10px; }
+  .activity-section-title { font-size: 17px; margin-bottom: 10px; }
+  .activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .activity-card { min-height: 144px; padding: 12px; gap: 6px; }
+  .activity-card-title { font-size: 18px; }
+  .activity-card-description { font-size: 13px; }
+  .activity-card-top svg { width: 28px; height: 28px; }
+  .activity-card-top { gap: 6px; }
+  .activity-soon { font-size: 10px; padding: 2px 4px; }
+  .activity-ready { font-size: 11px; gap: 3px; }
+}
+@media (max-height: 550px) and (min-width: 601px) {
+  .topic-activity-pilot .concept-viewport .app { padding: 10px 18px; }
+  .topic-activity-pilot .title-row { margin-bottom: 8px; }
+  .topic-activity-pilot h1 { font-size: 25px; }
+  .topic-activity-pilot .eyebrow { font-size: 10px; margin-bottom: 4px; }
+  .activity-section-title { font-size: 16px; margin-bottom: 8px; }
+  .activity-grid { gap: 10px; }
+  .activity-card { min-height: 108px; padding: 9px 12px; gap: 4px; }
+  .activity-card-top svg { width: 24px; height: 24px; }
+  .activity-card-title { font-size: 17px; margin-top: 0; }
+  .activity-card-description { max-width: none; font-size: 12px; line-height: 1.2; }
+}
