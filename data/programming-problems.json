@@ -6631,43 +6631,43 @@
   "practiceCategories": [
     {
       "id": "science",
-      "title": "🧪 Science"
+      "title": "Science"
     },
     {
       "id": "maths",
-      "title": "➗ Maths"
+      "title": "Maths"
     },
     {
       "id": "finance",
-      "title": "💷 Finance"
+      "title": "Finance"
     },
     {
       "id": "computing",
-      "title": "💻 Computing"
+      "title": "Computing"
     },
     {
       "id": "gaming",
-      "title": "🎮 Gaming"
+      "title": "Gaming"
     },
     {
       "id": "creative-media",
-      "title": "🎨 Creative & Media",
-      "shortTitle": "🎨 Creative"
+      "title": "Creative & Media",
+      "shortTitle": "Creative"
     },
     {
       "id": "social-community",
-      "title": "🤝 Social & Community",
-      "shortTitle": "🤝 Social"
+      "title": "Social & Community",
+      "shortTitle": "Social"
     },
     {
       "id": "health-fitness",
-      "title": "💪 Health & Fitness",
-      "shortTitle": "💪 Fitness"
+      "title": "Health & Fitness",
+      "shortTitle": "Fitness"
     },
     {
       "id": "environment-sustainability",
-      "title": "🌱 Environment & Sustainability",
-      "shortTitle": "🌱 Environment"
+      "title": "Environment & Sustainability",
+      "shortTitle": "Environment"
     }
   ]
 }

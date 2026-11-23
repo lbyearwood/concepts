@@ -94,6 +94,7 @@
   const allProblems = [...data.problems, ...(data.practiceProblems || [])];
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));
   const practiceNames = new Map(data.practiceCategories.map(category => [category.id, category.title]));
+  const practiceShortNames = new Map(data.practiceCategories.map(category => [category.id, category.shortTitle || category.title]));
   const collectionNames = {exam: 'Exam questions', level1: 'Easy', level2: 'Medium', level3: 'Hard'};
   const categoryLabel = problem => problemCollection(problem) === 'exam' ? categoryNames.get(problem.category) : collectionNames[problem.collection] + ' | ' + practiceNames.get(problem.category);
   const state = {collection: 'exam', category: 'traversal', practiceCategory: data.practiceCategories[0].id, problem: null, step: 0, line: 0, frame: 0, started: false};
@@ -197,6 +198,17 @@
     node.setAttribute('aria-hidden', 'true');
     return node;
   };
+  const categoryIcon = identity => {
+    const namespace = 'http://www.w3.org/2000/svg';
+    const node = document.createElementNS(namespace, 'svg');
+    for (const [key, value] of Object.entries({class: 'category-glyph', viewBox: '0 0 32 32',
+      fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round',
+      'stroke-linejoin': 'round', 'aria-hidden': 'true', focusable: 'false'})) node.setAttribute(key, value);
+    const use = document.createElementNS(namespace, 'use');
+    use.setAttribute('href', new URL('../../../assets/icons/problem-categories.svg#' + identity, location.href).href);
+    node.append(use);
+    return node;
+  };
   const viewKey = () => state.problem + ':' + state.line + ':' + state.step + ':' + dialog.dataset.tutorialView + ':' + dialog.dataset.checkpoint;
   function rememberViewPages() {
     if (!renderedView) return;
@@ -291,12 +303,15 @@
     });
     const title = exam ? categoryNames.get(state.category) : collectionNames[state.collection] + ' | ' + practiceNames.get(state.practiceCategory);
     syncCategoryPanel();
-    document.getElementById('problem-category-title').textContent = title;
+    document.getElementById('problem-category-title').replaceChildren(
+      categoryIcon(exam ? state.category : state.practiceCategory), element('span', 'category-heading-name', title));
+    categoryPicker.querySelector('.category-picker-icon').replaceChildren(categoryIcon(state.category));
+    practicePicker.querySelector('.category-picker-icon').replaceChildren(categoryIcon(state.practiceCategory));
     const problems = collectionProblems(data, state.collection, exam ? state.category : state.practiceCategory);
     document.querySelector('.problem-count-summary').textContent = problems.length + (problems.length === 1 ? ' problem' : ' problems');
     for (const option of practiceSelect.options) {
       const count = collectionProblems(data, state.collection, option.value).length;
-      option.textContent = practiceNames.get(option.value) + (count ? ' (' + count + ')' : '');
+      option.textContent = practiceShortNames.get(option.value) + (count ? ' (' + count + ')' : '');
     }
     list.setAttribute('aria-label', title + (title.endsWith('problems') ? '' : ' problems'));
     list.replaceChildren();

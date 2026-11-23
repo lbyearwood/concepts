@@ -33,9 +33,9 @@
   --category-accent:var(--yellow);
   position:relative;
   justify-content:space-between;
-  gap:7px;
+  gap:5px;
   min-height:52px;
-  padding:7px 9px 7px 16px;
+  padding:7px 7px 7px 14px;
   border:2px solid var(--ink);
   border-bottom:4px solid #b5b7c2;
   background:white;
@@ -72,9 +72,14 @@
   font-size:12px;
   font-weight:900;
 }
+.problems-app .category-glyph { display:block; flex:none; width:22px; height:22px; }
+.problems-app :is(.problem-categories,.practice-categories) .category-glyph { width:20px; height:20px; }
+.problems-app .category-name { flex:1; min-width:0; }
 .problems-app :is(.problem-categories,.practice-categories) button[aria-selected="true"] .category-count { background:white; color:var(--blue); }
 .problems-app .problem-list-heading { gap:12px; margin-bottom:10px; align-items:center; }
-.problems-app .problem-list-heading h2 { font-size:24px; }
+.problems-app .problem-list-heading h2 { display:flex; align-items:center; gap:9px; min-width:0; font-size:24px; }
+.problems-app .category-heading-name { min-width:0; overflow-wrap:anywhere; }
+.problems-app .problem-list-heading .category-glyph { width:26px; height:26px; }
 .problems-app .problem-count-summary {
   display:inline-flex;
   flex:none;
@@ -130,6 +135,7 @@
 .problems-app .problem-empty { margin:5px 0; padding:20px; border:2px solid var(--ink); border-left:8px solid var(--orange); background:#fff; color:var(--muted); }
 .problems-app .practice-category-picker { display:none; }
 .problems-app :is(.exam-category-picker,.practice-category-picker) {
+  position:relative;
   flex:none;
   gap:5px;
   margin:12px 0 16px;
@@ -141,7 +147,7 @@
   width:100%;
   min-width:0;
   min-height:44px;
-  padding:7px 30px 7px 12px;
+  padding:7px 30px 7px 46px;
   border:2px solid var(--ink);
   border-left:8px solid var(--teal);
   border-radius:0;
@@ -149,6 +155,7 @@
   color:var(--ink);
   font:700 14px/1.25 Arial,Helvetica,sans-serif;
 }
+.problems-app .category-picker-icon { position:absolute; left:18px; bottom:11px; width:22px; height:22px; pointer-events:none; }
 @media(max-width:600px), (max-height:560px) {
   .problems-app :is(.problem-categories,.practice-categories) { display:none; }
   .problems-app :is(.exam-category-picker,.practice-category-picker) { display:flex; flex-direction:column; }

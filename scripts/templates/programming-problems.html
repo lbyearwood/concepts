@@ -9,14 +9,14 @@
   <script src="../../../assets/site-navigation.js?v=1" defer></script>
   <link rel="stylesheet" href="../../../assets/colour-block.css?v=2">
   <link rel="stylesheet" href="../../../assets/programming-problems.css?v=24">
-  <link rel="stylesheet" href="../../../assets/programming-catalogue.css?v=1">
+  <link rel="stylesheet" href="../../../assets/programming-catalogue.css?v=2">
   <script src="../../../assets/tutorial-code-style.js?v=5" defer></script>
   <script src="../../../assets/tutorial-typing-sound.js?v=4" defer></script>
   <script src="../../../assets/tutorial-fit.js?v=3" defer></script>
   <script src="../../../assets/tutorial-typewriter.js?v=7" defer></script>
   <script src="../../../assets/tutorial-presentation.js?v=2" defer></script>
   <script src="../../../assets/tutorial-tutor.js?v=11" defer></script>
-  <script src="../../../assets/programming-problems.js?v=25" defer></script>
+  <script src="../../../assets/programming-problems.js?v=26" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block problems-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -41,6 +41,7 @@ __CATEGORIES__
         <select id="exam-category-select" aria-labelledby="exam-category-label" aria-controls="category-panel">
 __CATEGORY_OPTIONS__
         </select>
+        <span class="category-picker-icon" aria-hidden="true">__EXAM_PICKER_ICON__</span>
       </label>
       <div class="practice-categories" role="tablist" aria-label="Console problem categories" hidden>
 __PRACTICE_CATEGORIES__
@@ -50,10 +51,11 @@ __PRACTICE_CATEGORIES__
         <select id="practice-category-select" aria-labelledby="practice-category-label" aria-controls="category-panel">
 __PRACTICE_CATEGORY_OPTIONS__
         </select>
+        <span class="category-picker-icon" aria-hidden="true">__PRACTICE_PICKER_ICON__</span>
       </label>
       <section id="category-panel" class="category-panel" role="tabpanel" aria-labelledby="category-traversal">
         <div class="problem-list-heading">
-          <h2 id="problem-category-title">List Traversal</h2>
+          <h2 id="problem-category-title">__CATEGORY_HEADING_ICON__<span class="category-heading-name">List Traversal</span></h2>
           <span class="problem-list-instruction problem-count-summary" aria-hidden="true">8 problems</span>
         </div>
         <div class="problem-list-scroll">

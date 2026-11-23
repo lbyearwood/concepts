@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="traversal" viewBox="0 0 32 32">
+    <path d="M10 6h19M10 16h19M10 26h19M4 4v24m-3-4 3 4 3-4"/>
+  </symbol>
+  <symbol id="counting" viewBox="0 0 32 32">
+    <path d="M6 5v22M12 5v22M18 5v22M24 5v22M3 24 28 8"/>
+  </symbol>
+  <symbol id="subroutines" viewBox="0 0 32 32">
+    <path d="M10 3h12v8H10zM3 22h10v7H3zM19 22h10v7H19zM16 11v6M8 22v-5h16v5"/>
+  </symbol>
+  <symbol id="files" viewBox="0 0 32 32">
+    <path d="M3 7h10l4 4h12v17H3zM7 17h18M7 22h12"/>
+  </symbol>
+  <symbol id="arrays-nested-loops" viewBox="0 0 32 32">
+    <path d="M4 4h24v24H4zM4 12h24M4 20h24M12 4v24M20 4v24"/>
+  </symbol>
+  <symbol id="calculations" viewBox="0 0 32 32">
+    <rect x="6" y="2" width="20" height="28" rx="2"/>
+    <path d="M10 7h12v5H10zM11 17h1m8 0h1m-10 5h1m8 0h1m-10 5h1m8 0h1"/>
+  </symbol>
+  <symbol id="strings" viewBox="0 0 32 32">
+    <path d="M5 7h7v8H8v9H3v-9zm17 0h7v8h-4v9h-5v-9z"/>
+  </symbol>
+  <symbol id="validation-authentication" viewBox="0 0 32 32">
+    <path d="m16 3 12 5v8c0 7-7 12-12 14C11 28 4 23 4 16V8zM10 16l4 4 8-9"/>
+  </symbol>
+  <symbol id="random-numbers" viewBox="0 0 32 32">
+    <rect x="4" y="4" width="24" height="24" rx="3"/>
+    <g fill="currentColor" stroke="none"><circle cx="10" cy="10" r="1.7"/><circle cx="22" cy="10" r="1.7"/><circle cx="16" cy="16" r="1.7"/><circle cx="10" cy="22" r="1.7"/><circle cx="22" cy="22" r="1.7"/></g>
+  </symbol>
+  <symbol id="searching-sorting" viewBox="0 0 32 32">
+    <circle cx="13" cy="13" r="9"/><path d="m20 20 9 9M8 10h10M8 15h7"/>
+  </symbol>
+  <symbol id="tracing-debugging-testing" viewBox="0 0 32 32">
+    <path d="M12 10a4 4 0 0 1 8 0M13 4l-2-2m8 2 2-2M10 13H5l-2-3m7 10H3m7 5H6l-3 4m19-16h5l2-3m-7 10h7m-7 5h4l3 4"/>
+    <rect x="10" y="10" width="12" height="19" rx="6"/><path d="M16 15v14"/>
+  </symbol>
+  <symbol id="sql" viewBox="0 0 32 32">
+    <ellipse cx="16" cy="7" rx="12" ry="4"/><path d="M4 7v18c0 5 24 5 24 0V7M4 16c0 5 24 5 24 0"/>
+  </symbol>
+  <symbol id="science" viewBox="0 0 32 32">
+    <path d="M11 3h10M13 3v10L5 26c-1 2 0 3 2 3h18c2 0 3-1 2-3l-8-13V3M9 21h14"/>
+    <circle cx="17" cy="17" r="1"/>
+  </symbol>
+  <symbol id="maths" viewBox="0 0 32 32">
+    <path d="M3 8h10M8 3v10M20 8h9M4 21l8 8m0-8-8 8M20 25h9"/>
+    <circle cx="24.5" cy="20" r="1"/><circle cx="24.5" cy="30" r="1"/>
+  </symbol>
+  <symbol id="finance" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="13"/>
+    <path d="M21 10c0-5-9-5-9 0v12l-3 2h14M8 16h12"/>
+  </symbol>
+  <symbol id="computing" viewBox="0 0 32 32">
+    <path d="M3 4h26v18H3zM16 22v6M10 29h12M12 9l-4 4 4 4m8-8 4 4-4 4"/>
+  </symbol>
+  <symbol id="gaming" viewBox="0 0 32 32">
+    <path d="M9 8h14c4 0 5 4 6 9l1 6c1 5-3 7-6 4l-5-4h-6l-5 4c-3 3-7 1-6-4l1-6c1-5 2-9 6-9zM8 13v8m-4-4h8"/>
+    <circle cx="22" cy="14" r="1"/><circle cx="26" cy="18" r="1"/>
+  </symbol>
+  <symbol id="creative-media" viewBox="0 0 32 32">
+    <path d="M17 3C9 2 2 8 3 17s9 14 15 12c4-1 0-6 4-7 5-1 8-3 7-8S24 3 17 3z"/>
+    <circle cx="10" cy="11" r="1.5"/><circle cx="17" cy="8" r="1.5"/><circle cx="24" cy="13" r="1.5"/><circle cx="8" cy="19" r="1.5"/>
+  </symbol>
+  <symbol id="social-community" viewBox="0 0 32 32">
+    <circle cx="12" cy="9" r="5"/><circle cx="25" cy="11" r="3"/>
+    <path d="M3 29v-5c0-9 18-9 18 0v5M23 19c5-2 8 2 8 6v4"/>
+  </symbol>
+  <symbol id="health-fitness" viewBox="0 0 32 32">
+    <path d="M16 28 5 18C-3 10 8-1 16 8c8-9 19 2 11 10zM4 17h7l3-7 4 13 3-6h7"/>
+  </symbol>
+  <symbol id="environment-sustainability" viewBox="0 0 32 32">
+    <path d="M28 4C12 1 3 9 4 19s10 13 17 5c5-6 6-13 7-20zM4 29 23 10M13 20l-2-7m7 2h6"/>
+  </symbol>
+</svg>

@@ -3,6 +3,7 @@ import copy
 import importlib.util
 import json
 import unittest
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -41,8 +42,8 @@ class ProgrammingCatalogueTests(unittest.TestCase):
     def test_console_categories_and_difficulty_identity(self):
         self.assertEqual(self.data['interface'], 'console')
         self.assertEqual([c['title'] for c in self.data['practiceCategories']], [
-            '🧪 Science', '➗ Maths', '💷 Finance', '💻 Computing', '🎮 Gaming', '🎨 Creative & Media',
-            '🤝 Social & Community', '💪 Health & Fitness', '🌱 Environment & Sustainability'])
+            'Science', 'Maths', 'Finance', 'Computing', 'Gaming', 'Creative & Media',
+            'Social & Community', 'Health & Fitness', 'Environment & Sustainability'])
         parser = Buttons()
         parser.feed(builder.output())
         collections = [b for b in parser.buttons if 'data-collection' in b]
@@ -55,6 +56,21 @@ class ProgrammingCatalogueTests(unittest.TestCase):
             self.assertEqual(button['role'], 'tab')
             self.assertEqual(button['aria-controls'], 'category-panel')
             self.assertEqual(button['id'], 'practice-category-' + button['data-practice-category'])
+
+    def test_every_category_has_a_resolvable_decorative_vector_icon(self):
+        expected = {c['id'] for c in self.data['categories'] + self.data['practiceCategories']}
+        sprite = ET.fromstring((ROOT / 'assets/icons/problem-categories.svg').read_text(encoding='utf-8'))
+        symbols = sprite.findall('{http://www.w3.org/2000/svg}symbol')
+        self.assertEqual({s.attrib['id'] for s in symbols}, expected)
+        self.assertEqual(len(symbols), len(expected))
+        for identity in expected:
+            icon = builder.category_icon(identity)
+            self.assertIn('problem-categories.svg#' + identity, icon)
+            self.assertIn('aria-hidden="true"', icon)
+            self.assertIn('focusable="false"', icon)
+        page = builder.output()
+        for identity in expected:
+            self.assertIn('problem-categories.svg#' + identity, page)
 
     def test_original_tariffs_and_all_point_totals(self):
         self.assertEqual([p['id'] for p in self.data['problems']], ['problem-' + str(i) for i in range(1, 65)])

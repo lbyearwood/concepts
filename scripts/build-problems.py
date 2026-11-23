@@ -16,6 +16,13 @@ PRACTICE = ROOT / 'data/practice-problems.json'
 PRACTICE_GUIDES = ROOT / 'data/practice-tutorial-guides.json'
 TEMPLATE = ROOT / 'scripts/templates/programming-problems.html'
 
+def category_icon(identity):
+    if not re.fullmatch(r'[a-z][a-z0-9-]+', identity):
+        raise ValueError('Invalid category icon identity')
+    return (f'<svg class="category-glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" '
+            f'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+            f'<use href="../../../assets/icons/problem-categories.svg#{identity}"></use></svg>')
+
 def validate_assessment(question):
     marks = question.get('marks')
     marking = question.get('marking', {})
@@ -130,7 +137,7 @@ def output():
     for index, category in enumerate(data['categories']):
         count = sum(problem['category'] == category['id'] for problem in data['problems'])
         badge = f' <span class="category-count">{count}</span>' if count else ''
-        categories.append(f'        <button id="category-{category["id"]}" type="button" role="tab" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-category="{category["id"]}" tabindex="{0 if index == 0 else -1}"><span class="category-name">{escape(category["title"])}</span>{badge}</button>')
+        categories.append(f'        <button id="category-{category["id"]}" type="button" role="tab" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-category="{category["id"]}" tabindex="{0 if index == 0 else -1}">{category_icon(category["id"])}<span class="category-name">{escape(category["title"])}</span>{badge}</button>')
         option_label = category['title'] + (f' ({count})' if count else '')
         category_options.append(f'          <option value="{category["id"]}">{escape(option_label)}</option>')
     problems = [problem for problem in data['problems'] if problem['category'] == 'traversal']
@@ -139,7 +146,7 @@ def output():
         label = escape(category['title'])
         if category.get('shortTitle'):
             label = f'<span class="practice-name-full">{label}</span><span class="practice-name-short" aria-hidden="true">{escape(category["shortTitle"])}</span>'
-        practice_categories.append(f'        <button id="practice-category-{category["id"]}" type="button" role="tab" aria-label="{escape(category["title"], quote=True)}" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-practice-category="{category["id"]}" tabindex="{0 if index == 0 else -1}">{label}</button>')
+        practice_categories.append(f'        <button id="practice-category-{category["id"]}" type="button" role="tab" aria-label="{escape(category["title"], quote=True)}" aria-selected="{str(index == 0).lower()}" aria-controls="category-panel" data-practice-category="{category["id"]}" tabindex="{0 if index == 0 else -1}">{category_icon(category["id"])}<span class="category-name">{label}</span></button>')
     items = []
     for index, problem in enumerate(problems, 1):
         items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open question</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
@@ -148,6 +155,9 @@ def output():
     values['__PRACTICE_CATEGORY_OPTIONS__'] = '\n'.join(
         f'          <option value="{category["id"]}">{escape(category["title"])}</option>'
         for category in data['practiceCategories'])
+    values['__CATEGORY_HEADING_ICON__'] = category_icon('traversal')
+    values['__EXAM_PICKER_ICON__'] = category_icon('traversal')
+    values['__PRACTICE_PICKER_ICON__'] = category_icon('science')
     for token, value in values.items():
         if content.count(token) != 1:
             raise ValueError(f'Missing or duplicate template token: {token}')
