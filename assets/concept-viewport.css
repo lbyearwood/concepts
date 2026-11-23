@@ -1,6 +1,6 @@
 /* A concept is one teaching canvas. Only the navigation scrolls. */
 body.concept-demo { height: 100vh; height: 100dvh; overflow: hidden; }
-.concept-viewport { position: fixed; inset: 0 0 0 var(--sidebar-width); overflow: clip; }
+.concept-viewport { position: fixed; inset: var(--site-header-height, 0px) 0 0 var(--sidebar-width); overflow: clip; }
 .concept-demo .app { position: absolute; top: 0; left: 0; width: 100%; max-width: none; margin: 0; padding: 14px 20px; transform-origin: top left; }
 .concept-demo .title-row { position: relative; margin-bottom: 12px; padding-right: 124px; }
 .concept-demo h1 { font-size: 38px; line-height: 1.08; }

@@ -34,6 +34,13 @@ def sidebar(units, current):
     brand = relative("assets/csrevision-logo.png", current)
     lines = [
         '  <aside class="site-sidebar" aria-label="Site navigation">',
+        '    <header class="site-mobile-header">',
+        f'      <a class="mobile-brand" href="{relative("index.html", current)}" aria-label="CSRevision home"><img src="{brand}" alt="CSR — csrevision" width="545" height="325"></a>',
+        '      <button class="sidebar-toggle" type="button" aria-expanded="false" aria-controls="site-navigation"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg><span>Menu</span></button>',
+        '    </header>',
+        '    <button class="sidebar-backdrop" type="button" aria-label="Close menu" tabindex="-1" hidden></button>',
+        '    <div class="sidebar-panel" id="site-navigation" aria-label="Site navigation">',
+        '      <div class="sidebar-panel-heading"><strong>Menu</strong><button class="sidebar-close" type="button">Close<svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" stroke="currentColor" stroke-width="2.5"/></svg></button></div>',
         f'    <a class="sidebar-brand" href="{relative("index.html", current)}" aria-label="CSRevision home"><img class="sidebar-logo" src="{brand}" alt="CSR — csrevision" width="545" height="325"></a>',
         '    <nav aria-label="Main navigation">',
         "      " + link("index.html", "Home", current, "sidebar-home"),
@@ -74,7 +81,7 @@ def sidebar(units, current):
             '            <ul class="sidebar-concepts"><li>' + link(path, label, current) + "</li></ul>",
             "          </details>",
         ]
-    lines += ["        </div>", "      </details>", "    </nav>", "  </aside>"]
+    lines += ["        </div>", "      </details>", "    </nav>", "    </div>", "  </aside>"]
     return "\n".join(lines)
 
 
@@ -211,7 +218,11 @@ def outputs():
         html, count = re.subn(r'  <aside class="site-sidebar".*?</aside>', lambda _: sidebar(units, path), html, count=1, flags=re.S)
         if count != 1:
             raise ValueError(f"Expected exactly one sidebar in {path}")
-        html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=tutorials-1", html)
+        html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=responsive-1", html)
+        html = re.sub(r'concept-viewport\.css\?v=\d+', "concept-viewport.css?v=2", html)
+        if 'site-navigation.js' not in html:
+            script = f'  <script src="{relative("assets/site-navigation.js", path)}?v=1" defer></script>\n'
+            html = html.replace('</head>', script + '</head>', 1)
         html = re.sub(r'course-topic\.css\?v=\d+', "course-topic.css?v=6", html)
         pages[path] = html
     return pages

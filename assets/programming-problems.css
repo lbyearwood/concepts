@@ -1,6 +1,6 @@
 /* Native tutorial catalogue. Keep the surrounding page and sidebar stationary. */
 body.problems-page { height:100vh; height:100dvh; overflow:hidden; }
-.problems-app { position:fixed; inset:0 0 0 var(--sidebar-width); display:flex; flex-direction:column; min-width:0; padding:26px 28px 20px; background:#fff; color:#101223; font:15px/1.5 Arial,Helvetica,sans-serif; }
+.problems-app { position:fixed; inset:var(--site-header-height, 0px) 0 0 var(--sidebar-width); display:flex; flex-direction:column; min-width:0; padding:26px 28px 20px; background:#fff; color:#101223; font:15px/1.5 Arial,Helvetica,sans-serif; }
 .problems-app [hidden] { display:none !important; }
 .problems-heading .eyebrow { margin:0 0 8px; color:#d90058; font-size:11px; font-weight:900; letter-spacing:.065em; text-transform:uppercase; }
 .problems-heading h1 { margin:0 0 24px; font:900 34px/1.14 "Arial Black",Arial,sans-serif; letter-spacing:-1.1px; }
