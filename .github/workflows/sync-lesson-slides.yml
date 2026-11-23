@@ -54,6 +54,7 @@ jobs:
           node --test tests/tutorial-dismissal.test.cjs
           node --test tests/tutorial-copy-guard.test.cjs
           node --test tests/site-navigation.test.cjs
+          node --test tests/login-preview.test.cjs
           node --test tests/tutorial-session.test.cjs
           node --test tests/tutorial-presentation.test.cjs
           node --test tests/practice-walkthrough.test.cjs

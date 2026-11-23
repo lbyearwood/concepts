@@ -25,11 +25,11 @@ class Tags(HTMLParser):
 class NavigationTests(unittest.TestCase):
     def test_every_route_has_one_menu_and_loads_the_same_controller(self):
         pages = course.outputs()
-        self.assertEqual(len(pages), 66)
+        self.assertEqual(len(pages), 67)
         for route, html in pages.items():
             with self.subTest(route=route):
                 tags = Tags(html).tags
-                if route == 'index.html':
+                if route in {'index.html', 'login.html'}:
                     self.assertFalse(any('site-sidebar' in a.get('class', '').split() for _, a in tags))
                     self.assertFalse(any('site-navigation.js' in a.get('src', '') for _, a in tags))
                     continue

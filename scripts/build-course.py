@@ -14,6 +14,7 @@ PROGRAMMING_PROBLEMS = f"{COURSE}/tutorials/programming-problems.html"
 COURSE_OVERVIEW = f"{COURSE}/index.html"
 ACTIVITY_PILOT = f"{COURSE}/1-16-translators-and-programming-languages.html"
 HOME_TEMPLATE = ROOT / 'scripts/templates/homepage.html'
+LOGIN_TEMPLATE = ROOT / 'scripts/templates/login.html'
 CONCEPTS = [
     ("memory", "Memory Management", "concepts/memory-management/virtual-memory.html", "Virtual Memory"),
     ("scheduling", "Process Scheduling", "concepts/process-scheduling/round-robin.html", "Round Robin Scheduling"),
@@ -292,6 +293,7 @@ def outputs():
     for path in [EXISTING_TOPIC, PROGRAMMING_PROBLEMS] + [item[2] for item in CONCEPTS]:
         pages[path] = (ROOT / path).read_text(encoding="utf-8")
     pages['index.html'] = HOME_TEMPLATE.read_text(encoding='utf-8')
+    pages['login.html'] = LOGIN_TEMPLATE.read_text(encoding='utf-8')
     pages[COURSE_OVERVIEW] = course_overview(units)
     existing = next(topic for unit in units for topic in unit["topics"]
                     if f'{COURSE}/{topic["file"]}' == EXISTING_TOPIC)
@@ -314,7 +316,7 @@ def outputs():
     html = re.sub(r'(src="[^"]*/assets/)(?:selfhosted-lesson|course-lesson)\.js\?v=\d+', r'\1course-lesson.js?v=5', html)
     pages[EXISTING_TOPIC] = html
     for path, html in pages.items():
-        if path == 'index.html':
+        if path in {'index.html', 'login.html'}:
             continue
         html, count = re.subn(r'  <aside class="site-sidebar".*?</aside>', lambda _: sidebar(units, path), html, count=1, flags=re.S)
         if count != 1:
