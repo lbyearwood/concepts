@@ -4,6 +4,51 @@
   function collectionProblems(data, collection, category) {
     return [...data.problems, ...(data.practiceProblems || [])].filter(problem => problemCollection(problem) === collection && problem.category === category);
   }
+  function createTutorialCopyGuard(dialog) {
+    const owner = dialog.ownerDocument;
+    const notice = dialog.querySelector('.tutorial-copy-notice');
+    const nonTextInputs = new Set(['button', 'checkbox', 'color', 'file', 'hidden', 'image', 'radio', 'range', 'reset', 'submit']);
+    function editable(target) {
+      const element = target?.nodeType === 3 ? target.parentElement : target;
+      const field = element?.closest?.('input, textarea, select, [contenteditable]');
+      if (!field || !dialog.contains(field)) return false;
+      if (field.tagName === 'INPUT') return !nonTextInputs.has(field.type);
+      return field.tagName === 'TEXTAREA' || field.tagName === 'SELECT' || field.isContentEditable;
+    }
+    function protect(event, useFocus) {
+      const target = dialog.contains(event.target) ? event.target : useFocus ? owner.activeElement : null;
+      if (!dialog.open || !target || !dialog.contains(target) || editable(target)) return;
+      event.preventDefault();
+      if (notice && !['selectstart', 'dragstart'].includes(event.type)) {
+        notice.textContent = 'Copying tutorial text and code is disabled. Type the code into your own editor.';
+      }
+    }
+    const clipboard = event => protect(event, true);
+    const selection = event => protect(event, false);
+    const keydown = event => {
+      const key = event.key.toLowerCase();
+      if (!event.altKey && !event.shiftKey &&
+          (((event.ctrlKey || event.metaKey) && ['a', 'c', 'x'].includes(key)) || (event.ctrlKey && key === 'insert'))) {
+        protect(event, true);
+      }
+    };
+    const clearNotice = () => { if (notice) notice.textContent = ''; };
+    dialog.classList.add('tutorial-copy-protected');
+    owner.addEventListener('copy', clipboard, true);
+    owner.addEventListener('cut', clipboard, true);
+    owner.addEventListener('keydown', keydown, true);
+    for (const type of ['contextmenu', 'selectstart', 'dragstart']) dialog.addEventListener(type, selection);
+    dialog.addEventListener('close', clearNotice);
+    return () => {
+      owner.removeEventListener('copy', clipboard, true);
+      owner.removeEventListener('cut', clipboard, true);
+      owner.removeEventListener('keydown', keydown, true);
+      for (const type of ['contextmenu', 'selectstart', 'dragstart']) dialog.removeEventListener(type, selection);
+      dialog.removeEventListener('close', clearNotice);
+      dialog.classList.remove('tutorial-copy-protected');
+      clearNotice();
+    };
+  }
   function createDismissalGuard(dialog, isProtected) {
     function requestClose(reason) {
       if (isProtected() && reason !== 'close-button') return false;
@@ -40,10 +85,11 @@
     const exact = find(position.kind);
     return exact >= 0 ? exact : Math.max(0, find('explanation'));
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { createDismissalGuard, createProblemSession, findPositionFrame, collectionProblems }; return; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { createTutorialCopyGuard, createDismissalGuard, createProblemSession, findPositionFrame, collectionProblems }; return; }
   const dataNode = document.getElementById('problem-data');
   const dialog = document.getElementById('tutorial-modal');
   if (!dataNode || !dialog) return;
+  createTutorialCopyGuard(dialog);
   const data = JSON.parse(dataNode.textContent);
   const allProblems = [...data.problems, ...(data.practiceProblems || [])];
   const categoryNames = new Map(data.categories.map(category => [category.id, category.title]));

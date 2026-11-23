@@ -52,6 +52,7 @@ jobs:
           node --test tests/tutorial-code-style.test.cjs
           node --test tests/tutorial-typing-sound.test.cjs
           node --test tests/tutorial-dismissal.test.cjs
+          node --test tests/tutorial-copy-guard.test.cjs
           node --test tests/tutorial-session.test.cjs
           node --test tests/tutorial-presentation.test.cjs
           node --test tests/practice-walkthrough.test.cjs
