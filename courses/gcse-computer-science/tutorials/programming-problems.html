@@ -9,13 +9,14 @@
   <script src="../../../assets/site-navigation.js?v=1" defer></script>
   <link rel="stylesheet" href="../../../assets/colour-block.css?v=2">
   <link rel="stylesheet" href="../../../assets/programming-problems.css?v=24">
+  <link rel="stylesheet" href="../../../assets/programming-catalogue.css?v=1">
   <script src="../../../assets/tutorial-code-style.js?v=5" defer></script>
   <script src="../../../assets/tutorial-typing-sound.js?v=4" defer></script>
   <script src="../../../assets/tutorial-fit.js?v=3" defer></script>
   <script src="../../../assets/tutorial-typewriter.js?v=7" defer></script>
   <script src="../../../assets/tutorial-presentation.js?v=2" defer></script>
   <script src="../../../assets/tutorial-tutor.js?v=11" defer></script>
-  <script src="../../../assets/programming-problems.js?v=24" defer></script>
+  <script src="../../../assets/programming-problems.js?v=25" defer></script>
 </head>
 <body class="has-sidebar theme-colour-block problems-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -192,8 +193,8 @@
         <button id="category-sql" type="button" role="tab" aria-selected="false" aria-controls="category-panel" data-category="sql" tabindex="-1"><span class="category-name">SQL</span> <span class="category-count">7</span></button>
       </div>
       <label class="exam-category-picker" for="exam-category-select">
-        <span>Exam question category</span>
-        <select id="exam-category-select" aria-controls="category-panel">
+        <span id="exam-category-label">Exam question category</span>
+        <select id="exam-category-select" aria-labelledby="exam-category-label" aria-controls="category-panel">
           <option value="traversal">List Traversal (8)</option>
           <option value="counting">Counting (4)</option>
           <option value="subroutines">Subroutines (5)</option>
@@ -219,10 +220,24 @@
         <button id="practice-category-health-fitness" type="button" role="tab" aria-label="💪 Health &amp; Fitness" aria-selected="false" aria-controls="category-panel" data-practice-category="health-fitness" tabindex="-1"><span class="practice-name-full">💪 Health &amp; Fitness</span><span class="practice-name-short" aria-hidden="true">💪 Fitness</span></button>
         <button id="practice-category-environment-sustainability" type="button" role="tab" aria-label="🌱 Environment &amp; Sustainability" aria-selected="false" aria-controls="category-panel" data-practice-category="environment-sustainability" tabindex="-1"><span class="practice-name-full">🌱 Environment &amp; Sustainability</span><span class="practice-name-short" aria-hidden="true">🌱 Environment</span></button>
       </div>
+      <label class="practice-category-picker" for="practice-category-select" hidden>
+        <span id="practice-category-label">Problem category</span>
+        <select id="practice-category-select" aria-labelledby="practice-category-label" aria-controls="category-panel">
+          <option value="science">🧪 Science</option>
+          <option value="maths">➗ Maths</option>
+          <option value="finance">💷 Finance</option>
+          <option value="computing">💻 Computing</option>
+          <option value="gaming">🎮 Gaming</option>
+          <option value="creative-media">🎨 Creative &amp; Media</option>
+          <option value="social-community">🤝 Social &amp; Community</option>
+          <option value="health-fitness">💪 Health &amp; Fitness</option>
+          <option value="environment-sustainability">🌱 Environment &amp; Sustainability</option>
+        </select>
+      </label>
       <section id="category-panel" class="category-panel" role="tabpanel" aria-labelledby="category-traversal">
         <div class="problem-list-heading">
           <h2 id="problem-category-title">List Traversal</h2>
-          <span class="problem-list-instruction">Choose a problem to open its exam question</span>
+          <span class="problem-list-instruction problem-count-summary" aria-hidden="true">8 problems</span>
         </div>
         <div class="problem-list-scroll">
           <ol class="problem-list" aria-label="List Traversal problems">

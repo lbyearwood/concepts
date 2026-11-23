@@ -105,8 +105,10 @@
   const categoryTabs = document.querySelector('.problem-categories');
   const categoryPicker = document.querySelector('.exam-category-picker');
   const categorySelect = document.getElementById('exam-category-select');
-  const compactCategories = window.matchMedia('(max-width:600px), (max-height:500px) and (max-width:900px)');
+  const compactCategories = window.matchMedia('(max-width:600px), (max-height:560px)');
   const practiceTabs = document.querySelector('.practice-categories');
+  const practicePicker = document.querySelector('.practice-category-picker');
+  const practiceSelect = document.getElementById('practice-category-select');
   const categoryPanel = document.getElementById('category-panel');
   const content = dialog.querySelector('.tutorial-step-content');
   const body = dialog.querySelector('.tutorial-body');
@@ -254,7 +256,7 @@
     codePager?.layout(); tutor.layout();
   }
   function syncCategoryPanel() {
-    const exam = state.collection === 'exam', picker = exam && compactCategories.matches;
+    const exam = state.collection === 'exam', picker = compactCategories.matches;
     categoryPanel.setAttribute('role', picker ? 'region' : 'tabpanel');
     categoryPanel.setAttribute('aria-labelledby', picker ? 'problem-category-title' : exam ? 'category-' + state.category : 'practice-category-' + state.practiceCategory);
   }
@@ -271,7 +273,8 @@
     categoryPicker.hidden = !exam;
     categorySelect.value = state.category;
     practiceTabs.hidden = exam;
-    document.querySelector('.problem-list-instruction').hidden = !exam;
+    practicePicker.hidden = exam;
+    practiceSelect.value = state.practiceCategory;
     document.querySelectorAll('[data-category]').forEach(button => {
       const selected = button.dataset.category === state.category;
       button.setAttribute('aria-selected', String(selected));
@@ -290,6 +293,11 @@
     syncCategoryPanel();
     document.getElementById('problem-category-title').textContent = title;
     const problems = collectionProblems(data, state.collection, exam ? state.category : state.practiceCategory);
+    document.querySelector('.problem-count-summary').textContent = problems.length + (problems.length === 1 ? ' problem' : ' problems');
+    for (const option of practiceSelect.options) {
+      const count = collectionProblems(data, state.collection, option.value).length;
+      option.textContent = practiceNames.get(option.value) + (count ? ' (' + count + ')' : '');
+    }
     list.setAttribute('aria-label', title + (title.endsWith('problems') ? '' : ' problems'));
     list.replaceChildren();
     problems.forEach((problem, index) => {
@@ -532,6 +540,10 @@
     const button = event.target.closest('[data-practice-category]');
     if (!button) return;
     state.practiceCategory = button.dataset.practiceCategory;
+    renderList();
+  });
+  practiceSelect.addEventListener('change', () => {
+    state.practiceCategory = practiceSelect.value;
     renderList();
   });
   document.querySelectorAll('[role="tablist"]').forEach(tablist => {

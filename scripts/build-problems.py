@@ -145,6 +145,9 @@ def output():
         items.append(f'            <li><button class="problem-row" type="button" data-problem="{problem["id"]}" aria-haspopup="dialog" aria-controls="tutorial-modal"><span class="problem-number">{index:02}</span><span class="problem-title">{escape(problem["title"])}</span><span class="problem-open"><span>Open question</span><span class="problem-icon icon-right" aria-hidden="true"></span></span></button></li>')
     content = TEMPLATE.read_text(encoding='utf-8')
     values = {'__SIDEBAR__': sidebar.group(), '__CATEGORIES__': '\n'.join(categories), '__CATEGORY_OPTIONS__': '\n'.join(category_options), '__PRACTICE_CATEGORIES__': '\n'.join(practice_categories), '__PROBLEM_LIST__': '\n'.join(items), '__PROBLEM_DATA__': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c'), '__TUTOR_GUIDE_DATA__': json.dumps(guides, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')}
+    values['__PRACTICE_CATEGORY_OPTIONS__'] = '\n'.join(
+        f'          <option value="{category["id"]}">{escape(category["title"])}</option>'
+        for category in data['practiceCategories'])
     for token, value in values.items():
         if content.count(token) != 1:
             raise ValueError(f'Missing or duplicate template token: {token}')

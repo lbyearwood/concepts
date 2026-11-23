@@ -1,0 +1,176 @@
+/* Catalogue-only Colour Block refresh. Tutorial dialogs retain their approved UI. */
+.problems-app { padding:24px 24px 20px; }
+.problems-app .problems-heading h1 { margin-bottom:20px; font-size:34px; }
+.problems-app .problem-collections { gap:8px; padding-bottom:14px; }
+.problems-app .problem-collections button {
+  position:relative;
+  min-height:46px;
+  padding:10px 12px 10px 18px;
+  font-size:15px;
+  font-weight:900;
+}
+.problems-app .problem-collections button::before {
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:7px;
+  background:var(--blue);
+}
+.problems-app #collection-level1::before { background:var(--yellow); }
+.problems-app #collection-level2::before { background:var(--teal); }
+.problems-app #collection-level3::before { background:var(--pink); }
+.problems-app .problem-collections button[aria-selected="true"] { background:var(--blue); color:white; }
+.problems-app .problem-collections button[aria-selected="true"]::before { background:var(--blue); }
+.problems-app :is(.problem-categories,.practice-categories) {
+  gap:8px;
+  padding:14px 0 0;
+  margin-bottom:18px;
+  border:0;
+}
+.problems-app .problem-categories { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.problems-app .practice-categories { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.problems-app :is(.problem-categories,.practice-categories) button {
+  --category-accent:var(--yellow);
+  position:relative;
+  justify-content:space-between;
+  gap:7px;
+  min-height:52px;
+  padding:7px 9px 7px 16px;
+  border:2px solid var(--ink);
+  border-bottom:4px solid #b5b7c2;
+  background:white;
+  color:var(--ink);
+  font:800 13px/1.2 Arial,Helvetica,sans-serif;
+}
+.problems-app :is(.problem-categories,.practice-categories) button::before {
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:7px;
+  background:var(--category-accent);
+}
+.problems-app :is(.problem-categories,.practice-categories) button:nth-child(4n+2) { --category-accent:var(--teal); }
+.problems-app :is(.problem-categories,.practice-categories) button:nth-child(4n+3) { --category-accent:var(--orange); }
+.problems-app :is(.problem-categories,.practice-categories) button:nth-child(4n) { --category-accent:var(--lime); }
+.problems-app #category-sql { --category-accent:var(--pink); }
+.problems-app :is(.problem-categories,.practice-categories) button[aria-selected="true"] {
+  background:var(--blue);
+  border-bottom-color:var(--pink);
+  color:white;
+}
+.problems-app :is(.problem-categories,.practice-categories) button[aria-selected="true"]::before { background:var(--blue); }
+.problems-app :is(.problem-categories,.practice-categories) button:hover:not([aria-selected="true"]) { background:#fff9c9; }
+.problems-app .category-count {
+  display:grid;
+  place-items:center;
+  min-width:22px;
+  height:22px;
+  padding:1px 5px;
+  border-radius:0;
+  background:#ececf1;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:900;
+}
+.problems-app :is(.problem-categories,.practice-categories) button[aria-selected="true"] .category-count { background:white; color:var(--blue); }
+.problems-app .problem-list-heading { gap:12px; margin-bottom:10px; align-items:center; }
+.problems-app .problem-list-heading h2 { font-size:24px; }
+.problems-app .problem-count-summary {
+  display:inline-flex;
+  flex:none;
+  padding:4px 8px;
+  border:1px solid var(--pink);
+  background:var(--pink);
+  color:white;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.2;
+  white-space:nowrap;
+}
+.problems-app .problem-list-scroll { padding:5px; margin:-5px; }
+.problems-app .problem-list { display:grid; gap:8px; }
+.problems-app .problem-row {
+  grid-template-columns:32px minmax(0,1fr) 30px;
+  gap:12px;
+  min-height:54px;
+  padding:8px 10px;
+  border:2px solid var(--ink);
+  background:white;
+  color:var(--ink);
+}
+.problems-app .problem-number {
+  display:grid;
+  place-items:center;
+  min-height:28px;
+  background:var(--blue);
+  color:white;
+  font-size:12px;
+}
+.problems-app .problem-title { font-size:15px; font-weight:800; }
+.problems-app .problem-open {
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:28px;
+  background:var(--yellow);
+  color:var(--ink);
+}
+.problems-app .problem-open > span:first-child {
+  position:absolute;
+  width:1px;
+  height:1px;
+  margin:-1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+.problems-app .problem-row:is(:hover,:focus-visible) { background:var(--blue); color:white; }
+.problems-app .problem-row:is(:hover,:focus-visible) .problem-number { background:white; color:var(--blue); }
+.problems-app .problem-row:is(:hover,:focus-visible) .problem-open { color:var(--ink); }
+.problems-app .problem-empty { margin:5px 0; padding:20px; border:2px solid var(--ink); border-left:8px solid var(--orange); background:#fff; color:var(--muted); }
+.problems-app .practice-category-picker { display:none; }
+.problems-app :is(.exam-category-picker,.practice-category-picker) {
+  flex:none;
+  gap:5px;
+  margin:12px 0 16px;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:800;
+}
+.problems-app :is(.exam-category-picker,.practice-category-picker) select {
+  width:100%;
+  min-width:0;
+  min-height:44px;
+  padding:7px 30px 7px 12px;
+  border:2px solid var(--ink);
+  border-left:8px solid var(--teal);
+  border-radius:0;
+  background:white;
+  color:var(--ink);
+  font:700 14px/1.25 Arial,Helvetica,sans-serif;
+}
+@media(max-width:600px), (max-height:560px) {
+  .problems-app :is(.problem-categories,.practice-categories) { display:none; }
+  .problems-app :is(.exam-category-picker,.practice-category-picker) { display:flex; flex-direction:column; }
+}
+@media(max-width:600px) {
+  .problems-app { padding:18px 14px; }
+  .problems-app .problems-heading .eyebrow { font-size:10px; }
+  .problems-app .problems-heading h1 { font-size:27px; margin-bottom:16px; }
+  .problems-app .problem-collections { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .problems-app .problem-collections button { min-height:44px; font-size:14px; }
+  .problems-app .problem-list-heading h2 { font-size:21px; }
+  .problems-app .problem-row { grid-template-columns:28px minmax(0,1fr) 28px; gap:8px; padding:8px; }
+  .problems-app .problem-title { font-size:14px; }
+  .problems-app .problem-open { width:28px; }
+}
+@media(max-height:560px) {
+  .problems-app { padding:10px 16px; }
+  .problems-app .problems-heading .eyebrow { font-size:10px; margin-bottom:4px; }
+  .problems-app .problems-heading h1 { font-size:26px; margin-bottom:10px; }
+  .problems-app .problem-collections { padding-bottom:10px; }
+  .problems-app .problem-collections button { min-height:40px; padding-top:6px; padding-bottom:6px; }
+  .problems-app :is(.exam-category-picker,.practice-category-picker) { margin:8px 0 10px; }
+  .problems-app .problem-list-heading { margin-bottom:8px; }
+  .problems-app .problem-list-heading h2 { font-size:21px; }
+}
