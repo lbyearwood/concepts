@@ -8,6 +8,8 @@ body.has-sidebar { margin: 0 0 0 var(--sidebar-width); padding-top: var(--site-h
 .site-sidebar nav { display: block; }
 .site-sidebar a { text-decoration: none; }
 .site-sidebar .sidebar-home { display: block; padding: 12px 8px; margin-bottom: 14px; color: #101223; font-size: 20px; font-weight: 900; }
+.site-sidebar .sidebar-overview a { display:block; min-height:44px; margin:6px 0 10px; padding:10px 9px; font-size:15px; font-weight:700; }
+.site-sidebar .sidebar-overview a:hover { background:#ffe500; }
 .site-sidebar .sidebar-label { display: none; }
 .site-sidebar details { margin: 10px 0 24px; }
 .site-sidebar summary { position: relative; display: flex; align-items: center; min-height: 44px; padding: 9px 24px 9px 10px; border-left: 7px solid #00d6c0; color: #101223; font-size: 18px; font-weight: 900; line-height: 1.25; list-style: none; cursor: pointer; overflow-wrap: anywhere; }

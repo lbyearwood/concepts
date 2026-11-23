@@ -11,6 +11,8 @@ CATALOGUE = ROOT / "data/gcse-course.json"
 COURSE = "courses/gcse-computer-science"
 EXISTING_TOPIC = f"{COURSE}/1-1-variables-constants-data-types-casting.html"
 PROGRAMMING_PROBLEMS = f"{COURSE}/tutorials/programming-problems.html"
+COURSE_OVERVIEW = f"{COURSE}/index.html"
+HOME_TEMPLATE = ROOT / 'scripts/templates/homepage.html'
 CONCEPTS = [
     ("memory", "Memory Management", "concepts/memory-management/virtual-memory.html", "Virtual Memory"),
     ("scheduling", "Process Scheduling", "concepts/process-scheduling/round-robin.html", "Round Robin Scheduling"),
@@ -50,6 +52,7 @@ def sidebar(units, current):
         '          <details class="sidebar-course" open>',
         "            <summary>GCSE Computer Science</summary>",
         '            <div class="sidebar-units">',
+        '              <div class="sidebar-overview">' + link(COURSE_OVERVIEW, 'Course overview', current) + '</div>',
     ]
     for unit in units:
         active = any(f'{COURSE}/{topic["file"]}' == current for topic in unit["topics"])
@@ -165,6 +168,50 @@ def new_topic(unit, topic, deck=None):
 '''
 
 
+def course_overview(units):
+    groups = []
+    for index, unit in enumerate(units, 1):
+        topics = '\n'.join('          <li>' + link(f'{COURSE}/{topic["file"]}', topic['title'], COURSE_OVERVIEW) + '</li>' for topic in unit['topics'])
+        groups.append(f'''      <details class="hub-unit" id="unit-{index}">
+        <summary>{escape(unit['title'])}<span class="hub-topic-count">{len(unit['topics'])} topics</span></summary>
+        <ol>
+{topics}
+        </ol>
+      </details>''')
+    concepts = '\n'.join(f'      <a href="{relative(path, COURSE_OVERVIEW)}"><strong>{escape(label)}</strong><span>{escape(category)}</span></a>' for _, category, path, label in CONCEPTS)
+    return f'''<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose a GCSE Computer Science topic, follow a programming tutorial or explore an interactive concept.">
+  <title>Start revising | CSRevision</title>
+  <link rel="stylesheet" href="../../assets/sidebar.css?v=responsive-2">
+  <link rel="stylesheet" href="../../assets/colour-block.css?v=2">
+  <link rel="stylesheet" href="../../assets/course-hub.css?v=1">
+</head>
+<body class="has-sidebar theme-colour-block resource-hub-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <aside class="site-sidebar" aria-label="Site navigation"></aside>
+  <main class="course-hub" id="main-content" tabindex="-1">
+    <p class="eyebrow">GCSE Computer Science</p>
+    <h1>Start revising</h1>
+    <p class="hub-intro">Choose a topic, follow a programming tutorial or explore an interactive concept.</p>
+    <a class="hub-tutorial" href="tutorials/programming-problems.html"><h2>Programming problems</h2><p>Build your skills with guided Python and SQL tutorials, practice problems and questions to check your understanding.</p></a>
+    <h2 class="hub-section-title">Choose a topic</h2>
+    <div class="hub-units">
+{chr(10).join(groups)}
+    </div>
+    <h2 class="hub-section-title">Explore a concept</h2>
+    <div class="hub-concepts">
+{concepts}
+    </div>
+  </main>
+</body>
+</html>
+'''
+
+
 def outputs():
     catalogue = json.loads(CATALOGUE.read_text(encoding="utf-8"))
     units = catalogue["units"]
@@ -192,8 +239,10 @@ def outputs():
                 deck = decks.get("gcse-" + topic["title"].split(" ", 1)[0].replace(".", "-"))
                 pages[path] = new_topic(unit, topic, deck)
     # Existing teaching content stays intact; only its shared navigation is regenerated.
-    for path in ["index.html", EXISTING_TOPIC, PROGRAMMING_PROBLEMS] + [item[2] for item in CONCEPTS]:
+    for path in [EXISTING_TOPIC, PROGRAMMING_PROBLEMS] + [item[2] for item in CONCEPTS]:
         pages[path] = (ROOT / path).read_text(encoding="utf-8")
+    pages['index.html'] = HOME_TEMPLATE.read_text(encoding='utf-8')
+    pages[COURSE_OVERVIEW] = course_overview(units)
     existing = next(topic for unit in units for topic in unit["topics"]
                     if f'{COURSE}/{topic["file"]}' == EXISTING_TOPIC)
     source = existing.get("lessonSrc")
@@ -215,10 +264,12 @@ def outputs():
     html = re.sub(r'(src="[^"]*/assets/)(?:selfhosted-lesson|course-lesson)\.js\?v=\d+', r'\1course-lesson.js?v=5', html)
     pages[EXISTING_TOPIC] = html
     for path, html in pages.items():
+        if path == 'index.html':
+            continue
         html, count = re.subn(r'  <aside class="site-sidebar".*?</aside>', lambda _: sidebar(units, path), html, count=1, flags=re.S)
         if count != 1:
             raise ValueError(f"Expected exactly one sidebar in {path}")
-        html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=responsive-1", html)
+        html = re.sub(r'sidebar\.css\?v=[\w-]+', "sidebar.css?v=responsive-2", html)
         html = re.sub(r'concept-viewport\.css\?v=\d+', "concept-viewport.css?v=2", html)
         if 'site-navigation.js' not in html:
             script = f'  <script src="{relative("assets/site-navigation.js", path)}?v=1" defer></script>\n'
